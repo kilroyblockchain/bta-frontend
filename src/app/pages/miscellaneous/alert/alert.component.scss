@@ -1,0 +1,31 @@
+nb-card {
+    max-width: 600px;
+
+    nb-card-header {
+        nb-icon {
+            margin-right: 5px;
+        }
+    }
+
+    nb-card-body {
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        button {
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+    }
+}
+
+.options {
+    display: flex;
+    float: right;
+
+    :first-child {
+        margin-right: 8px;
+    }
+}

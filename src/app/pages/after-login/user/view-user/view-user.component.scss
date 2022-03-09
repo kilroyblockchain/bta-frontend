@@ -1,0 +1,16 @@
+.dialog-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+::ng-deep {
+    nb-card {
+        nb-card {
+            width: 100% !important;
+
+            nb-card-body {
+                display: block;
+            }
+        }
+    }
+}

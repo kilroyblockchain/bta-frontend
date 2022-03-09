@@ -1,0 +1,32 @@
+::ng-deep {
+    nb-card {
+        &.bottom-border {
+            border-right: 0;
+            border-top: 0;
+            border-left: 0;
+            width: 100%;
+            margin-right: 0 !important;
+
+            nb-card-body {
+                padding: 1rem 0;
+            }
+
+            .actions {
+                margin-bottom: 10px;
+                justify-content: flex-end;
+                display: flex;
+
+                button {
+                    &:not(:last-child) {
+                        margin-right: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.form-holder.floating {
+    flex-direction: row !important;
+    width: 100%;
+}

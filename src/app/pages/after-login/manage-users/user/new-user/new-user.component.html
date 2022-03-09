@@ -1,0 +1,159 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'MANAGE_USERS.USERS.TITLE.CREATE_USER' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <ng-container *ngIf="!activeForm">
+        <nb-card-body>
+            <form [formGroup]="searchUserForm">
+                <div class="form-holder floating">
+                    <input id="email" nbInput fullWidth type="text" [placeholder]="'*' + ('COMMON.PLACEHOLDER.EMAIL' | translate)" formControlName="email" [ngClass]="{ 'status-danger': submitted && SearchUserForm.email.errors }" />
+                    <label for="email" [attr.data-content]="'*' + ('COMMON.LABEL.EMAIL' | translate)"></label>
+                    <div *ngIf="submitted && SearchUserForm.email.errors as err" class="invalid-feedback">
+                        <span *ngIf="err.required">{{ 'COMMON.VALIDATIONS.EMAIL_IS_REQUIRED' | translate }}</span>
+                        <span *ngIf="err.email">{{ 'COMMON.VALIDATIONS.EMAIL_MUST_BE_VALID' | translate }}</span>
+                    </div>
+                </div>
+            </form>
+        </nb-card-body>
+        <nb-card-footer>
+            <button type="button" nbButton status="primary" hero type="submit" (click)="checkEmail(searchUserForm)">{{ 'COMMON.BUTTON.NEXT' | translate }}</button>
+        </nb-card-footer>
+    </ng-container>
+    <ng-container *ngIf="activeForm">
+        <nb-card-body>
+            <form class="form-container" [formGroup]="userAlreadyExist ? existingUserForm : newUserForm">
+                <ng-container *ngIf="activeForm && userAlreadyExist">
+                    <div class="user-detail-card">
+                        <div class="detail-row">
+                            <b>{{ 'COMMON.LABEL.FIRST_NAME' | translate }}:</b> <span>{{ userDetail.firstName | titlecase }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <b>{{ 'COMMON.LABEL.LAST_NAME' | translate }}: </b> <span>{{ userDetail.lastName | titlecase }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <b>{{ 'COMMON.LABEL.EMAIL' | translate }}:</b> <span>{{ userDetail.email }}</span>
+                        </div>
+                        <div class="detail-row">
+                            <b>{{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}:</b> <span>{{ userDetail.phone }}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder">
+                            <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
+                            <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="organizationUnit" (selectedChange)="onUnitChange($event)" [ngClass]="{ 'status-danger': submitted && ExistingUserForm.organizationUnit.errors }">
+                                <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
+                            </nb-select>
+                            <div *ngIf="submitted && ExistingUserForm.organizationUnit.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                        <div class="form-holder">
+                            <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
+                            <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingId" [ngClass]="{ 'status-danger': submitted && ExistingUserForm.staffingId.errors }">
+                                <nb-option *ngFor="let staffing of staffings" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
+                            </nb-select>
+                            <div *ngIf="submitted && ExistingUserForm.staffingId.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeForm && !userAlreadyExist">
+                    <div class="user-detail-card">
+                        <div class="detail-row">
+                            <b>{{ 'COMMON.LABEL.EMAIL' | translate }}:</b> <span>{{ UF.email.value }}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder floating">
+                            <input name="firstName" nbInput fullWidth [placeholder]="'*' + ('COMMON.PLACEHOLDER.FIRST_NAME' | translate)" formControlName="firstName" [ngClass]="{ 'status-danger': submitted && UF.firstName.errors }" />
+                            <label for="firstName" [attr.data-content]="'*' + ('COMMON.LABEL.FIRST_NAME' | translate)"></label>
+                            <div *ngIf="submitted && UF.firstName.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'COMMON.VALIDATIONS.FIRSTNAME_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                        <div class="form-holder floating">
+                            <input name="lastName" nbInput fullWidth [placeholder]="'*' + ('COMMON.PLACEHOLDER.LAST_NAME' | translate)" formControlName="lastName" [ngClass]="{ 'status-danger': submitted && UF.lastName.errors }" />
+                            <label for="lastName" [attr.data-content]="'*' + ('COMMON.LABEL.LAST_NAME' | translate)"></label>
+                            <div *ngIf="submitted && UF.lastName.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'COMMON.VALIDATIONS.LASTNAME_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder">
+                            <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
+                            <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="organizationUnit" (selectedChange)="onUnitChange($event)" [ngClass]="{ 'status-danger': submitted && UF.organizationUnit.errors }">
+                                <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
+                            </nb-select>
+                            <div *ngIf="submitted && UF.organizationUnit.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                        <div class="form-holder">
+                            <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
+                            <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingId" [ngClass]="{ 'status-danger': submitted && UF.staffingId.errors }">
+                                <nb-option *ngFor="let staffing of staffings" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
+                            </nb-select>
+                            <div *ngIf="submitted && UF.staffingId.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.required">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder floating">
+                            <input name="phone" nbInput fullWidth [placeholder]="'*' + ('COMMON.LABEL.PHONE_NUMBER' | translate)" formControlName="phone" [ngClass]="{ 'status-danger': submitted && UF.phone.errors }" />
+                            <label for="phone" [attr.data-content]="'*' + ('COMMON.LABEL.PHONE_NUMBER' | translate)"></label>
+                            <div *ngIf="submitted && UF.phone.errors as err" class="invalid-feedback">
+                                <app-validation-message field="phone" [error]="err"></app-validation-message>
+                            </div>
+                        </div>
+                        <div class="form-holder">
+                            <label for="country" class="label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)" [ngClass]="{ 'status-danger': submitted && UF.country.errors }">
+                                <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder">
+                            <label for="state" class="label">{{ 'COMMON.LABEL.STATE' | translate }}</label>
+                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="state" [ngClass]="{ 'status-danger': submitted && UF.state.errors }">
+                                <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class="form-holder floating">
+                            <input name="city" nbInput fullWidth [placeholder]="'COMMON.LABEL.CITY' | translate" formControlName="city" [ngClass]="{ 'status-danger': submitted && UF.city.errors }" />
+                            <label for="city" [attr.data-content]="'COMMON.LABEL.CITY' | translate"></label>
+                        </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder floating">
+                            <input name="address" nbInput fullWidth [placeholder]="'COMMON.LABEL.ADDRESS' | translate" formControlName="address" [ngClass]="{ 'status-danger': submitted && UF.address.errors }" />
+                            <label for="address" [attr.data-content]="'COMMON.LABEL.ADDRESS' | translate"></label>
+                            <div *ngIf="submitted && UF.address.errors as err" class="invalid-feedback">
+                                <span *ngIf="err.minlength">{{ 'COMMON.VALIDATIONS.ADDRESS_MIN_LENGTH' | translate: { minLength: err.minlength.requiredLength } }}</span>
+                            </div>
+                        </div>
+                        <div class="form-holder floating">
+                            <input name="zipCode" nbInput fullWidth [placeholder]="'COMMON.LABEL.ZIP_CODE' | translate" formControlName="zipCode" [ngClass]="{ 'status-danger': submitted && UF.zipCode.errors }" />
+                            <label for="zipCode" [attr.data-content]="'COMMON.LABEL.ZIP_CODE' | translate"></label>
+                        </div>
+                    </div>
+                </ng-container>
+            </form>
+        </nb-card-body>
+        <nb-card-footer>
+            <button nbButton hero status="primary" type="submit" (click)="saveNewUser(userAlreadyExist ? existingUserForm : newUserForm)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+        </nb-card-footer>
+    </ng-container>
+</nb-card>

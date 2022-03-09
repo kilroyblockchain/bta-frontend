@@ -1,0 +1,117 @@
+<div class="user-group-container">
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'MANAGE_USERS.USERS.TITLE.USER' | translate }}</h4>
+            <div class="actions">
+                <app-select-subscription-type (changedSubscription)="onSubscriptionChange($event)" (initChange)="initSubscriptionType()"></app-select-subscription-type>
+            </div>
+        </div>
+        <div *ngIf="canAddUser" class="actions">
+            <button nbButton hero status="primary" size="small" (click)="addNewUser()"><nb-icon icon="plus-circle-outline"></nb-icon>{{ 'MANAGE_USERS.USERS.BUTTON.ADD_USER' | translate }}</button>
+        </div>
+    </div>
+    <nb-card class="medium-card-width">
+        <nb-card-body>
+            <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound" [filterLabel]="'MANAGE_USERS.USERS.DESCRIPTION.SHOW_ENABLED_USERS'" (toggleTableEmit)="toggleTable()" (pageChanged)="pageChange($event)" (searchValue)="onSearch($event)"></app-filter-bar>
+
+            <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)" [nbSpinner]="loadingTable" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+                <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+                <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns" [ngClass]="{ 'gray-bg-row': findAdminUser(row.data['action']) || user.id === row.data['action'].id }"></tr>
+
+                <ng-container
+                    *ngFor="
+                        let column of columns
+                            | paginate
+                                : {
+                                      id: 'table_paginate_id',
+                                      itemsPerPage: resultperpage,
+                                      currentPage: page,
+                                      totalItems: totalRecords
+                                  };
+                        let index = index
+                    "
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="utilsService.getShowOn(index)"
+                >
+                    <ng-container [ngSwitch]="column">
+                        <ng-container *ngSwitchCase="'name'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.USER_DETAIL.NAME' | translate }}/{{ 'COMMON.USER_DETAIL.EMAIL' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'organizationUnit'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.USER_DETAIL.ORGANIZATION_UNIT' | translate }}/{{ 'COMMON.USER_DETAIL.STAFFING' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'country'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.USER_DETAIL.COUNTRY' | translate }}/{{ 'COMMON.USER_DETAIL.STATE' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'action'">
+                            <th width="175px" nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                {{ 'COMMON.COLUMN_NAME.' + (columnsName[index] | uppercase) | translate }}
+                            </th>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                {{ 'COMMON.USER_DETAIL.' + (columnsName[index] | uppercase) | translate }}
+                            </th>
+                        </ng-container>
+                    </ng-container>
+
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                        <div [ngSwitch]="column">
+                            <div class="table-col" *ngSwitchCase="'name'">
+                                <app-blockchain-verified [blockName]="row.data['firstName'] + ' ' + row.data['lastName'] | titlecase" [blockchainVerified]="row.data['blockchainVerified']"></app-blockchain-verified>
+                                <span [nbTooltip]="'COMMON.LABEL.EMAIL' | translate" nbTooltipPlacement="left">
+                                    <small>
+                                        <i>
+                                            {{ row.data['email'] || '-' }}
+                                        </i>
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="table-col" *ngSwitchCase="'organizationUnit'">
+                                <span [nbTooltip]="'MANAGE_USERS.USERS.TOOLTIP.ORGANIZATION_UNIT' | translate" nbTooltipPlacement="left">{{ row.data[column] }}</span>
+                                <span [nbTooltip]="'MANAGE_USERS.USERS.TOOLTIP.STAFFING' | translate" nbTooltipPlacement="left">
+                                    <small>
+                                        <i>
+                                            {{ row.data['staffing'] || '-' }}
+                                        </i>
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="table-col" *ngSwitchCase="'country'">
+                                <span [nbTooltip]="'COMMON.LABEL.COUNTRY' | translate" nbTooltipPlacement="left">{{ row.data[column] }}</span>
+                                <span [nbTooltip]="'COMMON.LABEL.STATE' | translate" nbTooltipPlacement="left">
+                                    <small>
+                                        <i>
+                                            {{ row.data['state'] || '-' }}
+                                        </i>
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="table-col" *ngSwitchCase="'action'">
+                                <button nbSuffix nbButton ghost (click)="viewUser(row.data['action'])">
+                                    <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.VIEW' | translate" icon="eye-outline" pack="eva"> </nb-icon>
+                                </button>
+                                <button nbSuffix nbButton ghost *ngIf="!row.data.verified && !row.data.isDeleted && canUpdateUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" (click)="enableUser(row.data['action'])">
+                                    <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.ENABLE' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                                </button>
+                                <button *ngIf="canUpdateUser && !findAdminUser(row.data['action']) && !(user.id === row.data['action'].id)" nbSuffix nbButton ghost (click)="editUser(row.data['action'])">
+                                    <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
+                                </button>
+                                <button *ngIf="row.data.verified && row.data.isDeleted && canDeleteUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="deleteUser(row.data['action'])">
+                                    <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.DISABLE' | translate" icon="lock-outline" pack="eva"> </nb-icon>
+                                </button>
+                            </div>
+                            <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
+                        </div>
+                    </td>
+                </ng-container>
+            </table>
+            <div *ngIf="!dataFound && loading && !loadingTable">
+                <app-loader></app-loader>
+            </div>
+            <div *ngIf="!dataFound && !loading">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

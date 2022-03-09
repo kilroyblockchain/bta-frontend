@@ -1,0 +1,446 @@
+$main-color: #00b4eb;
+
+* {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+[disabled],
+:disabled,
+.disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    color: inherit !important;
+}
+
+[tabindex='-1']:focus {
+    outline: none !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.c-row {
+    width: 100%;
+    display: flex;
+}
+
+.inline-form {
+    .form-holder {
+        width: 100%;
+        margin-right: 0;
+
+        @include md {
+            width: calc((100% - 40px) / 2);
+            float: left;
+        }
+
+        &:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+}
+
+.form-inner-container {
+    &.two-col {
+        .form-holder {
+            width: 100%;
+            margin-right: 0;
+
+            @include md {
+                width: calc((100% - 40px) / 2);
+                float: left;
+                margin-right: 40px;
+            }
+
+            &:nth-child(2n) {
+                margin-right: 0;
+            }
+
+            &.full {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.cdk-overlay-pane {
+    nb-card {
+        &.increase-card-width {
+            width: 90vw;
+        }
+
+        &.medium-card-width {
+            width: 50vw;
+        }
+
+        &.auto-card-width {
+            width: revert;
+        }
+
+        nb-card-body {
+            max-height: calc(100vh - 223px);
+            padding: 1rem !important;
+        }
+    }
+}
+
+.nb-theme-corporate {
+    nb-card {
+        border: 1px solid #edf1f7;
+        border-radius: 8px !important;
+
+        &-body {
+            &::-webkit-scrollbar {
+                width: 0.7rem;
+                height: 0.7rem;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #dadada;
+                border-radius: 0.5rem;
+            }
+        }
+
+        &-header {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px 8px 0 0 !important;
+            padding: 0.5rem 1rem;
+
+            a {
+                text-decoration: none;
+                color: #222b45;
+            }
+
+            .icon:hover {
+                cursor: pointer;
+            }
+        }
+
+        &.status-info {
+            nb-card-header {
+                background-color: $main-color;
+
+                button,
+                nb-icon,
+                h6 {
+                    color: white;
+                }
+            }
+        }
+
+        &.accent-info {
+            border-top-color: $main-color;
+            border-top-width: 1px;
+
+            nb-card-header {
+                color: $main-color;
+            }
+        }
+
+        nb-tab {
+            padding: 0 !important;
+        }
+    }
+
+    table {
+        border-radius: 8px !important;
+        overflow: hidden !important;
+
+        th {
+            background-color: #e9f7fb;
+            cursor: pointer;
+
+            button {
+                cursor: pointer;
+            }
+        }
+
+        tr {
+            td {
+                transition: 0.2s ease-in;
+            }
+
+            &:hover {
+                td {
+                    background-color: #ebfaff;
+                }
+            }
+
+            &.nb-tree-grid-row {
+                transition: all 0.25s ease-in-out;
+
+                &:hover {
+                    background: rgb(0 0 0 / 3%) !important;
+                }
+
+                .nb-tree-grid-cell {
+                    > * {
+                        float: left;
+                    }
+
+                    nb-tree-grid-row-toggle {
+                        cursor: pointer;
+                    }
+                }
+
+                .table-col {
+                    span {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        th,
+        td {
+            font-size: 80%;
+            padding: 0.67rem 0.8rem !important;
+        }
+    }
+
+    .shape-rectangle {
+        border-radius: 8px !important;
+    }
+
+    .page-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        min-height: 40px;
+
+        .title-holder {
+            .actions {
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+            }
+        }
+
+        h4 {
+            margin: 0;
+        }
+
+        .actions {
+            & > * {
+                display: block;
+                float: left;
+
+                &:not(:last-child) {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .tab-title {
+        padding-bottom: 0.1rem;
+
+        nb-tab {
+            &.content-active {
+                padding: 0 !important;
+            }
+        }
+
+        nb-tabset {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #edf1f7;
+
+            .tab {
+                .tab-link {
+                    &::before {
+                        bottom: 0 !important;
+                    }
+                }
+
+                &.active {
+                    .tab-link {
+                        color: $main-color;
+
+                        &::before {
+                            background-color: $main-color;
+                        }
+                    }
+                }
+            }
+
+            .tabset {
+                border-bottom: 0;
+
+                li {
+                    a {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    .status-basic {
+        .checked {
+            background-color: $main-color !important;
+            border-color: $main-color !important;
+        }
+
+        .toggle-switcher {
+            nb-icon {
+                color: $main-color !important;
+            }
+        }
+    }
+
+    .ngx-pagination {
+        button,
+        a {
+            color: #4b4e5f !important;
+            text-decoration: none;
+        }
+    }
+
+    .chart-container {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.table-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .search,
+    .table-search {
+        display: flex;
+        align-items: center;
+
+        button {
+            margin-left: 10px;
+        }
+    }
+
+    .total-records {
+        color: #4b4e5f;
+        font-size: 13px;
+        font-style: italic;
+    }
+}
+
+nb-context-menu {
+    .menu-items {
+        .menu-item {
+            a {
+                .menu-title {
+                    flex: inherit !important;
+                }
+            }
+        }
+    }
+}
+
+.calendar-with-time {
+    width: 100% !important;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.help-text {
+    font-size: 12px;
+    color: #7e7e7e;
+    margin-top: 8px;
+}
+
+.covid-negative-row-bg {
+    background-color: #f1f8e9 !important;
+}
+
+.cancel-button {
+    margin-left: 10px;
+}
+
+.gray-bg-row {
+    background-color: #bbbbbb47 !important;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.child-expanded-row-bg {
+    background-color: #0000ff0d !important;
+}
+
+.menu-item {
+    a:hover {
+        color: #8f9bb3 !important;
+    }
+}
+
+.indicator-online {
+    background: #28b62c;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+nb-select {
+    button {
+        border-radius: 8px !important;
+    }
+}
+
+nb-toggle {
+    .toggle-label {
+        display: flex !important;
+        flex-direction: column-reverse !important;
+        align-items: flex-start !important;
+    }
+
+    .text {
+        padding: 0 !important;
+    }
+}
+
+.status-filter-holder {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}

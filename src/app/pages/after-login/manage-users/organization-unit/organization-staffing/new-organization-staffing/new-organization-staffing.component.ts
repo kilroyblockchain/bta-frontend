@@ -1,0 +1,199 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbCheckboxComponent, NbDialogRef } from '@nebular/theme';
+import { ManageUserService, UtilsService, StaffingService } from 'src/app/@core/services';
+
+export interface IAccessList {
+    featureId: string;
+    accessType: Array<string>;
+}
+let that: any;
+@Component({
+    selector: 'app-new-organization-staffing',
+    templateUrl: './new-organization-staffing.component.html',
+    styleUrls: ['./new-organization-staffing.component.scss']
+})
+export class NewOrganizationStaffingComponent implements OnInit {
+    rowData: any;
+    mode!: string;
+    newOrganizationStaffingForm!: FormGroup;
+    features!: Array<any>;
+    submitted!: boolean;
+    user: any;
+    loading!: boolean;
+    featureList!: Array<any>;
+    unitName!: string;
+    accessListRequiredError = false;
+    accessList: Array<IAccessList> = [];
+    masterSelected: boolean;
+    @ViewChild('allSelected')
+    allSelected!: NbCheckboxComponent;
+    totalFeaturesCount = 0;
+
+    constructor(private ref: NbDialogRef<NewOrganizationStaffingComponent>, private fb: FormBuilder, private readonly staffingService: StaffingService, private readonly manageUserService: ManageUserService, private readonly utilsService: UtilsService) {
+        that = this;
+        this.masterSelected = false;
+    }
+
+    ngOnInit(): void {
+        this.buildNewOrganizationStaffingForm();
+        if (this.rowData) {
+            this.unitName = this.rowData.unitName;
+            this.getOrganizationUnitDetail();
+        }
+        if (this.mode === 'EDIT') {
+            this.buildEditOrganizationStaffingForm(this.rowData);
+        }
+    }
+
+    buildNewOrganizationStaffingForm(): void {
+        this.newOrganizationStaffingForm = this.fb.group({
+            staffingName: ['', [Validators.required]]
+        });
+    }
+
+    buildEditOrganizationStaffingForm(data: any): void {
+        this.newOrganizationStaffingForm.patchValue({
+            staffingName: data.unitName
+        });
+        this.accessList = [...data.action.featureAndAccess];
+    }
+
+    get UF(): any {
+        return this.newOrganizationStaffingForm.controls;
+    }
+
+    getOrganizationUnitDetail(): void {
+        this.manageUserService.getOrganizationUnitById(this.rowData._id).subscribe((data) => {
+            if (data.success) {
+                let tempData = data.data.featureListId;
+                tempData.forEach((list: any) => {
+                    list.accessChecked = [];
+                    for (let i = 0; i < list.accessType.length; i++) {
+                        list.accessChecked.push(false);
+                        this.totalFeaturesCount = this.totalFeaturesCount + 1;
+                    }
+                });
+                this.featureList = tempData;
+                if (this.mode === 'EDIT') {
+                    this.fillFeatureList(data.data.featureListId);
+                }
+            }
+        });
+    }
+
+    fillFeatureList(featureList: any[]): void {
+        featureList.map((feature, index) => {
+            this.accessList.map((access) => {
+                feature.accessType.map((a: any, i: any) => {
+                    if (!this.featureList[index].accessChecked) {
+                        this.featureList[index].accessChecked = new Array(feature.accessType.length).fill(false);
+                    }
+                    if (feature._id === access.featureId) {
+                        access.accessType.map((b) => {
+                            if (a === b) {
+                                this.featureList[index].accessChecked[i] = true;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    toggleFeatureList(featureID: any, access: any, event: any): void {
+        if (this.accessList.length) {
+            const featureData = this.accessList.filter((res) => res.featureId === featureID);
+            if (featureData.length) {
+                const index = featureData[0].accessType.indexOf(access);
+                if (index === -1) {
+                    if (event) {
+                        featureData[0].accessType.push(access);
+                    }
+                } else {
+                    if (!event) {
+                        featureData[0].accessType.splice(index, 1);
+                    }
+                }
+            } else {
+                const temp = {
+                    featureId: featureID,
+                    accessType: [access]
+                };
+                if (event) {
+                    this.accessList.push(temp);
+                }
+            }
+        } else {
+            const temp = {
+                featureId: featureID,
+                accessType: [access]
+            };
+            if (event) {
+                this.accessList.push(temp);
+            }
+        }
+        this.masterSelected = this.isAllSelected(this.accessList);
+    }
+
+    saveNewOrganizationStaffing({ value, valid }: FormGroup): void {
+        this.submitted = true;
+        if (!valid) {
+            return;
+        }
+        if (!this.accessList.length) {
+            this.accessListRequiredError = true;
+            return;
+        }
+        this.accessListRequiredError = false;
+        value.featureAndAccess = this.accessList;
+        value.organizationUnitId = this.rowData._id;
+        this.loading = true;
+        if (this.mode === 'CREATE') {
+            this.staffingService.createNewStaffing(value).subscribe({ next: this.successRes, error: this.errorRes });
+        }
+
+        if (this.mode === 'EDIT') {
+            this.staffingService.updateStaffingById(this.rowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
+        }
+    }
+
+    successRes(res: any): void {
+        that.loading = false;
+        if (res && res.success) {
+            that.ref.close(res);
+            that.utilsService.showToast('success', res.message);
+        }
+    }
+
+    errorRes(err: any): void {
+        that.loading = false;
+        that.utilsService.showToast('warning', err?.message);
+    }
+
+    closeModal(): void {
+        this.ref.close('close');
+    }
+
+    isAllSelected(event: any) {
+        const accessLength = [];
+        this.accessList.forEach((access) => {
+            accessLength.push(...access.accessType);
+        });
+        if (accessLength.length === this.totalFeaturesCount) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    toggleAllSelection(isSelected: any): void {
+        for (var i = 0; i < this.featureList.length; i++) {
+            const accessList = this.featureList[i];
+            for (var j = 0; j < accessList.accessType.length; j++) {
+                accessList.accessChecked[j] = isSelected;
+                this.toggleFeatureList(accessList._id, accessList.accessType[j], true);
+            }
+        }
+    }
+}

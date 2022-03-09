@@ -1,0 +1,32 @@
+<form [formGroup]="loginFormGroup" (ngSubmit)="executeCaptcha(loginFormGroup, captchaRef)" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <h4 class="title">{{ 'LOGIN.TITLE.WELCOME_TO_APP' | translate: { appTitle: appTitle | titlecase } }}</h4>
+    <p class="sub-title">{{ 'LOGIN.TITLE.SIGN_IN_BY_ENTERING_THE_INFORMATION_BELOW' | translate }}</p>
+    <div class="form-inner-container">
+        <div class="form-holder floating">
+            <input id="email" nbInput fullWidth type="text" [placeholder]="'LOGIN.PLACEHOLDER.EMAIL' | translate" formControlName="email" [ngClass]="{ 'status-danger': submitted && UF.email.errors }" />
+            <label for="email" [attr.data-content]="'*' + ('LOGIN.LABEL.EMAIL' | translate)"></label>
+
+            <div *ngIf="submitted && UF.email.errors as err" class="invalid-feedback">
+                <span *ngIf="err.required">{{ 'COMMON.VALIDATIONS.EMAIL_IS_REQUIRED' | translate }}</span>
+                <span *ngIf="err.email">{{ 'COMMON.VALIDATIONS.EMAIL_MUST_BE_VALID' | translate }}</span>
+            </div>
+        </div>
+        <div class="form-holder floating">
+            <input id="password" nbInput fullWidth type="password" [placeholder]="'LOGIN.PLACEHOLDER.PASSWORD' | translate" formControlName="password" [ngClass]="{ 'status-danger': submitted && UF.password.errors }" />
+            <label for="password" [attr.data-content]="'*' + ('LOGIN.LABEL.PASSWORD' | translate)"></label>
+
+            <div *ngIf="submitted && UF.password.errors as err" class="invalid-feedback">
+                <span *ngIf="err.required">{{ 'COMMON.VALIDATIONS.PASSWORD_IS_REQUIRED' | translate }}</span>
+                <span *ngIf="!err.required && err.minlength">{{ 'COMMON.VALIDATIONS.PASSWORD_MIN_LENGTH' | translate: { minPasswordLength: err.minlength.requiredLength } }}</span>
+            </div>
+        </div>
+    </div>
+    <re-captcha #captchaRef="reCaptcha" (error)="onError($event)" errorMode="handled" (resolved)="resolved($event, loginFormGroup)" size="invisible"> </re-captcha>
+    <div class="action-holder">
+        <button nbButton hero status="primary">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</button>
+        <a nbButton hero status="basic" href="/#/auth/register">{{ 'LOGIN.BUTTON.CREATE_AN_ACCOUNT' | translate }}</a>
+    </div>
+    <div class="action-holder">
+        <a href="/#/auth/request-password">{{ 'LOGIN.BUTTON.FORGOT_PASSWORD' | translate }}</a>
+    </div>
+</form>

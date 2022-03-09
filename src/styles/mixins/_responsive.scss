@@ -1,0 +1,63 @@
+// responsive breakboints
+// Extra Small smartphones (landscape view)
+$screen-xsm-min: 480px;
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Extra Small devices = 576px
+@mixin xsm {
+    @media (min-width: #{$screen-xsm-min}) {
+        @content;
+    }
+}
+
+// Small devices = 576px
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+
+// Medium devices = 768px
+@mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+}
+
+// Large devices = 992px
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+
+@mixin min-lg {
+    @media (min-width: #{$screen-lg-min + 1}) {
+        @content;
+    }
+}
+
+// Extra large devices = 1200px
+@mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+// Custom devices
+@mixin rwd($screen) {
+    @media (min-width: #{$screen-lg-min + 'px'}) {
+        @content;
+    }
+}

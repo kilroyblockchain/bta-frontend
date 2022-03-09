@@ -1,0 +1,31 @@
+<div class="thank-body">
+    <div class="content" *ngIf="subType !== 'other'">
+        <h4>{{ 'LOGIN.TITLE.WELCOME_TO_APP' | translate: { appTitle: appTitle | titlecase } }}.</h4>
+        <p>{{ 'THANK_YOU.LABEL.THANK_YOU_FOR_REGISTRATION' | translate }}</p>
+        <hr />
+    </div>
+    <div class="content" *ngIf="subType === 'other'">
+        <h4>{{ 'THANK_YOU.LABEL.THANK_YOU_FOR_INTEREST' | translate: { appTitle: appTitle | titlecase } }}</h4>
+        <p>{{ 'THANK_YOU.LABEL.WELCOME_TO_COMMUNITY' | translate }}</p>
+        <hr />
+        <p>
+            <b>{{ 'THANK_YOU.LABEL.RESOURCES_AND_NEXT_STEPS' | translate }}</b>
+        </p>
+        <ol>
+            <li innerHTML="'THANK_YOU.LABEL.EMAIL_US_AT' | translate: { appTitle: appTitle | titlecase }"></li>
+            <li [innerHTML]="'THANK_YOU.LABEL.VISIT_US_AT_OUR_WEBSITE' | translate"></li>
+        </ol>
+        <hr />
+    </div>
+    <p>
+        <b>{{ 'THANK_YOU.LABEL.WE_ARE_HERE_TO_HELP' | translate }}</b>
+    </p>
+
+    <p [innerHTML]="'THANK_YOU.LABEL.CONTACT_US' | translate"></p>
+</div>
+
+<p>{{ 'THANK_YOU.LABEL.THANK_YOU' | translate }},</p>
+<p>{{ 'THANK_YOU.LABEL.KILROY_BLOCKCHAIN' | translate }}</p>
+<p>{{ 'THANK_YOU.LABEL.APP_TEAM' | translate: { appTitle: appTitle | titlecase } }}</p>
+
+<!-- [innerHTML]="'WORKFLOW.DESCRIPTION.CONTACT_ADMINISTRATION' | translate" -->

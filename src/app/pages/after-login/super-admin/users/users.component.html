@@ -1,0 +1,146 @@
+<div class="user-list-container">
+    <div class="page-title">
+        <h4 *ngIf="!companyUsers && !unverifiedUsers && !blockedUsers" class="title">{{ 'SUPER_ADMIN.TITLE.ORGANIZATION_ADMIN' | translate }}</h4>
+        <h4 *ngIf="companyUsers" class="title">{{ 'SUPER_ADMIN.TITLE.NON_ADMIN_USERS' | translate }}</h4>
+        <h4 *ngIf="!rejectedCompanies && unverifiedUsers">{{ 'SUPER_ADMIN.TITLE.UNVERIFIED_USER_LIST' | translate }}</h4>
+        <h4 *ngIf="rejectedCompanies && unverifiedUsers">{{ 'SUPER_ADMIN.TITLE.REJECTED_COMPANY_LIST' | translate }}</h4>
+        <h4 *ngIf="blockedUsers">{{ 'SUPER_ADMIN.TITLE.BLOCKED_USERS' | translate }}</h4>
+    </div>
+    <nb-card class="medium-card-width">
+        <nb-card-body>
+            <div class="tab-title">
+                <nb-tabset fullWidth (changeTab)="getTabData($event)">
+                    <nb-tab [tabTitle]="'SUPER_ADMIN.TITLE.TAB_TITLE.ALL' | translate" tabId="all"> </nb-tab>
+                </nb-tabset>
+            </div>
+            <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound" [filterLabel]="'SUPER_ADMIN.LABEL.SHOW_ENABLED_USERS'" (toggleTableEmit)="toggleTable()" (searchValue)="onSearch($event)"></app-filter-bar>
+            <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)" [nbSpinner]="loadingTable" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+                <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+                <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+                <ng-container
+                    *ngFor="
+                        let column of defaultColumns
+                            | paginate
+                                : {
+                                      id: 'table_paginate_id',
+                                      itemsPerPage: resultperpage,
+                                      currentPage: page,
+                                      totalItems: totalRecords
+                                  };
+                        let index = index
+                    "
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="utilsService.getShowOn(index)"
+                >
+                    <ng-container [ngSwitch]="column">
+                        <ng-container *ngSwitchCase="'companyName'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'SUPER_ADMIN.COLUMN_NAME.ORGANIZATION' | translate }}/{{ 'SUPER_ADMIN.COLUMN_NAME.POST' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'name'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.COLUMN_NAME.NAME' | translate }}/{{ 'SUPER_ADMIN.COLUMN_NAME.ADDRESS' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'email'">
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.COLUMN_NAME.EMAIL' | translate }}/{{ 'COMMON.COLUMN_NAME.PHONE' | translate }}</th>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'action'">
+                            <th width="150px" nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                {{ defaultColumnsNames[index] | translate }}
+                            </th>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                {{ defaultColumnsNames[index] | translate }}
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                        <div class="table-col" *ngIf="defaultColumns[index] === 'companyName'">
+                            <span nbTooltip="Organization name" nbTooltipPlacement="left">
+                                {{ companyUsers ? row.data['nonAdminCompanyList'] || '-' : row.data['adminCompanyList'] || '-' }}
+                            </span>
+                            <span nbTooltip="Job title" nbTooltipPlacement="left">
+                                <small>
+                                    <i>{{ row.data['jobTitle'] || '-' }}</i>
+                                </small>
+                            </span>
+                        </div>
+                        <div class="table-col" *ngIf="defaultColumns[index] === 'name'">
+                            <app-blockchain-verified [blockName]="row.data['name'] | titlecase" [blockchainVerified]="row.data['blockchainVerified']"></app-blockchain-verified>
+                            <span nbTooltip="Customer Address" nbTooltipPlacement="left">
+                                <small>
+                                    <i>{{ row.data['address'] || '-' }}</i>
+                                </small>
+                            </span>
+                        </div>
+                        <div class="table-col" *ngIf="defaultColumns[index] === 'email'">
+                            <span nbTooltip="Email Address" nbTooltipPlacement="left">{{ row.data['email'] || '-' }}</span>
+                            <span nbTooltip="{{ 'COMMON.TOOLTIP.PHONE_NUMBER' | translate }}" nbTooltipPlacement="left">
+                                <small>
+                                    <i>{{ row.data['phone'] || '-' }}</i>
+                                </small>
+                            </span>
+                        </div>
+                        <div class="table-col" *ngIf="defaultColumns[index] === 'subcriptionType'">
+                            <span nbTooltip="Subscription type" nbTooltipPlacement="left">
+                                {{ companyUsers ? row.data['nonAdminType'] || '-' : row.data['adminType'] || '-' }}
+                            </span>
+                            <span nbTooltip="Created at" nbTooltipPlacement="left">
+                                <small>
+                                    <i>{{ row.data['createdat'] || '-' }}</i>
+                                </small>
+                            </span>
+                        </div>
+                        <div class="table-col" *ngIf="defaultColumns[index] === 'action'">
+                            <ng-container *ngIf="blockedUsers; else unblockedUsers">
+                                <button nbSuffix nbButton ghost (click)="unblockUser(row.data)">
+                                    <nb-icon [nbTooltip]="'SUPER_ADMIN.TOOLTIP.UNBLOCK_USER' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                                </button>
+                            </ng-container>
+                            <ng-template #unblockedUsers>
+                                <ng-container *ngIf="!rejectedCompanies; else rejectedCompanyActions">
+                                    <button nbSuffix nbButton ghost *ngIf="!row.data.verified && canVerify && !companyUsers" (click)="verifyUser(row.data)">
+                                        <ng-container *ngIf="unverifiedUsers">
+                                            <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VERIFY' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                                        </ng-container>
+                                        <ng-container *ngIf="!unverifiedUsers">
+                                            <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                                        </ng-container>
+                                    </button>
+                                    <button nbSuffix nbButton ghost (click)="viewUser(row.data)">
+                                        <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VIEW_DETAIL' | translate" icon="eye-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                    <button *ngIf="row.data.verified && canDelete && !companyUsers" nbSuffix nbButton ghost (click)="verifyUser(row.data)">
+                                        <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="lock-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                    <button *ngIf="row.data.verified && !companyUsers" nbSuffix nbButton ghost (click)="addSubscriptionType(row.data.id, row.data.name, row.data)">
+                                        <nb-icon [nbTooltip]="'SUPER_ADMIN.TOOLTIP.UPDATE_SUBSCRIPTION_TYPE' | translate" icon="plus-circle-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                    <button *ngIf="unverifiedUsers && !row.data.verified && !rejectedCompanies" nbSuffix nbButton ghost (click)="rejectUser(row.data.id)">
+                                        <nb-icon [nbTooltip]="'SUPER_ADMIN.TOOLTIP.REJECT_ORGANIZATION' | translate" icon="person-delete-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                </ng-container>
+                                <ng-template #rejectedCompanyActions>
+                                    <button nbSuffix nbButton ghost (click)="viewUser(row.data)">
+                                        <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VIEW_DETAIL' | translate" icon="eye-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                    <button nbSuffix nbButton ghost (click)="viewRejectInformations(row.data)">
+                                        <nb-icon [nbTooltip]="'SUPER_ADMIN.TOOLTIP.VIEW_REJECT_DETAIL' | translate" icon="info-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                    <button nbSuffix nbButton ghost *ngIf="canVerify" (click)="verifyUser(row.data)">
+                                        <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VERIFY' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </div>
+                    </td>
+                </ng-container>
+            </table>
+            <div *ngIf="!dataFound && loading && !loadingTable">
+                <app-loader></app-loader>
+            </div>
+            <div *ngIf="!dataFound && !loading">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

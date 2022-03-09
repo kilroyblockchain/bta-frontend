@@ -1,0 +1,23 @@
+.summary-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: space-evenly;
+    padding: 1.5rem 0 1rem;
+    text-align: center;
+
+    .count-block {
+        display: block;
+        background: #cce6e4;
+        padding: 5px;
+        margin-bottom: 10px;
+        width: 170px;
+        border-radius: 10px;
+
+        .h6 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.5rem;
+        }
+    }
+}

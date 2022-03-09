@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'base-proj'`, () => {
+  it(`should have as title 'flo-web'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('base-proj');
+    expect(app.title).toEqual('flo-web');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('base-proj app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('flo-web app is running!');
   });
 });

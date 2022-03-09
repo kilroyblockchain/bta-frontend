@@ -1,0 +1,47 @@
+<nb-card class="medium-card-width">
+    <nb-card-header
+        >{{ 'DASHBOARD.TITLE.LOGIN_COUNT_SUMMARY' | translate }}
+        <div class="chart-actions">
+            <app-show-hide-embed-buttons [loading]="loading" (isChartHidden)="hideShowChart($event)" [hideEmbed]="true"></app-show-hide-embed-buttons>
+        </div>
+    </nb-card-header>
+    <nb-card-body *ngIf="!isHidden">
+        <div *ngIf="usersLoginCounts" class="summary-container">
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.REALTIME_ONLINE_USER_COUNT' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.realtimeOnlineUserCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.TODAY_USER_COUNT' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.todayLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.LAST_WEEK_USER_COUNT' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.lastWeekLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.LAST_MONTH_USER_COUNT' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.lastMonthLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.LAST_3_MONTH' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.last3MonthLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.LAST_6_MONTH' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.last6MonthLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.LAST_YEAR' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.lastYearLoginCount }}</div>
+            </div>
+            <div class="count-block">
+                <div>{{ 'DASHBOARD.LABEL.TOTAL_USER_COUNT' | translate }}</div>
+                <div class="h6">{{ usersLoginCounts.totalLoginUserCount }}</div>
+            </div>
+        </div>
+        <div *ngIf="!usersLoginCounts && loading">
+            <app-loader></app-loader>
+        </div>
+    </nb-card-body>
+</nb-card>

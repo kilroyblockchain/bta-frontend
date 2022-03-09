@@ -1,0 +1,47 @@
+<nb-card class="medium-card-width" accent="info">
+    <nb-card-body>
+        <div class="table-container">
+            <div class="table-head">
+                <div class="search">
+                    <app-search-input (search)="onSearch($event)"></app-search-input>
+                </div>
+                <div class="total-records" [translate]="'COMMON.DESCRIPTION.RECORDS'" [translateParams]="{ totalRecords: totalRecords }"></div>
+            </div>
+            <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+                <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+                <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+                <ng-container
+                    *ngFor="
+                        let column of columns
+                            | paginate
+                                : {
+                                      id: 'table_paginate_id',
+                                      itemsPerPage: resultperpage,
+                                      currentPage: 1,
+                                      totalItems: totalRecords
+                                  };
+                        let index = index
+                    "
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="utilsService.getShowOn(index)"
+                >
+                    <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                        {{ columnNames[index] | translate }}
+                    </th>
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                        <span *ngIf="columns[index] === 'TxId' || columns[index] === 'hashCode'" nbPopover="{{ row.data[column] || '-' }}" nbPopoverPlacement="top" nbPopoverStatus="success" nbPopoverTrigger="hover" nbTooltipPlacement="left">{{ row.data[column] || '-' }}</span>
+                        <span *ngIf="columns[index] === 'isDeleted' || columns[index] === 'operation' || columns[index] === 'timestamp'">
+                            {{ row.data[column] || '-' }}
+                        </span>
+                    </td>
+                </ng-container>
+            </table>
+        </div>
+        <div *ngIf="!dataFound && loading">
+            <app-loader></app-loader>
+        </div>
+        <div *ngIf="!dataFound && !loading">
+            <app-data-not-found></app-data-not-found>
+        </div>
+    </nb-card-body>
+</nb-card>

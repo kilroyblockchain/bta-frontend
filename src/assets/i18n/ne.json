@@ -1,0 +1,586 @@
+{
+    "COMMON": {
+        "BUTTON": {
+            "RESET_FILTER": "ne Reset Filter",
+            "NEXT": "ne Next",
+            "SAVE": "ne SAVE",
+            "EDIT": "ne Edit",
+            "YES": "ne Yes",
+            "CANCEL": "ne CANCEL",
+            "OK": "ne OK",
+            "UPDATE": "ne Update",
+            "SUBMIT": "ne Submit",
+            "DONE": "ne Done",
+            "DELETE": "ne Delete",
+            "CHANGE_PASSWORD": "ne Change Password",
+            "NO": "ne No",
+            "ADD": "ne Add",
+            "REMOVE": "ne Remove",
+            "ADD_NOTE": "ne Add Note",
+            "VIEW": "ne View",
+            "COPY": "ne Copy",
+            "DOWNLOAD": "ne Download"
+        },
+        "RADIO": {
+            "YES": "ne Yes",
+            "NO": "ne No"
+        },
+        "PLACEHOLDER": {
+            "SEARCH": "ne Search",
+            "SELECT_COUNTRY": "ne Select Country",
+            "SELECT_STATE": "ne Select State",
+            "FIRST_NAME": "ne First Name",
+            "LAST_NAME": "ne Last Name",
+            "EMAIL": "ne Email",
+            "PHONE_NUMBER": "ne Phone Number",
+            "ADDRESS": "ne Address",
+            "CITY": "ne City",
+            "ZIP_CODE": "ne Zip Code",
+            "DATE_OF_BIRTH": "ne Date of Birth",
+            "FROM_DATE": "ne From Date",
+            "TO_DATE": "ne To Date",
+            "NEW_PASSWORD": "ne New Password",
+            "CONFIRM_PASSWORD": "ne Confirm Password"
+        },
+        "DESCRIPTION": {
+            "RECORDS": "ne {{totalRecords}}  Records Found",
+            "USER": "ne User",
+            "DETAIL": "ne Detail",
+            "DATA_NOT_FOUND": "ne Sorry, {{ type }} not found",
+            "VIEW_DETAIL": "ne View Detail",
+            "ALL": "ne All",
+            "GENERAL_INFORMATION": "ne General",
+            "ENABLED": "ne Enabled",
+            "DISABLED": "ne Disabled",
+            "NO_DATA_FOUND": "ne No Data Found",
+            "YES": "ne Yes",
+            "NO": "ne No",
+            "VERIFIED": "ne Verified",
+            "UNVERIFIED": "ne Unverified"
+        },
+        "COLUMN_NAME": {
+            "UPDATED_AT": "ne Updated At",
+            "CREATED_AT": "ne Created At",
+            "ACTION": "ne Actions",
+            "CREATED_DATE": "ne Created Date",
+            "UPDATED_DATE": "ne Updated-Date",
+            "STATUS": "ne Status",
+            "DATE_OF_BIRTH": "ne Birth Date",
+            "LOCATION": "ne Location",
+            "EMAIL": "ne Email",
+            "TITLE": "ne Title",
+            "PHONE": "ne Phone",
+            "CREATED_BY": "ne Created By",
+            "COUNTRY_NAME": "ne Country",
+            "STATE_NAME": "ne State",
+            "ADDRESS": "ne Address",
+            "ZIP_CODE": "ne Zip Code",
+            "NAME": "ne Name",
+            "TYPE": "ne Type",
+            "FIRST_NAME": "ne First Name",
+            "LAST_NAME": "ne Last Name",
+            "ORGANIZATION_NAME": "ne Organization Name",
+            "FOR": "ne For",
+            "POSITION": "ne Position",
+            "LOGGED_IN_AT": "ne Logged In At",
+            "LOGGED_OUT_AT": "ne Logged Out At"
+        },
+        "MENU_ITEM": {
+            "DEACTIVATE": "ne Deactivate",
+            "MANAGE": "ne Manage",
+            "ENABLE": "ne Enable",
+            "DISABLE": "ne Disable",
+            "EDIT": "ne Edit",
+            "VIEW": "ne View",
+            "BC_HISTORY": "ne BC History",
+            "DELETE": "ne Delete"
+        },
+        "TOOLTIP": {
+            "BLOCKCHAIN_VERIFIED": "ne Kilroy Blockchain Verified",
+            "ALL": "ne All",
+            "PAST": "ne Past",
+            "TODAY": "ne Today",
+            "FUTURE": "ne Future",
+            "EMPTY": "ne Empty",
+            "EDIT": "ne Edit",
+            "DELETE": "ne Delete",
+            "ENABLE": "ne Enable",
+            "DISABLE": "ne Disable",
+            "VIEW": "ne View",
+            "ADD": "ne Add",
+            "VERIFY": "ne Verify",
+            "CREATED_TIME": "ne Created Time",
+            "MANAGE": "ne Manage",
+            "CLOSE": "ne Close",
+            "PHONE_NUMBER": "ne Phone Number",
+            "ALTERNATE_PHONE_NUMBER": "ne Alternate Phone Number",
+            "EMAIL": "ne Email",
+            "VIEW_DETAIL": "ne View Detail",
+            "CREATED_DATE": "ne Created Date",
+            "UPDATED_DATE": "ne Updated-Date"
+        },
+        "LABEL": {
+            "COUNTRY": "ne Country",
+            "STATE": "ne State",
+            "ALTERNATE_PHONE": "ne Alternate Phone",
+            "ADDRESS": "ne Address",
+            "CREATED_AT": "ne Created At",
+            "FIRST_NAME": "ne First Name",
+            "LAST_NAME": "ne Last Name",
+            "EMAIL": "ne Email",
+            "PHONE_NUMBER": "ne Phone Number",
+            "ZIP_CODE": "ne Zip Code",
+            "ORGANIZATION_NAME": "ne Organization Name",
+            "NAME": "ne Name",
+            "NEW_PASSWORD": "ne New Password",
+            "CONFIRM_PASSWORD": "ne Confirm Password",
+            "DATE_OF_BIRTH": "ne Date of Birth",
+            "TIMESTAMP": "ne Timestamp",
+            "CITY": "ne City",
+            "LOCATION": "ne Location",
+            "NOTE": "ne Note",
+            "TITLE": "ne Title",
+            "SEARCH_HERE": "ne Type here to search...",
+            "DATE": "ne Date",
+            "MANAGE": "ne Manage",
+            "CREATED_BY": "ne Created By",
+            "NEXT": "ne Next",
+            "PREVIOUS": "ne Previous",
+            "DESCRIPTION": "ne Description",
+            "SEARCH_BY": "ne Search By",
+            "NONE": "ne None",
+            "DEPARTMENT": "ne Department",
+            "OTHER": "ne Other",
+            "FROM_DATE": "ne From Date",
+            "TO_DATE": "ne To Date"
+        },
+        "VALIDATIONS": {
+            "EMAIL_IS_REQUIRED": "ne Email is required",
+            "EMAIL_MUST_BE_VALID": "ne Email must be a valid email address",
+            "FIRSTNAME_IS_REQUIRED": "ne First Name is required",
+            "LASTNAME_IS_REQUIRED": "ne Last Name is required",
+            "PHONE_IS_REQUIRED": "ne Phone number is required",
+            "PHONE_MIN_LENGTH": "ne Phone Number must be at least {{ minLength }} characters",
+            "PHONE_MAX_LENGTH": "ne Phone Number must not be more than {{ maxLength }} characters",
+            "INVALID_PHONE": "ne Phone Number is invalid",
+            "COUNTRY_IS_REQUIRED": "ne Country is required",
+            "STATE_IS_REQUIRED": "ne State is required",
+            "ADDRESS_IS_REQUIRED": "ne Address is required",
+            "ZIP_IS_REQUIRED": "ne Zip Code is required",
+            "FIRSTNAME_MIN_LENGTH": "ne First Name must be at least {{ minLength }} characters",
+            "LASTNAME_MIN_LENGTH": "ne Last Name must be at least {{ minLength }} characters",
+            "ADDRESS_MIN_LENGTH": "ne Address must be at least {{ minLength }} characters",
+            "ZIP_CODE_MIN_LENGTH": "ne ZIP Code must be at least {{ minLength }} characters",
+            "NAME_MIN_LENGTH": "ne Name must be at least {{minLength }} characters",
+            "NAME_IS_REQUIRED": "ne Name is required",
+            "CITY_IS_REQUIRED": "ne City is required",
+            "DOB_IS_REQUIRED": "ne Date of Birth is required",
+            "DOB_MIN_DATE": "ne Date of Birth must be after {{ minDate}}",
+            "DOB_MAX_DATE": "ne Date of Birth must be before {{ maxDate}}",
+            "PASSWORD_IS_REQUIRED": "ne Password is required",
+            "PASSWORD_MIN_LENGTH": "ne Password must be at least {{ minPasswordLength }} characters",
+            "NEW_PASSWORD_IS_REQUIRED": "ne New Password is required",
+            "NEW_PASSWORD_MIN_LENGTH": "ne New Password must be at least {{ minPasswordLength }} characters",
+            "CONFIRM_PASSWORD_DOES_NOT_MATCH": "ne Confirm Password does not match with new password",
+            "CONFIRM_PASSWORD_IS_REQUIRED": "ne Confirm Password is required",
+            "CONFIRM_PASSWORD_MIN_LENGTH": "ne Confirm Password must be at least {{ minPasswordLength }} characters",
+            "ORGANIZATION_NAME_IS_REQUIRED": "ne Organization Name is required",
+            "LOCATION_IS_REQUIRED": "ne Location is required",
+            "TITLE_IS_REQUIRED": "ne Title is required",
+            "FROM_DATE_REQUIRED": "ne From date is required",
+            "TO_DATE_REQUIRED": "ne To date is required",
+            "TO_DATE_MIN": "ne To date must not be earlier than {{ minDate }}"
+        },
+        "USER_DETAIL": {
+            "NAME": "ne Name",
+            "FIRSTNAME": "ne First Name",
+            "LASTNAME": "ne Last Name",
+            "EMAIL": "ne Email",
+            "PHONE": "ne Phone",
+            "ADDRESS": "ne Address",
+            "ZIP_CODE": "ne Zip Code",
+            "PHONE_NO": "ne Phone No",
+            "COUNTRY": "ne Country",
+            "STATE": "ne State",
+            "DOB": "ne Date Of Birth",
+            "ALTERNATE_PHONE": "ne Alternate Phone",
+            "CITY": "ne City",
+            "ORGANIZATION_UNIT": "ne Organization Unit",
+            "STAFFING": "ne Staffing"
+        },
+        "ALERT_MSG": {
+            "DISABLE_DATA_RECORD": "ne Do you want to disable {{recordType}} {{name}}",
+            "DELETE_DATA_RECORD": "ne Do you want to delete {{recordType}} {{name}}",
+            "ENABLE_DATA_RECORD": "ne Do you want to enable {{recordType}} {{name}}"
+        }
+    },
+    "PAGE_TITLE": {
+        "USER_ACCEPT": "ne User Accept",
+        "TERMS_AND_CONDITIONS": "ne Terms and Conditions",
+        "LOGIN": "ne Login",
+        "REGISTER": "ne Register",
+        "REQUEST_PASSWORD": "ne Request Password",
+        "RESET_PASSWORD": "ne Reset Password",
+        "BILLING": "ne Billing",
+        "THANK_YOU": "ne Thank you",
+        "DASHBOARD": "ne Dashboard",
+        "ADMIN": "ne Admin",
+        "PROFILE_DETAILS": "ne Profile Details",
+        "USER_LIST_ADMIN": "ne User List (Admin) ",
+        "UNVERIFIED_USER_LIST": "ne Unverified User List (Admin)",
+        "USER_LIST": "ne User List",
+        "ORGANIZATION_UNIT": "ne Organization Unit",
+        "MANAGE_USER": "ne Manage User",
+        "BLOCKCHAIN_HISTORY": "ne Blockchain History",
+        "REJECTED_COMPANY_LIST": "ne Rejected Organization List",
+        "BLOCKED_USERS": "ne Blocked Users",
+        "USER_ACTIVITY_LOG": "ne User Activity"
+    },
+    "FOOTER": {
+        "TITLE": {
+            "COPYRIGHT_TEXT": "ne ©Copyright {{currentYear}} Kilroy Blockchain Corporation, All Rights Reserved"
+        },
+        "LABEL": {
+            "SELECT": "ne Select Language"
+        }
+    },
+    "LOGIN": {
+        "TITLE": {
+            "WELCOME_TO_APP": "ne Welcome to {{appTitle}}",
+            "SIGN_IN_BY_ENTERING_THE_INFORMATION_BELOW": "ne Sign in by entering the information below"
+        },
+        "BUTTON": {
+            "LOGIN": "ne Login",
+            "CREATE_AN_ACCOUNT": "ne Create an Account",
+            "FORGOT_PASSWORD": "ne Forgot Password?"
+        },
+        "LABEL": {
+            "EMAIL": "ne Email",
+            "PASSWORD": "ne Password"
+        },
+        "PLACEHOLDER": {
+            "EMAIL": "ne Email",
+            "PASSWORD": "ne Password"
+        }
+    },
+    "REGISTER": {
+        "TITLE": "ne Start Registration for your account",
+        "SUBTITLE": "ne Create your account to use our application",
+        "PLACEHOLDER": {
+            "CHOOSE_SUBSCRIPTION_TYPE": "ne Choose Subscription Type",
+            "COMPANY": "ne Organization",
+            "JOB_TITLE": "ne Job Title"
+        },
+        "VALIDATIONS": {
+            "SUBSCRIPTION_TYPE_IS_REQUIRED": "ne Subscription type is required",
+            "COMPANY_IS_REQUIRED": "ne Organization is required",
+            "COMPANY_MIN_LENGTH": "ne  Organization must be at least {{ minLength }} characters",
+            "JOB_TITLE_IS_REQUIRED": "ne Job title is required",
+            "JOB_TITLE_MIN_LENGTH": "ne  Job Title must be at least {{ minLength }} characters"
+        },
+        "LABEL": {
+            "AGREE_THE_TERMS_AND_CONDITION": "ne Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
+            "COMPANY": "ne Organization",
+            "JOB_TITLE": "ne Job Title"
+        },
+        "BUTTON": {
+            "REGISTER": "ne Register",
+            "CONTINUE": "ne Continue",
+            "GO_BACK": "ne Back"
+        },
+        "DESCRIPTION": {
+            "TERMS_AND_CONDITIONS": "ne Terms and Conditions"
+        }
+    },
+    "FORGOT_PASSWORD": {
+        "TITLE": {
+            "RESET_PASSWORD": "ne Reset Password"
+        },
+        "DESCRIPTION": {
+            "PLEASE_ENTER_YOUR_PASSWORD": "ne Please enter your password in order to reset your password"
+        },
+        "LABEL": {
+            "TITLE": "ne Forgot Password?",
+            "SUB_TITLE": "ne Please enter you email, so that we can send you further detail",
+            "PASSWORD_RESET_EMAIL_SENT": "ne Password Reset Email Sent",
+            "AN_EMAIL_HAS_BEEN_SENT": "ne An email has been sent to your email {{ email }}.  Follow the directions in the email to reset your password"
+        },
+        "BUTTON": {
+            "RESET_PASSWORD": "ne Reset Password",
+            "GO_TO_LOGIN": "ne Go To Login"
+        }
+    },
+    "CHANGE_PASSWORD": {
+        "TITLE": {
+            "CHANGE_PASSWORD": "ne Change Password"
+        },
+        "DESCRIPTION": {
+            "PLEASE_ENTER_YOUR_CURRENT_PASSWORD": "ne Please enter your current password and new password in order to change your password"
+        },
+        "LABEL": {
+            "CURRENT_PASSWORD": "ne Current Password"
+        },
+        "PLACEHOLDER": {
+            "CURRENT_PASSWORD": "ne Current Password"
+        }
+    },
+    "THANK_YOU": {
+        "LABEL": {
+            "THANK_YOU_FOR_REGISTRATION": "ne Thank you for your registration, you will be notified when your account is activated. This could take up to two weeks.",
+            "THANK_YOU_FOR_INTEREST": "ne Thank you for your interest in {{appTitle}} network.",
+            "WELCOME_TO_COMMUNITY": "ne Welcome to the initiative to provide community-based organizations with meaningful options so they can fight COVID-19 in an impactful way.",
+            "RESOURCES_AND_NEXT_STEPS": "ne Resources and Next Steps",
+            "EMAIL_US_AT": "ne Set up an introductory call with your {{appTitle}} Account Executive by emailing us at <a href='mailto:info@kilroyblockchain.com'> info@kilroyblockchain.com</a>",
+            "VISIT_US_AT_OUR_WEBSITE": "ne Visit <a href='https://casey.health'>https://casey.health</a> to download the infographic describing the network. You can learn more about the product at <a href='https://kilroyblockchain.com/casey'>https://kilroyblockchain.com/casey</a>.",
+            "WE_ARE_HERE_TO_HELP": "ne We are here to help",
+            "CONTACT_US": "ne If you have any questions, feel free to <a href='https://kilroyblockchain.com/contact' target='_blank'> <span> contact us. </span></a>",
+            "THANK_YOU": "ne Thank you",
+            "KILROY_BLOCKCHAIN": "ne Kilroy Blockchain",
+            "APP_TEAM": "ne {{appTitle}} Team"
+        }
+    },
+    "MANAGE_USERS": {
+        "ORGANIZATION_UNIT": {
+            "TITLE": {
+                "ORGANIZATION_UNIT": "ne Organization Units",
+                "ADD_ORGANIZATION_UNIT": "ne Add Organization Unit",
+                "EDIT_ORGANIZATION_UNIT": "ne Edit Organization Unit"
+            },
+            "BUTTON": {
+                "ORGANIZATION_UNIT": "ne Organization Unit"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_UNIT": "ne Show Active Units",
+                "UNIT_NAME": "ne Unit Name",
+                "FEATURES": "ne Feature(s)"
+            },
+            "VALIDATIONS": {
+                "UNIT_NAME_IS_REQUIRED": "ne Unit name is required",
+                "SELECT_ATLEAST_ONE_FEATURE": "ne Select atleast one feature"
+            },
+            "PLACEHOLDER": {
+                "DESCRIPTION": "ne Description",
+                "SELECT_FEATURES": "ne Select Feature(s)"
+            },
+            "TOOLTIP": {
+                "ADD_STAFFING": "ne Add Staffing"
+            },
+            "COLUMN_NAME": {
+                "UNIT_NAME": "ne Unit Name",
+                "DESCRIPTION": "ne Description"
+            },
+            "ALERT_MSG": {
+                "DISABLE_ORGANIZATION_UNIT": "ne Do you want to disable organization unit"
+            }
+        },
+        "ORG_STAFFING": {
+            "TITLE": {
+                "ADD_ORGANIZATION_STAFFING": "ne Add Organization Staffing for {{unitName}}",
+                "UPDATE_ORGANIZATION_STAFFING": "ne Update Organization Staffing for {{unitName}}"
+            },
+            "LABEL": {
+                "MANAGE_FEATURE_ACCESS": "ne Manage {{Feature}}"
+            },
+            "VALIDATIONS": {
+                "STAFFING_NAME_IS_REQUIRED": "ne Staffing name is required",
+                "ACCESS_LIST_IS_REQUIRED": "ne Access List is required"
+            },
+            "PLACEHOLDER": {
+                "STAFFING_NAME": "ne Staffing Name"
+            },
+            "DESCRIPTION": {
+                "FEATURE_ACCESS_LEVEL": "ne Feature access Level"
+            }
+        },
+        "USERS": {
+            "TITLE": {
+                "USER": "ne User",
+                "CREATE_USER": "ne Create User",
+                "EDIT_USER": "ne Edit User"
+            },
+            "BUTTON": {
+                "ADD_USER": "ne Add User"
+            },
+            "LABEL": {
+                "ORGANIZATION_UNIT": "ne Organization Unit",
+                "STAFFING": "ne Staffing"
+            },
+            "VALIDATIONS": {
+                "ORGANIZATION_UNIT_IS_REQUIRED": "ne Organization Unit is required",
+                "STAFFING_IS_REQUIRED": "ne Staffing Unit is required"
+            },
+            "PLACEHOLDER": {
+                "SELECT_ORGANIZATION_UNIT": "ne Select Organization Unit",
+                "SELECT_STAFFING": "ne Select Staffing",
+                "SELECT_SUBSCRIPTION": "ne Select Subscription"
+            },
+            "TOOLTIP": {
+                "ORGANIZATION_UNIT": "ne Organization Unit",
+                "STAFFING": "ne Staffing"
+            },
+            "ALERT_MSG": {
+                "DISABLE_USER": "ne Do you want to disable user "
+            },
+            "DESCRIPTION": {
+                "SHOW_ENABLED_USERS": "ne Show Enabled Users",
+                "PERSONAL_DETAIL": "ne Personal Detail",
+                "ORGANIZATION_DETAIL": "ne Organization Detail"
+            }
+        },
+        "USERS_ACTIVITY": {
+            "TITLE": {
+                "USERS_ACTIVITY": "ne User Activity",
+                "CLICK_TO_VIEW_ALL_USERS": "ne Click to view all users",
+                "CLICK_TO_VIEW_ONLINE_USERS": "ne Click to view online users"
+            },
+            "BUTTON": {
+                "ONLINE_USERS": "ne Online Users",
+                "ALL_USERS": "ne All Users"
+            }
+        }
+    },
+    "PERSONAL_DETAIL": {
+        "TITLE": {
+            "PERSONAL_DETAILS": "ne Personal Details",
+            "BASIC_INFORMATION": "ne Basic Information",
+            "UPDATE_PERSONAL_DETAILS": "ne Update Personal Details"
+        },
+        "BUTTON": {},
+        "LABEL": {
+            "ORGANIZATION": "ne Organization"
+        },
+        "PLACEHOLDER": {
+            "SELECT_ORGANIZATION_UNIT": "ne Select Organization Unit",
+            "SELECT_STAFFING": "ne Select Staffing"
+        },
+        "DESCRIPTION": {
+            "SHOW_ENABLED_USERS": "ne Show Enabled Users",
+            "PERSONAL_DETAIL": "ne Personal Detail",
+            "ORGANIZATION_DETAIL": "ne Organization Detail"
+        }
+    },
+    "DASHBOARD": {
+        "TITLE": {
+            "LOGIN_COUNT_SUMMARY": "ne Login Count Summary"
+        },
+        "LABEL": {
+            "TODAY_USER_COUNT": "ne Today",
+            "LAST_WEEK_USER_COUNT": "ne Last Week",
+            "LAST_MONTH_USER_COUNT": "ne Last Month",
+            "LAST_3_MONTH": "ne Last 3 Month",
+            "LAST_6_MONTH": "ne Last 6 Month",
+            "LAST_YEAR": "ne Last Year",
+            "TOTAL_USER_COUNT": "ne Total Users",
+            "REALTIME_ONLINE_USER_COUNT": "ne Realtime Online Users"
+        }
+    },
+    "HEADER": {
+        "MENU_ITEM": {
+            "ORGANIZATIONAL": "ne Organizational",
+            "SUPER_ADMIN": "ne Super Admin",
+            "PROFILE": "ne Profile",
+            "YOUR_ORGANIZATION_DETAILS": "ne View Organization Details",
+            "CHANGE_PASSWORD": "ne Change Password",
+            "LOGOUT": "ne Logout",
+            "LOGIN": "ne Login",
+            "REGISTER": "ne Register",
+            "DASHBOARD": "ne Dashboard",
+            "MANAGE_USERS": "ne Manage Users",
+            "ORGANIZATION_UNIT": "ne Organization Unit",
+            "USER": "ne User",
+            "USER_ACTIVITY": "ne User Activity"
+        }
+    },
+    "ORGANIZATION_DETAILS": {
+        "TITLE": {
+            "ORG_DETAIL": "ne Organization Details",
+            "EDIT_ORGANIZATION": "ne Edit Organization"
+        },
+        "PLACEHOLDER": {
+            "COMPANY_NAME": "ne Organization Name"
+        },
+        "LABEL": {
+            "UNIT_NAME": "ne Unit Name",
+            "STAFFING_NAME": "ne Staffing Name",
+            "COMPANY_NAME": "ne Organization Name",
+            "COMPANY_ADDRESS": "ne Organization Address"
+        },
+        "VALIDATIONS": {
+            "COMPANY_NAME": "ne Organization name is required",
+            "STATE_IS_REQUIRED_IF_COUNTRY_IS_SELECTED": "ne State is required if country is selected."
+        }
+    },
+    "SUPER_ADMIN": {
+        "TITLE": {
+            "ORGANIZATION_ADMIN": "ne Organization Admin",
+            "NON_ADMIN_USERS": "ne Non Admin Users",
+            "UNVERIFIED_USER_LIST": "ne Unverified Organization",
+            "REJECTED_COMPANY_LIST": "ne Rejected Organization",
+            "REJECT_INFORMATION": "ne Reject information of {{companyName}}",
+            "ADDITIONAL_REJECT_INFORMATION": "ne Additional reject information",
+            "ASSIGN_NEW_SUBSCRIPTION_TYPE": "ne Assign New Subscription Type to {{name}}",
+            "UPDATE_ASSIGNED_SUBSCRIPTION_TYPE": "ne Update Assigned Subscription Type to {{name}}",
+            "CREATED_AT": "ne Created At",
+            "UPDATED_AT": "ne and Updated At",
+            "BLOCKED_USERS": "ne Blocked Users",
+            "TAB_TITLE": {
+                "ALL": "ne All"
+            }
+        },
+        "SIDEBAR_MENU": {
+            "APP_USERS": "ne {{appTitle}} Users",
+            "ORGANIZATION_ADMIN": "ne Organization Admin",
+            "UNVERIFIED_ORGANIZATION": "ne Unverified Organization",
+            "REJECTED_ORGANIZATION": "ne Rejected Organization",
+            "NON_ADMIN_USERS": "ne Non Admin Users",
+            "BLOCKED_USERS": "ne Blocked Users"
+        },
+        "LABEL": {
+            "TITLE": "ne Title",
+            "LIST": "ne List",
+            "SHOW_ENABLED_USERS": "ne Show Enabled Users",
+            "DESCRIPTION": "ne Description",
+            "ORGANIZATION": "ne Organization",
+            "SUBSCRIPTION_TYPES": "ne Subscription Type(s)"
+        },
+        "PLACEHOLDER": {
+            "TITLE": "ne Title",
+            "LIST": "ne List",
+            "DESCRIPTION": "ne Description",
+            "SELECT_ORGANIZATION": "ne Select Organization"
+        },
+        "TOOLTIP": {
+            "ASSIGN_ORGANIZATION": "ne Assign organization",
+            "UPDATE_SUBSCRIPTION_TYPE": "ne Update Subscription Type",
+            "REJECT_ORGANIZATION": "ne Reject Organization",
+            "VIEW_REJECT_DETAIL": "ne View Reject Detail",
+            "UNBLOCK_USER": "ne Unblock User"
+        },
+        "COLUMN_NAME": {
+            "ORGANIZATION": "ne Organization",
+            "POST": "ne Post",
+            "ADDRESS": "ne Address",
+            "SUBSCRIPTION_TYPE": "ne Subscription Type",
+            "DESCRIPTION": "ne Description",
+            "REJECTED_BY": "ne Rejected By",
+            "DATE": "ne Date",
+            "CREATED": "ne Created"
+        },
+        "VALIDATIONS": {
+            "TITLE_IS_REQUIRED": "ne Title is required",
+            "LIST_NAME_IS_REQUIRED": "ne List name is required",
+            "DESCRIPTION_SHOULD_HAVE_MINIMUM_CHARACTERS": "ne Description should have minimum of {{ minlength }} characters",
+            "SELECT_ONE_ORGANIZATION": "ne Select one Organization",
+            "SELECT_ONE_SUBSCRIPTION_TYPE": "ne Select one Subscription Type"
+        },
+        "DESCRIPTION": {
+            "SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION": "ne Select the Verify icon to verify the organization",
+            "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "ne Select the Enable icon to enable the organization (subscription)",
+            "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "ne Select the Disable icon to disable the organization (subscription)",
+            "REJECTED_INFORMATION": "ne Rejected Information"
+        },
+        "ALERT_MSG": {
+            "UNBLOCK_USER": "ne Do you want to unblock user {{name}}"
+        }
+    }
+}
