@@ -8,7 +8,7 @@
     </div>
     <nb-card class="medium-card-width">
         <nb-card-body>
-            <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound" [filterLabel]="'SUPER_ADMIN.LABEL.SHOW_ENABLED_USERS'" (toggleTableEmit)="toggleTable()" (searchValue)="onSearch($event)"></app-filter-bar>
+            <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound" [filterLabel]="!unverifiedUsers && !blockedUsers ? 'SUPER_ADMIN.LABEL.SHOW_ENABLED_USERS' : ''" (toggleTableEmit)="toggleTable()" (searchValue)="onSearch($event)"></app-filter-bar>
             <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)" [nbSpinner]="loadingTable" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
                 <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
                 <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
