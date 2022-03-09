@@ -1,4 +1,4 @@
-<nb-card class="medium-card-width" *ngIf="showOrganizationDetail && userData.company.subscriptionType !== 'vaccinated-user'" status="info">
+<nb-card class="medium-card-width" *ngIf="showOrganizationDetail" status="info">
     <nb-card-header>
         {{ 'ORGANIZATION_DETAILS.TITLE.ORG_DETAIL' | translate }}
         <button nbButton ghost *ngIf="showOrganizationEditButton" (click)="editOrganizationDetails(userData?.company?.companyId?._id)">
@@ -40,15 +40,6 @@
         </div>
         <div class="detail-row">
             <b>{{ 'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate }}: </b> <span>{{ company?.staffingId[0]?.staffingName || 'N/a' }}</span>
-        </div>
-        <div class="detail-row">
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_HELP_YOU_WOULD_LIKE_FROM_THE_APP_NETWORK' | translate: { appTitle: appTitle | titlecase } }}</b>
-            <p>{{ company?.companyId?.contributionForApp || '-' }}</p>
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_YOUR_ORGANIZATION_IS_LOOKING_TO_CONTRIBUTE_AT_APP_NETWORK' | translate: { appTitle: appTitle | titlecase } }}</b>
-            <p>{{ company?.companyId?.helpNeededFromApp || '-' }}</p>
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_YOUR_BUSINESS_DOES' | translate }}</b>
-            <p>{{ company?.companyId?.aboutOrganization || '-' }}</p>
-            <b>{{ 'COMMON.LABEL.CREATED_AT' | translate }}: </b> <span>{{ company?.companyId?.createdAt | date }}</span>
         </div>
     </nb-card-body>
 </nb-card>

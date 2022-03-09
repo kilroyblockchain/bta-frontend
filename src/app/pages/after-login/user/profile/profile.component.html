@@ -4,8 +4,8 @@
         <h4 *ngIf="url === 'organization-details'">{{ 'ORGANIZATION_DETAILS.TITLE.ORG_DETAIL' | translate }}</h4>
     </div>
 </div>
-<div *ngIf="dataFound && !loading" class="profile-row">
-    <div *ngIf="url === 'personal-details' && userData">
+<div *ngIf="dataFound && !loading">
+    <div *ngIf="url === 'personal-details' && userData" class="fixed-width-container">
         <app-personal-details [userData]="userData"></app-personal-details>
     </div>
     <div *ngIf="url === 'organization-details'" class="fixed-width-container">
