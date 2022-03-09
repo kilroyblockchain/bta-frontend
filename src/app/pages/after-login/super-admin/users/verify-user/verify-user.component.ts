@@ -13,7 +13,6 @@ interface TreeNode<T> {
 
 interface FSEntry {
     companyName: string;
-    subscriptionType?: string;
     id?: string;
     companyId: string;
     verify: boolean;
@@ -30,8 +29,8 @@ export class VerifyUserComponent implements OnInit {
     userId: any;
     delete!: boolean;
     unverifiedUsers!: boolean;
-    defaultColumnsNames = ['COMMON.COLUMN_NAME.ORGANIZATION_NAME', 'SUPER_ADMIN.COLUMN_NAME.SUBSCRIPTION_TYPE', 'COMMON.COLUMN_NAME.ACTION'];
-    defaultColumns = ['companyName', 'subscriptionType', 'action'];
+    defaultColumnsNames = ['COMMON.COLUMN_NAME.ORGANIZATION_NAME', 'COMMON.COLUMN_NAME.ACTION'];
+    defaultColumns = ['companyName', 'action'];
     allColumns = [...this.defaultColumns];
     dataSource: NbTreeGridDataSource<FSEntry>;
     sortColumn!: string;
@@ -73,7 +72,6 @@ export class VerifyUserComponent implements OnInit {
                     companyId: item.companyId._id,
                     verify: item.verified,
                     isDeleted: 'isDeleted' in item ? item.isDeleted : true,
-                    subscriptionType: this.utilsService.getFullSubcriptionType(item.subscriptionType),
                     assignedSubscription: item.subscriptionType
                 }
             });
