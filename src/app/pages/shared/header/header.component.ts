@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.setDefaultSubscriptionTypeOnCompanyChange(this.userData);
 
                 const organization = this.userData.company.filter((defaultCompany: IUserCompany) => (<ICompany>defaultCompany.companyId)._id === this.selectedOrganizationId && defaultCompany.verified && !defaultCompany.isDeleted);
+                this.organizationName = (organization.find((company) => company.default)?.companyId as ICompany).companyName;
                 this.defaultCompanyRoles = [];
                 organization.forEach((element: IUserCompany) => {
                     if (!this.defaultCompanyRoles.some((orgRole) => orgRole === element)) {

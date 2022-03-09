@@ -40,8 +40,7 @@ export class EditProfileComponent implements OnInit {
             state: [user?.state?._id],
             city: [user?.city],
             address: [user?.address, [Validators.minLength(3)]],
-            zipCode: [user?.zipCode],
-            jobTitle: [user?.jobTitle]
+            zipCode: [user?.zipCode]
         });
     }
 
