@@ -1,5 +1,4 @@
 <div class="actions">
     <button nbButton hero *ngIf="isHidden" (click)="collapseChart(false)" title="Show"><nb-icon icon="chevron-down"></nb-icon></button>
     <button nbButton hero *ngIf="!isHidden" (click)="collapseChart(true)" title="Hide"><nb-icon icon="chevron-up"></nb-icon></button>
-    <button nbButton hero *ngIf="!isHidden && !hideEmbed" [disabled]="loading" (click)="displayEmbedDialog()" title="Embed"><nb-icon icon="code"></nb-icon></button>
 </div>

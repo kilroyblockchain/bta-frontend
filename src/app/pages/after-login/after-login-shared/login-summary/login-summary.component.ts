@@ -9,15 +9,17 @@ import { ManageUserService } from 'src/app/@core/services';
     styleUrls: ['./login-summary.component.scss']
 })
 export class LoginSummaryComponent {
-    isHidden: boolean = true;
+    isHidden: boolean = false;
     loading = false;
     usersLoginCounts!: IUsersLoginCount;
 
-    constructor(public manageUserService: ManageUserService) {}
+    constructor(public manageUserService: ManageUserService) {
+        this.getAllUsersLoginCount();
+    }
 
     prepareLoginCount(): void {}
 
-    hideShowChart(collapse: boolean): void {
+    hideShowLoginSummary(collapse: boolean): void {
         this.isHidden = collapse;
         if (!collapse) {
             this.getAllUsersLoginCount();
