@@ -20,8 +20,6 @@ import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
     providers: [TitleCasePipe]
 })
 export class UserComponent implements OnInit, OnDestroy {
-    @Input() currentStep: any;
-    @Output() ifStepChange = new EventEmitter();
     registrationFormGroup!: FormGroup;
     submitted = false;
     selectedSubscriber!: string;
@@ -73,7 +71,6 @@ export class UserComponent implements OnInit, OnDestroy {
             address: [user?.address, [Validators.required, Validators.minLength(3)]],
             zipCode: [user?.zipCode, [Validators.required]],
             companyName: [user?.companyName, [Validators.required, Validators.minLength(2)]],
-            jobTitle: [user?.jobTitle, [Validators.required, Validators.minLength(3)]],
             password: [user?.password, [Validators.minLength(5)]]
         });
     }
@@ -129,14 +126,9 @@ export class UserComponent implements OnInit, OnDestroy {
             return;
         }
         value.reCaptchaToken = this.recaptchaStr;
-        if (value.subscriptionType === 'other') {
-            this.localStorageService.setLocalStorageData(LocalStorageConstant.UDRegS1, value);
-            this.ifStepChange.emit();
-        } else {
-            const companyData = { companyName: this.UF.companyName.value, reCaptchaToken: this.recaptchaStr };
-            const data = { ...value, ...companyData };
-            this.postUserData(data);
-        }
+        const companyData = { companyName: this.UF.companyName.value, reCaptchaToken: this.recaptchaStr };
+        const data = { ...value, ...companyData };
+        this.postUserData(data);
     }
 
     postUserData(userData: any): void {
@@ -186,17 +178,10 @@ export class UserComponent implements OnInit, OnDestroy {
 
     subscriberChanged(): void {
         this.selectedSubscriber = this.UF.subscriptionType.value;
-        if (this.selectedSubscriber === 'vaccination-appointment') {
-            this.getAllCompanyNames();
-        }
     }
 
     changedOnAgreedOnTerms(checked: any): void {
         this.enableSubmitButton = checked;
-    }
-
-    goToReportPage(): void {
-        this.router.navigate(['/report-issue']);
     }
 
     onError(errorDetails: RecaptchaErrorParameters): void {

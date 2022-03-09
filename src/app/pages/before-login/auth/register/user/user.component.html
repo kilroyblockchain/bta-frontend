@@ -110,15 +110,6 @@
             </nb-autocomplete>
         </div>
 
-        <div class="form-holder floating">
-            <input id="job-title" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.JOB_TITLE' | translate" formControlName="jobTitle" [ngClass]="{ 'status-danger': submitted && UF.companyName.errors }" />
-            <label for="job-title" [attr.data-content]="'*' + ('REGISTER.LABEL.JOB_TITLE' | translate)"></label>
-            <div *ngIf="submitted && UF.jobTitle.errors as err" class="invalid-feedback">
-                <span *ngIf="err.required">{{ 'REGISTER.VALIDATIONS.JOB_TITLE_IS_REQUIRED' | translate }}</span>
-                <span *ngIf="err.minlength" [translate]="'REGISTER.VALIDATIONS.JOB_TITLE_MIN_LENGTH'" [translateParams]="{ minLength: err.minlength.requiredLength }"></span>
-            </div>
-        </div>
-
         <div class="form-holder full" *ngIf="selectedSubscriber !== 'other'">
             <nb-checkbox status="basic" (checkedChange)="changedOnAgreedOnTerms($event)">
                 <p [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
@@ -127,11 +118,9 @@
         <re-captcha #captchaRef="reCaptcha" (error)="onError($event)" errorMode="handled" (resolved)="resolved($event, registrationFormGroup)" size="invisible"> </re-captcha>
     </div>
     <div class="submit-button">
-        <div class="action-holder" *ngIf="selectedSubscriber !== 'other'">
+        <div class="action-holder">
             <button nbButton hero status="primary" [disabled]="!enableSubmitButton">{{ 'REGISTER.BUTTON.REGISTER' | translate }}</button>
             <a nbButton hero status="basic" href="/#/auth/login">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</a>
         </div>
-        <button nbButton hero status="primary" *ngIf="selectedSubscriber === 'other'">{{ 'REGISTER.BUTTON.CONTINUE' | translate }}</button>
-        <button *ngIf="false" nbButton hero status="primary" (click)="goToReportPage()">{{ 'REGISTER.BUTTON.REPORT_ISSUE' | translate }}</button>
     </div>
 </form>

@@ -11,6 +11,5 @@ export interface User {
     address: string;
     zipCode: string;
     companyName: string;
-    jobTitle: string;
     password: string;
 }
