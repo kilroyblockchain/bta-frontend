@@ -4,9 +4,13 @@ import { AuthService, UtilsService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-select-subscription-type',
-    template: ` <nb-select size="small" [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_SUBSCRIPTION' | translate" size="small" [title]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_SUBSCRIPTION' | translate" [(selected)]="defaultSubscriptionType" (selectedChange)="onSubscriptionChange($event)">
-        <nb-option *ngFor="let role of user.roles" [value]="role">{{ utilsService.getFullSubcriptionType(role) }}</nb-option>
-    </nb-select>`
+    template: `
+        <ng-container *ngIf="user.roles && user.roles.length > 1">
+            <nb-select size="small" [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_SUBSCRIPTION' | translate" size="small" [title]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_SUBSCRIPTION' | translate" [(selected)]="defaultSubscriptionType" (selectedChange)="onSubscriptionChange($event)">
+                <nb-option *ngFor="let role of user.roles" [value]="role">{{ utilsService.getFullSubcriptionType(role) }}</nb-option>
+            </nb-select>
+        </ng-container>
+    `
 })
 export class SelectSubscriptionTypeComponent implements OnInit {
     user!: IUserData;
