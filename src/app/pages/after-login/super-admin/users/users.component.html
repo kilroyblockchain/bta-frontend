@@ -8,11 +8,6 @@
     </div>
     <nb-card class="medium-card-width">
         <nb-card-body>
-            <div class="tab-title">
-                <nb-tabset fullWidth (changeTab)="getTabData($event)">
-                    <nb-tab [tabTitle]="'SUPER_ADMIN.TITLE.TAB_TITLE.ALL' | translate" tabId="all"> </nb-tab>
-                </nb-tabset>
-            </div>
             <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound" [filterLabel]="'SUPER_ADMIN.LABEL.SHOW_ENABLED_USERS'" (toggleTableEmit)="toggleTable()" (searchValue)="onSearch($event)"></app-filter-bar>
             <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)" [nbSpinner]="loadingTable" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
                 <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
@@ -57,11 +52,6 @@
                         <div class="table-col" *ngIf="defaultColumns[index] === 'companyName'">
                             <span nbTooltip="Organization name" nbTooltipPlacement="left">
                                 {{ companyUsers ? row.data['nonAdminCompanyList'] || '-' : row.data['adminCompanyList'] || '-' }}
-                            </span>
-                            <span nbTooltip="Job title" nbTooltipPlacement="left">
-                                <small>
-                                    <i>{{ row.data['jobTitle'] || '-' }}</i>
-                                </small>
                             </span>
                         </div>
                         <div class="table-col" *ngIf="defaultColumns[index] === 'name'">
