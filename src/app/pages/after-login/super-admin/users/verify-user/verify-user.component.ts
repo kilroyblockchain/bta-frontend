@@ -15,6 +15,7 @@ interface FSEntry {
     companyName: string;
     id?: string;
     companyId: string;
+    subscriptionType: string;
     verify: boolean;
     isDeleted: boolean;
     assignedSubscription: string;
@@ -29,8 +30,8 @@ export class VerifyUserComponent implements OnInit {
     userId: any;
     delete!: boolean;
     unverifiedUsers!: boolean;
-    defaultColumnsNames = ['COMMON.COLUMN_NAME.ORGANIZATION_NAME', 'COMMON.COLUMN_NAME.ACTION'];
-    defaultColumns = ['companyName', 'action'];
+    defaultColumnsNames = ['COMMON.COLUMN_NAME.ORGANIZATION_NAME', 'SUPER_ADMIN.COLUMN_NAME.SUBSCRIPTION_TYPE', 'COMMON.COLUMN_NAME.ACTION'];
+    defaultColumns = ['companyName', 'subscriptionType', 'action'];
     allColumns = [...this.defaultColumns];
     dataSource: NbTreeGridDataSource<FSEntry>;
     sortColumn!: string;
@@ -70,6 +71,7 @@ export class VerifyUserComponent implements OnInit {
                     companyName: item.companyId.companyName,
                     id: item._id,
                     companyId: item.companyId._id,
+                    subscriptionType: this.utilsService.getFullSubcriptionType(item.subscriptionType),
                     verify: item.verified,
                     isDeleted: 'isDeleted' in item ? item.isDeleted : true,
                     assignedSubscription: item.subscriptionType
@@ -109,7 +111,7 @@ export class VerifyUserComponent implements OnInit {
     }
 
     enableUser(id: string, data: any): void {
-        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.ENABLE_DATA_RECORD', { name: `${data.companyName}`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
+        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.ENABLE_DATA_RECORD', { name: `${data.companyName} (${data.subscriptionType})`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogOpen.onClose.subscribe((res) => {
             if (res) {
                 this.loading = true;
@@ -141,7 +143,7 @@ export class VerifyUserComponent implements OnInit {
     }
 
     disableUser(id: string, rowData: any): void {
-        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.DISABLE_DATA_RECORD', { name: `${rowData.companyName}`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
+        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.DISABLE_DATA_RECORD', { name: `${rowData.companyName} (${rowData.subscriptionType})`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogOpen.onClose.subscribe((res) => {
             if (res) {
                 this.loading = true;
