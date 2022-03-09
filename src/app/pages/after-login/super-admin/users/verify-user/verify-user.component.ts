@@ -109,7 +109,7 @@ export class VerifyUserComponent implements OnInit {
     }
 
     enableUser(id: string, data: any): void {
-        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.ENABLE_DATA_RECORD', { name: `${data.companyName}  (${data.subscriptionType})`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
+        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.ENABLE_DATA_RECORD', { name: `${data.companyName}`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogOpen.onClose.subscribe((res) => {
             if (res) {
                 this.loading = true;
@@ -141,7 +141,7 @@ export class VerifyUserComponent implements OnInit {
     }
 
     disableUser(id: string, rowData: any): void {
-        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.DISABLE_DATA_RECORD', { name: `${rowData.companyName}  (${rowData.subscriptionType})`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
+        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('COMMON.ALERT_MSG.DISABLE_DATA_RECORD', { name: `${rowData.companyName}`, recordType: '' }) }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogOpen.onClose.subscribe((res) => {
             if (res) {
                 this.loading = true;
