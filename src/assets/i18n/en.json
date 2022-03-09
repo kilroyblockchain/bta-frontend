@@ -37,7 +37,6 @@
             "CITY": "City",
             "ZIP_CODE": "Zip Code",
             "DATE_OF_BIRTH": "Date of Birth",
-            "DROP_YOUR_ATTACHMENTS": "Drop your attachments",
             "FROM_DATE": "From Date",
             "TO_DATE": "To Date",
             "NEW_PASSWORD": "New Password",
@@ -57,9 +56,7 @@
             "YES": "Yes",
             "NO": "No",
             "VERIFIED": "Verified",
-            "UNVERIFIED": "Unverified",
-            "NO_RECORD_TYPE_FOUND": "No {{recordType}} Found",
-            "EMBED_PAGE": "Embed Page"
+            "UNVERIFIED": "Unverified"
         },
         "COLUMN_NAME": {
             "UPDATED_AT": "Updated At",
@@ -218,15 +215,12 @@
         }
     },
     "PAGE_TITLE": {
-        "REPORT_ISSUE": "Report Issue",
-        "VERIFY_TRACER": "Verify Tracer",
         "USER_ACCEPT": "User Accept",
         "TERMS_AND_CONDITIONS": "Terms and Conditions",
         "LOGIN": "Login",
         "REGISTER": "Register",
         "REQUEST_PASSWORD": "Request Password",
         "RESET_PASSWORD": "Reset Password",
-        "COMPANY_TRANSFER": "Organization Transfer",
         "BILLING": "Billing",
         "THANK_YOU": "Thank you",
         "DASHBOARD": "Dashboard",
@@ -235,15 +229,12 @@
         "USER_LIST_ADMIN": "User List (Admin) ",
         "UNVERIFIED_USER_LIST": "Unverified User List (Admin)",
         "USER_LIST": "User List",
-        "REPORTED_ISSUES": "Issues",
-        "COMPANY_TRANSFERS": "Organization Transfer",
         "ORGANIZATION_UNIT": "Organization Unit",
         "MANAGE_USER": "Manage User",
         "BLOCKCHAIN_HISTORY": "Blockchain History",
         "REJECTED_COMPANY_LIST": "Rejected Organization List",
         "BLOCKED_USERS": "Blocked Users",
-        "USER_ACTIVITY_LOG": "User Activity",
-        "CMS_LIST": "CMS"
+        "USER_ACTIVITY_LOG": "User Activity"
     },
     "FOOTER": {
         "TITLE": {
@@ -290,18 +281,11 @@
         "LABEL": {
             "AGREE_THE_TERMS_AND_CONDITION": "Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
             "COMPANY": "Organization",
-            "JOB_TITLE": "Job Title",
-            "CONTINUE_YOUR_ACCOUNT_REGISTRATION": "Continue your account registration",
-            "USE_THE_SAME_INFORMATION": "Use the same information (address) from the registration page",
-            "TELL_US_MORE_ABOUT": "Tell us more about {{ companyName }}",
-            "ABOUT_ORGANIZATION": "Describe what your business does",
-            "HELP_FROM_APP": "Describe what help you would like from the {{appTitle}} network",
-            "CONTRIBUTE_TO_APP": "Describe what your organization is looking to contribute at {{appTitle}} network"
+            "JOB_TITLE": "Job Title"
         },
         "BUTTON": {
             "REGISTER": "Register",
             "CONTINUE": "Continue",
-            "REPORT_ISSUE": "Report Issue",
             "GO_BACK": "Back"
         },
         "DESCRIPTION": {
@@ -458,80 +442,21 @@
     "PERSONAL_DETAIL": {
         "TITLE": {
             "PERSONAL_DETAILS": "Personal Details",
-            "EDUCATION": "Education",
-            "EXPERIENCE": "Experience",
-            "SKILLS": "Skills",
-            "LANGUAGES": "Languages",
             "BASIC_INFORMATION": "Basic Information",
-            "OTHER_DETAILS": "Other Details",
-            "UPDATE_PERSONAL_DETAILS": "Update Personal Details",
-            "ADD_EDUCATION_DETAIL": "Add Education Detail",
-            "EDIT_EDUCATION_DETAIL": "Edit Education Detail",
-            "ADD_EXPERIENCE_DETAIL": "Add Experience Detail",
-            "EDIT_EXPERIENCE_DETAIL": "Edit Experience Detail",
-            "ADD_SKILLS": "Add Skills",
-            "ADD_LANGUAGES": "Add Languages"
+            "UPDATE_PERSONAL_DETAILS": "Update Personal Details"
         },
         "BUTTON": {},
         "LABEL": {
-            "SCHOOL": "School",
-            "DEGREE": "Degree",
-            "FIELD_OF_STUDY": "Field of Study",
-            "GRADE": "Grade",
-            "YEAR": "Year",
-            "TITLE": "Title",
-            "EMPLOYMENT_TYPE": "Employment Type",
-            "ORGANIZATION": "Organization",
-            "ASSIGNED_ORGANIZATIONS": "Assigned Organizations",
-            "BIRTHDAY": "Birthday",
-            "ID": "ID",
-            "JOB_TITLE": "Job Title",
-            "END_YEAR": "End Year",
-            "START_YEAR": "Start Year",
-            "SKILLS": "Skills",
-            "LANGUAGE": "Language"
-        },
-        "VALIDATIONS": {
-            "START_YEAR_IS_REQUIRED": "Start year is required",
-            "GRADE_IS_REQUIRED": "Grade is required",
-            "FIELD_OF_STUDY_IS_REQUIRED": "Field of Study is required",
-            "DEGREE_IS_REQUIRED": "Degree is required",
-            "SCHOOL_IS_REQUIRED": "School is required",
-            "START_YEAR_MUST_BE_BEFORE_THE_END_YEAR": "Start Year must be Before the End year",
-            "END_YEAR_MUST_BE_AFTER_START_YEAR": "End Year must be After Start year",
-            "ORGANIZATION_IS_REQUIRED": "Organization is required",
-            "EMPLOYMENT_TYPE_IS_REQUIRED": "Employment Type is required",
-            "START_DATE_IS_REQUIRED": "Start Date is required",
-            "START_DATE_MUST_BE_BEFORE_TODAY": "Start Date must be before today",
-            "END_DATE_MUST_BE_BEFORE_TODAY": "End Date must be before today"
+            "ORGANIZATION": "Organization"
         },
         "PLACEHOLDER": {
             "SELECT_ORGANIZATION_UNIT": "Select Organization Unit",
-            "SELECT_STAFFING": "Select Staffing",
-            "SKILLS": "Skills",
-            "LANGUAGES": "Languages",
-            "SELECT_START_YEAR": "Select Start Year",
-            "SELECT_END_YEAR": "Select End Year",
-            "SELECT_EMPLOYMENT_TYPE": "Select Employment Type",
-            "SEARCH_SKILLS": "Search Skills",
-            "SEARCH_LANGUAGES": "Search Languages"
-        },
-        "TOOLTIP": {
-            "ADD_SKILLS": "Add skills",
-            "ADD_LANGUAGES": "Add Language",
-            "ADD_EDUCATION_DETAIL": "Add Education Detail",
-            "ADD_EXPERIENCE_DETAIL": "Add Experience Detail"
-        },
-        "ALERT_MSG": {
-            "DELETE_EDUCATION": "Do you want to delete education {{degree}} ",
-            "DELETE_EXPERIENCE": "Do you want to delete experience {{experience}} "
+            "SELECT_STAFFING": "Select Staffing"
         },
         "DESCRIPTION": {
             "SHOW_ENABLED_USERS": "Show Enabled Users",
             "PERSONAL_DETAIL": "Personal Detail",
-            "ORGANIZATION_DETAIL": "Organization Detail",
-            "ADD_NEW_SKILL": "Add New Skills",
-            "ADD_NEW_LANGUAGE": "Add New Language"
+            "ORGANIZATION_DETAIL": "Organization Detail"
         }
     },
     "DASHBOARD": {
@@ -577,9 +502,6 @@
         "LABEL": {
             "UNIT_NAME": "Unit Name",
             "STAFFING_NAME": "Staffing Name",
-            "DESCRIBE_WHAT_HELP_YOU_WOULD_LIKE_FROM_THE_APP_NETWORK": "Describe what help you would like from the {{appTitle}} network",
-            "DESCRIBE_WHAT_YOUR_ORGANIZATION_IS_LOOKING_TO_CONTRIBUTE_AT_APP_NETWORK": "Describe what your organization is looking to contribute at {{appTitle}} network",
-            "DESCRIBE_WHAT_YOUR_BUSINESS_DOES": "Describe what your business does",
             "COMPANY_NAME": "Organization Name",
             "COMPANY_ADDRESS": "Organization Address"
         },
@@ -594,14 +516,10 @@
             "NON_ADMIN_USERS": "Non Admin Users",
             "UNVERIFIED_USER_LIST": "Unverified Organization",
             "REJECTED_COMPANY_LIST": "Rejected Organization",
-            "ADD_NEW_WORKFLOW": "Add New Workflow",
             "REJECT_INFORMATION": "Reject information of {{companyName}}",
             "ADDITIONAL_REJECT_INFORMATION": "Additional reject information",
             "ASSIGN_NEW_SUBSCRIPTION_TYPE": "Assign New Subscription Type to {{name}}",
             "UPDATE_ASSIGNED_SUBSCRIPTION_TYPE": "Update Assigned Subscription Type to {{name}}",
-            "CMS_LIST": "CMS",
-            "BLOG": "Blog",
-            "CMS_BLOG": "CMS Blog",
             "CREATED_AT": "Created At",
             "UPDATED_AT": "and Updated At",
             "BLOCKED_USERS": "Blocked Users",
@@ -615,19 +533,7 @@
             "UNVERIFIED_ORGANIZATION": "Unverified Organization",
             "REJECTED_ORGANIZATION": "Rejected Organization",
             "NON_ADMIN_USERS": "Non Admin Users",
-            "CONFIGURATION": "Configuration",
-            "CMS": "CMS",
-            "ISSUES": "Issues",
-            "ORGANIZATION_TRANSFER": "Organization Transfer",
             "BLOCKED_USERS": "Blocked Users"
-        },
-        "BUTTON": {
-            "ADD_NEW_CMS": "Add New CMS",
-            "SHOW_ACTIVE_CMS": "Show Active CMS",
-            "CMS_STATUS": "CMS Status"
-        },
-        "MENU_ITEM": {
-            "COPY_URL": "Copy URL"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -635,21 +541,13 @@
             "SHOW_ENABLED_USERS": "Show Enabled Users",
             "DESCRIPTION": "Description",
             "ORGANIZATION": "Organization",
-            "SUBSCRIPTION_TYPES": "Subscription Type(s)",
-            "RESOURCE_TITLE": "Title",
-            "RESOURCE_LINK": "Link",
-            "BLOG_TITLE": "Blog Title",
-            "BLOG_URL": "Blog URL",
-            "CONTENT": "Content"
+            "SUBSCRIPTION_TYPES": "Subscription Type(s)"
         },
         "PLACEHOLDER": {
             "TITLE": "Title",
             "LIST": "List",
             "DESCRIPTION": "Description",
-            "SELECT_ORGANIZATION": "Select Organization",
-            "RESOURCE_TITLE": "Title",
-            "RESOURCE_LINK": "Link",
-            "ENTER_YOUR_CONTENT_HERE": "Enter your content here"
+            "SELECT_ORGANIZATION": "Select Organization"
         },
         "TOOLTIP": {
             "ASSIGN_ORGANIZATION": "Assign organization",
@@ -666,7 +564,6 @@
             "DESCRIPTION": "Description",
             "REJECTED_BY": "Rejected By",
             "DATE": "Date",
-            "URL": "URL",
             "CREATED": "Created"
         },
         "VALIDATIONS": {
@@ -674,20 +571,13 @@
             "LIST_NAME_IS_REQUIRED": "List name is required",
             "DESCRIPTION_SHOULD_HAVE_MINIMUM_CHARACTERS": "Description should have minimum of {{ minlength }} characters",
             "SELECT_ONE_ORGANIZATION": "Select one Organization",
-            "SELECT_ONE_SUBSCRIPTION_TYPE": "Select one Subscription Type",
-            "LINK_IS_REQUIRED": "Link is required",
-            "TITLE_MUST_BE_ATLEAST_X_CHARACTERS": "Title must be atleast {{minLength}} characters",
-            "BLOG_TITLE_IS_REQUIRED": "Blog Title is required",
-            "BLOG_URL_IS_REQUIRED": "Blog URL is required",
-            "BLOG_CONTENT_IS_REQUIRED": "Blog Content is required",
-            "DUPLICATE_TITLE": "Title must be unique"
+            "SELECT_ONE_SUBSCRIPTION_TYPE": "Select one Subscription Type"
         },
         "DESCRIPTION": {
             "SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION": "Select the Verify icon to verify the organization",
             "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "Select the Enable icon to enable the organization (subscription)",
             "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "Select the Disable icon to disable the organization (subscription)",
-            "REJECTED_INFORMATION": "Rejected Information",
-            "SHOW_ENABLED_SYMPTOMS": "Show Enabled Symptoms"
+            "REJECTED_INFORMATION": "Rejected Information"
         },
         "ALERT_MSG": {
             "UNBLOCK_USER": "Do you want to unblock user {{name}}"

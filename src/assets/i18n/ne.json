@@ -37,7 +37,6 @@
             "CITY": "ne City",
             "ZIP_CODE": "ne Zip Code",
             "DATE_OF_BIRTH": "ne Date of Birth",
-            "DROP_YOUR_ATTACHMENTS": "ne Drop your attachments",
             "FROM_DATE": "ne From Date",
             "TO_DATE": "ne To Date",
             "NEW_PASSWORD": "ne New Password",
@@ -57,9 +56,7 @@
             "YES": "ne Yes",
             "NO": "ne No",
             "VERIFIED": "ne Verified",
-            "UNVERIFIED": "ne Unverified",
-            "NO_RECORD_TYPE_FOUND": "ne No {{recordType}} Found",
-            "EMBED_PAGE": "ne Embed Page"
+            "UNVERIFIED": "ne Unverified"
         },
         "COLUMN_NAME": {
             "UPDATED_AT": "ne Updated At",
@@ -218,15 +215,12 @@
         }
     },
     "PAGE_TITLE": {
-        "REPORT_ISSUE": "ne Report Issue",
-        "VERIFY_TRACER": "ne Verify Tracer",
         "USER_ACCEPT": "ne User Accept",
         "TERMS_AND_CONDITIONS": "ne Terms and Conditions",
         "LOGIN": "ne Login",
         "REGISTER": "ne Register",
         "REQUEST_PASSWORD": "ne Request Password",
         "RESET_PASSWORD": "ne Reset Password",
-        "COMPANY_TRANSFER": "ne Organization Transfer",
         "BILLING": "ne Billing",
         "THANK_YOU": "ne Thank you",
         "DASHBOARD": "ne Dashboard",
@@ -235,15 +229,12 @@
         "USER_LIST_ADMIN": "ne User List (Admin) ",
         "UNVERIFIED_USER_LIST": "ne Unverified User List (Admin)",
         "USER_LIST": "ne User List",
-        "REPORTED_ISSUES": "ne Issues",
-        "COMPANY_TRANSFERS": "ne Organization Transfer",
         "ORGANIZATION_UNIT": "ne Organization Unit",
         "MANAGE_USER": "ne Manage User",
         "BLOCKCHAIN_HISTORY": "ne Blockchain History",
         "REJECTED_COMPANY_LIST": "ne Rejected Organization List",
         "BLOCKED_USERS": "ne Blocked Users",
-        "USER_ACTIVITY_LOG": "ne User Activity",
-        "CMS_LIST": "ne CMS"
+        "USER_ACTIVITY_LOG": "ne User Activity"
     },
     "FOOTER": {
         "TITLE": {
@@ -290,18 +281,11 @@
         "LABEL": {
             "AGREE_THE_TERMS_AND_CONDITION": "ne Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
             "COMPANY": "ne Organization",
-            "JOB_TITLE": "ne Job Title",
-            "CONTINUE_YOUR_ACCOUNT_REGISTRATION": "ne Continue your account registration",
-            "USE_THE_SAME_INFORMATION": "ne Use the same information (address) from the registration page",
-            "TELL_US_MORE_ABOUT": "ne Tell us more about {{ companyName }}",
-            "ABOUT_ORGANIZATION": "ne Describe what your business does",
-            "HELP_FROM_APP": "ne Describe what help you would like from the {{appTitle}} network",
-            "CONTRIBUTE_TO_APP": "ne Describe what your organization is looking to contribute at {{appTitle}} network"
+            "JOB_TITLE": "ne Job Title"
         },
         "BUTTON": {
             "REGISTER": "ne Register",
             "CONTINUE": "ne Continue",
-            "REPORT_ISSUE": "ne Report Issue",
             "GO_BACK": "ne Back"
         },
         "DESCRIPTION": {
@@ -458,80 +442,21 @@
     "PERSONAL_DETAIL": {
         "TITLE": {
             "PERSONAL_DETAILS": "ne Personal Details",
-            "EDUCATION": "ne Education",
-            "EXPERIENCE": "ne Experience",
-            "SKILLS": "ne Skills",
-            "LANGUAGES": "ne Languages",
             "BASIC_INFORMATION": "ne Basic Information",
-            "OTHER_DETAILS": "ne Other Details",
-            "UPDATE_PERSONAL_DETAILS": "ne Update Personal Details",
-            "ADD_EDUCATION_DETAIL": "ne Add Education Detail",
-            "EDIT_EDUCATION_DETAIL": "ne Edit Education Detail",
-            "ADD_EXPERIENCE_DETAIL": "ne Add Experience Detail",
-            "EDIT_EXPERIENCE_DETAIL": "ne Edit Experience Detail",
-            "ADD_SKILLS": "ne Add Skills",
-            "ADD_LANGUAGES": "ne Add Languages"
+            "UPDATE_PERSONAL_DETAILS": "ne Update Personal Details"
         },
         "BUTTON": {},
         "LABEL": {
-            "SCHOOL": "ne School",
-            "DEGREE": "ne Degree",
-            "FIELD_OF_STUDY": "ne Field of Study",
-            "GRADE": "ne Grade",
-            "YEAR": "ne Year",
-            "TITLE": "ne Title",
-            "EMPLOYMENT_TYPE": "ne Employment Type",
-            "ORGANIZATION": "ne Organization",
-            "ASSIGNED_ORGANIZATIONS": "ne Assigned Organizations",
-            "BIRTHDAY": "ne Birthday",
-            "ID": "ne ID",
-            "JOB_TITLE": "ne Job Title",
-            "END_YEAR": "ne End Year",
-            "START_YEAR": "ne Start Year",
-            "SKILLS": "ne Skills",
-            "LANGUAGE": "ne Language"
-        },
-        "VALIDATIONS": {
-            "START_YEAR_IS_REQUIRED": "ne Start year is required",
-            "GRADE_IS_REQUIRED": "ne Grade is required",
-            "FIELD_OF_STUDY_IS_REQUIRED": "ne Field of Study is required",
-            "DEGREE_IS_REQUIRED": "ne Degree is required",
-            "SCHOOL_IS_REQUIRED": "ne School is required",
-            "START_YEAR_MUST_BE_BEFORE_THE_END_YEAR": "ne Start Year must be Before the End year",
-            "END_YEAR_MUST_BE_AFTER_START_YEAR": "ne End Year must be After Start year",
-            "ORGANIZATION_IS_REQUIRED": "ne Organization is required",
-            "EMPLOYMENT_TYPE_IS_REQUIRED": "ne Employment Type is required",
-            "START_DATE_IS_REQUIRED": "ne Start Date is required",
-            "START_DATE_MUST_BE_BEFORE_TODAY": "ne Start Date must be before today",
-            "END_DATE_MUST_BE_BEFORE_TODAY": "ne End Date must be before today"
+            "ORGANIZATION": "ne Organization"
         },
         "PLACEHOLDER": {
             "SELECT_ORGANIZATION_UNIT": "ne Select Organization Unit",
-            "SELECT_STAFFING": "ne Select Staffing",
-            "SKILLS": "ne Skills",
-            "LANGUAGES": "ne Languages",
-            "SELECT_START_YEAR": "ne Select Start Year",
-            "SELECT_END_YEAR": "ne Select End Year",
-            "SELECT_EMPLOYMENT_TYPE": "ne Select Employment Type",
-            "SEARCH_SKILLS": "ne Search Skills",
-            "SEARCH_LANGUAGES": "ne Search Languages"
-        },
-        "TOOLTIP": {
-            "ADD_SKILLS": "ne Add skills",
-            "ADD_LANGUAGES": "ne Add Language",
-            "ADD_EDUCATION_DETAIL": "ne Add Education Detail",
-            "ADD_EXPERIENCE_DETAIL": "ne Add Experience Detail"
-        },
-        "ALERT_MSG": {
-            "DELETE_EDUCATION": "ne Do you want to delete education {{degree}} ",
-            "DELETE_EXPERIENCE": "ne Do you want to delete experience {{experience}} "
+            "SELECT_STAFFING": "ne Select Staffing"
         },
         "DESCRIPTION": {
             "SHOW_ENABLED_USERS": "ne Show Enabled Users",
             "PERSONAL_DETAIL": "ne Personal Detail",
-            "ORGANIZATION_DETAIL": "ne Organization Detail",
-            "ADD_NEW_SKILL": "ne Add New Skills",
-            "ADD_NEW_LANGUAGE": "ne Add New Language"
+            "ORGANIZATION_DETAIL": "ne Organization Detail"
         }
     },
     "DASHBOARD": {
@@ -577,9 +502,6 @@
         "LABEL": {
             "UNIT_NAME": "ne Unit Name",
             "STAFFING_NAME": "ne Staffing Name",
-            "DESCRIBE_WHAT_HELP_YOU_WOULD_LIKE_FROM_THE_APP_NETWORK": "ne Describe what help you would like from the {{appTitle}} network",
-            "DESCRIBE_WHAT_YOUR_ORGANIZATION_IS_LOOKING_TO_CONTRIBUTE_AT_APP_NETWORK": "ne Describe what your organization is looking to contribute at {{appTitle}} network",
-            "DESCRIBE_WHAT_YOUR_BUSINESS_DOES": "ne Describe what your business does",
             "COMPANY_NAME": "ne Organization Name",
             "COMPANY_ADDRESS": "ne Organization Address"
         },
@@ -594,14 +516,10 @@
             "NON_ADMIN_USERS": "ne Non Admin Users",
             "UNVERIFIED_USER_LIST": "ne Unverified Organization",
             "REJECTED_COMPANY_LIST": "ne Rejected Organization",
-            "ADD_NEW_WORKFLOW": "ne Add New Workflow",
             "REJECT_INFORMATION": "ne Reject information of {{companyName}}",
             "ADDITIONAL_REJECT_INFORMATION": "ne Additional reject information",
             "ASSIGN_NEW_SUBSCRIPTION_TYPE": "ne Assign New Subscription Type to {{name}}",
             "UPDATE_ASSIGNED_SUBSCRIPTION_TYPE": "ne Update Assigned Subscription Type to {{name}}",
-            "CMS_LIST": "ne CMS",
-            "BLOG": "ne Blog",
-            "CMS_BLOG": "ne CMS Blog",
             "CREATED_AT": "ne Created At",
             "UPDATED_AT": "ne and Updated At",
             "BLOCKED_USERS": "ne Blocked Users",
@@ -615,19 +533,7 @@
             "UNVERIFIED_ORGANIZATION": "ne Unverified Organization",
             "REJECTED_ORGANIZATION": "ne Rejected Organization",
             "NON_ADMIN_USERS": "ne Non Admin Users",
-            "CONFIGURATION": "ne Configuration",
-            "CMS": "ne CMS",
-            "ISSUES": "ne Issues",
-            "ORGANIZATION_TRANSFER": "ne Organization Transfer",
             "BLOCKED_USERS": "ne Blocked Users"
-        },
-        "BUTTON": {
-            "ADD_NEW_CMS": "ne Add New CMS",
-            "SHOW_ACTIVE_CMS": "ne Show Active CMS",
-            "CMS_STATUS": "ne CMS Status"
-        },
-        "MENU_ITEM": {
-            "COPY_URL": "ne Copy URL"
         },
         "LABEL": {
             "TITLE": "ne Title",
@@ -635,21 +541,13 @@
             "SHOW_ENABLED_USERS": "ne Show Enabled Users",
             "DESCRIPTION": "ne Description",
             "ORGANIZATION": "ne Organization",
-            "SUBSCRIPTION_TYPES": "ne Subscription Type(s)",
-            "RESOURCE_TITLE": "ne Title",
-            "RESOURCE_LINK": "ne Link",
-            "BLOG_TITLE": "ne Blog Title",
-            "BLOG_URL": "ne Blog URL",
-            "CONTENT": "ne Content"
+            "SUBSCRIPTION_TYPES": "ne Subscription Type(s)"
         },
         "PLACEHOLDER": {
             "TITLE": "ne Title",
             "LIST": "ne List",
             "DESCRIPTION": "ne Description",
-            "SELECT_ORGANIZATION": "ne Select Organization",
-            "RESOURCE_TITLE": "ne Title",
-            "RESOURCE_LINK": "ne Link",
-            "ENTER_YOUR_CONTENT_HERE": "ne Enter your content here"
+            "SELECT_ORGANIZATION": "ne Select Organization"
         },
         "TOOLTIP": {
             "ASSIGN_ORGANIZATION": "ne Assign organization",
@@ -666,7 +564,6 @@
             "DESCRIPTION": "ne Description",
             "REJECTED_BY": "ne Rejected By",
             "DATE": "ne Date",
-            "URL": "ne URL",
             "CREATED": "ne Created"
         },
         "VALIDATIONS": {
@@ -674,20 +571,13 @@
             "LIST_NAME_IS_REQUIRED": "ne List name is required",
             "DESCRIPTION_SHOULD_HAVE_MINIMUM_CHARACTERS": "ne Description should have minimum of {{ minlength }} characters",
             "SELECT_ONE_ORGANIZATION": "ne Select one Organization",
-            "SELECT_ONE_SUBSCRIPTION_TYPE": "ne Select one Subscription Type",
-            "LINK_IS_REQUIRED": "ne Link is required",
-            "TITLE_MUST_BE_ATLEAST_X_CHARACTERS": "ne Title must be atleast {{minLength}} characters",
-            "BLOG_TITLE_IS_REQUIRED": "ne Blog Title is required",
-            "BLOG_URL_IS_REQUIRED": "ne Blog URL is required",
-            "BLOG_CONTENT_IS_REQUIRED": "ne Blog Content is required",
-            "DUPLICATE_TITLE": "ne Title must be unique"
+            "SELECT_ONE_SUBSCRIPTION_TYPE": "ne Select one Subscription Type"
         },
         "DESCRIPTION": {
             "SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION": "ne Select the Verify icon to verify the organization",
             "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "ne Select the Enable icon to enable the organization (subscription)",
             "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "ne Select the Disable icon to disable the organization (subscription)",
-            "REJECTED_INFORMATION": "ne Rejected Information",
-            "SHOW_ENABLED_SYMPTOMS": "ne Show Enabled Symptoms"
+            "REJECTED_INFORMATION": "ne Rejected Information"
         },
         "ALERT_MSG": {
             "UNBLOCK_USER": "ne Do you want to unblock user {{name}}"
