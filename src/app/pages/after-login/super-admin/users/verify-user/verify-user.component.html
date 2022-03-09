@@ -1,0 +1,51 @@
+<div class="contact-tracing-container" accent="danger" size="tiny">
+    <nb-card class="medium-card-width">
+        <nb-card-header>
+            <section *ngIf="unverifiedUsers" class="dialog-head">
+                <h6>{{ 'SUPER_ADMIN.DESCRIPTION.SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION' | translate }}</h6>
+            </section>
+            <section *ngIf="!unverifiedUsers" class="dialog-head">
+                <ng-container *ngIf="!enabled">
+                    <h6>{{ 'SUPER_ADMIN.DESCRIPTION.SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION' | translate }}</h6>
+                </ng-container>
+                <ng-container *ngIf="enabled">
+                    <h6>{{ 'SUPER_ADMIN.DESCRIPTION.SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION' | translate }}</h6>
+                </ng-container>
+            </section>
+
+            <div class="close-dialog">
+                <button nbButton class="icon" (click)="closeModal()">
+                    <nb-icon icon="close-circle-outline"></nb-icon>
+                </button>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+                <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+                <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+                <ng-container *ngFor="let column of defaultColumns; let index = index" [nbTreeGridColumnDef]="column" [showOn]="utilsService.getShowOn(index)">
+                    <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                        {{ defaultColumnsNames[index] | translate }}
+                    </th>
+                    <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                        {{ defaultColumnsNames[index] | translate }}
+                    </th>
+                    <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                        <span *ngIf="defaultColumns[index] !== 'action'">{{ row.data[column] || '-' }} </span>
+                        <span *ngIf="defaultColumns[index] === 'action'">
+                            <button *ngIf="!row.data['verify'] && unverifiedUsers" nbSuffix nbButton ghost (click)="verifyUser(row.data)">
+                                <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VERIFY' | translate" icon="person-done-outline" pack="eva"> </nb-icon>
+                            </button>
+                            <button *ngIf="row.data['verify'] && row.data['isDeleted'] && !unverifiedUsers" nbSuffix nbButton ghost (click)="enableUser(row.data.id, row.data)">
+                                <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
+                            </button>
+                            <button *ngIf="row.data['verify'] && !row.data['isDeleted'] && !unverifiedUsers" nbSuffix nbButton ghost (click)="disableUser(row.data.id, row.data)">
+                                <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-2-outline" pack="eva"> </nb-icon>
+                            </button>
+                        </span>
+                    </td>
+                </ng-container>
+            </table>
+        </nb-card-body>
+    </nb-card>
+</div>

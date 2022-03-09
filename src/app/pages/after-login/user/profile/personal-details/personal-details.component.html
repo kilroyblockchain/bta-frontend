@@ -1,0 +1,46 @@
+<div class="profile-row">
+    <nb-card class="medium-card-width" status="info">
+        <nb-card-header>
+            {{ 'PERSONAL_DETAIL.TITLE.BASIC_INFORMATION' | translate }}
+            <button nbButton ghost status="primary" type="submit" *ngIf="showProfileEditButton" (click)="editPersonalDetails()">
+                <nb-icon icon="edit-outline"></nb-icon>
+            </button>
+        </nb-card-header>
+        <nb-card-body *ngIf="userData">
+            <div *ngIf="userData.userId" class="detail-row">
+                <b>{{ 'PERSONAL_DETAIL.LABEL.ID' | translate }}: </b> <span>{{ userData?.userId }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b>
+                <span><app-blockchain-verified [blockName]="userData?.firstName + ' ' + userData?.lastName | titlecase" [blockchainVerified]="userData?.blockchainVerified"></app-blockchain-verified></span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.EMAIL' | translate }}: </b> <span>{{ userData?.email }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}: </b> <span>{{ userData?.phone }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ userData?.country?.name || 'N/a' }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ userData?.state?.name || 'N/a' }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ userData?.city || 'N/a' }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ userData?.address || 'N/a' }}</span>
+            </div>
+            <div class="detail-row">
+                <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ userData?.zipCode || 'N/a' }}</span>
+            </div>
+            <div *ngIf="organizationList.length" class="detail-row">
+                <b>{{ 'PERSONAL_DETAIL.LABEL.ASSIGNED_ORGANIZATIONS' | translate }}: </b>
+                <span *ngFor="let item of organizationList">
+                    {{ item }}
+                </span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

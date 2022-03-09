@@ -1,0 +1,41 @@
+$icon-height: 60px;
+$primary-color: red;
+
+.detail-card {
+    .name {
+        width: 100%;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        border-bottom: 4px solid $primary-color;
+        display: flex;
+        align-items: center;
+
+        app-blockchain-verified {
+            margin-right: 10px;
+        }
+
+        small {
+            margin-left: 10px;
+        }
+    }
+
+    .other-detail {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            display: block;
+
+            &.title {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .case-number {
+        width: 60px;
+        text-align: center;
+    }
+}

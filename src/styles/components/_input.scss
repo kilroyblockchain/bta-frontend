@@ -1,0 +1,85 @@
+$accent-color: #6a67ce;
+$active-color: #9f9ddd;
+$border-color: #e4e9f2;
+$text-color: #2b5867;
+
+.form-holder {
+    margin-bottom: 30px;
+
+    &.floating {
+        transition: background-color 0.2s ease;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            font-size: 1rem !important;
+            border-radius: 50px !important;
+            transition: border-color 0.2s ease;
+            border: 0.1rem solid $border-color;
+            background-color: rgb(255 255 255 / 30%) !important;
+            order: 2;
+            margin-bottom: 5px;
+        }
+
+        &:hover {
+            input {
+                border-color: darken($border-color, 20);
+            }
+        }
+
+        label {
+            display: block;
+            position: relative;
+            font-weight: 500;
+            pointer-events: none;
+            font-size: 14px;
+            margin-bottom: 5px;
+            order: 1;
+
+            &::before {
+                color: $text-color;
+                content: attr(data-content);
+                display: inline-block;
+                filter: blur(0);
+                backface-visibility: hidden;
+                transform-origin: left top;
+                transition: transform 0.2s ease;
+                position: relative;
+                font-size: 13px;
+            }
+        }
+
+        input:focus + label::before {
+            color: $accent-color;
+        }
+
+        input:not(:focus):not(:placeholder-shown) + label::before {
+            color: $active-color;
+        }
+
+        .nb-form-control-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nb-form-field-addon {
+            margin-top: 20px !important;
+        }
+    }
+
+    .invalid-feedback {
+        color: red;
+        font-size: 12px;
+        order: 3;
+        letter-spacing: 0.04rem;
+    }
+
+    nb-select {
+        border-radius: 50px !important;
+
+        .select-button {
+            border-radius: 50px !important;
+            background-color: rgb(255 255 255 / 30%) !important;
+        }
+    }
+}

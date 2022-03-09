@@ -1,0 +1,31 @@
+::ng-deep {
+    .user-detail-card {
+        display: flex;
+        flex-wrap: wrap;
+        background: #edf1f7;
+        padding: 10px;
+        margin-bottom: 20px;
+        justify-content: space-between;
+    }
+
+    .title-holder {
+        display: flex;
+
+        .action {
+            margin-left: 15px;
+        }
+    }
+
+    .actions {
+        button {
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+        }
+    }
+}
+
+.select-all {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}

@@ -1,0 +1,75 @@
+:host {
+    width: 100%;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.organization-dropdown {
+    nb-icon {
+        color: #598bff;
+        margin-left: 5px;
+    }
+}
+
+.logo-holder {
+    display: block;
+    height: 2.25rem;
+    cursor: pointer;
+    user-select: none;
+
+    &.nopad {
+        margin-left: -1.25rem;
+    }
+
+    img {
+        height: 100%;
+    }
+}
+
+nb-action {
+    cursor: pointer;
+
+    a {
+        text-decoration: none;
+    }
+
+    &.vaccine-card {
+        cursor: default;
+    }
+}
+
+.actions {
+    display: flex;
+
+    .search-action {
+        cursor: pointer;
+    }
+
+    nb-actions {
+        nb-action {
+            &:last-child {
+                padding-right: 0 !important;
+            }
+        }
+    }
+}
+
+.company-name {
+    color: blue;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+nb-actions.size-small {
+    nb-action.sidebar-toggle {
+        padding-left: 0;
+    }
+}

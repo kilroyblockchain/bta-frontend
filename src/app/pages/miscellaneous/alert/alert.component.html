@@ -1,0 +1,15 @@
+<nb-card class="medium-card-width">
+    <nb-card-header>
+        <div class="title" *ngIf="!alert"><nb-icon icon="alert-triangle-outline"></nb-icon> {{ question }} {{ name }}?</div>
+        <div class="title" *ngIf="alert"><nb-icon icon="alert-triangle-outline"></nb-icon> {{ info }}</div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="actions" *ngIf="alert">
+            <button nbButton status="success" size="small" (click)="alertInfo()">{{ 'COMMON.BUTTON.OK' | translate }}</button>
+        </div>
+        <div class="actions" *ngIf="!alert">
+            <button nbButton status="success" size="small" (click)="selected()">{{ 'COMMON.BUTTON.YES' | translate }}</button>
+            <button nbButton status="danger" size="small" (click)="rejected()">{{ cancelBtnLabel | translate }}</button>
+        </div>
+    </nb-card-body>
+</nb-card>

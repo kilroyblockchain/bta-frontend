@@ -1,0 +1,22 @@
+<nb-card class="medium-card-width">
+    <nb-card-body *ngIf="detail">
+        <div class="detail-card">
+            <div class="name">
+                <app-blockchain-verified [blockName]="(detail?.name ?? '-') | titlecase" [blockchainVerified]="detail?.blockchainVerified ?? false"></app-blockchain-verified>
+                <span *ngIf="detail?.caseNo">
+                    - <small>{{ detail?.caseNo }}</small>
+                </span>
+            </div>
+            <div class="other-detail">
+                <div class="info" *ngFor="let info of detail?.informations">
+                    <span class="title">{{ info.label | translate }}</span>
+                    <ng-container *ngFor="let row of info.values">
+                        <span class="values" *ngIf="row.tooltipText" [nbTooltip]="row.tooltipText | translate">{{ row.value }}</span>
+                        <span class="values" *ngIf="!row.tooltipText">{{ row.value }}</span>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-body *ngIf="!detail"><app-loader></app-loader></nb-card-body>
+</nb-card>

@@ -1,10 +1,25 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { LoggedInGaurd } from './@core/gaurd/logged-in.guard';
 
-const routes: Routes = [];
+const routes: Routes = [
+    {
+        path: 'u',
+        loadChildren: async () => (await import('./pages/after-login/after-login.module')).AfterLoginModule,
+        canActivate: [LoggedInGaurd]
+    },
+    {
+        path: '',
+        loadChildren: async () => (await import('./pages/before-login/before-login.module')).BeforeLoginModule
+    }
+];
+
+const config: ExtraOptions = {
+    useHash: true
+};
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, config)],
+    exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

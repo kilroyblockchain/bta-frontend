@@ -1,0 +1,16 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label span {
+        padding-right: 10px;
+    }
+
+    p,
+    label span {
+        color: #4b4e5f;
+        font-size: 13px;
+        margin: 0;
+    }
+}

@@ -1,0 +1,13 @@
+@mixin text-ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin mat-icon {
+    font-size: 20px;
+    color: #858282;
+    display: block;
+    text-align: center;
+}

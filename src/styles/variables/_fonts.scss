@@ -1,0 +1,28 @@
+$font-size-base: 14px;
+$font-size-standard: 1rem;
+$line-height: 1.5;
+$letter-spacing: 0.025rem;
+$font-weight-700: 700;
+$font-weight-600: 600;
+$font-weight-500: 500;
+$font-weight-400: 400;
+$font-weight-300: 300;
+$font-weight-200: 200;
+$font-weight-100: 100;
+
+@function casey-unit($font-pixel) {
+    @return ($font-pixel / $font-size-base) * 1rem;
+}
+
+$font-size-sm: casey-unit(math.ceil($font-size-base * 0.85));
+$font-size-lg: casey-unit(math.ceil($font-size-base * 1.15));
+$headings-font-weight: $font-weight-700;
+$heading-margin-bottom: 20px;
+$sub-title-text-color: #8898aa;
+$subtitle-font-weight: $font-weight-600;
+$h1-font-size: casey-unit(math.ceil($font-size-base * 1.68));
+$h2-font-size: casey-unit(math.ceil($font-size-base * 1.42));
+$h3-font-size: casey-unit(math.ceil($font-size-base * 1.28));
+$h4-font-size: $font-size-standard;
+$h5-font-size: casey-unit(math.ceil($font-size-base * 0.85));
+$h6-font-size: casey-unit(math.ceil($font-size-base * 0.68));

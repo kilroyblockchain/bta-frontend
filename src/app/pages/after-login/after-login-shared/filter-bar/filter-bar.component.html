@@ -1,0 +1,16 @@
+<div class="table-container">
+    <div class="filter-status-holder">
+        <div class="page-subtitle">
+            <div class="status-filter-holder" [ngStyle]="{ 'justify-content': !filterLabel ? 'flex-end' : 'space-between' }">
+                <nb-toggle *ngIf="filterLabel" labelPosition="start" [(ngModel)]="toggleStatusFilter" (checkedChange)="toggleTable()">{{ filterLabel | translate }}</nb-toggle>
+            </div>
+        </div>
+    </div>
+    <div class="table-head">
+        <div class="search">
+            <app-search-input (search)="onSearch($event)"></app-search-input>
+        </div>
+        <div class="total-records">{{ 'COMMON.DESCRIPTION.RECORDS' | translate: { totalRecords: totalRecords } }}</div>
+        <pagination-controls *ngIf="dataFound && totalRecords > resultperpage" [id]="paginateId" directionalLinks="true" (pageChange)="pageChange($event)"> </pagination-controls>
+    </div>
+</div>

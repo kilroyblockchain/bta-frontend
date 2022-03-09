@@ -1,0 +1,65 @@
+<form [formGroup]="registrationFormGroup" (ngSubmit)="registrationFormSubmit(registrationFormGroup)">
+    <h4 class="title">{{ 'REGISTER.LABEL.CONTINUE_YOUR_ACCOUNT_REGISTRATION' | translate }}</h4>
+    <p class="sub-title">{{ 'REGISTER.LABEL.TELL_US_MORE_ABOUT' | translate: { companyName: stepOneData?.companyName } }}</p>
+    <div class="form-holder full">
+        <nb-checkbox status="basic" (checkedChange)="copyStepOneData()">{{ 'REGISTER.LABEL.USE_THE_SAME_INFORMATION' | translate }}</nb-checkbox>
+    </div>
+    <div class="form-holder full image-upload">
+        <label class="upload-holder" for="companyLogo">
+            <div class="upload-button">
+                <nb-icon icon="camera-outline"></nb-icon>
+            </div>
+            <img [src]="logoURL ? logoURL : '/assets/images/logo/logo-holder.png'" />
+        </label>
+        <input nbInput type="file" hidden id="companyLogo" formControlName="companyLogo" (change)="onFileChange($event)" />
+    </div>
+    <div class="form-inner-container two-col">
+        <div class="form-holder floating">
+            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="companyCountry" (selectedChange)="onSelectChange($event)">
+                <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
+            </nb-select>
+        </div>
+
+        <div class="form-holder floating">
+            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="companyState" [ngClass]="{ 'status-danger': submitted && UF.companyState.errors }">
+                <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
+            </nb-select>
+        </div>
+
+        <div class="form-holder floating">
+            <input id="address" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ADDRESS' | translate" formControlName="companyAddress" />
+            <label for="address" [attr.data-content]="'*' + ('COMMON.LABEL.ADDRESS' | translate)"></label>
+        </div>
+
+        <div class="form-holder floating">
+            <input id="zipcode" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ZIP_CODE' | translate" formControlName="companyZipCode" />
+            <label for="zipcode" [attr.data-content]="'*' + ('COMMON.LABEL.ZIP_CODE' | translate)"></label>
+        </div>
+
+        <div class="form-holder">
+            <label for="aboutOrganization">{{ 'REGISTER.LABEL.ABOUT_ORGANIZATION' | translate }}</label>
+            <textarea id="aboutOrganization" nbInput fullWidth formControlName="aboutOrganization"></textarea>
+        </div>
+
+        <div class="form-holder">
+            <label for="helpNeededFromApp">{{ 'REGISTER.LABEL.HELP_FROM_APP' | translate: { appTitle: appTitle } }}</label>
+            <textarea id="helpNeededFromApp" nbInput fullWidth formControlName="helpNeededFromApp"></textarea>
+        </div>
+
+        <div class="form-holder full">
+            <label for="contributionForApp">{{ 'REGISTER.LABEL.CONTRIBUTE_TO_APP' | translate: { appTitle: appTitle } }}</label>
+            <textarea id="contributionForApp" nbInput fullWidth formControlName="contributionForApp"></textarea>
+        </div>
+    </div>
+
+    <div class="form-holder full">
+        <nb-checkbox status="basic" (checkedChange)="changedOnAgreedOnTerms($event)">
+            <p [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
+        </nb-checkbox>
+    </div>
+
+    <div class="action-holder">
+        <button type="button" nbButton hero (click)="goBack()" *ngIf="enableBackButton">{{ 'REGISTER.BUTTON.GO_BACK' | translate }}</button>
+        <button nbButton hero status="primary" [disabled]="!enableSubmitButton">{{ 'REGISTER.BUTTON.REGISTER' | translate }}</button>
+    </div>
+</form>

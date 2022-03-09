@@ -1,0 +1,696 @@
+{
+    "COMMON": {
+        "BUTTON": {
+            "RESET_FILTER": "es Reset Filter",
+            "NEXT": "es Next",
+            "SAVE": "es SAVE",
+            "EDIT": "es Edit",
+            "YES": "es Yes",
+            "CANCEL": "es CANCEL",
+            "OK": "es OK",
+            "UPDATE": "es Update",
+            "SUBMIT": "es Submit",
+            "DONE": "es Done",
+            "DELETE": "es Delete",
+            "CHANGE_PASSWORD": "es Change Password",
+            "NO": "es No",
+            "ADD": "es Add",
+            "REMOVE": "es Remove",
+            "ADD_NOTE": "es Add Note",
+            "VIEW": "es View",
+            "COPY": "es Copy",
+            "DOWNLOAD": "es Download"
+        },
+        "RADIO": {
+            "YES": "es Yes",
+            "NO": "es No"
+        },
+        "PLACEHOLDER": {
+            "SEARCH": "es Search",
+            "SELECT_COUNTRY": "es Select Country",
+            "SELECT_STATE": "es Select State",
+            "FIRST_NAME": "es First Name",
+            "LAST_NAME": "es Last Name",
+            "EMAIL": "es Email",
+            "PHONE_NUMBER": "es Phone Number",
+            "ADDRESS": "es Address",
+            "CITY": "es City",
+            "ZIP_CODE": "es Zip Code",
+            "DATE_OF_BIRTH": "es Date of Birth",
+            "DROP_YOUR_ATTACHMENTS": "es Drop your attachments",
+            "FROM_DATE": "es From Date",
+            "TO_DATE": "es To Date",
+            "NEW_PASSWORD": "es New Password",
+            "CONFIRM_PASSWORD": "es Confirm Password"
+        },
+        "DESCRIPTION": {
+            "RECORDS": "es {{totalRecords}}  Records Found",
+            "USER": "es User",
+            "DETAIL": "es Detail",
+            "DATA_NOT_FOUND": "es Sorry, {{ type }} not found",
+            "VIEW_DETAIL": "es View Detail",
+            "ALL": "es All",
+            "GENERAL_INFORMATION": "es General",
+            "ENABLED": "es Enabled",
+            "DISABLED": "es Disabled",
+            "NO_DATA_FOUND": "es No Data Found",
+            "YES": "es Yes",
+            "NO": "es No",
+            "VERIFIED": "es Verified",
+            "UNVERIFIED": "es Unverified",
+            "NO_RECORD_TYPE_FOUND": "es No {{recordType}} Found",
+            "EMBED_PAGE": "es Embed Page"
+        },
+        "COLUMN_NAME": {
+            "UPDATED_AT": "es Updated At",
+            "CREATED_AT": "es Created At",
+            "ACTION": "es Actions",
+            "CREATED_DATE": "es Created Date",
+            "UPDATED_DATE": "es Updated-Date",
+            "STATUS": "es Status",
+            "DATE_OF_BIRTH": "es Birth Date",
+            "LOCATION": "es Location",
+            "EMAIL": "es Email",
+            "TITLE": "es Title",
+            "PHONE": "es Phone",
+            "CREATED_BY": "es Created By",
+            "COUNTRY_NAME": "es Country",
+            "STATE_NAME": "es State",
+            "ADDRESS": "es Address",
+            "ZIP_CODE": "es Zip Code",
+            "NAME": "es Name",
+            "TYPE": "es Type",
+            "FIRST_NAME": "es First Name",
+            "LAST_NAME": "es Last Name",
+            "ORGANIZATION_NAME": "es Organization Name",
+            "FOR": "es For",
+            "POSITION": "es Position",
+            "LOGGED_IN_AT": "es Logged In At",
+            "LOGGED_OUT_AT": "es Logged Out At"
+        },
+        "MENU_ITEM": {
+            "DEACTIVATE": "es Deactivate",
+            "MANAGE": "es Manage",
+            "ENABLE": "es Enable",
+            "DISABLE": "es Disable",
+            "EDIT": "es Edit",
+            "VIEW": "es View",
+            "BC_HISTORY": "es BC History",
+            "DELETE": "es Delete"
+        },
+        "TOOLTIP": {
+            "BLOCKCHAIN_VERIFIED": "es Kilroy Blockchain Verified",
+            "ALL": "es All",
+            "PAST": "es Past",
+            "TODAY": "es Today",
+            "FUTURE": "es Future",
+            "EMPTY": "es Empty",
+            "EDIT": "es Edit",
+            "DELETE": "es Delete",
+            "ENABLE": "es Enable",
+            "DISABLE": "es Disable",
+            "VIEW": "es View",
+            "ADD": "es Add",
+            "VERIFY": "es Verify",
+            "CREATED_TIME": "es Created Time",
+            "MANAGE": "es Manage",
+            "CLOSE": "es Close",
+            "PHONE_NUMBER": "es Phone Number",
+            "ALTERNATE_PHONE_NUMBER": "es Alternate Phone Number",
+            "EMAIL": "es Email",
+            "VIEW_DETAIL": "es View Detail",
+            "CREATED_DATE": "es Created Date",
+            "UPDATED_DATE": "es Updated-Date"
+        },
+        "LABEL": {
+            "COUNTRY": "es Country",
+            "STATE": "es State",
+            "ALTERNATE_PHONE": "es Alternate Phone",
+            "ADDRESS": "es Address",
+            "CREATED_AT": "es Created At",
+            "FIRST_NAME": "es First Name",
+            "LAST_NAME": "es Last Name",
+            "EMAIL": "es Email",
+            "PHONE_NUMBER": "es Phone Number",
+            "ZIP_CODE": "es Zip Code",
+            "ORGANIZATION_NAME": "es Organization Name",
+            "NAME": "es Name",
+            "NEW_PASSWORD": "es New Password",
+            "CONFIRM_PASSWORD": "es Confirm Password",
+            "DATE_OF_BIRTH": "es Date of Birth",
+            "TIMESTAMP": "es Timestamp",
+            "CITY": "es City",
+            "LOCATION": "es Location",
+            "NOTE": "es Note",
+            "TITLE": "es Title",
+            "SEARCH_HERE": "es Type here to search...",
+            "DATE": "es Date",
+            "MANAGE": "es Manage",
+            "CREATED_BY": "es Created By",
+            "NEXT": "es Next",
+            "PREVIOUS": "es Previous",
+            "DESCRIPTION": "es Description",
+            "SEARCH_BY": "es Search By",
+            "NONE": "es None",
+            "DEPARTMENT": "es Department",
+            "OTHER": "es Other",
+            "FROM_DATE": "es From Date",
+            "TO_DATE": "es To Date"
+        },
+        "VALIDATIONS": {
+            "EMAIL_IS_REQUIRED": "es Email is required",
+            "EMAIL_MUST_BE_VALID": "es Email must be a valid email address",
+            "FIRSTNAME_IS_REQUIRED": "es First Name is required",
+            "LASTNAME_IS_REQUIRED": "es Last Name is required",
+            "PHONE_IS_REQUIRED": "es Phone number is required",
+            "PHONE_MIN_LENGTH": "es Phone Number must be at least {{ minLength }} characters",
+            "PHONE_MAX_LENGTH": "es Phone Number must not be more than {{ maxLength }} characters",
+            "INVALID_PHONE": "es Phone Number is invalid",
+            "COUNTRY_IS_REQUIRED": "es Country is required",
+            "STATE_IS_REQUIRED": "es State is required",
+            "ADDRESS_IS_REQUIRED": "es Address is required",
+            "ZIP_IS_REQUIRED": "es Zip Code is required",
+            "FIRSTNAME_MIN_LENGTH": "es First Name must be at least {{ minLength }} characters",
+            "LASTNAME_MIN_LENGTH": "es Last Name must be at least {{ minLength }} characters",
+            "ADDRESS_MIN_LENGTH": "es Address must be at least {{ minLength }} characters",
+            "ZIP_CODE_MIN_LENGTH": "es ZIP Code must be at least {{ minLength }} characters",
+            "NAME_MIN_LENGTH": "es Name must be at least {{minLength }} characters",
+            "NAME_IS_REQUIRED": "es Name is required",
+            "CITY_IS_REQUIRED": "es City is required",
+            "DOB_IS_REQUIRED": "es Date of Birth is required",
+            "DOB_MIN_DATE": "es Date of Birth must be after {{ minDate}}",
+            "DOB_MAX_DATE": "es Date of Birth must be before {{ maxDate}}",
+            "PASSWORD_IS_REQUIRED": "es Password is required",
+            "PASSWORD_MIN_LENGTH": "es Password must be at least {{ minPasswordLength }} characters",
+            "NEW_PASSWORD_IS_REQUIRED": "es New Password is required",
+            "NEW_PASSWORD_MIN_LENGTH": "es New Password must be at least {{ minPasswordLength }} characters",
+            "CONFIRM_PASSWORD_DOES_NOT_MATCH": "es Confirm Password does not match with new password",
+            "CONFIRM_PASSWORD_IS_REQUIRED": "es Confirm Password is required",
+            "CONFIRM_PASSWORD_MIN_LENGTH": "es Confirm Password must be at least {{ minPasswordLength }} characters",
+            "ORGANIZATION_NAME_IS_REQUIRED": "es Organization Name is required",
+            "LOCATION_IS_REQUIRED": "es Location is required",
+            "TITLE_IS_REQUIRED": "es Title is required",
+            "FROM_DATE_REQUIRED": "es From date is required",
+            "TO_DATE_REQUIRED": "es To date is required",
+            "TO_DATE_MIN": "es To date must not be earlier than {{ minDate }}"
+        },
+        "USER_DETAIL": {
+            "NAME": "es Name",
+            "FIRSTNAME": "es First Name",
+            "LASTNAME": "es Last Name",
+            "EMAIL": "es Email",
+            "PHONE": "es Phone",
+            "ADDRESS": "es Address",
+            "ZIP_CODE": "es Zip Code",
+            "PHONE_NO": "es Phone No",
+            "COUNTRY": "es Country",
+            "STATE": "es State",
+            "DOB": "es Date Of Birth",
+            "ALTERNATE_PHONE": "es Alternate Phone",
+            "CITY": "es City",
+            "ORGANIZATION_UNIT": "es Organization Unit",
+            "STAFFING": "es Staffing"
+        },
+        "ALERT_MSG": {
+            "DISABLE_DATA_RECORD": "es Do you want to disable {{recordType}} {{name}}",
+            "DELETE_DATA_RECORD": "es Do you want to delete {{recordType}} {{name}}",
+            "ENABLE_DATA_RECORD": "es Do you want to enable {{recordType}} {{name}}"
+        }
+    },
+    "PAGE_TITLE": {
+        "REPORT_ISSUE": "es Report Issue",
+        "VERIFY_TRACER": "es Verify Tracer",
+        "USER_ACCEPT": "es User Accept",
+        "TERMS_AND_CONDITIONS": "es Terms and Conditions",
+        "LOGIN": "es Login",
+        "REGISTER": "es Register",
+        "REQUEST_PASSWORD": "es Request Password",
+        "RESET_PASSWORD": "es Reset Password",
+        "COMPANY_TRANSFER": "es Organization Transfer",
+        "BILLING": "es Billing",
+        "THANK_YOU": "es Thank you",
+        "DASHBOARD": "es Dashboard",
+        "ADMIN": "es Admin",
+        "PROFILE_DETAILS": "es Profile Details",
+        "USER_LIST_ADMIN": "es User List (Admin) ",
+        "UNVERIFIED_USER_LIST": "es Unverified User List (Admin)",
+        "USER_LIST": "es User List",
+        "REPORTED_ISSUES": "es Issues",
+        "COMPANY_TRANSFERS": "es Organization Transfer",
+        "ORGANIZATION_UNIT": "es Organization Unit",
+        "MANAGE_USER": "es Manage User",
+        "BLOCKCHAIN_HISTORY": "es Blockchain History",
+        "REJECTED_COMPANY_LIST": "es Rejected Organization List",
+        "BLOCKED_USERS": "es Blocked Users",
+        "USER_ACTIVITY_LOG": "es User Activity",
+        "CMS_LIST": "es CMS"
+    },
+    "FOOTER": {
+        "TITLE": {
+            "COPYRIGHT_TEXT": "es ©Copyright {{currentYear}} Kilroy Blockchain Corporation, All Rights Reserved"
+        },
+        "LABEL": {
+            "SELECT": "es Select Language"
+        }
+    },
+    "LOGIN": {
+        "TITLE": {
+            "WELCOME_TO_APP": "es Welcome to {{appTitle}}",
+            "SIGN_IN_BY_ENTERING_THE_INFORMATION_BELOW": "es Sign in by entering the information below"
+        },
+        "BUTTON": {
+            "LOGIN": "es Login",
+            "CREATE_AN_ACCOUNT": "es Create an Account",
+            "FORGOT_PASSWORD": "es Forgot Password?"
+        },
+        "LABEL": {
+            "EMAIL": "es Email",
+            "PASSWORD": "es Password"
+        },
+        "PLACEHOLDER": {
+            "EMAIL": "es Email",
+            "PASSWORD": "es Password"
+        }
+    },
+    "REGISTER": {
+        "TITLE": "es Start Registration for your account",
+        "SUBTITLE": "es Create your account to use our application",
+        "PLACEHOLDER": {
+            "CHOOSE_SUBSCRIPTION_TYPE": "es Choose Subscription Type",
+            "COMPANY": "es Organization",
+            "JOB_TITLE": "es Job Title"
+        },
+        "VALIDATIONS": {
+            "SUBSCRIPTION_TYPE_IS_REQUIRED": "es Subscription type is required",
+            "COMPANY_IS_REQUIRED": "es Organization is required",
+            "COMPANY_MIN_LENGTH": "es  Organization must be at least {{ minLength }} characters",
+            "JOB_TITLE_IS_REQUIRED": "es Job title is required",
+            "JOB_TITLE_MIN_LENGTH": "es  Job Title must be at least {{ minLength }} characters"
+        },
+        "LABEL": {
+            "AGREE_THE_TERMS_AND_CONDITION": "es Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
+            "COMPANY": "es Organization",
+            "JOB_TITLE": "es Job Title",
+            "CONTINUE_YOUR_ACCOUNT_REGISTRATION": "es Continue your account registration",
+            "USE_THE_SAME_INFORMATION": "es Use the same information (address) from the registration page",
+            "TELL_US_MORE_ABOUT": "es Tell us more about {{ companyName }}",
+            "ABOUT_ORGANIZATION": "es Describe what your business does",
+            "HELP_FROM_APP": "es Describe what help you would like from the {{appTitle}} network",
+            "CONTRIBUTE_TO_APP": "es Describe what your organization is looking to contribute at {{appTitle}} network"
+        },
+        "BUTTON": {
+            "REGISTER": "es Register",
+            "CONTINUE": "es Continue",
+            "REPORT_ISSUE": "es Report Issue",
+            "GO_BACK": "es Back"
+        },
+        "DESCRIPTION": {
+            "TERMS_AND_CONDITIONS": "es Terms and Conditions"
+        }
+    },
+    "FORGOT_PASSWORD": {
+        "TITLE": {
+            "RESET_PASSWORD": "es Reset Password"
+        },
+        "DESCRIPTION": {
+            "PLEASE_ENTER_YOUR_PASSWORD": "es Please enter your password in order to reset your password"
+        },
+        "LABEL": {
+            "TITLE": "es Forgot Password?",
+            "SUB_TITLE": "es Please enter you email, so that we can send you further detail",
+            "PASSWORD_RESET_EMAIL_SENT": "es Password Reset Email Sent",
+            "AN_EMAIL_HAS_BEEN_SENT": "es An email has been sent to your email {{ email }}.  Follow the directions in the email to reset your password"
+        },
+        "BUTTON": {
+            "RESET_PASSWORD": "es Reset Password",
+            "GO_TO_LOGIN": "es Go To Login"
+        }
+    },
+    "CHANGE_PASSWORD": {
+        "TITLE": {
+            "CHANGE_PASSWORD": "es Change Password"
+        },
+        "DESCRIPTION": {
+            "PLEASE_ENTER_YOUR_CURRENT_PASSWORD": "es Please enter your current password and new password in order to change your password"
+        },
+        "LABEL": {
+            "CURRENT_PASSWORD": "es Current Password"
+        },
+        "PLACEHOLDER": {
+            "CURRENT_PASSWORD": "es Current Password"
+        }
+    },
+    "THANK_YOU": {
+        "LABEL": {
+            "THANK_YOU_FOR_REGISTRATION": "es Thank you for your registration, you will be notified when your account is activated. This could take up to two weeks.",
+            "THANK_YOU_FOR_INTEREST": "es Thank you for your interest in {{appTitle}} network.",
+            "WELCOME_TO_COMMUNITY": "es Welcome to the initiative to provide community-based organizations with meaningful options so they can fight COVID-19 in an impactful way.",
+            "RESOURCES_AND_NEXT_STEPS": "es Resources and Next Steps",
+            "EMAIL_US_AT": "es Set up an introductory call with your {{appTitle}} Account Executive by emailing us at <a href='mailto:info@kilroyblockchain.com'> info@kilroyblockchain.com</a>",
+            "VISIT_US_AT_OUR_WEBSITE": "es Visit <a href='https://casey.health'>https://casey.health</a> to download the infographic describing the network. You can learn more about the product at <a href='https://kilroyblockchain.com/casey'>https://kilroyblockchain.com/casey</a>.",
+            "WE_ARE_HERE_TO_HELP": "es We are here to help",
+            "CONTACT_US": "es If you have any questions, feel free to <a href='https://kilroyblockchain.com/contact' target='_blank'> <span> contact us. </span></a>",
+            "THANK_YOU": "es Thank you",
+            "KILROY_BLOCKCHAIN": "es Kilroy Blockchain",
+            "APP_TEAM": "es {{appTitle}} Team"
+        }
+    },
+    "MANAGE_USERS": {
+        "ORGANIZATION_UNIT": {
+            "TITLE": {
+                "ORGANIZATION_UNIT": "es Organization Units",
+                "ADD_ORGANIZATION_UNIT": "es Add Organization Unit",
+                "EDIT_ORGANIZATION_UNIT": "es Edit Organization Unit"
+            },
+            "BUTTON": {
+                "ORGANIZATION_UNIT": "es Organization Unit"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_UNIT": "es Show Active Units",
+                "UNIT_NAME": "es Unit Name",
+                "FEATURES": "es Feature(s)"
+            },
+            "VALIDATIONS": {
+                "UNIT_NAME_IS_REQUIRED": "es Unit name is required",
+                "SELECT_ATLEAST_ONE_FEATURE": "es Select atleast one feature"
+            },
+            "PLACEHOLDER": {
+                "DESCRIPTION": "es Description",
+                "SELECT_FEATURES": "es Select Feature(s)"
+            },
+            "TOOLTIP": {
+                "ADD_STAFFING": "es Add Staffing"
+            },
+            "COLUMN_NAME": {
+                "UNIT_NAME": "es Unit Name",
+                "DESCRIPTION": "es Description"
+            },
+            "ALERT_MSG": {
+                "DISABLE_ORGANIZATION_UNIT": "es Do you want to disable organization unit"
+            }
+        },
+        "ORG_STAFFING": {
+            "TITLE": {
+                "ADD_ORGANIZATION_STAFFING": "es Add Organization Staffing for {{unitName}}",
+                "UPDATE_ORGANIZATION_STAFFING": "es Update Organization Staffing for {{unitName}}"
+            },
+            "LABEL": {
+                "MANAGE_FEATURE_ACCESS": "es Manage {{Feature}}"
+            },
+            "VALIDATIONS": {
+                "STAFFING_NAME_IS_REQUIRED": "es Staffing name is required",
+                "ACCESS_LIST_IS_REQUIRED": "es Access List is required"
+            },
+            "PLACEHOLDER": {
+                "STAFFING_NAME": "es Staffing Name"
+            },
+            "DESCRIPTION": {
+                "FEATURE_ACCESS_LEVEL": "es Feature access Level"
+            }
+        },
+        "USERS": {
+            "TITLE": {
+                "USER": "es User",
+                "CREATE_USER": "es Create User",
+                "EDIT_USER": "es Edit User"
+            },
+            "BUTTON": {
+                "ADD_USER": "es Add User"
+            },
+            "LABEL": {
+                "ORGANIZATION_UNIT": "es Organization Unit",
+                "STAFFING": "es Staffing"
+            },
+            "VALIDATIONS": {
+                "ORGANIZATION_UNIT_IS_REQUIRED": "es Organization Unit is required",
+                "STAFFING_IS_REQUIRED": "es Staffing Unit is required"
+            },
+            "PLACEHOLDER": {
+                "SELECT_ORGANIZATION_UNIT": "es Select Organization Unit",
+                "SELECT_STAFFING": "es Select Staffing",
+                "SELECT_SUBSCRIPTION": "es Select Subscription"
+            },
+            "TOOLTIP": {
+                "ORGANIZATION_UNIT": "es Organization Unit",
+                "STAFFING": "es Staffing"
+            },
+            "ALERT_MSG": {
+                "DISABLE_USER": "es Do you want to disable user "
+            },
+            "DESCRIPTION": {
+                "SHOW_ENABLED_USERS": "es Show Enabled Users",
+                "PERSONAL_DETAIL": "es Personal Detail",
+                "ORGANIZATION_DETAIL": "es Organization Detail"
+            }
+        },
+        "USERS_ACTIVITY": {
+            "TITLE": {
+                "USERS_ACTIVITY": "es User Activity",
+                "CLICK_TO_VIEW_ALL_USERS": "es Click to view all users",
+                "CLICK_TO_VIEW_ONLINE_USERS": "es Click to view online users"
+            },
+            "BUTTON": {
+                "ONLINE_USERS": "es Online Users",
+                "ALL_USERS": "es All Users"
+            }
+        }
+    },
+    "PERSONAL_DETAIL": {
+        "TITLE": {
+            "PERSONAL_DETAILS": "es Personal Details",
+            "EDUCATION": "es Education",
+            "EXPERIENCE": "es Experience",
+            "SKILLS": "es Skills",
+            "LANGUAGES": "es Languages",
+            "BASIC_INFORMATION": "es Basic Information",
+            "OTHER_DETAILS": "es Other Details",
+            "UPDATE_PERSONAL_DETAILS": "es Update Personal Details",
+            "ADD_EDUCATION_DETAIL": "es Add Education Detail",
+            "EDIT_EDUCATION_DETAIL": "es Edit Education Detail",
+            "ADD_EXPERIENCE_DETAIL": "es Add Experience Detail",
+            "EDIT_EXPERIENCE_DETAIL": "es Edit Experience Detail",
+            "ADD_SKILLS": "es Add Skills",
+            "ADD_LANGUAGES": "es Add Languages"
+        },
+        "BUTTON": {},
+        "LABEL": {
+            "SCHOOL": "es School",
+            "DEGREE": "es Degree",
+            "FIELD_OF_STUDY": "es Field of Study",
+            "GRADE": "es Grade",
+            "YEAR": "es Year",
+            "TITLE": "es Title",
+            "EMPLOYMENT_TYPE": "es Employment Type",
+            "ORGANIZATION": "es Organization",
+            "ASSIGNED_ORGANIZATIONS": "es Assigned Organizations",
+            "BIRTHDAY": "es Birthday",
+            "ID": "es ID",
+            "JOB_TITLE": "es Job Title",
+            "END_YEAR": "es End Year",
+            "START_YEAR": "es Start Year",
+            "SKILLS": "es Skills",
+            "LANGUAGE": "es Language"
+        },
+        "VALIDATIONS": {
+            "START_YEAR_IS_REQUIRED": "es Start year is required",
+            "GRADE_IS_REQUIRED": "es Grade is required",
+            "FIELD_OF_STUDY_IS_REQUIRED": "es Field of Study is required",
+            "DEGREE_IS_REQUIRED": "es Degree is required",
+            "SCHOOL_IS_REQUIRED": "es School is required",
+            "START_YEAR_MUST_BE_BEFORE_THE_END_YEAR": "es Start Year must be Before the End year",
+            "END_YEAR_MUST_BE_AFTER_START_YEAR": "es End Year must be After Start year",
+            "ORGANIZATION_IS_REQUIRED": "es Organization is required",
+            "EMPLOYMENT_TYPE_IS_REQUIRED": "es Employment Type is required",
+            "START_DATE_IS_REQUIRED": "es Start Date is required",
+            "START_DATE_MUST_BE_BEFORE_TODAY": "es Start Date must be before today",
+            "END_DATE_MUST_BE_BEFORE_TODAY": "es End Date must be before today"
+        },
+        "PLACEHOLDER": {
+            "SELECT_ORGANIZATION_UNIT": "es Select Organization Unit",
+            "SELECT_STAFFING": "es Select Staffing",
+            "SKILLS": "es Skills",
+            "LANGUAGES": "es Languages",
+            "SELECT_START_YEAR": "es Select Start Year",
+            "SELECT_END_YEAR": "es Select End Year",
+            "SELECT_EMPLOYMENT_TYPE": "es Select Employment Type",
+            "SEARCH_SKILLS": "es Search Skills",
+            "SEARCH_LANGUAGES": "es Search Languages"
+        },
+        "TOOLTIP": {
+            "ADD_SKILLS": "es Add skills",
+            "ADD_LANGUAGES": "es Add Language",
+            "ADD_EDUCATION_DETAIL": "es Add Education Detail",
+            "ADD_EXPERIENCE_DETAIL": "es Add Experience Detail"
+        },
+        "ALERT_MSG": {
+            "DELETE_EDUCATION": "es Do you want to delete education {{degree}} ",
+            "DELETE_EXPERIENCE": "es Do you want to delete experience {{experience}} "
+        },
+        "DESCRIPTION": {
+            "SHOW_ENABLED_USERS": "es Show Enabled Users",
+            "PERSONAL_DETAIL": "es Personal Detail",
+            "ORGANIZATION_DETAIL": "es Organization Detail",
+            "ADD_NEW_SKILL": "es Add New Skills",
+            "ADD_NEW_LANGUAGE": "es Add New Language"
+        }
+    },
+    "DASHBOARD": {
+        "TITLE": {
+            "LOGIN_COUNT_SUMMARY": "es Login Count Summary"
+        },
+        "LABEL": {
+            "TODAY_USER_COUNT": "es Today",
+            "LAST_WEEK_USER_COUNT": "es Last Week",
+            "LAST_MONTH_USER_COUNT": "es Last Month",
+            "LAST_3_MONTH": "es Last 3 Month",
+            "LAST_6_MONTH": "es Last 6 Month",
+            "LAST_YEAR": "es Last Year",
+            "TOTAL_USER_COUNT": "es Total Users",
+            "REALTIME_ONLINE_USER_COUNT": "es Realtime Online Users"
+        }
+    },
+    "HEADER": {
+        "MENU_ITEM": {
+            "ORGANIZATIONAL": "es Organizational",
+            "SUPER_ADMIN": "es Super Admin",
+            "PROFILE": "es Profile",
+            "YOUR_ORGANIZATION_DETAILS": "es View Organization Details",
+            "CHANGE_PASSWORD": "es Change Password",
+            "LOGOUT": "es Logout",
+            "LOGIN": "es Login",
+            "REGISTER": "es Register",
+            "DASHBOARD": "es Dashboard",
+            "MANAGE_USERS": "es Manage Users",
+            "ORGANIZATION_UNIT": "es Organization Unit",
+            "USER": "es User",
+            "USER_ACTIVITY": "es User Activity"
+        }
+    },
+    "ORGANIZATION_DETAILS": {
+        "TITLE": {
+            "ORG_DETAIL": "es Organization Details",
+            "EDIT_ORGANIZATION": "es Edit Organization"
+        },
+        "PLACEHOLDER": {
+            "COMPANY_NAME": "es Organization Name"
+        },
+        "LABEL": {
+            "UNIT_NAME": "es Unit Name",
+            "STAFFING_NAME": "es Staffing Name",
+            "DESCRIBE_WHAT_HELP_YOU_WOULD_LIKE_FROM_THE_APP_NETWORK": "es Describe what help you would like from the {{appTitle}} network",
+            "DESCRIBE_WHAT_YOUR_ORGANIZATION_IS_LOOKING_TO_CONTRIBUTE_AT_APP_NETWORK": "es Describe what your organization is looking to contribute at {{appTitle}} network",
+            "DESCRIBE_WHAT_YOUR_BUSINESS_DOES": "es Describe what your business does",
+            "COMPANY_NAME": "es Organization Name",
+            "COMPANY_ADDRESS": "es Organization Address"
+        },
+        "VALIDATIONS": {
+            "COMPANY_NAME": "es Organization name is required",
+            "STATE_IS_REQUIRED_IF_COUNTRY_IS_SELECTED": "es State is required if country is selected."
+        }
+    },
+    "SUPER_ADMIN": {
+        "TITLE": {
+            "ORGANIZATION_ADMIN": "es Organization Admin",
+            "NON_ADMIN_USERS": "es Non Admin Users",
+            "UNVERIFIED_USER_LIST": "es Unverified Organization",
+            "REJECTED_COMPANY_LIST": "es Rejected Organization",
+            "ADD_NEW_WORKFLOW": "es Add New Workflow",
+            "REJECT_INFORMATION": "es Reject information of {{companyName}}",
+            "ADDITIONAL_REJECT_INFORMATION": "es Additional reject information",
+            "ASSIGN_NEW_SUBSCRIPTION_TYPE": "es Assign New Subscription Type to {{name}}",
+            "UPDATE_ASSIGNED_SUBSCRIPTION_TYPE": "es Update Assigned Subscription Type to {{name}}",
+            "CMS_LIST": "es CMS",
+            "BLOG": "es Blog",
+            "CMS_BLOG": "es CMS Blog",
+            "CREATED_AT": "es Created At",
+            "UPDATED_AT": "es and Updated At",
+            "BLOCKED_USERS": "es Blocked Users",
+            "TAB_TITLE": {
+                "ALL": "es All"
+            }
+        },
+        "SIDEBAR_MENU": {
+            "APP_USERS": "es {{appTitle}} Users",
+            "ORGANIZATION_ADMIN": "es Organization Admin",
+            "UNVERIFIED_ORGANIZATION": "es Unverified Organization",
+            "REJECTED_ORGANIZATION": "es Rejected Organization",
+            "NON_ADMIN_USERS": "es Non Admin Users",
+            "CONFIGURATION": "es Configuration",
+            "CMS": "es CMS",
+            "ISSUES": "es Issues",
+            "ORGANIZATION_TRANSFER": "es Organization Transfer",
+            "BLOCKED_USERS": "es Blocked Users"
+        },
+        "BUTTON": {
+            "ADD_NEW_CMS": "es Add New CMS",
+            "SHOW_ACTIVE_CMS": "es Show Active CMS",
+            "CMS_STATUS": "es CMS Status"
+        },
+        "MENU_ITEM": {
+            "COPY_URL": "es Copy URL"
+        },
+        "LABEL": {
+            "TITLE": "es Title",
+            "LIST": "es List",
+            "SHOW_ENABLED_USERS": "es Show Enabled Users",
+            "DESCRIPTION": "es Description",
+            "ORGANIZATION": "es Organization",
+            "SUBSCRIPTION_TYPES": "es Subscription Type(s)",
+            "RESOURCE_TITLE": "es Title",
+            "RESOURCE_LINK": "es Link",
+            "BLOG_TITLE": "es Blog Title",
+            "BLOG_URL": "es Blog URL",
+            "CONTENT": "es Content"
+        },
+        "PLACEHOLDER": {
+            "TITLE": "es Title",
+            "LIST": "es List",
+            "DESCRIPTION": "es Description",
+            "SELECT_ORGANIZATION": "es Select Organization",
+            "RESOURCE_TITLE": "es Title",
+            "RESOURCE_LINK": "es Link",
+            "ENTER_YOUR_CONTENT_HERE": "es Enter your content here"
+        },
+        "TOOLTIP": {
+            "ASSIGN_ORGANIZATION": "es Assign organization",
+            "UPDATE_SUBSCRIPTION_TYPE": "es Update Subscription Type",
+            "REJECT_ORGANIZATION": "es Reject Organization",
+            "VIEW_REJECT_DETAIL": "es View Reject Detail",
+            "UNBLOCK_USER": "es Unblock User"
+        },
+        "COLUMN_NAME": {
+            "ORGANIZATION": "es Organization",
+            "POST": "es Post",
+            "ADDRESS": "es Address",
+            "SUBSCRIPTION_TYPE": "es Subscription Type",
+            "DESCRIPTION": "es Description",
+            "REJECTED_BY": "es Rejected By",
+            "DATE": "es Date",
+            "URL": "es URL",
+            "CREATED": "es Created"
+        },
+        "VALIDATIONS": {
+            "TITLE_IS_REQUIRED": "es Title is required",
+            "LIST_NAME_IS_REQUIRED": "es List name is required",
+            "DESCRIPTION_SHOULD_HAVE_MINIMUM_CHARACTERS": "es Description should have minimum of {{ minlength }} characters",
+            "SELECT_ONE_ORGANIZATION": "es Select one Organization",
+            "SELECT_ONE_SUBSCRIPTION_TYPE": "es Select one Subscription Type",
+            "LINK_IS_REQUIRED": "es Link is required",
+            "TITLE_MUST_BE_ATLEAST_X_CHARACTERS": "es Title must be atleast {{minLength}} characters",
+            "BLOG_TITLE_IS_REQUIRED": "es Blog Title is required",
+            "BLOG_URL_IS_REQUIRED": "es Blog URL is required",
+            "BLOG_CONTENT_IS_REQUIRED": "es Blog Content is required",
+            "DUPLICATE_TITLE": "es Title must be unique"
+        },
+        "DESCRIPTION": {
+            "SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION": "es Select the Verify icon to verify the organization",
+            "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "es Select the Enable icon to enable the organization (subscription)",
+            "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "es Select the Disable icon to disable the organization (subscription)",
+            "REJECTED_INFORMATION": "es Rejected Information",
+            "SHOW_ENABLED_SYMPTOMS": "es Show Enabled Symptoms"
+        },
+        "ALERT_MSG": {
+            "UNBLOCK_USER": "es Do you want to unblock user {{name}}"
+        }
+    }
+}
