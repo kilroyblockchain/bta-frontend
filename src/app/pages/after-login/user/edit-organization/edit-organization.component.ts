@@ -39,9 +39,6 @@ export class EditOrganizationComponent implements OnInit {
             city: [''],
             address: [''],
             zipCode: [''],
-            aboutOrganization: [''],
-            contributionForApp: [''],
-            helpNeededFromApp: [''],
             companyLogo: [''],
             image: ['']
         });
@@ -98,10 +95,7 @@ export class EditOrganizationComponent implements OnInit {
                             state: res.state,
                             city: res.city,
                             address: res.address,
-                            zipCode: res.zipCode,
-                            aboutOrganization: res.aboutOrganization,
-                            contributionForApp: res.contributionForApp,
-                            helpNeededFromApp: res.helpNeededFromApp
+                            zipCode: res.zipCode
                         });
                         if (res.companyLogo) {
                             this.logoURL = this.imageBaseUrl + res.companyLogo;

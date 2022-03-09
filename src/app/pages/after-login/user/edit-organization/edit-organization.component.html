@@ -61,21 +61,6 @@
                     <input id="zipcode" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ZIP_CODE' | translate" formControlName="zipCode" />
                     <label for="zipcode" [attr.data-content]="'COMMON.LABEL.ZIP_CODE' | translate"></label>
                 </div>
-
-                <div class="form-holder">
-                    <label for="aboutOrganization">{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_YOUR_BUSINESS_DOES' | translate }}</label>
-                    <textarea id="aboutOrganization" nbInput fullWidth formControlName="aboutOrganization"></textarea>
-                </div>
-
-                <div class="form-holder">
-                    <label for="helpNeededFromApp">{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_HELP_YOU_WOULD_LIKE_FROM_THE_APP_NETWORK' | translate: { appTitle: appTitle | titlecase } }}</label>
-                    <textarea id="helpNeededFromApp" nbInput fullWidth formControlName="helpNeededFromApp"></textarea>
-                </div>
-
-                <div class="form-holder">
-                    <label for="contributionForApp">{{ 'ORGANIZATION_DETAILS.LABEL.DESCRIBE_WHAT_YOUR_ORGANIZATION_IS_LOOKING_TO_CONTRIBUTE_AT_APP_NETWORK' | translate: { appTitle: appTitle | titlecase } }}</label>
-                    <textarea id="contributionForApp" nbInput fullWidth formControlName="contributionForApp"></textarea>
-                </div>
             </div>
         </form>
     </nb-card-body>

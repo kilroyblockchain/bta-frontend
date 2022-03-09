@@ -2,7 +2,7 @@
     <nb-card-header
         >{{ 'DASHBOARD.TITLE.LOGIN_COUNT_SUMMARY' | translate }}
         <div class="chart-actions">
-            <app-show-hide-embed-buttons [loading]="loading" (isChartHidden)="hideShowChart($event)" [hideEmbed]="true"></app-show-hide-embed-buttons>
+            <app-show-hide-buttons [loading]="loading" [isHidden]="isHidden" (isCardHidden)="hideShowLoginSummary($event)"></app-show-hide-buttons>
         </div>
     </nb-card-header>
     <nb-card-body *ngIf="!isHidden">

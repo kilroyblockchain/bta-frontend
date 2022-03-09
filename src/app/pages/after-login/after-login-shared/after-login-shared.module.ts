@@ -7,9 +7,9 @@ import { BlockchainHistoryGridComponent } from './blockchain-history-grid/blockc
 import { LoginSummaryComponent } from './login-summary/login-summary.component';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { CustomPipeModule } from 'src/app/@core/pipes/pipe.module';
-import { ShowHideEmbedButtonsComponent } from './show-hide-embed-buttons/show-hide-embed-buttons.component';
+import { ShowHideButtonsComponent } from './show-hide-buttons/show-hide-buttons.component';
 
-const COMPONENTS = [DetailCardComponent, BlockchainHistoryGridComponent, LoginSummaryComponent, FilterBarComponent, ShowHideEmbedButtonsComponent];
+const COMPONENTS = [DetailCardComponent, BlockchainHistoryGridComponent, LoginSummaryComponent, FilterBarComponent, ShowHideButtonsComponent];
 
 @NgModule({
     declarations: [...COMPONENTS],

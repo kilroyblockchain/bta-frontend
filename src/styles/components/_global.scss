@@ -93,6 +93,10 @@ a {
     }
 }
 
+.cdk-overlay-container {
+    z-index: 1040 !important;
+}
+
 .cdk-overlay-pane {
     nb-card {
         &.increase-card-width {
