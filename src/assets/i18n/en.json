@@ -575,8 +575,8 @@
         },
         "DESCRIPTION": {
             "SELECT_THE_VERIFY_ICON_TO_VERIFY_THE_ORGANIZATION": "Select the Verify icon to verify the organization",
-            "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "Select the Enable icon to enable the organization",
-            "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "Select the Disable icon to disable the organization",
+            "SELECT_THE_ENABLE_ICON_TO_ENABLE_THE_ORGANIZATION": "Select the Enable icon to enable the organization (subscription)",
+            "SELECT_THE_DISABLE_ICON_TO_DISABLE_THE_ORGANIZATION": "Select the Disable icon to disable the organization (subscription)",
             "REJECTED_INFORMATION": "Rejected Information"
         },
         "ALERT_MSG": {
