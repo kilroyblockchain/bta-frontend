@@ -8,7 +8,7 @@ import { EditOrganizationUnitComponent } from './edit-organization-unit/edit-org
 import { NewOrganizationUnitComponent } from './new-organization-unit/new-organization-unit.component';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 
@@ -70,7 +70,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
     }
 
     lanaguageChanged(): void {
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.translate.onLangChange.subscribe(() => {
             this.setTranslatedTableColumns();
             this.checkAccess();
         });

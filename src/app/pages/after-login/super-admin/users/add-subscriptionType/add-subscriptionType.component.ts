@@ -2,10 +2,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { SubscriptionService, UtilsService } from 'src/app/@core/services';
-import { finalize } from 'rxjs/operators';
 import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
 import { ISubscription } from 'src/app/@core/interfaces/subscription.interface';
-import { ICountry } from 'src/app/@core/interfaces/country.interface';
 import { ISubscriptionAndCountryList } from 'src/app/@core/services/subscription.service';
 
 @Component({
@@ -61,7 +59,7 @@ export class AddSubscriptionTypeComponent implements OnInit {
         this.patchSubscriptionTypes(this.organizationList.find((company: any) => company._id === companyId));
     }
 
-    submitaddSubscriptionFormGroup({ valid, value }: FormGroup): void {
+    submitaddSubscriptionFormGroup({ valid }: FormGroup): void {
         this.submitted = true;
         if (!valid) {
             return;

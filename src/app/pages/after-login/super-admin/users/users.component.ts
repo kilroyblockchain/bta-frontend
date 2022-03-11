@@ -1,7 +1,6 @@
 import { VerifyUserComponent } from './verify-user/verify-user.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { NbSortDirection, NbTreeGridDataSource, NbTreeGridDataSourceBuilder, NbDialogService } from '@nebular/theme';
-import { environment } from 'src/environments/environment';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { UtilsService, AuthService, LangTranslateService } from 'src/app/@core/services';
 import { ViewUserComponent } from '../../user/view-user/view-user.component';
@@ -14,7 +13,6 @@ import { RejectCompanyFormComponent } from './reject-form/reject-form.component'
 import { RejectInformationsComponent } from './reject-informations/reject-informations.component';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 
-const BASE_URL = environment.apiURL + '/files/';
 interface TreeNode<T> {
     data: T;
     children?: TreeNode<T>[];

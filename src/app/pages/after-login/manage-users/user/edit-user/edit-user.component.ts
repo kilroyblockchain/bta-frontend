@@ -35,8 +35,7 @@ export class EditUserComponent implements OnInit {
 
     buildEditUserForm(): void {
         const row = this.getCompany(this.rowData.company);
-        let selectedStaffing;
-        selectedStaffing = row.staffingId;
+        const selectedStaffing = row.staffingId;
         this.populateStaffing(selectedStaffing[0]?.organizationUnitId?._id);
         this.populateStates(this.rowData?.country?._id);
         this.editUserForm = this.fb.group({

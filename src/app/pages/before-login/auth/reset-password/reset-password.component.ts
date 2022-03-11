@@ -34,7 +34,6 @@ export class ResetPasswordComponent implements OnInit {
             newpassword: ['', [Validators.required, Validators.minLength(5)]]
         });
         this.resetPasswordFormGroup.get('newpassword')?.valueChanges.subscribe((value) => {
-            console.log(value);
             this.onChangeConfirmPassword(value);
         });
     }

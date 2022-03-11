@@ -9,7 +9,6 @@ export const URLConstant = {
     rejectUser: '/user/reject',
     allowUser: '/user/remove/reject',
     refreshToken: '/user/refresh-access-token',
-    organizationRegistrationURL: '/organization/',
     getOrganizationURL: '/organization',
     updateOrganizationURL: '/organization',
     requestPasswordURL: '/user/forget-password',

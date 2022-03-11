@@ -148,7 +148,7 @@ export class UtilsService {
     }
 
     getResultsPerPage(): number {
-        if (environment.hasOwnProperty('resultsPerPage')) {
+        if (environment.resultsPerPage) {
             return environment.resultsPerPage;
         } else {
             return 15;

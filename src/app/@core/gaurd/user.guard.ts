@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class UserGaurd implements CanActivate {
     isAdmin!: boolean;
     constructor(public authService: AuthService, public router: Router) {}
 
-    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    async canActivate(): Promise<boolean> {
         const data = await this.authService.getUserData();
         this.userData = { ...data };
         const roles = this.userData?.roles;

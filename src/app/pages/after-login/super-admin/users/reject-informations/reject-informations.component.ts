@@ -107,5 +107,7 @@ export class RejectInformationsComponent implements OnInit {
         this.ref.close();
     }
 
-    onSearch(query: ISearchQuery): void {}
+    onSearch(query: ISearchQuery): void {
+        console.log(query);
+    }
 }

@@ -6,7 +6,7 @@ import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-con
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { ICompany, IUserData } from 'src/app/@core/interfaces/user-data.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
@@ -81,16 +81,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                     firstName: this.titleCasePipe.transform(data?.firstName),
                     lastName: this.titleCasePipe.transform(data?.lastName),
                     email: data?.email,
-                    id: data?._id || data?.id,
-                    companyName: data?.companyName,
+                    id: data?.id,
+                    companyName: (data?.company[0].companyId as ICompany).companyName,
                     companyId: data?.companyId,
                     company: data?.company,
                     autoPassword: data?.autoPassword,
-                    staffingId: data?.staffingId,
-                    skill: data?.skill,
-                    language: data?.language,
-                    education: data?.education,
-                    experience: data?.experience
+                    staffingId: data?.staffingId
                 };
                 this.authService.setUserData(user);
                 this.authService.getUserData().then((userData) => {

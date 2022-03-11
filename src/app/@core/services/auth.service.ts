@@ -6,7 +6,10 @@ import { URLConstant } from '../constants/url.constant';
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom, Subject } from 'rxjs';
 import { IUserRegisterFormData, IUserRegisterRes } from 'src/app/pages/before-login/auth/register/user-register.interface';
-import { IUserData } from '../interfaces/user-data.interface';
+import { ICompany, IUserData } from '../interfaces/user-data.interface';
+import { IStaffUserFormData } from 'src/app/pages/after-login/manage-users/user/manage-user.interface';
+import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
+import { IOrganizationFormData } from 'src/app/pages/after-login/user/edit-organization/organization-form.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -20,55 +23,47 @@ export class AuthService {
         return this.http.post(URLConstant.userRegistrationURL, user);
     }
 
-    createUserForOrganization(user: any, defaultSubscriptionType: string): Observable<any> {
+    createUserForOrganization(user: IStaffUserFormData, defaultSubscriptionType: string): Observable<IUserData> {
         return this.http.post(URLConstant.createUserForOrgURL + `/${defaultSubscriptionType}`, user);
     }
 
-    updatePersonalDetails(user: any): Observable<any> {
+    updatePersonalDetails(user: IUserRegisterFormData): Observable<IUserData> {
         return this.http.put(URLConstant.userUpdateURL, user);
     }
 
-    getUser(): Observable<any> {
+    getUser(): Observable<IUserData> {
         return this.http.get(URLConstant.getUserData);
     }
 
-    getUserById(userId: string): Observable<any> {
-        return this.http.get(URLConstant.getUserData + `/${userId}`);
-    }
-
-    getAllUserData(query: any): Observable<any> {
+    getAllUserData(query: { [key: string]: string }): Observable<IPaginateResult<IUserData[]>> {
         return this.http.get(URLConstant.getAllUserData, query);
     }
 
-    getAllCompanyNames(): Observable<any> {
+    getAllCompanyNames(): Observable<string[]> {
         return this.http.get(URLConstant.getAllCompanyNamesUrl);
     }
 
-    organizationRegister(organization: any, formData: any): Observable<any> {
-        return this.http.post(URLConstant.organizationRegistrationURL, organization, formData);
-    }
-
-    getOrganizationById(organizationId: string): Observable<any> {
+    getOrganizationById(organizationId: string): Observable<ICompany> {
         return this.http.get(URLConstant.getOrganizationURL + '/' + organizationId);
     }
 
-    getOrganization(): any {
-        return this.localStorageService.getLocalStorageData(LocalStorageConstant.comapanyId);
+    getOrganization(): { id: string } {
+        return this.localStorageService.getLocalStorageData(LocalStorageConstant.companyId);
     }
 
-    updateOrganization(organizationId: string, organization: any, hasFormData: any): Observable<any> {
+    updateOrganization(organizationId: string, organization: IOrganizationFormData, hasFormData: boolean): Observable<ICompany> {
         return this.http.put(URLConstant.updateOrganizationURL + '/' + organizationId, organization, hasFormData);
     }
 
-    userLogin(user: any): Observable<any> {
+    userLogin(user: { email: string; password: string }): Observable<IUserData & { accessToken: string }> {
         return this.http.post(URLConstant.loginURL, user);
     }
 
-    requestPassword(user: any): Observable<any> {
+    requestPassword(user: { email: string }): Observable<IAppResponse<void>> {
         return this.http.put(URLConstant.requestPasswordURL, user);
     }
 
-    resetPassword(user: any): Observable<any> {
+    resetPassword(user: { password: string; resetToken: string }): Observable<any> {
         return this.http.put(URLConstant.resetPasswordURL, user);
     }
 
@@ -116,11 +111,11 @@ export class AuthService {
     }
 
     setOrganizationId(companyId: string): void {
-        this.localStorageService.setLocalStorageData(LocalStorageConstant.comapanyId, { id: companyId });
+        this.localStorageService.setLocalStorageData(LocalStorageConstant.companyId, { id: companyId });
     }
 
     async getOrganizationId(): Promise<object> {
-        return await this.localStorageService.getLocalStorageData(LocalStorageConstant.comapanyId);
+        return await this.localStorageService.getLocalStorageData(LocalStorageConstant.companyId);
     }
 
     async getUserData(): Promise<IUserData> {

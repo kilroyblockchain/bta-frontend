@@ -175,9 +175,9 @@ export class NewOrganizationStaffingComponent implements OnInit {
         this.ref.close('close');
     }
 
-    isAllSelected(event: any) {
+    isAllSelected(accessList: IAccessList[]) {
         const accessLength = [];
-        this.accessList.forEach((access) => {
+        accessList.forEach((access) => {
             accessLength.push(...access.accessType);
         });
         if (accessLength.length === this.totalFeaturesCount) {
