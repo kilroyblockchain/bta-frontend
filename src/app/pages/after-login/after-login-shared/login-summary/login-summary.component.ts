@@ -9,7 +9,7 @@ import { ManageUserService } from 'src/app/@core/services';
     styleUrls: ['./login-summary.component.scss']
 })
 export class LoginSummaryComponent {
-    isHidden: boolean = false;
+    isHidden = false;
     loading = false;
     usersLoginCounts!: IUsersLoginCount;
 

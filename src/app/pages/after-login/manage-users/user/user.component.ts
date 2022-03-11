@@ -170,7 +170,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getPosition(companyArray: Array<any>): { organizationUnit: string; staffing: any[]; staffingIdArray: string[] } {
-        let unit: string = '';
+        let unit = '';
         const positions: any[] = [];
         const staffingIdArray: string[] = [];
         const companyRow = this.getCompanyRow(companyArray);

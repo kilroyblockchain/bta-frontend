@@ -114,7 +114,7 @@ export class UtilsService {
     }
 
     getFullSubcriptionType(role: string): string {
-        let subcriptionType: string = '';
+        let subcriptionType = '';
         if (role === 'super-admin') {
             subcriptionType = 'Super Admin';
         } else if (role === 'staff') {

@@ -2,7 +2,7 @@
     <nb-card-body *ngIf="detail">
         <div class="detail-card">
             <div class="name">
-                <app-blockchain-verified [blockName]="(detail?.name ?? '-') | titlecase" [blockchainVerified]="detail?.blockchainVerified ?? false"></app-blockchain-verified>
+                <app-blockchain-verified [blockName]="detail?.name ?? '-' | titlecase" [blockchainVerified]="detail?.blockchainVerified ?? false"></app-blockchain-verified>
                 <span *ngIf="detail?.caseNo">
                     - <small>{{ detail?.caseNo }}</small>
                 </span>

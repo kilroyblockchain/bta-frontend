@@ -2,17 +2,4 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/corporate';
 
-$nb-themes: nb-register-theme((
-
-    
-
-  
-  
-  
-  
-  
-  
-  
-  
-      
-), corporate, corporate)                              ;
+$nb-themes: nb-register-theme((), corporate, corporate);
