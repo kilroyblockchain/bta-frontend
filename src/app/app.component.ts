@@ -19,7 +19,7 @@ export class AppComponent {
     title = environment.project + '-web';
     isLoggedIn = false;
     userData: any;
-    pageType: string = '';
+    pageType = '';
     sidebarState: NbSidebarState;
     constructor(protected authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private translate: TranslateService, private localStorageService: LocalStorageService, private titleCasePipe: TitleCasePipe) {
         this.isLoggedIn = this.authService.isLoggedIn;

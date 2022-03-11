@@ -13,7 +13,7 @@ export class CreateDataService {
     public getPrintData(data: any): Observable<any>[] {
         const printArray = [];
         try {
-            if (!!data) {
+            if (data) {
                 for (let index = 0; index < data.length - 1; index++) {
                     const row = data[index].split(',');
                     for (let rowcount = 0; rowcount < row.length; rowcount++) {

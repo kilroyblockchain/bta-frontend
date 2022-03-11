@@ -66,7 +66,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
     getOrganizationUnitDetail(): void {
         this.manageUserService.getOrganizationUnitById(this.rowData._id).subscribe((data) => {
             if (data.success) {
-                let tempData = data.data.featureListId;
+                const tempData = data.data.featureListId;
                 tempData.forEach((list: any) => {
                     list.accessChecked = [];
                     for (let i = 0; i < list.accessType.length; i++) {
@@ -188,9 +188,9 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     toggleAllSelection(isSelected: any): void {
-        for (var i = 0; i < this.featureList.length; i++) {
+        for (let i = 0; i < this.featureList.length; i++) {
             const accessList = this.featureList[i];
-            for (var j = 0; j < accessList.accessType.length; j++) {
+            for (let j = 0; j < accessList.accessType.length; j++) {
                 accessList.accessChecked[j] = isSelected;
                 this.toggleFeatureList(accessList._id, accessList.accessType[j], true);
             }

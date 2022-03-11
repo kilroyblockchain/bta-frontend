@@ -58,7 +58,7 @@ export class LocalStorageService {
 
     decryptData = (data: any): any => {
         try {
-            if (!!data) {
+            if (data) {
                 const bytes = CryptoJS.AES.decrypt(data, ENCRYPT_SECRET_KEY);
                 if (bytes.toString()) {
                     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));

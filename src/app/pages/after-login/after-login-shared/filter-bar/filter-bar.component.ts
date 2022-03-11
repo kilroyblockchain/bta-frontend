@@ -24,7 +24,7 @@ export class FilterBarComponent {
     @Output() toggleTableEmit = new EventEmitter();
     @Output() searchValue = new EventEmitter();
     @Output() pageChanged = new EventEmitter();
-    toggleStatusFilter: boolean = true;
+    toggleStatusFilter = true;
     resultperpage = this.utilsService.getResultsPerPage();
 
     constructor(private utilsService: UtilsService) {}
