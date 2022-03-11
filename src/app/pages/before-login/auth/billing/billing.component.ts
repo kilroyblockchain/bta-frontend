@@ -19,7 +19,6 @@ export class BillingComponent {
         { value: '4', label: 'Visa Card', icon: 'visa' },
         { value: '5', label: 'Master Card', icon: 'mastercard' }
     ];
-    paymentOption: any;
-    paymentMethodOption: any;
-    constructor() {}
+    paymentOption!: { label: string; value: string }[];
+    paymentMethodOption!: { label: string; value: string; icon: string }[];
 }

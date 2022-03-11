@@ -8,6 +8,7 @@ import { AuthService, LocalStorageService } from './@core/services';
 import { NbSidebarState } from '@nebular/theme';
 import { environment } from 'src/environments/environment';
 import { TitleCasePipe } from '@angular/common';
+import { IUserData } from './@core/interfaces/user-data.interface';
 
 @Component({
     selector: 'app-root',
@@ -18,7 +19,7 @@ import { TitleCasePipe } from '@angular/common';
 export class AppComponent {
     title = environment.project + '-web';
     isLoggedIn = false;
-    userData: any;
+    userData!: IUserData;
     pageType = '';
     sidebarState: NbSidebarState;
     constructor(protected authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private translate: TranslateService, private localStorageService: LocalStorageService, private titleCasePipe: TitleCasePipe) {

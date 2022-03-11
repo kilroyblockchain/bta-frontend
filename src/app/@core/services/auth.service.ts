@@ -6,6 +6,7 @@ import { URLConstant } from '../constants/url.constant';
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom, Subject } from 'rxjs';
 import { IUserRegisterFormData, IUserRegisterRes } from 'src/app/pages/before-login/auth/register/user-register.interface';
+import { IUserData } from '../interfaces/user-data.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -122,12 +123,12 @@ export class AuthService {
         return await this.localStorageService.getLocalStorageData(LocalStorageConstant.comapanyId);
     }
 
-    async getUserData(): Promise<any> {
+    async getUserData(): Promise<IUserData> {
         const userToken = await this.localStorageService.getLocalStorageData(LocalStorageConstant.user);
         return userToken;
     }
 
-    getUserDataSync(): any {
+    getUserDataSync(): IUserData {
         const userToken = this.localStorageService.getLocalStorageData(LocalStorageConstant.user);
         return userToken;
     }

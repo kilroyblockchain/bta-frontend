@@ -6,6 +6,8 @@ import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-con
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
     selector: 'app-login',
@@ -15,14 +17,14 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginComponent implements OnInit, OnDestroy {
     loginFormGroup!: FormGroup;
-    userData: any;
+    userData!: IUserData;
     submitted = false;
     loading = false;
     recaptchaStr!: string;
     appTitle = environment.project;
 
     @ViewChild('captchaRef')
-    captchaRef!: TemplateRef<any>;
+    captchaRef!: TemplateRef<RecaptchaComponent>;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private fb: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private titleCasePipe: TitleCasePipe) {}
 
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.loginFormGroup.controls;
     }
 

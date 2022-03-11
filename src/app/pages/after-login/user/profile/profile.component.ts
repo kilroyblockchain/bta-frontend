@@ -7,6 +7,7 @@ import { AuthService, UtilsService } from 'src/app/@core/services';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { finalize } from 'rxjs/operators';
+import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
 
 const BASE_URL = environment.apiURL + '/files/';
 @Component({
@@ -15,7 +16,7 @@ const BASE_URL = environment.apiURL + '/files/';
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-    userData: any;
+    userData!: IUserData;
     imageBaseUrl = BASE_URL;
     dataFound!: boolean;
     loading!: boolean;

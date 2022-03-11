@@ -1,15 +1,10 @@
-import { environment } from './../../../environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-const BASE_URL = environment.apiURL;
 
 @Injectable({
     providedIn: 'root'
 })
 export class CreateDataService {
-    constructor() {}
-
     public getPrintData(data: any): Observable<any>[] {
         const printArray = [];
         try {

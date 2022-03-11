@@ -1,3 +1,7 @@
+import { ICountry, IState } from './country.interface';
+import { IStaffing } from './manage-user.interface';
+import { ISubscription } from './subscription.interface';
+
 export interface IUserData {
     id: string;
     firstName: string;
@@ -5,20 +9,28 @@ export interface IUserData {
     email: string;
     companyId: string;
     company: IUserCompany[];
+    country: string | ICountry;
+    state: string | IState;
+    city?: string;
     staffingId: string[];
     autoPassword: boolean;
     roles: string[];
+    address?: string;
+    zipCode?: string;
+    phone: string;
+    createdAt: Date;
+    blockchainVerified?: boolean;
 }
 
 export interface IUserCompany {
     _id: string;
     companyId: ICompany | string;
     default: boolean;
-    deletedStaffingId: any[];
+    deletedStaffingId: string[];
     isAdmin: boolean;
     isDeleted: boolean;
     isRejected: boolean;
-    staffingId: any[];
+    staffingId: IStaffing[];
     subscriptionType: string;
     userAccept: boolean;
     verified: boolean;
@@ -26,18 +38,16 @@ export interface IUserCompany {
 
 export interface ICompany {
     _id: string;
-    aboutOrganization: string;
     address: string;
     companyName: string;
-    contributionForApp: string;
-    country: string;
-    state: string;
+    companyLogo?: string;
+    country: string | ICountry;
+    state: string | IState;
     zipCode: string;
-    helpNeededFromApp: string;
+    city: string;
     isDeleted: boolean;
     isRejected: boolean;
-    subscription: any[];
-    vaccines: any[];
+    subscription: Partial<ISubscription>[];
     createdAt: Date;
     updatedAt: Date;
 }

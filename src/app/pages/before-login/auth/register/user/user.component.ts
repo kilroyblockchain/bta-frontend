@@ -35,7 +35,7 @@ export class UserComponent implements OnInit, OnDestroy {
     states!: IState[];
     subscriptions!: ISubscription[];
     loading = false;
-    companyNames: any[] = [];
+    companyNames: string[] = [];
     filteredControlOptions$!: Observable<string[]>;
 
     @ViewChild('captchaRef')
@@ -171,7 +171,7 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    private filter(value: any): string[] {
+    private filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.companyNames.filter((optionValue) => optionValue.toLowerCase().includes(filterValue));
     }

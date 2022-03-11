@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from 'src/app/@core/services';
@@ -79,5 +79,7 @@ export class BlockchainHistoryGridComponent implements OnChanges {
         });
     }
 
-    onSearch(searchQuery: ISearchQuery): void {}
+    onSearch(searchQuery: ISearchQuery): void {
+        console.log(searchQuery);
+    }
 }

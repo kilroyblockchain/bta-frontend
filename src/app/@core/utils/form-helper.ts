@@ -34,7 +34,7 @@ export const hasRequireValidator = (control: AbstractControl): boolean => {
  * @param  dob
  * @returns Return locale date string
  */
-export const dateOfBirthParser = (dob: any): string => {
+export const dateOfBirthParser = (dob: Date): string => {
     if (dob) {
         const dobWithZeroTime = new Date(new Date(dob).setHours(0, 0, 0, 0));
         return dobWithZeroTime.toLocaleDateString();
