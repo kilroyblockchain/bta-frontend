@@ -7,11 +7,7 @@ export interface IUserData {
     company: IUserCompany[];
     staffingId: string[];
     autoPassword: boolean;
-    education: any[];
-    experience: any[];
-    language: any[];
     roles: string[];
-    skill: any[];
 }
 
 export interface IUserCompany {

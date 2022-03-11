@@ -5,6 +5,7 @@ import { LocalStorageConstant } from 'src/app/@core/constants/local-storage.cons
 import { URLConstant } from '../constants/url.constant';
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom, Subject } from 'rxjs';
+import { IUserRegisterFormData, IUserRegisterRes } from 'src/app/pages/before-login/auth/register/user-register.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +15,8 @@ export class AuthService {
 
     constructor(private http: HttpService, private localStorageService: LocalStorageService, private router: Router) {}
 
-    userRegister(user: any, formData: any): Observable<any> {
-        return this.http.post(URLConstant.userRegistrationURL, user, formData);
+    userRegister(user: IUserRegisterFormData): Observable<IUserRegisterRes> {
+        return this.http.post(URLConstant.userRegistrationURL, user);
     }
 
     createUserForOrganization(user: any, defaultSubscriptionType: string): Observable<any> {

@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { SubscriptionService, UtilsService } from 'src/app/@core/services';
 import { finalize } from 'rxjs/operators';
+import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
+import { ISubscription } from 'src/app/@core/interfaces/subscription.interface';
+import { ICountry } from 'src/app/@core/interfaces/country.interface';
+import { ISubscriptionAndCountryList } from 'src/app/@core/services/subscription.service';
 
 @Component({
     selector: 'app-add-subscription-type',
@@ -46,9 +50,9 @@ export class AddSubscriptionTypeComponent implements OnInit {
     }
 
     populateSubscriptionTypes(): void {
-        this.subscriptionService.getAllSubscription().subscribe((res) => {
+        this.subscriptionService.getAllSubscription().subscribe((res: IAppResponse<ISubscription[] | ISubscriptionAndCountryList>) => {
             if (res && res.success) {
-                this.subscriptionTypes = res?.data?.filter((subscription: any) => subscription.subscriptionTypeIdentifier !== 'super-admin');
+                this.subscriptionTypes = (res?.data as ISubscription[])?.filter((subscription: ISubscription) => subscription.subscriptionTypeIdentifier !== 'super-admin');
             }
         });
     }

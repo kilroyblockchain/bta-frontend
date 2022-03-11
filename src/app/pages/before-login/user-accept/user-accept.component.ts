@@ -1,7 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/@core/services';
+import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
 
+interface IUserAcceptDetail extends IUserData {
+    requestedBy: string;
+    subscriptionType: string;
+    userName: string;
+}
 @Component({
     selector: 'app-user-accept',
     templateUrl: './user-accept.component.html',
@@ -9,7 +15,7 @@ import { AuthService } from 'src/app/@core/services';
 })
 export class UserAcceptComponent implements OnInit {
     token: string;
-    userData!: any;
+    userData!: IUserAcceptDetail;
     userAccept!: boolean;
     error!: boolean;
     verified!: boolean;

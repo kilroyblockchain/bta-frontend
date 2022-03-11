@@ -1,3 +1,5 @@
+import { AbstractControl } from '@angular/forms';
+
 export interface IUsersLoginCount {
     realtimeOnlineUserCount: number;
     todayLoginCount: number;
@@ -7,4 +9,8 @@ export interface IUsersLoginCount {
     last6MonthLoginCount: number;
     lastYearLoginCount: number;
     totalLoginUserCount: number;
+}
+
+export interface IFormControls {
+    [key: string]: AbstractControl;
 }

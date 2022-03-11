@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 
 @Component({
     selector: 'app-validation-message',
@@ -9,7 +9,7 @@ export class ValidationMessageComponent implements OnInit {
     @Input()
     field!: string;
     @Input()
-    error!: any;
+    error!: ValidationErrors;
     @Input()
     fieldTitle!: string;
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService, UtilsService } from 'src/app/@core/services';
 import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-constants';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
     selector: 'app-reset-password',
@@ -38,7 +39,7 @@ export class ResetPasswordComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.resetPasswordFormGroup.controls;
     }
 
@@ -56,7 +57,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     onChangeConfirmPassword(confirmPassword: string): void {
-        if (this.UF.password.value === confirmPassword) {
+        if (this.UF['password'].value === confirmPassword) {
             this.passwordDoNotMatch = false;
         }
     }
@@ -73,7 +74,7 @@ export class ResetPasswordComponent implements OnInit {
             return;
         }
 
-        if (this.UF.password.value !== this.UF.newpassword.value) {
+        if (this.UF['password'].value !== this.UF['newpassword'].value) {
             this.passwordDoNotMatch = true;
             return;
         }

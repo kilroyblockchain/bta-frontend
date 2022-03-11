@@ -14,5 +14,4 @@ export class BlockchainVerifiedComponent {
     tooltip!: string;
     @Input()
     showOnline!: boolean;
-    constructor() {}
 }
