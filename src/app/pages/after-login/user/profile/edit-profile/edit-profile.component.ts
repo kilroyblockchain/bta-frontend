@@ -7,6 +7,7 @@ import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-const
 import { finalize } from 'rxjs/operators';
 import { DEFAULT_VALUES, ValidationRegexConstant } from 'src/app/@core/constants';
 import { TitleCasePipe } from '@angular/common';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
     selector: 'app-edit-profile',
@@ -44,7 +45,7 @@ export class EditProfileComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.personalDetailsForm.controls;
     }
 

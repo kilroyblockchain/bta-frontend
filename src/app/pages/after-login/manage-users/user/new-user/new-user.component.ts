@@ -6,6 +6,7 @@ import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-const
 import { DEFAULT_VALUES, ValidationRegexConstant } from 'src/app/@core/constants';
 import { AuthService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
     selector: 'app-new-user',
@@ -65,15 +66,15 @@ export class NewUserComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.newUserForm.controls;
     }
 
-    get SearchUserForm(): any {
+    get SearchUserForm(): IFormControls {
         return this.searchUserForm.controls;
     }
 
-    get ExistingUserForm(): any {
+    get ExistingUserForm(): IFormControls {
         return this.existingUserForm.controls;
     }
 

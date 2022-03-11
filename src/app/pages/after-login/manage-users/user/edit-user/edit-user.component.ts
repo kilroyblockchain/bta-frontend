@@ -5,6 +5,7 @@ import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { ValidationRegexConstant } from 'src/app/@core/constants';
 import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { AuthService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
 
@@ -54,7 +55,7 @@ export class EditUserComponent implements OnInit {
         this.setOrgUnits();
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.editUserForm.controls;
     }
 

@@ -6,6 +6,7 @@ import { AuthService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
 import { MSG_KEY_CONSTANT_ORGANIZATION } from 'src/app/@core/constants/message-key-constants';
 import { finalize } from 'rxjs/operators';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 const BASE_URL = environment.apiURL + '/files/';
 @Component({
@@ -44,7 +45,7 @@ export class EditOrganizationComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.editOrganizationForm.controls;
     }
 
@@ -144,7 +145,7 @@ export class EditOrganizationComponent implements OnInit {
         }
         let formData: any;
         let hasFormData: boolean;
-        if (this.UF.image.value) {
+        if (this.UF['image'].value) {
             hasFormData = true;
             formData = new FormData();
             for (const property of Object.keys(this.UF)) {

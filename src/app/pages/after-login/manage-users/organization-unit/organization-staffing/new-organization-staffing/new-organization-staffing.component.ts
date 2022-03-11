@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbCheckboxComponent, NbDialogRef } from '@nebular/theme';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { ManageUserService, UtilsService, StaffingService } from 'src/app/@core/services';
 
 export interface IAccessList {
@@ -59,7 +60,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
         this.accessList = [...data.action.featureAndAccess];
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.newOrganizationStaffingForm.controls;
     }
 

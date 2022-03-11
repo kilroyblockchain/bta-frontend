@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbOptionComponent } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -38,7 +39,7 @@ export class NewOrganizationUnitComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.newOrganizationUnitForm.controls;
     }
 

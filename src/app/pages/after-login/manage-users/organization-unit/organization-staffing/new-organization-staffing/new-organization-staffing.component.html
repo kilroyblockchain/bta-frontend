@@ -13,10 +13,10 @@
     <nb-card-body>
         <form class="form-container" [formGroup]="newOrganizationStaffingForm">
             <div class="form-holder floating">
-                <input name="staffingName" nbInput fullWidth [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate)" formControlName="staffingName" [ngClass]="{ 'status-danger': submitted && UF.staffingName.errors }" />
+                <input name="staffingName" nbInput fullWidth [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate)" formControlName="staffingName" [ngClass]="{ 'status-danger': submitted && UF['staffingName'].errors }" />
                 <label for="staffingName" [attr.data-content]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate)"></label>
-                <div *ngIf="submitted && UF.staffingName.errors as err" class="invalid-feedback">
-                    <span *ngIf="err.required">{{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.STAFFING_NAME_IS_REQUIRED' | translate }}</span>
+                <div *ngIf="submitted && UF['staffingName'].errors as err" class="invalid-feedback">
+                    <span *ngIf="err['required']">{{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.STAFFING_NAME_IS_REQUIRED' | translate }}</span>
                 </div>
             </div>
             <div class="form-holder feature-list">

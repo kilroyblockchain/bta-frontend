@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -25,7 +26,7 @@ export class EditOrganizationUnitComponent implements OnInit {
         this.buildEditOrganizationUnitForm(this.rowData);
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.editOrganizationUnitForm.controls;
     }
 
