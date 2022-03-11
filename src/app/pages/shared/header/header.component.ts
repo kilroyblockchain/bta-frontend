@@ -2,19 +2,36 @@ import { AuthService, UtilsService, LocalStorageService } from 'src/app/@core/se
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbDialogService, NbMenuBag, NbMenuItem, NbMenuService, NbSidebarState } from '@nebular/theme';
 import { ChangePasswordComponent } from '../../after-login/user/change-passwod/change-password.component';
 import { NbSidebarService } from '@nebular/theme';
 import { environment } from 'src/environments/environment';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { Location } from '@angular/common';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageConstant } from 'src/app/@core/constants';
 import { ICompany, IUserCompany, IUserData } from 'src/app/@core/interfaces/user-data.interface';
 
 interface IorgMenu extends NbMenuItem {
     companyId: string;
+}
+
+interface IOrgDetail {
+    companyName: string;
+    value: string;
+    elementId: string;
+    subscriptionType: string;
+    companyId: string;
+    isOrganization?: boolean;
+}
+
+interface IOrgMenu extends NbMenuItem {
+    value: string;
+    elementId: string;
+    subscriptionType: string;
+    companyId: string;
+    isOrganization?: boolean;
 }
 @Component({
     selector: 'app-header',
@@ -23,26 +40,24 @@ interface IorgMenu extends NbMenuItem {
 })
 export class HeaderComponent implements OnInit, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
-    userMenu: any[] = [];
-    organizationMenu: any[] = [];
-    contactsMenu = [];
-    organizationList: any[] = [];
+    userMenu: NbMenuItem[] = [];
+    organizationMenu: IOrgMenu[] = [];
+    organizationList: IOrgDetail[] = [];
     searchMenu = [];
-    allRoles: any[] = [];
+    allRoles: string[] = [];
     manageUserMenuItem: NbMenuItem[] = [];
     organizationName = '';
     isLoggedIn = false;
     userData!: IUserData;
     autoPassword!: boolean;
     searchPlaceHolder = '';
-    searchStringChanged: Subject<any> = new Subject<any>();
+    searchStringChanged: Subject<string> = new Subject<string>();
     routerSubscription!: Subscription;
     BASE_URL = environment.hostURL;
     selectedOrganizationId = '';
     searchString = '';
-    selectedOrganization: any;
+    selectedOrganization!: { id: any };
     menuClickSubscription!: Subscription;
-    defaultCompanyRoles!: any[];
     onlyVaccinatedUser!: boolean;
     canReadOrganizationDetail!: boolean;
     appTitle = environment.project;
@@ -64,12 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
                 const organization = this.userData.company.filter((defaultCompany: IUserCompany) => (<ICompany>defaultCompany.companyId)._id === this.selectedOrganizationId && defaultCompany.verified && !defaultCompany.isDeleted);
                 this.organizationName = (organization.find((company) => company.default)?.companyId as ICompany).companyName;
-                this.defaultCompanyRoles = [];
-                organization.forEach((element: IUserCompany) => {
-                    if (!this.defaultCompanyRoles.some((orgRole) => orgRole === element)) {
-                        this.defaultCompanyRoles.push(element.subscriptionType);
-                    }
-                });
+
                 this.organizationList = [];
 
                 this.userData.company.forEach((element) => {
@@ -82,15 +92,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                         this.allRoles.push(element.subscriptionType);
                     }
                 });
-            }
-            if (this.isLoggedIn && this.userData && this.userData?.roles.includes('supervisor')) {
-                this.selectedOrganization = this.localStorageService.getLocalStorageData('selectedOrganization');
-                if (!this.selectedOrganization) {
-                    this.selectedOrganizationId = this.userData.companyId;
-                    this.localStorageService.setLocalStorageData('selectedOrganization', { id: this.userData.companyId });
-                } else {
-                    this.selectedOrganizationId = this.selectedOrganization.id;
-                }
             }
         });
         if (this.isLoggedIn) {
@@ -126,7 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     getTranslatedValue(keyword: string, link?: string): void {
         const menuItemLink = link ? { link } : {};
-        this.translate.get(keyword).subscribe((data: object) => {
+        this.translate.get(keyword).subscribe((data: string) => {
             this.userMenu.push({ title: data, ...menuItemLink });
         });
     }
@@ -137,7 +138,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     languageChanged(): void {
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.translate.onLangChange.subscribe(() => {
             this.searchMenu = [];
             this.organizationMenu = [];
             this.userMenu = [];
@@ -151,7 +152,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    async checkAccess(): Promise<any> {
+    async checkAccess(): Promise<void> {
         this.canReadOrganizationDetail = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_DETAIL, [ACCESS_TYPE.READ]);
     }
 
@@ -163,29 +164,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     initMenuSubscription(): void {
-        this.menuClickSubscription = this.menuService.onItemClick().subscribe((event) => {
-            if (event.tag !== 'caseGridMenu' && event.tag !== 'contactGridMenu' && event.tag !== 'allContactsGridMenu') {
-                switch (event.item.title) {
-                    case this.translate.instant('HEADER.MENU_ITEM.CHANGE_PASSWORD'):
-                        this.dialogService.open(ChangePasswordComponent, { closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
-                        break;
-                    default:
-                        break;
-                }
+        this.menuClickSubscription = this.menuService.onItemClick().subscribe((event: NbMenuBag) => {
+            switch (event.item.title) {
+                case this.translate.instant('HEADER.MENU_ITEM.CHANGE_PASSWORD'):
+                    this.dialogService.open(ChangePasswordComponent, { closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
+                    break;
+                default:
+                    break;
+            }
 
-                if (event.item.title === this.translate.instant('HEADER.MENU_ITEM.LOGOUT')) {
-                    this.authService.logout();
-                }
-                if (event.tag === 'organization-context-menu') {
-                    const item = event.item as IorgMenu;
-                    this.organizationName = event.item.title;
-                    this.localStorageService.setLocalStorageData('selectedOrganization', { id: item.companyId });
-                    this.authService.changeDefaultCompany(this.organizationMenu.find((element) => element.value === item.companyId)).subscribe((res) => {
-                        this.authService.setUserData(res.data);
-                        this.setDefaultSubscriptionTypeOnCompanyChange(res.data);
-                        window.location.reload();
-                    });
-                }
+            if (event.item.title === this.translate.instant('HEADER.MENU_ITEM.LOGOUT')) {
+                this.authService.logout();
+            }
+            if (event.tag === 'organization-context-menu') {
+                const item = event.item as IorgMenu;
+                this.organizationName = event.item.title;
+                this.localStorageService.setLocalStorageData('selectedOrganization', { id: item.companyId });
+                this.authService.changeDefaultCompany(this.organizationMenu.find((element) => element.value === item.companyId)).subscribe((res) => {
+                    this.authService.setUserData(res.data);
+                    this.setDefaultSubscriptionTypeOnCompanyChange(res.data);
+                    window.location.reload();
+                });
             }
         });
     }
@@ -232,7 +231,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     toggleAdminSidebar(): void {
         this.sidebarService.toggle(false, 'left');
-        this.sidebarService.getSidebarState('left').subscribe((state) => {
+        this.sidebarService.getSidebarState('left').subscribe((state: NbSidebarState) => {
             this.localStorageService.setLocalStorageData(LocalStorageConstant.sidebarState, state);
         });
     }
@@ -254,7 +253,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.authService.setDefaultSubscriptionType(defaultCompany.subscriptionType);
     }
 
-    get showOgranizationMenu(): boolean {
+    get showOrganizationMenu(): boolean {
         return Boolean(this.organizationMenu && this.organizationMenu.length > 1 && this.userData && this.userData?.roles && this.userData?.roles?.length && this.userData?.roles[0] && this.allRoles.length);
     }
 }

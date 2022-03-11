@@ -16,8 +16,8 @@
         "prod:beta": "ng build --configuration=beta",
         "prod:obc": "ng build --configuration=obc",
         "stylelint": "stylelint \"**/*.scss\" --fix",
-        "prettier:check": "prettier --config .prettierrc --loglevel 'warn' --check \"src/**/*.{ts,css,scss,html,json}\"",
-        "prettier:write": "prettier --config .prettierrc --loglevel 'warn' --write \"src/**/*.{ts,css,scss,html,json}\""
+        "prettier:check": "prettier --config .prettierrc --loglevel warn --check \"src/**/*.{ts,css,scss,html,json}\"",
+        "prettier:write": "prettier --config .prettierrc --loglevel warn --write \"src/**/*.{ts,css,scss,html,json}\""
     },
     "private": true,
     "dependencies": {
