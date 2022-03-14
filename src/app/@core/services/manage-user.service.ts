@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IUserLoginCount } from 'src/app/pages/after-login/after-login-shared/login-summary/login-count.interface';
 import { IUserActivity } from 'src/app/pages/after-login/manage-users/user-activity-log/user-activity.interface';
+import { IStaffUserFormData } from 'src/app/pages/after-login/manage-users/user/manage-user.interface';
+import { IUserActionRow } from 'src/app/pages/after-login/super-admin/users/user.interface';
 import { URLConstant } from '../constants/url.constant';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
-import { ICreateUnit, IFeatureAndAccess, IOrganizationUnit } from '../interfaces/manage-user.interface';
+import { ICreateUnit, IOrganizationUnit, IStaffing } from '../interfaces/manage-user.interface';
 import { IUserRes } from '../interfaces/user-data.interface';
 import { HttpService } from './http.service';
 
@@ -47,45 +50,27 @@ export class ManageUserService {
         return this.http.get(URLConstant.getAllUserActivityOfOrganization, query);
     }
 
-    getAllUsersLoginCount(): Observable<any> {
+    getAllUsersLoginCount(): Observable<IAppResponse<IUserLoginCount>> {
         return this.http.get(URLConstant.getAllUsersLoginCount);
     }
 
-    editUserForOrganization(userId: string, data: any): Observable<any> {
+    editUserForOrganization(userId: string, data: IStaffUserFormData): Observable<IUserRes> {
         return this.http.put(URLConstant.updateOrganizationUser + `/${userId}`, data);
     }
 
-    editTrainingUser(userId: string, data: any, staffingId: string): Observable<any> {
-        return this.http.put(URLConstant.updateOrganizationUser + `/${staffingId}/${userId}`, data);
-    }
-
-    verifyOrganizationUser(data: any, staffingId = '', enableTrainingUser = false): Observable<any> {
-        if (staffingId && enableTrainingUser) {
-            return this.http.put(URLConstant.verifyOrganizationUser + `/${staffingId}?enableTrainingUser=${enableTrainingUser}`, data);
-        }
-        return this.http.put(URLConstant.verifyOrganizationUser, data);
-    }
-
-    deleteOrganizationUser(userId: string, staffingId = '', query = {}): Observable<any> {
-        if (staffingId) {
-            return this.http.delete(URLConstant.deleteOrganizationUser + `/${staffingId}/${userId}`, query);
-        }
-        return this.http.delete(URLConstant.deleteOrganizationUser + `/${userId}`, query);
-    }
-
-    disableorganizationUser(data: any): Observable<any> {
+    disableOrganizationUser(data: Partial<IStaffUserFormData>): Observable<IAppResponse<void>> {
         return this.http.put(URLConstant.deleteOrganizationUser, data);
     }
 
-    enableOrganizationUser(data: any): Observable<any> {
+    enableOrganizationUser(data: Partial<IUserActionRow>): Observable<IAppResponse<void>> {
         return this.http.put(URLConstant.enableOrganizationUser, data);
     }
 
-    deleteStaffingById(id: string): Observable<any> {
+    deleteStaffingById(id: string): Observable<IAppResponse<IStaffing>> {
         return this.http.delete(URLConstant.createStaffingURL + '/' + id);
     }
 
-    enableOrganizationStaffing(organizationStaffingId: string): Observable<any> {
+    enableOrganizationStaffing(organizationStaffingId: string): Observable<IAppResponse<IStaffing>> {
         return this.http.put(URLConstant.enableOrganizationStaffing + `/${organizationStaffingId}`);
     }
 }

@@ -19,7 +19,7 @@ export class SuperAdminAccessGuard implements CanActivate {
         if (route.data['featureIdentifier'] === 'dashboard') {
             return true;
         }
-        const activated = await this.utilsService.canAccessFeature(route.data['featureIdentifier'], ACCESS_TYPE.READ);
+        const activated = await this.utilsService.canAccessFeature(route.data['featureIdentifier'], [ACCESS_TYPE.READ]);
         return activated;
     }
 

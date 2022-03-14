@@ -13,7 +13,7 @@ export interface IUserRes {
     country: ICountry;
     state: IState;
     city?: string;
-    staffingId: string[];
+    staffingId: IStaffing[] | string[];
     autoPassword: boolean;
     roles: string[];
     address?: string;

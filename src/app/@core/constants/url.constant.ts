@@ -35,7 +35,6 @@ export const URLConstant = {
     getAllUserOfOrganization: '/user/organization-user/all',
     getAllUserActivityOfOrganization: '/user/user-activity',
     getAllUsersLoginCount: '/user/user-count',
-    verifyOrganizationUser: '/user/organization-user/verify',
     enableOrganizationUser: '/user/organization-user/enable',
     deleteOrganizationUser: '/user/organization-user',
     updateOrganizationUser: '/user/organization-user',

@@ -89,7 +89,7 @@ export class AuthService {
         return this.http.get(URLConstant.getVerificationDetailsURL + `/${token}`);
     }
 
-    setUserAccept(token: string): Observable<any> {
+    setUserAccept(token: string): Observable<IAppResponse<void>> {
         return this.http.put(URLConstant.setUserAcceptURL + `/${token}`);
     }
 
@@ -108,7 +108,7 @@ export class AuthService {
         return authToken ? true : false;
     }
 
-    setUserData(user: any): void {
+    setUserData(user: Partial<IUserRes>): void {
         this.localStorageService.setLocalStorageData(LocalStorageConstant.user, user);
     }
 
@@ -182,18 +182,9 @@ export class AuthService {
         return this.http.get(URLConstant.getUserIdByEmail, { email: encodedEmail });
     }
 
-    updateUserLocalStorageData(updateData: any): void {
+    updateUserLocalStorageData(updateData: IUserRes): void {
         const userData = this.getUserDataSync();
         this.setUserData({ ...userData, ...updateData });
-    }
-
-    getUserDefaultCompany(subscriptionType?: string): any {
-        const userData = this.getUserDataSync();
-        if (subscriptionType) {
-            return userData.company.find((company: any) => company.subscriptionType === subscriptionType && company.default === true);
-        } else {
-            return userData.companyId;
-        }
     }
 
     getUserLang(): string {
@@ -204,19 +195,12 @@ export class AuthService {
         return this.localStorageService.setLocalStorageData(LocalStorageConstant.defaultLanguage, lang);
     }
 
-    getUserSubscriptionCompany(subscriptionType: string): any {
-        const userData = this.getUserDataSync();
-        if (userData.roles && userData.roles.includes(subscriptionType)) {
-            return userData.company.find((company: any) => company.subscriptionType === subscriptionType);
-        }
-    }
-
     getUserRoles(): Array<string> {
         const userData = this.getUserDataSync();
         return userData.roles;
     }
 
-    unblockUser(userId: string): Observable<any> {
+    unblockUser(userId: string): Observable<IAppResponse<void>> {
         return this.http.put(`${URLConstant.unblockUserURL}/${userId}`);
     }
 }

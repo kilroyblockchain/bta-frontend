@@ -211,7 +211,7 @@ export class UserComponent implements OnInit, OnDestroy {
                     const user = {
                         userId: rowData.id,
                         companyRowId: companyRow._id,
-                        staffingId: rowData.staffingId,
+                        staffingId: rowData.staffingId as string[],
                         subscriptionType: companyRow.subscriptionType
                     };
                     this.manageUserService
@@ -254,10 +254,10 @@ export class UserComponent implements OnInit, OnDestroy {
                         companyRowId: companyRow._id,
                         companyId: companyRow.companyId._id,
                         subscriptionType: companyRow.subscriptionType,
-                        staffingId: user.staffingId
+                        staffingId: user.staffingId as string[]
                     };
                     this.manageUserService
-                        .disableorganizationUser(disableUser)
+                        .disableOrganizationUser(disableUser)
                         .pipe(
                             finalize(() => {
                                 this.loadingTable = false;

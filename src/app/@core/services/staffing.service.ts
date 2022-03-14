@@ -19,15 +19,7 @@ export class StaffingService {
         return this.http.get(URLConstant.getUnitStaffingURL + '/' + unitId);
     }
 
-    getStaffingById(id: string): Observable<any> {
-        return this.http.get(URLConstant.createStaffingURL + '/' + id);
-    }
-
-    updateStaffingById(id: string, data: any): Observable<any> {
+    updateStaffingById(id: string, data: ICreateStaff): Observable<IAppResponse<IStaffing>> {
         return this.http.put(URLConstant.createStaffingURL + '/' + id, data);
-    }
-
-    getOrganizationUnitsByCompanyId(): Observable<any> {
-        return this.http.get(URLConstant.getOrganizationUnitURL);
     }
 }
