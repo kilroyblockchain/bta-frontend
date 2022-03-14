@@ -85,7 +85,6 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 const featureAndAccessList = data.data.featureListId as IFeature[];
                 this.featureList = featureAndAccessList.map((featureAndAccess) => {
                     const featureAndAccessCopy: IFeature & { accessChecked: boolean[] } = { ...featureAndAccess, accessChecked: [] };
-                    console.log(featureAndAccessCopy);
                     for (let i = 0; i < featureAndAccessCopy.accessType.length; i++) {
                         featureAndAccessCopy.accessChecked.push(false);
                         this.totalFeaturesCount = this.totalFeaturesCount + 1;
