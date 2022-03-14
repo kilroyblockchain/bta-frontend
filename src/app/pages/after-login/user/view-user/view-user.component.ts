@@ -38,8 +38,8 @@ export class ViewUserComponent implements OnInit {
         const organizationDetail = this.user?.company[0]?.companyId as ICompany;
         this.organizationDetail = {
             ...organizationDetail,
-            countryName: (organizationDetail.country as ICountry).name,
-            stateName: (organizationDetail.state as IState).name
+            countryName: (organizationDetail.country as ICountry)?.name ?? 'N/a',
+            stateName: (organizationDetail.state as IState)?.name ?? 'N/a'
         };
     }
 

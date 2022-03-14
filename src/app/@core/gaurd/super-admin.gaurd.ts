@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { IUserRes } from '../interfaces/user-data.interface';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SuperAdminGaurd implements CanActivate {
-    userData: any;
+    userData!: IUserRes;
     constructor(public authService: AuthService, public router: Router) {}
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {

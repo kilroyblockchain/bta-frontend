@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IRejectInformationFormData } from 'src/app/pages/after-login/super-admin/users/reject-informations/reject-information.interface';
+import { IRejectInformation, IRejectInformationFormData } from 'src/app/pages/after-login/super-admin/users/reject-informations/reject-information.interface';
 import { URLConstant } from '../constants/url.constant';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
 import { HttpService } from './http.service';
@@ -13,7 +13,7 @@ export class UserRejectService {
         return this.http.post(URLConstant.rejectUser, rejectUserDto);
     }
 
-    getRejectInformationsOfUser(userId: string, paginateOptions: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<any>>> {
+    getRejectInformationsOfUser(userId: string, paginateOptions: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IRejectInformation>>> {
         return this.http.get(URLConstant.rejectUserInformationBaseURL + `/find/${userId}`, paginateOptions);
     }
 
@@ -21,7 +21,7 @@ export class UserRejectService {
         return this.http.post(URLConstant.allowUser + `/${userId}`);
     }
 
-    updateRejectInformation(rejectInfoId: string, updatedInfo: IRejectInformationFormData): Observable<IAppResponse<any>> {
+    updateRejectInformation(rejectInfoId: string, updatedInfo: IRejectInformationFormData): Observable<IAppResponse<IRejectInformation>> {
         return this.http.put(URLConstant.rejectUserInformationBaseURL + `/${rejectInfoId}`, updatedInfo);
     }
 }

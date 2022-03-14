@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthService, UtilsService } from 'src/app/@core/services';
     styleUrls: ['./dashboard.component.scss']
 })
 export class AppDashboardComponent {
-    userData: any;
+    userData: IUserRes;
     constructor(private authService: AuthService, private router: Router, public utilsService: UtilsService) {
         this.userData = this.authService.getUserDataSync();
         this.router.navigate(['/']);

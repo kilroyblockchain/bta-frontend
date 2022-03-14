@@ -93,7 +93,7 @@ export class AuthService {
         return this.http.put(URLConstant.setUserAcceptURL + `/${token}`);
     }
 
-    getNewAccessToken(): Observable<any> {
+    getNewAccessToken(): Observable<{ accessToken: string }> {
         const data = {
             accessToken: this.getAccessToken()
         };

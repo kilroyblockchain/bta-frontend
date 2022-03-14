@@ -17,8 +17,8 @@ export class ProfileService {
         const { companyId } = company;
         return {
             ...companyId,
-            countryName: (companyId.country as ICountry).name,
-            stateName: (companyId.state as IState).name,
+            countryName: (companyId.country as ICountry)?.name ?? 'N/a',
+            stateName: (companyId.state as IState)?.name ?? 'N/a',
             blockchainVerified: userData.blockchainVerified
         };
     }
