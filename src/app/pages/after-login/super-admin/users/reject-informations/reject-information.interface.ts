@@ -11,3 +11,8 @@ interface IUserDetail {
     id: string;
     name: string;
 }
+
+export interface IRejectInformationFormData {
+    rejectedUser: string;
+    description: string;
+}

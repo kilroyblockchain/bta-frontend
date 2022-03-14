@@ -6,7 +6,7 @@ import { AuthService, LangTranslateService, UtilsService } from 'src/app/@core/s
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { environment } from 'src/environments/environment';
 import { TitleCasePipe } from '@angular/common';
-import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 
 @Component({
     selector: 'app-sidebar',
@@ -19,7 +19,7 @@ export class SidebarComponent {
     superAdminMenuItems: MenuItem[] = [];
     companyUsersMenuItems: MenuItem[] = [];
     defaultMenuItems: MenuItem[] = [];
-    userData!: IUserData;
+    userData!: IUserRes;
     appTitle = environment.project;
 
     constructor(private utilsService: UtilsService, private authService: AuthService, private sidebarService: NbSidebarService, private langTranslateService: LangTranslateService, private titleCasePipe: TitleCasePipe) {

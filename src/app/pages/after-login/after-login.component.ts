@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@core/services/auth.service';
 import { Component } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
-import { ChangePasswordComponent } from 'src/app/pages/after-login/user/change-passwod/change-password.component';
+import { ChangePasswordComponent } from 'src/app/pages/after-login/user/change-password/password';
 
 interface StaffingData {
     _id: string;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
@@ -7,6 +7,9 @@ import { DEFAULT_VALUES, ValidationRegexConstant } from 'src/app/@core/constants
 import { AuthService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
+import { IOrganizationUnit, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
 
 @Component({
     selector: 'app-new-user',
@@ -18,16 +21,16 @@ export class NewUserComponent implements OnInit {
     newUserForm!: FormGroup;
     existingUserForm!: FormGroup;
     searchUserForm!: FormGroup;
-    countries!: Array<any>;
-    states!: Array<any>;
+    countries!: Array<ICountry>;
+    states!: Array<IState>;
     loading!: boolean;
-    organizationUnits!: Array<any>;
-    staffings!: Array<any>;
+    organizationUnits!: IOrganizationUnit[];
+    staffings!: Array<IStaffing>;
     submitted!: boolean;
     defaultSubscriptionType!: string;
     userAlreadyExist!: boolean;
     activeForm!: boolean;
-    userDetail: any;
+    userDetail!: Partial<IUserData>;
 
     constructor(private ref: NbDialogRef<NewUserComponent>, private fb: FormBuilder, private countryService: CountryService, private authService: AuthService, private utilsService: UtilsService, private readonly manageUserService: ManageUserService, private readonly staffingService: StaffingService) {}
 
@@ -109,14 +112,6 @@ export class NewUserComponent implements OnInit {
                         this.existingUserForm.patchValue({
                             email: value.email
                         });
-                        if (this.userDetail.organizationName) {
-                            this.existingUserForm.patchValue({
-                                sponsorOrganizationName: this.userDetail.sponsorOrganizationName
-                            });
-                            if (this.existingUserForm && this.existingUserForm.get('sponsorOrganizationName')) {
-                                (<AbstractControl>this.existingUserForm.get('sponsorOrganizationName')).disable();
-                            }
-                        }
                     } else {
                         this.userAlreadyExist = false;
                         this.newUserForm.patchValue({
@@ -175,7 +170,7 @@ export class NewUserComponent implements OnInit {
         this.loading = true;
         if (this.userAlreadyExist) {
             this.authService
-                .addCompanyToUser({ userId: this.userDetail.id, sponsorOrganizationName: value.sponsorOrganizationName, staffingId: value.staffingId, subscription: this.defaultSubscriptionType })
+                .addCompanyToUser({ userId: this.userDetail.id as string, staffingId: value.staffingId, subscription: this.defaultSubscriptionType })
                 .pipe(
                     finalize(() => {
                         this.loading = false;

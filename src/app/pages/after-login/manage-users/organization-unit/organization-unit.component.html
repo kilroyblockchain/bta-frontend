@@ -59,13 +59,13 @@
                                 <button *ngIf="!row.data['subrow'] && canUpdateOrganizationUnit" nbSuffix nbButton ghost (click)="openOrganizationEditModal(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
-                                <button *ngIf="row.data['subrow'] && canUpdateStaffing" nbSuffix nbButton ghost (click)="openStaffingEditEditModal(row.data)">
+                                <button *ngIf="row.data['subrow'] && canUpdateStaffing" nbSuffix nbButton ghost (click)="openStaffingEditModal(row.data)">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
                                 <button nbSuffix nbButton ghost *ngIf="row.data['status'] && !row.data['subrow'] && canDeleteOrganizationUnit" (click)="onDeleteOrganizationUnit(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva"> </nb-icon>
                                 </button>
-                                <button nbSuffix nbButton ghost *ngIf="row.data['status'] && row.data['subrow'] && canDeleteStaffing" (click)="onDeleteOrganizationStaffing(row.data)">
+                                <button nbSuffix nbButton ghost *ngIf="row.data['status'] && row.data['subrow'] && canDeleteStaffing" (click)="onDeleteOrganizationStaffing(row.data['unitName'], row.data['staffingId'])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva"> </nb-icon>
                                 </button>
                                 <button *ngIf="!row.data['subrow'] && canAddStaffing" nbSuffix nbButton ghost (click)="openAddStaffingModal(row.data[column])">

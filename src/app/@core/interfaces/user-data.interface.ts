@@ -2,15 +2,16 @@ import { ICountry, IState } from './country.interface';
 import { IStaffing } from './manage-user.interface';
 import { ISubscription } from './subscription.interface';
 
-export interface IUserData {
+export interface IUserRes {
+    _id?: string;
     id: string;
     firstName: string;
     lastName: string;
     email: string;
     companyId: string;
     company: IUserCompany[];
-    country: string | ICountry;
-    state: string | IState;
+    country: ICountry;
+    state: IState;
     city?: string;
     staffingId: string[];
     autoPassword: boolean;
@@ -18,13 +19,38 @@ export interface IUserData {
     address?: string;
     zipCode?: string;
     phone: string;
+    countryName?: string;
+    stateName?: string;
+    accessToken: string;
+    createdAt: Date;
+    blockchainVerified?: boolean;
+}
+
+export interface IUserData {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    companyId: string;
+    company: IUserCompany;
+    country: ICountry;
+    state: IState;
+    city?: string;
+    staffingId: string[];
+    autoPassword: boolean;
+    roles: string[];
+    address?: string;
+    zipCode?: string;
+    phone: string;
+    countryName?: string;
+    stateName?: string;
     createdAt: Date;
     blockchainVerified?: boolean;
 }
 
 export interface IUserCompany {
     _id: string;
-    companyId: ICompany | string;
+    companyId: ICompany;
     default: boolean;
     deletedStaffingId: string[];
     isAdmin: boolean;
@@ -41,8 +67,10 @@ export interface ICompany {
     address: string;
     companyName: string;
     companyLogo?: string;
-    country: string | ICountry;
-    state: string | IState;
+    country: ICountry | string;
+    state: IState | string;
+    countryName: string;
+    stateName: string;
     zipCode: string;
     city: string;
     isDeleted: boolean;
@@ -50,4 +78,5 @@ export interface ICompany {
     subscription: Partial<ISubscription>[];
     createdAt: Date;
     updatedAt: Date;
+    blockchainVerified?: boolean;
 }

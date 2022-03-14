@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NbDialogService, NbMenuBag, NbMenuItem, NbMenuService, NbSidebarState } from '@nebular/theme';
-import { ChangePasswordComponent } from '../../after-login/user/change-passwod/change-password.component';
+import { ChangePasswordComponent } from '../../after-login/user/change-password/password';
 import { NbSidebarService } from '@nebular/theme';
 import { environment } from 'src/environments/environment';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
@@ -11,7 +11,7 @@ import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageConstant } from 'src/app/@core/constants';
-import { ICompany, IUserCompany, IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { ICompany, IUserRes, IUserCompany } from 'src/app/@core/interfaces/user-data.interface';
 
 interface IorgMenu extends NbMenuItem {
     companyId: string;
@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     manageUserMenuItem: NbMenuItem[] = [];
     organizationName = '';
     isLoggedIn = false;
-    userData!: IUserData;
+    userData!: IUserRes;
     autoPassword!: boolean;
     searchPlaceHolder = '';
     searchStringChanged: Subject<string> = new Subject<string>();
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     BASE_URL = environment.hostURL;
     selectedOrganizationId = '';
     searchString = '';
-    selectedOrganization!: { id: any };
+    selectedOrganization!: { id: string };
     menuClickSubscription!: Subscription;
     onlyVaccinatedUser!: boolean;
     canReadOrganizationDetail!: boolean;
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     async buildMenu(): Promise<void> {
-        await this.authService.getUserData().then((data: IUserData) => {
+        await this.authService.getUserData().then((data: IUserRes) => {
             this.userData = { ...data };
             this.autoPassword = this.userData.autoPassword;
             this.selectedOrganizationId = this.userData.companyId;
@@ -180,7 +180,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 const item = event.item as IorgMenu;
                 this.organizationName = event.item.title;
                 this.localStorageService.setLocalStorageData('selectedOrganization', { id: item.companyId });
-                this.authService.changeDefaultCompany(this.organizationMenu.find((element) => element.value === item.companyId)).subscribe((res) => {
+                const selectedOrg = this.organizationMenu.find((element) => element.value === item.companyId);
+                this.authService.changeDefaultCompany({ companyId: selectedOrg?.companyId as string, subscriptionType: selectedOrg?.subscriptionType as string }).subscribe((res) => {
                     this.authService.setUserData(res.data);
                     this.setDefaultSubscriptionTypeOnCompanyChange(res.data);
                     window.location.reload();
@@ -198,37 +199,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.searchStringChanged.next(text);
     }
 
-    navigateToSearch(text: string): void {
-        const searchInfo = this.getSearchDataFromLocalStorage();
-        if (text && text.length > 2) {
-            if (searchInfo && searchInfo.search === 'child') {
-                this.router.navigate(['/u/contact-tracing/child-cases'], { queryParams: { query: text }, state: { programaticRoute: true } });
-            } else if (searchInfo && searchInfo.search === 'main') {
-                this.router.navigate(['u/contact-tracing'], { queryParams: { query: text }, state: { programaticRoute: true } });
-            } else if (searchInfo && searchInfo.search === 'vaccine-outreach') {
-                this.router.navigate(['u/vaccine-outreach'], { queryParams: { query: text }, state: { programaticRoute: true } });
-            }
-            this.searchStringChanged.next(text);
-        } else {
-            if (searchInfo && searchInfo.search === 'child') {
-                this.router.navigate(['/u/contact-tracing/child-cases'], { queryParams: {}, state: { programaticRoute: true } });
-            } else if (searchInfo && searchInfo.search === 'main') {
-                this.router.navigate(['u/contact-tracing'], { queryParams: {}, state: { programaticRoute: true } });
-            } else if (searchInfo && searchInfo.search === 'vaccine-outreach') {
-                this.router.navigate(['u/vaccine-outreach'], { queryParams: {}, state: { programaticRoute: true } });
-            }
-            this.searchStringChanged.next('');
-        }
-    }
-
-    getSearchDataFromLocalStorage(): any {
-        return this.localStorageService.getLocalStorageData('searchBy');
-    }
-
-    setSearchInfoIntoLocalStorage(data: any): void {
-        this.localStorageService.setLocalStorageData('searchBy', data);
-    }
-
     toggleAdminSidebar(): void {
         this.sidebarService.toggle(false, 'left');
         this.sidebarService.getSidebarState('left').subscribe((state: NbSidebarState) => {
@@ -236,19 +206,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    onOrganizationChange(data: any): void {
-        this.localStorageService.setLocalStorageData('selectedOrganization', { id: data });
-        this.authService.changeDefaultCompany(this.organizationList.find((element) => element.value === data)).subscribe((res) => {
-            this.authService.setUserData(res.data);
-            window.location.reload();
-        });
-    }
-
     checkShowDashboard(role: string): boolean {
         return role === 'vaccinated-user' || role === 'super-admin';
     }
 
-    setDefaultSubscriptionTypeOnCompanyChange(userData: IUserData): void {
+    setDefaultSubscriptionTypeOnCompanyChange(userData: IUserRes): void {
         const defaultCompany = <IUserCompany>userData.company.find((defCompany) => defCompany.default);
         this.authService.setDefaultSubscriptionType(defaultCompany.subscriptionType);
     }

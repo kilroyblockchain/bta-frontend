@@ -1,5 +1,5 @@
 export interface ICountry {
-    _id: number;
+    _id: string;
     states: Array<number>;
     countryCode: string;
     name: string;

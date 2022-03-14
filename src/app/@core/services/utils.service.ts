@@ -113,7 +113,7 @@ export class UtilsService {
         return constant;
     }
 
-    getFullSubcriptionType(role: string): string {
+    getFullSubscriptionType(role: string): string {
         let subcriptionType = '';
         if (role === 'super-admin') {
             subcriptionType = 'Super Admin';

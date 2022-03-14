@@ -23,7 +23,6 @@ export const URLConstant = {
     createUserForOrgURL: '/user/create',
     createStaffingURL: '/organization-staffing',
     getUnitStaffingURL: '/organization-staffing/unit',
-    getAllStaffingURL: '/organization-staffing/all',
     getOrganizationUnitURL: '/organization-unit/company',
     getFeatureOfUserSubscription: '/feature',
     createOrganizationUnit: '/organization-unit',

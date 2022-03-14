@@ -7,6 +7,8 @@ import { CountryService } from 'src/app/@core/services/country.service';
 import { MSG_KEY_CONSTANT_ORGANIZATION } from 'src/app/@core/constants/message-key-constants';
 import { finalize } from 'rxjs/operators';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
+import { ICompany } from 'src/app/@core/interfaces/user-data.interface';
 
 const BASE_URL = environment.apiURL + '/files/';
 @Component({
@@ -17,12 +19,12 @@ export class EditOrganizationComponent implements OnInit {
     appTitle = environment.project;
     public editOrganizationForm!: FormGroup;
     organizationId!: string;
-    countries!: Array<any>;
-    states!: Array<any>;
+    countries!: Array<ICountry>;
+    states!: Array<IState>;
     loading!: boolean;
     submitted!: boolean;
     stateRequiredErr!: boolean;
-    logoURL: any;
+    logoURL!: string;
     imageBaseUrl = BASE_URL;
     constructor(protected ref: NbDialogRef<EditOrganizationComponent>, private readonly fb: FormBuilder, private countryService: CountryService, private readonly authService: AuthService, private readonly utilsService: UtilsService) {}
 
@@ -85,10 +87,10 @@ export class EditOrganizationComponent implements OnInit {
                 })
             )
             .subscribe({
-                next: (res: any) => {
+                next: (res) => {
                     if (res) {
                         if (res) {
-                            this.populateStates(res.country);
+                            this.populateStates(res.country as string);
                         }
                         this.editOrganizationForm.patchValue({
                             companyName: res.companyName,
@@ -111,20 +113,23 @@ export class EditOrganizationComponent implements OnInit {
             });
     }
 
-    onFileChange(event: any): void {
-        if (event.target.files.length > 0) {
-            const file = event.target.files[0];
-            this.editOrganizationForm.patchValue({
-                image: file
-            });
+    onFileChange(event: Event): void {
+        if (event && event.target && (event.target as HTMLInputElement).files) {
+            const files = (event.target as HTMLInputElement).files as FileList;
+            if (files.length > 0) {
+                const file = files[0];
+                this.editOrganizationForm.patchValue({
+                    image: file
+                });
 
-            const reader = new FileReader();
+                const reader = new FileReader();
 
-            reader.readAsDataURL(event.target.files[0]);
+                reader.readAsDataURL(files[0]);
 
-            reader.onload = (e: any) => {
-                this.logoURL = e.target.result;
-            };
+                reader.onload = (e: ProgressEvent<FileReader>) => {
+                    this.logoURL = (e.target as FileReader).result as string;
+                };
+            }
         }
     }
 
@@ -143,7 +148,7 @@ export class EditOrganizationComponent implements OnInit {
         if (!valid) {
             return;
         }
-        let formData: any;
+        let formData;
         let hasFormData: boolean;
         if (this.UF['image'].value) {
             hasFormData = true;
@@ -158,7 +163,7 @@ export class EditOrganizationComponent implements OnInit {
         formData.state = formData.state ? String(formData.state) : '';
         this.loading = true;
         this.authService.updateOrganization(this.organizationId, formData, hasFormData).subscribe({
-            next: (res: any) => {
+            next: (res: ICompany) => {
                 this.loading = false;
                 value._id = this.organizationId;
                 this.ref.close({ saveSuccess: true, data: res });

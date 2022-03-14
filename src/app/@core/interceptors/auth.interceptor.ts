@@ -7,7 +7,7 @@ import { catchError, filter, take, switchMap } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     refreshingAccessToken!: boolean;
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     constructor(public authService: AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -75,7 +75,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 filter((token) => token != null),
                 take(1),
                 switchMap((jwt) => {
-                    return next.handle(this.addToken(request, jwt));
+                    return next.handle(this.addToken(request, jwt as string));
                 }),
                 catchError((err) => {
                     this.refreshingAccessToken = false;

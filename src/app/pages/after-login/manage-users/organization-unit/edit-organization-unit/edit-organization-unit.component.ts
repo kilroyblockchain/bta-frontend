@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IFeature, IOrganizationUnit } from 'src/app/@core/interfaces/manage-user.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -10,10 +12,10 @@ import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 
     templateUrl: './edit-organization-unit.component.html'
 })
 export class EditOrganizationUnitComponent implements OnInit {
-    rowData: any;
+    rowData!: IOrganizationUnit;
     editOrganizationUnitForm!: FormGroup;
-    user: any;
-    features!: Array<any>;
+    user!: IUserRes;
+    features!: Array<IFeature>;
     loading!: boolean;
     submitted!: boolean;
     defaultSubscriptionType: string | undefined;
@@ -42,7 +44,7 @@ export class EditOrganizationUnitComponent implements OnInit {
         });
     }
 
-    buildEditOrganizationUnitForm(data: any): void {
+    buildEditOrganizationUnitForm(data: IOrganizationUnit): void {
         this.editOrganizationUnitForm = this.fb.group({
             unitName: [data?.unitName, [Validators.required]],
             subscriptionType: [this.defaultSubscriptionType],

@@ -11,20 +11,20 @@
             <div class="form-inner-container">
                 <div class="form-holder">
                     <label for="Organizations" class="label">*{{ 'SUPER_ADMIN.LABEL.ORGANIZATION' | translate }}</label>
-                    <nb-select fullWidth id="companyId" name="companyId" [placeholder]="'SUPER_ADMIN.PLACEHOLDER.SELECT_ORGANIZATION' | translate" formControlName="companyId" [ngClass]="{ 'status-danger': submitted && UF.companyId.errors }" (selectedChange)="onCompanyChange($event)">
+                    <nb-select fullWidth id="companyId" name="companyId" [placeholder]="'SUPER_ADMIN.PLACEHOLDER.SELECT_ORGANIZATION' | translate" formControlName="companyId" [ngClass]="{ 'status-danger': submitted && UF['companyId'].errors }" (selectedChange)="onCompanyChange($event)">
                         <nb-option *ngFor="let item of organizationList" value="{{ item._id }}">{{ item.companyName }}</nb-option>
                     </nb-select>
-                    <div *ngIf="submitted && UF.companyId.errors as err" class="invalid-feedback">
-                        <span *ngIf="err.required">{{ 'SUPER_ADMIN.VALIDATIONS.SELECT_ONE_ORGANIZATION' | translate }}</span>
+                    <div *ngIf="submitted && UF['companyId'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'SUPER_ADMIN.VALIDATIONS.SELECT_ONE_ORGANIZATION' | translate }}</span>
                     </div>
                 </div>
                 <div class="form-holder">
                     <label for="subscriptionTypes" class="label">*{{ 'SUPER_ADMIN.LABEL.SUBSCRIPTION_TYPES' | translate }}</label>
-                    <nb-select multiple fullWidth id="subscriptionType" name="subscriptionType" placeholder="Select Subscription Type(s)" formControlName="subscriptionType" [ngClass]="{ 'status-danger': submitted && UF.subscriptionType.errors }">
+                    <nb-select multiple fullWidth id="subscriptionType" name="subscriptionType" placeholder="Select Subscription Type(s)" formControlName="subscriptionType" [ngClass]="{ 'status-danger': submitted && UF['subscriptionType'].errors }">
                         <nb-option *ngFor="let item of subscriptionTypes" value="{{ item.subscriptionTypeIdentifier }}">{{ item.subscriptionType }}</nb-option>
                     </nb-select>
-                    <div *ngIf="submitted && UF.subscriptionType.errors as err" class="invalid-feedback">
-                        <span *ngIf="err.required">{{ 'SUPER_ADMIN.LABEL.SELECT_ONE_SUBSCRIPTION_TYPE' | translate }}</span>
+                    <div *ngIf="submitted && UF['subscriptionType'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'SUPER_ADMIN.LABEL.SELECT_ONE_SUBSCRIPTION_TYPE' | translate }}</span>
                     </div>
                 </div>
             </div>

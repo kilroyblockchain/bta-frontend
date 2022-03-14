@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
+import { IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { ICompany } from 'src/app/@core/interfaces/user-data.interface';
 import { UtilsService } from 'src/app/@core/services';
 import { environment } from 'src/environments/environment';
 import { EditOrganizationComponent } from '../../edit-organization/edit-organization.component';
@@ -11,19 +13,17 @@ const BASE_URL = environment.apiURL + '/files/';
     templateUrl: './organization-details.component.html'
 })
 export class OrganizationDetailsComponent implements OnInit {
-    @Input() userData: any;
-    @Input() organizationList: any;
+    @Input() organization!: ICompany;
+    @Input() staffs!: IStaffing[];
     imageBaseUrl = BASE_URL;
     showOrganizationEditButton = false;
     showOrganizationDetail = false;
-    company: any;
     appTitle = environment.project;
 
     constructor(public utilsService: UtilsService, private dialogService: NbDialogService) {}
 
     ngOnInit(): void {
         this.checkAccessData();
-        this.company = this.userData.company;
     }
 
     async checkAccessData(): Promise<void> {
@@ -33,9 +33,9 @@ export class OrganizationDetailsComponent implements OnInit {
 
     editOrganizationDetails(organizationId: string): void {
         const dialogOpen = this.dialogService.open(EditOrganizationComponent, { context: { organizationId }, hasBackdrop: true, closeOnBackdropClick: false });
-        dialogOpen.onClose.subscribe((res: any) => {
+        dialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close' && res.saveSuccess) {
-                this.userData.company.companyId = res.data;
+                this.organization = res.data;
             }
         });
     }

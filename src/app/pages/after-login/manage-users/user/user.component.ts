@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
-import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
+import { IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
@@ -33,7 +34,7 @@ interface FSEntry {
     verified: boolean;
     isDeleted: boolean;
     blockchainVerified: boolean;
-    action: any;
+    action: IUserRes;
 }
 @Component({
     selector: 'app-user',
@@ -51,21 +52,20 @@ export class UserComponent implements OnInit, OnDestroy {
 
     newUserDialogClose!: Subscription;
     companyID!: string;
-    options: any;
+    options!: { [key: string]: unknown };
     loading!: boolean;
     dataFound!: boolean;
-    tableData: any[] = [];
+    tableData: IUserRes[] = [];
     loadingTable!: boolean;
     toggleStatusFilter = true;
     dialogClose!: Subscription;
     canAddUser!: boolean;
     canUpdateUser!: boolean;
     canDeleteUser!: boolean;
-    user: any;
-    defaultCompany: any;
+    user!: IUserRes;
     defaultSubscriptionType!: string;
 
-    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private disalogService: NbDialogService, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe) {
+    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe) {
         this.setCompanyId();
         this.checkAccess();
     }
@@ -84,7 +84,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }
     }
 
-    async checkAccess(): Promise<any> {
+    async checkAccess(): Promise<void> {
         this.canAddUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.WRITE]);
         this.canUpdateUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.UPDATE]);
         this.canDeleteUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.DELETE]);
@@ -93,7 +93,7 @@ export class UserComponent implements OnInit, OnDestroy {
     setCompanyId(): void {
         this.companyID = this.authService.getOrganization()?.id;
         if (!this.companyID) {
-            this.authService.getUserData().then((curUser: any) => (this.companyID = curUser.companyId));
+            this.authService.getUserData().then((curUser: IUserRes) => (this.companyID = curUser.companyId));
         }
     }
 
@@ -133,7 +133,7 @@ export class UserComponent implements OnInit, OnDestroy {
                             this.dataFound = true;
                         }
                         this.tableData = data.docs;
-                        this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
+                        this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
                     } else {
                         this.totalRecords = 0;
                     }
@@ -144,7 +144,7 @@ export class UserComponent implements OnInit, OnDestroy {
             });
     }
 
-    createTableData(data: any, status: boolean): void {
+    createTableData(data: IUserRes[], status: boolean): void {
         this.data = [];
         for (const item of data) {
             const { organizationUnit, staffing, staffingIdArray } = this.getPosition(item.company);
@@ -155,13 +155,13 @@ export class UserComponent implements OnInit, OnDestroy {
                     organizationUnit,
                     staffing: staffing.join(', '),
                     email: item.email,
-                    address: item.address,
+                    address: item.address ?? '-',
                     verified: status,
                     isDeleted: status,
                     country: item.country?.name,
                     state: item.state?.name,
-                    zipCode: item.zipCode,
-                    blockchainVerified: item?.blockchainVerified,
+                    zipCode: item.zipCode ?? '-',
+                    blockchainVerified: item?.blockchainVerified ?? false,
                     action: { ...item, staffingId: staffingIdArray }
                 }
             });
@@ -169,17 +169,18 @@ export class UserComponent implements OnInit, OnDestroy {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
-    getPosition(companyArray: Array<any>): { organizationUnit: string; staffing: any[]; staffingIdArray: string[] } {
+    getPosition(companyArray: Array<IUserCompany>): { organizationUnit: string; staffing: string[]; staffingIdArray: string[] } {
         let unit = '';
-        const positions: any[] = [];
+        const positions: string[] = [];
         const staffingIdArray: string[] = [];
         const companyRow = this.getCompanyRow(companyArray);
         const fieldToPopulate = this.toggleStatusFilter ? 'staffingId' : 'deletedStaffingId';
         if (companyRow) {
-            companyRow[fieldToPopulate].forEach((element: any) => {
-                unit = unit ? `${unit}` : element?.organizationUnitId?.unitName;
-                positions.push(element.staffingName);
-                staffingIdArray.push(element._id);
+            companyRow[fieldToPopulate].forEach((element) => {
+                const staffing = element as IStaffing;
+                unit = unit ? `${unit}` : staffing?.organizationUnitId?.unitName;
+                positions.push(staffing.staffingName);
+                staffingIdArray.push(staffing._id);
             });
         }
         return {
@@ -190,7 +191,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     addNewUser(): void {
-        const newUserDialogOpen = this.disalogService.open(NewUserComponent, { context: { defaultSubscriptionType: this.defaultSubscriptionType } });
+        const newUserDialogOpen = this.dialogService.open(NewUserComponent, { context: { defaultSubscriptionType: this.defaultSubscriptionType } });
         this.newUserDialogClose = newUserDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
                 if (this.toggleStatusFilter) {
@@ -200,39 +201,7 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    verifyUser(rowData: any): void {
-        this.loadingTable = true;
-        const companyRow = this.getCompanyRow(rowData.action.company);
-        if (rowData) {
-            const user = {
-                userId: rowData.action.id,
-                companyRowId: companyRow._id
-            };
-            this.manageUserService
-                .verifyOrganizationUser(user)
-                .pipe(
-                    finalize(() => {
-                        this.loadingTable = false;
-                    })
-                )
-                .subscribe({
-                    next: () => {
-                        this.totalRecords -= 1;
-                        if (!this.totalRecords) {
-                            this.dataFound = false;
-                        }
-                        this.tableData = this.tableData.filter((data: any) => data._id !== user.userId);
-                        this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
-                        this.utilsService.showToast('success', MSG_KEY_CONSTANT_USER.USER_VERIFIED);
-                    },
-                    error: (err) => {
-                        this.utilsService.showToast('warning', err?.message);
-                    }
-                });
-        }
-    }
-
-    enableUser(rowData: any): void {
+    enableUser(rowData: IUserRes): void {
         const enableDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('COMMON.ALERT_MSG.ENABLE_DATA_RECORD', { recordType: 'user', name: this.titleCasePipe.transform(rowData.firstName) }) }, hasBackdrop: true, closeOnBackdropClick: false });
         this.dialogClose = enableDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
@@ -258,8 +227,8 @@ export class UserComponent implements OnInit, OnDestroy {
                                 if (!this.totalRecords) {
                                     this.dataFound = false;
                                 }
-                                this.tableData = this.tableData.filter((data: any) => data._id !== user.userId);
-                                this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
+                                this.tableData = this.tableData.filter((data) => data._id !== user.userId);
+                                this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
                                 if (res.success && res.message) {
                                     this.utilsService.showToast('success', res.message);
                                 }
@@ -273,7 +242,7 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    deleteUser(user: any): void {
+    deleteUser(user: IUserRes): void {
         const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_USERS.USERS.ALERT_MSG.DISABLE_USER'), name: this.titleCasePipe.transform(user.firstName) }, hasBackdrop: true, closeOnBackdropClick: false });
         this.dialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
@@ -300,8 +269,8 @@ export class UserComponent implements OnInit, OnDestroy {
                                 if (!this.totalRecords) {
                                     this.dataFound = false;
                                 }
-                                this.tableData = this.tableData.filter((data: any) => data._id !== user?._id);
-                                this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
+                                this.tableData = this.tableData.filter((data) => data._id !== user?._id);
+                                this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
                                 if (res.success && res.message) {
                                     this.utilsService.showToast('success', res.message);
                                 }
@@ -315,28 +284,27 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    viewUser(user: any): void {
+    viewUser(user: IUserRes): void {
         this.dialogService.open(ViewUserComponent, { context: { user } });
     }
 
-    editUser(data: any): void {
-        const editUserDialogOpen = this.disalogService.open(EditUserComponent, { context: { rowData: data } });
+    editUser(data: IUserRes): void {
+        const editUserDialogOpen = this.dialogService.open(EditUserComponent, { context: { rowData: data } });
         editUserDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
-                const savedData: any = res;
-                this.tableData = this.tableData.map((item: any) => {
+                const savedData = res;
+                this.tableData = this.tableData.map((item) => {
                     if (item._id === savedData._id) {
                         return savedData;
                     }
                     return item;
                 });
-                this.tableData.sort((data1: any, data2: any) => new Date(data2.updatedAt).getTime() - new Date(data1.updatedAt).getTime());
-                this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
+                this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
             }
         });
     }
 
-    onSubscriptionChange(event: any): void {
+    onSubscriptionChange(event: string): void {
         this.defaultSubscriptionType = event;
         this.pageChange(1);
     }
@@ -351,12 +319,12 @@ export class UserComponent implements OnInit, OnDestroy {
         this.pageChange(1);
     }
 
-    getCompanyRow(company: Array<any>): any {
-        return company.find((compRowId) => compRowId.subscriptionType === this.defaultSubscriptionType && compRowId.companyId._id === this.user.companyId);
+    getCompanyRow(company: Array<IUserCompany>): IUserCompany {
+        return company.find((compRowId) => compRowId.subscriptionType === this.defaultSubscriptionType && compRowId.companyId._id === this.user.companyId) as IUserCompany;
     }
 
-    findAdminUser(rowData: any): boolean {
-        const adminUser = rowData.company.find((company: any) => company.companyId._id === this.user.companyId && company.isAdmin);
+    findAdminUser(rowData: IUserRes): boolean {
+        const adminUser = rowData.company.find((company) => company.companyId._id === this.user.companyId && company.isAdmin);
         if (adminUser) {
             return true;
         }

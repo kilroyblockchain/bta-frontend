@@ -27,10 +27,10 @@
                 <div class="feature" *ngFor="let feature of featureList">
                     <div class="feature-name">{{ feature.feature }}</div>
                     <div *ngIf="mode === 'CREATE'" class="access-list">
-                        <nb-checkbox status="basic" (checkedChange)="toggleFeatureList(feature?._id, access, $event)" *ngFor="let access of feature?.accessType; let i = index" [checked]="feature?.accessChecked[i]">{{ access }}</nb-checkbox>
+                        <nb-checkbox status="basic" (checkedChange)="toggleFeatureList(feature._id, access, $event)" *ngFor="let access of feature?.accessType; let i = index" [checked]="feature.accessChecked[i]">{{ access }}</nb-checkbox>
                     </div>
                     <div *ngIf="mode === 'EDIT'" class="access-list">
-                        <nb-checkbox status="basic" (checkedChange)="toggleFeatureList(feature?._id, access, $event)" *ngFor="let access of feature?.accessType; let i = index" [checked]="feature?.accessChecked[i]">{{ access }}</nb-checkbox>
+                        <nb-checkbox status="basic" (checkedChange)="toggleFeatureList(feature._id, access, $event)" *ngFor="let access of feature?.accessType; let i = index" [checked]="feature.accessChecked[i]">{{ access }}</nb-checkbox>
                     </div>
                 </div>
                 <div *ngIf="submitted && accessListRequiredError" class="invalid-feedback">

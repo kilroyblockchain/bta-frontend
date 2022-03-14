@@ -6,6 +6,9 @@ import { finalize } from 'rxjs/operators';
 import { ValidationRegexConstant } from 'src/app/@core/constants';
 import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
+import { IOrganizationUnit, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
 
@@ -14,17 +17,16 @@ import { CountryService } from 'src/app/@core/services/country.service';
     templateUrl: './edit-user.component.html'
 })
 export class EditUserComponent implements OnInit {
-    rowData: any;
+    rowData!: IUserRes;
     editUserForm!: FormGroup;
-    countries!: Array<any>;
-    states!: Array<any>;
+    countries!: Array<ICountry>;
+    states!: Array<IState>;
     loading!: boolean;
-    organizationUnits!: Array<any>;
-    staffings!: Array<any>;
+    organizationUnits!: Array<IOrganizationUnit>;
+    staffings!: Array<IStaffing>;
     submitted!: boolean;
-    userData: any;
+    userData!: IUserRes;
     defaultSubscriptionType!: string;
-    otherUnitStaffings = [];
 
     constructor(private ref: NbDialogRef<EditUserComponent>, private fb: FormBuilder, private countryService: CountryService, private authService: AuthService, private utilsService: UtilsService, private readonly manageUserService: ManageUserService, private readonly staffingService: StaffingService, private titleCasePipe: TitleCasePipe) {}
 
@@ -35,14 +37,14 @@ export class EditUserComponent implements OnInit {
     }
 
     buildEditUserForm(): void {
-        const row = this.getCompany(this.rowData.company);
+        const row = this.getCompany(this.rowData.company) as IUserCompany;
         const selectedStaffing = row.staffingId;
         this.populateStaffing(selectedStaffing[0]?.organizationUnitId?._id);
         this.populateStates(this.rowData?.country?._id);
         this.editUserForm = this.fb.group({
             firstName: [this.titleCasePipe.transform(this.rowData?.firstName), [Validators.required]],
             lastName: [this.titleCasePipe.transform(this.rowData?.lastName), [Validators.required]],
-            staffingId: [selectedStaffing.map((staffing: any) => staffing._id), [Validators.required]],
+            staffingId: [selectedStaffing.map((staffing) => staffing._id), [Validators.required]],
             organizationUnit: [selectedStaffing[0]?.organizationUnitId?._id, [Validators.required]],
             phone: [this.rowData?.phone, [Validators.required, Validators.minLength(7), Validators.maxLength(18), Validators.pattern(ValidationRegexConstant.PHONE)]],
             email: [this.rowData?.email, [Validators.required, Validators.email]],
@@ -105,7 +107,7 @@ export class EditUserComponent implements OnInit {
         this.populateStates(countryId);
     }
 
-    getCompany(companyArray: Array<any>): any {
+    getCompany(companyArray: Array<IUserCompany>): IUserCompany | undefined {
         return companyArray.find((comp) => comp.companyId._id === this.userData.companyId && comp.subscriptionType === this.defaultSubscriptionType);
     }
 
@@ -116,9 +118,9 @@ export class EditUserComponent implements OnInit {
         }
         this.loading = true;
 
-        value.staffingId = [...value.staffingId, ...this.otherUnitStaffings.map((staff: any) => staff._id)];
+        value.staffingId = [...value.staffingId];
         this.manageUserService
-            .editUserForOrganization(this.rowData._id, value)
+            .editUserForOrganization(this.rowData._id as string, value)
             .pipe(
                 finalize(() => {
                     this.loading = false;

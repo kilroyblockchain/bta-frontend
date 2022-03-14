@@ -12,6 +12,7 @@ import { finalize } from 'rxjs/operators';
 import { RejectCompanyFormComponent } from './reject-form/reject-form.component';
 import { RejectInformationsComponent } from './reject-informations/reject-informations.component';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
+import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 
 interface TreeNode<T> {
     data: T;
@@ -22,7 +23,6 @@ interface TreeNode<T> {
 interface FSEntry {
     name: string;
     companyName: string;
-    jobTitle: string;
     address?: string;
     email?: string;
     phone?: string;
@@ -33,11 +33,10 @@ interface FSEntry {
     verified?: boolean;
     blockchainVerified?: boolean;
     id?: string;
-    company?: any;
-    ownCompany?: any;
+    company?: IUserCompany[];
     companyId?: string;
-    createdat?: any;
-    extra?: any;
+    createdat?: string;
+    extra: IUserRes;
 }
 
 @Component({
@@ -62,12 +61,12 @@ export class UsersComponent implements OnInit {
     sortColumn!: string;
     sortDirection: NbSortDirection = NbSortDirection.NONE;
     totalRecords!: number;
-    options: any = {};
-    page: any = 1;
-    resultperpage: any = 10;
+    options: { [key: string]: unknown } = {};
+    page = 1;
+    resultperpage = 10;
     loadingTable!: boolean;
     loading = true;
-    tableData!: Array<any>;
+    tableData!: IUserRes[];
     dataFound = false;
     toggleStatusFilter!: boolean;
     subscriptionType = 'all';
@@ -116,7 +115,7 @@ export class UsersComponent implements OnInit {
                         this.dataFound = true;
                     }
                     this.tableData = data.docs;
-                    this.createTableData(this.tableData, this.options.status === 'verified' ? true : false);
+                    this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
                 }
             });
     }
@@ -129,27 +128,27 @@ export class UsersComponent implements OnInit {
         this.pageChange(1);
     }
 
-    async createTableData(data: any, status: boolean): Promise<void> {
+    async createTableData(data: IUserRes[], status: boolean): Promise<void> {
         this.data = [];
         for await (const item of data) {
-            const comp = item.company.filter((element: any) => (this.options.subscriptionType === 'allSupervisors' || this.options.subscriptionType === 'all' ? true : element.subscriptionType === this.options.subscriptionType));
-            const adminCompanyList: any[] = [];
-            const nonAdminCompanyList: any[] = [];
-            const adminTypes: any[] = [];
-            const nonAdminTypes: any[] = [];
-            comp.forEach((element: any) => {
+            const comp = item.company.filter((element: IUserCompany) => (this.options['subscriptionType'] === 'all' ? true : element.subscriptionType === this.options['subscriptionType']));
+            const adminCompanyList: string[] = [];
+            const nonAdminCompanyList: string[] = [];
+            const adminTypes: string[] = [];
+            const nonAdminTypes: string[] = [];
+            comp.forEach((element: IUserCompany) => {
                 if (element.isAdmin) {
                     if (!adminCompanyList.includes(element.companyId.companyName)) {
                         adminCompanyList.push(element.companyId.companyName);
                     }
-                    if (!adminTypes.includes(this.utilsService.getFullSubcriptionType(element.subscriptionType))) {
+                    if (!adminTypes.includes(this.utilsService.getFullSubscriptionType(element.subscriptionType))) {
                         if (this.toggleStatusFilter) {
                             if (!element.isDeleted) {
-                                adminTypes.push(this.utilsService.getFullSubcriptionType(element.subscriptionType));
+                                adminTypes.push(this.utilsService.getFullSubscriptionType(element.subscriptionType));
                             }
                         } else {
                             if (element.isDeleted) {
-                                adminTypes.push(this.utilsService.getFullSubcriptionType(element.subscriptionType));
+                                adminTypes.push(this.utilsService.getFullSubscriptionType(element.subscriptionType));
                             }
                         }
                     }
@@ -157,14 +156,14 @@ export class UsersComponent implements OnInit {
                     if (!nonAdminCompanyList.includes(element.companyId.companyName)) {
                         nonAdminCompanyList.push(element.companyId.companyName);
                     }
-                    if (!nonAdminTypes.includes(this.utilsService.getFullSubcriptionType(element.subscriptionType))) {
+                    if (!nonAdminTypes.includes(this.utilsService.getFullSubscriptionType(element.subscriptionType))) {
                         if (this.toggleStatusFilter) {
                             if (!element.isDeleted) {
-                                nonAdminTypes.push(this.utilsService.getFullSubcriptionType(element.subscriptionType));
+                                nonAdminTypes.push(this.utilsService.getFullSubscriptionType(element.subscriptionType));
                             }
                         } else {
                             if (element.isDeleted) {
-                                nonAdminTypes.push(this.utilsService.getFullSubcriptionType(element.subscriptionType));
+                                nonAdminTypes.push(this.utilsService.getFullSubscriptionType(element.subscriptionType));
                             }
                         }
                     }
@@ -174,10 +173,9 @@ export class UsersComponent implements OnInit {
             this.data.push({
                 data: {
                     name: this.titleCasePipe.transform(item.firstName + ' ' + item.lastName),
-                    companyName: Array.from(new Set(comp.map((compName: any) => compName.companyId.companyName))).join(','),
+                    companyName: Array.from(new Set(comp.map((compName: IUserCompany) => compName.companyId.companyName))).join(','),
                     adminCompanyList: adminCompanyList.join(','),
                     nonAdminCompanyList: nonAdminCompanyList.join(','),
-                    jobTitle: item.jobTitle,
                     address: item.address,
                     email: item.email,
                     phone: item.phone,
@@ -187,7 +185,7 @@ export class UsersComponent implements OnInit {
                     verified: status,
                     id: item._id,
                     company: comp,
-                    createdat: new DatePipe('en-US').transform(item.createdAt, 'yyyy-MM-dd'),
+                    createdat: new DatePipe('en-US').transform(item.createdAt, 'yyyy-MM-dd') as string,
                     extra: item
                 }
             });
@@ -196,8 +194,9 @@ export class UsersComponent implements OnInit {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
-    verifyUser(rowData: any): void {
-        const dialogResponse = this.dialogService.open(VerifyUserComponent, { context: { rowData, unverifiedUsers: this.unverifiedUsers, enabled: this.toggleStatusFilter } });
+    verifyUser(rowData: FSEntry): void {
+        const { extra: userData } = rowData;
+        const dialogResponse = this.dialogService.open(VerifyUserComponent, { context: { rowData: userData, unverifiedUsers: this.unverifiedUsers, enabled: this.toggleStatusFilter } });
         dialogResponse.onClose.subscribe((res) => {
             if (res === 'save') {
                 this.pageChange(1);
@@ -212,12 +211,14 @@ export class UsersComponent implements OnInit {
         this.retrieveAllUserData();
     }
 
-    viewUser(data: any): void {
-        this.dialogService.open(ViewUserComponent, { context: { user: { ...data.extra } } });
+    viewUser(data: FSEntry): void {
+        const { extra: userData } = data;
+        this.dialogService.open(ViewUserComponent, { context: { user: userData } });
     }
 
-    addSubscriptionType(id: string, name: string, data: any): void {
-        const dialogResponse = this.dialogService.open(AddSubscriptionTypeComponent, { context: { selectedUserId: id, name, data, type: 'CREATE' }, hasBackdrop: true, closeOnBackdropClick: false });
+    addSubscriptionType(id: string, name: string, data: FSEntry): void {
+        const { extra: userData } = data;
+        const dialogResponse = this.dialogService.open(AddSubscriptionTypeComponent, { context: { selectedUserId: id, name, data: userData, type: 'CREATE' }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogResponse.onClose.subscribe((res) => {
             if (res === 'save') {
                 this.pageChange(1);
@@ -239,12 +240,12 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    viewRejectInformations(user: any): void {
+    viewRejectInformations(user: FSEntry): void {
         this.dialogService.open(RejectInformationsComponent, { context: { rejectedUser: user.id, companyName: user.companyName } });
     }
 
-    unblockUser(user: any): void {
-        const userId = user.id;
+    unblockUser(user: FSEntry): void {
+        const userId = user.id as string;
         const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('SUPER_ADMIN.ALERT_MSG.UNBLOCK_USER', { name: user.name }) }, hasBackdrop: true, closeOnBackdropClick: false });
         dialogOpen.onClose.subscribe((dialogRes) => {
             if (dialogRes) {

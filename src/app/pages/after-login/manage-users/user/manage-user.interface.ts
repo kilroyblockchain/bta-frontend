@@ -11,3 +11,9 @@ export interface IStaffUserFormData {
     organizationUnit: string;
     staffingId: string[];
 }
+
+export interface IAddCompanyToUser {
+    userId: string;
+    staffingId: string;
+    subscription: string;
+}

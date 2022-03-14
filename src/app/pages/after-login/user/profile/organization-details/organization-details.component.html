@@ -1,45 +1,45 @@
 <nb-card class="medium-card-width" *ngIf="showOrganizationDetail" status="info">
     <nb-card-header>
         {{ 'ORGANIZATION_DETAILS.TITLE.ORG_DETAIL' | translate }}
-        <button nbButton ghost *ngIf="showOrganizationEditButton" (click)="editOrganizationDetails(userData?.company?.companyId?._id)">
+        <button nbButton ghost *ngIf="showOrganizationEditButton" (click)="editOrganizationDetails(organization._id)">
             <nb-icon icon="edit-outline"></nb-icon>
         </button>
     </nb-card-header>
-    <nb-card-body *ngIf="userData">
-        <div class="detail-row" *ngIf="company?.companyId?.companyLogo">
+    <nb-card-body *ngIf="organization">
+        <div class="detail-row" *ngIf="organization.companyLogo">
             <div class="c-col centered">
                 <div class="image-holder">
-                    <img [src]="imageBaseUrl + company?.companyId.companyLogo" [alt]="company?.companyId?.companyName" />
+                    <img [src]="imageBaseUrl + organization.companyLogo" [alt]="organization.companyName" />
                 </div>
             </div>
         </div>
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b>
             <span>
-                <app-blockchain-verified [blockName]="company?.companyId?.companyName" [blockchainVerified]="userData?.blockchainVerified"></app-blockchain-verified>
+                <app-blockchain-verified [blockName]="organization.companyName" [blockchainVerified]="organization.blockchainVerified"></app-blockchain-verified>
             </span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ company?.companyId?.country?.name || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ organization.countryName || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ company?.companyId?.state?.name || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ organization.stateName || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ company?.companyId?.city || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ organization.city || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ company?.companyId?.address || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ organization.address || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ company?.companyId?.zipCode || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ organization.zipCode || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.UNIT_NAME' | translate }}: </b> <span>{{ company?.staffingId[0]?.organizationUnitId?.unitName || 'N/a' }}</span>
-            <small>{{ company?.staffingId[0]?.organizationUnitId?.unitDescription }}</small>
+            <b>{{ 'ORGANIZATION_DETAILS.LABEL.UNIT_NAME' | translate }}: </b> <span>{{ staffs[0]?.organizationUnitId?.unitName || 'N/a' }}</span>
+            <small>{{ staffs[0]?.organizationUnitId?.unitDescription }}</small>
         </div>
         <div class="detail-row">
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate }}: </b> <span>{{ company?.staffingId[0]?.staffingName || 'N/a' }}</span>
+            <b>{{ 'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate }}: </b> <span>{{ staffs[0]?.staffingName || 'N/a' }}</span>
         </div>
     </nb-card-body>
 </nb-card>

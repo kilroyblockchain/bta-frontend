@@ -9,7 +9,7 @@
         <app-personal-details [userData]="userData"></app-personal-details>
     </div>
     <div *ngIf="url === 'organization-details'" class="fixed-width-container">
-        <app-organization-details [userData]="userData" [organizationList]="organizationList"></app-organization-details>
+        <app-organization-details [organization]="organization" [staffs]="staffs"></app-organization-details>
     </div>
 </div>
 <div *ngIf="!dataFound && loading">

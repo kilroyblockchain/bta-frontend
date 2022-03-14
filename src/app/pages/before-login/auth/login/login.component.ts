@@ -6,7 +6,7 @@ import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-con
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { ICompany, IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { ICompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
@@ -17,7 +17,7 @@ import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 })
 export class LoginComponent implements OnInit, OnDestroy {
     loginFormGroup!: FormGroup;
-    userData!: IUserData;
+    userData!: IUserRes;
     submitted = false;
     loading = false;
     recaptchaStr!: string;

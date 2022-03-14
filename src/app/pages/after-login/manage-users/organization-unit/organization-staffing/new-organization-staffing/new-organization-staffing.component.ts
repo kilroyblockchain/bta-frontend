@@ -1,28 +1,40 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbCheckboxComponent, NbDialogRef } from '@nebular/theme';
+import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IFeature, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
 import { ManageUserService, UtilsService, StaffingService } from 'src/app/@core/services';
+
+interface IChildrenRow {
+    unitName: string;
+    unitDescription: string;
+    status: boolean;
+    createdDate: string;
+    updatedDate: string;
+    action: unknown;
+    subrow: boolean;
+    _id: string;
+    staffingId: string;
+}
 
 export interface IAccessList {
     featureId: string;
     accessType: Array<string>;
 }
-let that: any;
+let that: NewOrganizationStaffingComponent;
 @Component({
     selector: 'app-new-organization-staffing',
     templateUrl: './new-organization-staffing.component.html',
     styleUrls: ['./new-organization-staffing.component.scss']
 })
 export class NewOrganizationStaffingComponent implements OnInit {
-    rowData: any;
+    childRowData!: IChildrenRow;
     mode!: string;
     newOrganizationStaffingForm!: FormGroup;
-    features!: Array<any>;
     submitted!: boolean;
-    user: any;
     loading!: boolean;
-    featureList!: Array<any>;
+    featureList!: Array<IFeature & { accessChecked: boolean[] }>;
     unitName!: string;
     accessListRequiredError = false;
     accessList: Array<IAccessList> = [];
@@ -38,12 +50,12 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildNewOrganizationStaffingForm();
-        if (this.rowData) {
-            this.unitName = this.rowData.unitName;
+        if (this.childRowData) {
+            this.unitName = this.childRowData.unitName;
             this.getOrganizationUnitDetail();
         }
         if (this.mode === 'EDIT') {
-            this.buildEditOrganizationStaffingForm(this.rowData);
+            this.buildEditOrganizationStaffingForm(this.childRowData);
         }
     }
 
@@ -53,11 +65,14 @@ export class NewOrganizationStaffingComponent implements OnInit {
         });
     }
 
-    buildEditOrganizationStaffingForm(data: any): void {
+    buildEditOrganizationStaffingForm(data: IChildrenRow): void {
         this.newOrganizationStaffingForm.patchValue({
             staffingName: data.unitName
         });
-        this.accessList = [...data.action.featureAndAccess];
+        this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
+            featureId: access.featureId as string,
+            accessType: access.accessType
+        }));
     }
 
     get UF(): IFormControls {
@@ -65,28 +80,29 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     getOrganizationUnitDetail(): void {
-        this.manageUserService.getOrganizationUnitById(this.rowData._id).subscribe((data) => {
+        this.manageUserService.getOrganizationUnitById(this.childRowData._id).subscribe((data) => {
             if (data.success) {
-                const tempData = data.data.featureListId;
-                tempData.forEach((list: any) => {
-                    list.accessChecked = [];
-                    for (let i = 0; i < list.accessType.length; i++) {
-                        list.accessChecked.push(false);
+                const featureAndAccessList = data.data.featureListId as IFeature[];
+                this.featureList = featureAndAccessList.map((featureAndAccess) => {
+                    const featureAndAccessCopy: IFeature & { accessChecked: boolean[] } = { ...featureAndAccess, accessChecked: [] };
+                    console.log(featureAndAccessCopy);
+                    for (let i = 0; i < featureAndAccessCopy.accessType.length; i++) {
+                        featureAndAccessCopy.accessChecked.push(false);
                         this.totalFeaturesCount = this.totalFeaturesCount + 1;
                     }
+                    return featureAndAccessCopy;
                 });
-                this.featureList = tempData;
                 if (this.mode === 'EDIT') {
-                    this.fillFeatureList(data.data.featureListId);
+                    this.fillFeatureList(data.data.featureListId as IFeature[]);
                 }
             }
         });
     }
 
-    fillFeatureList(featureList: any[]): void {
+    fillFeatureList(featureList: IFeature[]): void {
         featureList.map((feature, index) => {
             this.accessList.map((access) => {
-                feature.accessType.map((a: any, i: any) => {
+                feature.accessType.map((a: string, i: number) => {
                     if (!this.featureList[index].accessChecked) {
                         this.featureList[index].accessChecked = new Array(feature.accessType.length).fill(false);
                     }
@@ -102,7 +118,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
         });
     }
 
-    toggleFeatureList(featureID: any, access: any, event: any): void {
+    toggleFeatureList(featureID: string, access: string, event: boolean): void {
         if (this.accessList.length) {
             const featureData = this.accessList.filter((res) => res.featureId === featureID);
             if (featureData.length) {
@@ -148,18 +164,18 @@ export class NewOrganizationStaffingComponent implements OnInit {
         }
         this.accessListRequiredError = false;
         value.featureAndAccess = this.accessList;
-        value.organizationUnitId = this.rowData._id;
+        value.organizationUnitId = this.childRowData._id;
         this.loading = true;
         if (this.mode === 'CREATE') {
             this.staffingService.createNewStaffing(value).subscribe({ next: this.successRes, error: this.errorRes });
         }
 
         if (this.mode === 'EDIT') {
-            this.staffingService.updateStaffingById(this.rowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
+            this.staffingService.updateStaffingById(this.childRowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
         }
     }
 
-    successRes(res: any): void {
+    successRes(res: IAppResponse<IStaffing>): void {
         that.loading = false;
         if (res && res.success) {
             that.ref.close(res);
@@ -167,7 +183,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
         }
     }
 
-    errorRes(err: any): void {
+    errorRes(err: Error): void {
         that.loading = false;
         that.utilsService.showToast('warning', err?.message);
     }
@@ -188,7 +204,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
         }
     }
 
-    toggleAllSelection(isSelected: any): void {
+    toggleAllSelection(isSelected: boolean): void {
         for (let i = 0; i < this.featureList.length; i++) {
             const accessList = this.featureList[i];
             for (let j = 0; j < accessList.accessType.length; j++) {

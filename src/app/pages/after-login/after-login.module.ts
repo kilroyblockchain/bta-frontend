@@ -5,7 +5,7 @@ import { AfterLoginRoutingModule } from './after-login-routing.module';
 import { SuperAdminModule } from './super-admin/super-admin.module';
 import { COMMON_SHARED_MODULE } from 'src/app/@core/constants/common-shared-modules.constant';
 import { SharedModule } from './../shared/shared.module';
-import { ChangePasswordComponent } from './user/change-passwod/change-password.component';
+import { ChangePasswordComponent } from './user/change-password/password';
 import { MiscellaneousModule } from '../miscellaneous/miscellaneous.module';
 import { AppDashboardComponent } from './dashboard/dashboard.component';
 import { CustomPipeModule } from 'src/app/@core/pipes/pipe.module';
