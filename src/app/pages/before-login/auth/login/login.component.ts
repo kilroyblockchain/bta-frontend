@@ -74,37 +74,40 @@ export class LoginComponent implements OnInit, OnDestroy {
         value.reCaptchaToken = this.recaptchaStr;
         this.loading = true;
         this.authService.userLogin(value).subscribe({
-            next: (data) => {
-                this.authService.setAccessToken(data?.accessToken);
-                const user = {
-                    roles: data?.roles,
-                    firstName: this.titleCasePipe.transform(data?.firstName),
-                    lastName: this.titleCasePipe.transform(data?.lastName),
-                    email: data?.email,
-                    id: data?.id,
-                    companyName: (data?.company[0].companyId as ICompany).companyName,
-                    companyId: data?.companyId,
-                    company: data?.company,
-                    autoPassword: data?.autoPassword,
-                    staffingId: data?.staffingId
-                };
-                this.authService.setUserData(user);
-                this.authService.getUserData().then((userData) => {
-                    this.userData = { ...userData };
-                    const roles = this.userData?.roles;
-                    if (roles) {
-                        const returnURL = this.activatedRoute.snapshot.queryParams['returnUrl'];
-                        if (returnURL) {
-                            this.router.navigateByUrl(decodeURIComponent(returnURL)).then(() => {
+            next: (res) => {
+                const { data } = res;
+                if (data) {
+                    this.authService.setAccessToken(data?.accessToken);
+                    const user = {
+                        roles: data?.roles,
+                        firstName: this.titleCasePipe.transform(data?.firstName),
+                        lastName: this.titleCasePipe.transform(data?.lastName),
+                        email: data?.email,
+                        id: data?.id,
+                        companyName: (data?.company[0].companyId as ICompany).companyName,
+                        companyId: data?.companyId,
+                        company: data?.company,
+                        autoPassword: data?.autoPassword,
+                        staffingId: data?.staffingId
+                    };
+                    this.authService.setUserData(user);
+                    this.authService.getUserData().then((userData) => {
+                        this.userData = { ...userData };
+                        const roles = this.userData?.roles;
+                        if (roles) {
+                            const returnURL = this.activatedRoute.snapshot.queryParams['returnUrl'];
+                            if (returnURL) {
+                                this.router.navigateByUrl(decodeURIComponent(returnURL)).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
                                 window.location.reload();
-                            });
+                            }
                         } else {
-                            window.location.reload();
+                            this.loading = false;
                         }
-                    } else {
-                        this.loading = false;
-                    }
-                });
+                    });
+                }
             },
             error: (err) => {
                 this.loading = false;

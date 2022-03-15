@@ -164,11 +164,11 @@ export class VerifyUserComponent implements OnInit {
                         })
                     )
                     .subscribe({
-                        next: (data) => {
-                            if (data.success) {
+                        next: (res) => {
+                            if (res.success) {
                                 this.ref.close('save');
                             }
-                            this.utilsService.showToast('success', data?.message);
+                            this.utilsService.showToast('success', res?.message);
                         },
                         error: (err) => {
                             this.utilsService.showToast('warning', err?.message);

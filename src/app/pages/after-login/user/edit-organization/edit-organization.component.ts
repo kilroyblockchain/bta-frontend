@@ -8,7 +8,6 @@ import { MSG_KEY_CONSTANT_ORGANIZATION } from 'src/app/@core/constants/message-k
 import { finalize } from 'rxjs/operators';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
-import { ICompany } from 'src/app/@core/interfaces/user-data.interface';
 
 const BASE_URL = environment.apiURL + '/files/';
 @Component({
@@ -88,20 +87,21 @@ export class EditOrganizationComponent implements OnInit {
             )
             .subscribe({
                 next: (res) => {
-                    if (res) {
-                        if (res) {
-                            this.populateStates(res.country as string);
+                    const { data } = res;
+                    if (data) {
+                        if (data) {
+                            this.populateStates(data.country as string);
                         }
                         this.editOrganizationForm.patchValue({
-                            companyName: res.companyName,
-                            country: res.country,
-                            state: res.state,
-                            city: res.city,
-                            address: res.address,
-                            zipCode: res.zipCode
+                            companyName: data.companyName,
+                            country: data.country,
+                            state: data.state,
+                            city: data.city,
+                            address: data.address,
+                            zipCode: data.zipCode
                         });
-                        if (res.companyLogo) {
-                            this.logoURL = this.imageBaseUrl + res.companyLogo;
+                        if (data.companyLogo) {
+                            this.logoURL = this.imageBaseUrl + data.companyLogo;
                         }
                     } else {
                         this.utilsService.showToast('warning', MSG_KEY_CONSTANT_ORGANIZATION.ORGANIZATION_NOT_FOUND);
@@ -163,10 +163,11 @@ export class EditOrganizationComponent implements OnInit {
         formData.state = formData.state ? String(formData.state) : '';
         this.loading = true;
         this.authService.updateOrganization(this.organizationId, formData, hasFormData).subscribe({
-            next: (res: ICompany) => {
+            next: (res) => {
+                const { data } = res;
                 this.loading = false;
                 value._id = this.organizationId;
-                this.ref.close({ saveSuccess: true, data: res });
+                this.ref.close({ saveSuccess: true, data: data });
                 this.utilsService.showToast('success', MSG_KEY_CONSTANT_ORGANIZATION.SUCCESSFULLY_UPDATED_ORGANIZATION);
             },
             error: (err) => {

@@ -106,9 +106,10 @@ export class NewUserComponent implements OnInit {
             )
             .subscribe({
                 next: (res) => {
-                    if (res) {
+                    const { data } = res;
+                    if (data) {
                         this.userAlreadyExist = true;
-                        this.userDetail = res;
+                        this.userDetail = data;
                         this.existingUserForm.patchValue({
                             email: value.email
                         });
@@ -198,7 +199,7 @@ export class NewUserComponent implements OnInit {
                 next: (res) => {
                     this.loading = false;
                     this.utilsService.showToast('success', MSG_KEY_CONSTANT_USER.NEW_USER_ADDED);
-                    this.ref.close(res);
+                    this.ref.close(res.data);
                 },
                 error: (err) => {
                     this.loading = false;

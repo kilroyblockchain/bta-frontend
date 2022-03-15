@@ -128,7 +128,7 @@ export class EditUserComponent implements OnInit {
             )
             .subscribe({
                 next: (res) => {
-                    if (res) {
+                    if (res.data) {
                         this.utilsService.showToast('success', MSG_KEY_CONSTANT_USER.USER_UPDATED);
                         this.ref.close(res);
                     } else {
