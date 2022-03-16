@@ -4,7 +4,7 @@ export const LocalStorageConstant = {
     token: 'accessToken',
     tokenRe: 'ReAccessToken',
     user: 'user',
-    comapanyId: 'selectedOrganization',
+    companyId: 'selectedOrganization',
     defaultSubscriptionType: 'subscriptionType',
     defaultLanguage: 'defaultLanguage',
     sidebarState: 'sidebarState'

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UtilsService } from 'src/app/@core/services';
+import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 
 @Component({
     selector: 'app-filter-bar',
@@ -16,11 +17,6 @@ export class FilterBarComponent {
     paginateId!: string;
     @Input()
     recordType!: string;
-    @Input()
-    configType!: string;
-    @Input()
-    isLocalContactTracing!: boolean;
-    @Input() selectedTestResult: any;
     @Output() toggleTableEmit = new EventEmitter();
     @Output() searchValue = new EventEmitter();
     @Output() pageChanged = new EventEmitter();
@@ -33,11 +29,11 @@ export class FilterBarComponent {
         this.toggleTableEmit.emit();
     }
 
-    onSearch(event: any): void {
+    onSearch(event: ISearchQuery): void {
         this.searchValue.emit(event);
     }
 
-    pageChange(event: any): void {
+    pageChange(event: number): void {
         this.pageChanged.emit(event);
     }
 }

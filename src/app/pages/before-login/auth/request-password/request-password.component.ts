@@ -4,6 +4,7 @@ import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from
 import { AuthService, UtilsService } from 'src/app/@core/services';
 import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-constants';
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 
 @Component({
     selector: 'app-request-password',
@@ -17,7 +18,7 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
     recaptchaStr!: string;
 
     @ViewChild('captchaRef')
-    captchaRef!: TemplateRef<any>;
+    captchaRef!: TemplateRef<RecaptchaComponent>;
 
     constructor(private fb: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) {}
 
@@ -40,7 +41,7 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.requestPasswordFormGroup.controls;
     }
 

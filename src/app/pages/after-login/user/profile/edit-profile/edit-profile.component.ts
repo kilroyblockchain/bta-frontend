@@ -7,6 +7,9 @@ import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-const
 import { finalize } from 'rxjs/operators';
 import { DEFAULT_VALUES, ValidationRegexConstant } from 'src/app/@core/constants';
 import { TitleCasePipe } from '@angular/common';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
 
 @Component({
     selector: 'app-edit-profile',
@@ -14,9 +17,9 @@ import { TitleCasePipe } from '@angular/common';
     providers: [TitleCasePipe]
 })
 export class EditProfileComponent implements OnInit {
-    userData: any;
-    countries!: Array<any>;
-    states!: Array<any>;
+    userData!: IUserData;
+    countries!: Array<ICountry>;
+    states!: Array<IState>;
     loading = false;
     submitted = false;
 
@@ -31,7 +34,7 @@ export class EditProfileComponent implements OnInit {
         this.populateStates(this.userData.country?._id);
     }
 
-    createRegistrationForm(user: any): void {
+    createRegistrationForm(user: IUserData): void {
         this.personalDetailsForm = this.fb.group({
             firstName: [this.titleCasePipe.transform(user?.firstName), [Validators.required, Validators.minLength(2)]],
             lastName: [this.titleCasePipe.transform(user?.lastName), [Validators.required, Validators.minLength(2)]],
@@ -44,7 +47,7 @@ export class EditProfileComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.personalDetailsForm.controls;
     }
 

@@ -14,7 +14,7 @@ export const decodeString = (encodedString: string): string | void => {
     }
 };
 
-export const encodeJSON = (data: any): string | void => {
+export const encodeJSON = (data: { [key: string]: unknown }): string | void => {
     try {
         const stringified = JSON.stringify(data);
         return window.btoa(stringified);
@@ -23,7 +23,7 @@ export const encodeJSON = (data: any): string | void => {
     }
 };
 
-export const decodeJSON = (encodedString: string): any => {
+export const decodeJSON = (encodedString: string): { [key: string]: unknown } | void => {
     try {
         const stringified = window.atob(encodedString);
         const jsonObject = JSON.parse(stringified);

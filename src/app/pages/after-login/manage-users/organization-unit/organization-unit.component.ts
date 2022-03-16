@@ -8,9 +8,22 @@ import { EditOrganizationUnitComponent } from './edit-organization-unit/edit-org
 import { NewOrganizationUnitComponent } from './new-organization-unit/new-organization-unit.component';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { IOrganizationUnit } from 'src/app/@core/interfaces/manage-user.interface';
+
+interface IChildrenRow {
+    unitName: string;
+    unitDescription: string;
+    status: boolean;
+    createdDate: string;
+    updatedDate: string;
+    action: unknown;
+    subrow: boolean;
+    _id: string;
+    staffingId: string;
+}
 
 interface TreeNode<T> {
     data: T;
@@ -24,7 +37,7 @@ interface FSEntry {
     createdDate: Date;
     status: boolean;
     updatedDate: Date;
-    action: any;
+    action: unknown;
     subrow: boolean;
     _id?: string;
     staffingId?: string;
@@ -39,7 +52,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
     totalRecords = 0;
     resultperpage = this.utilsService.getResultsPerPage();
     page!: number;
-    options: any = {};
+    options: { [key: string]: unknown } = {};
     dataFound!: boolean;
     loading!: boolean;
     columns: Array<string> = ['unitName', 'unitDescription', 'createdDate', 'status', 'updatedDate', 'action'];
@@ -49,7 +62,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
     editOrganizationUnitDialogClose!: Subscription;
     newOrganizationStaffingDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
-    tableData!: Array<any>;
+    tableData!: Array<IOrganizationUnit>;
     loadingTable!: boolean;
     toggleStatusFilter = true;
     canAddOrganizationUnit!: boolean;
@@ -62,15 +75,15 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
     constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private readonly authService: AuthService, private readonly manageUserService: ManageUserService, private translate: TranslateService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.checkAccess();
-        this.lanaguageChanged();
+        this.languageChange();
     }
 
     ngOnInit(): void {
         this.setTranslatedTableColumns();
     }
 
-    lanaguageChanged(): void {
-        this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    languageChange(): void {
+        this.translate.onLangChange.subscribe(() => {
             this.setTranslatedTableColumns();
             this.checkAccess();
         });
@@ -82,7 +95,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    async checkAccess(): Promise<any> {
+    async checkAccess(): Promise<void> {
         this.canAddOrganizationUnit = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.WRITE]);
         this.canUpdateOrganizationUnit = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteOrganizationUnit = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.DELETE]);
@@ -110,7 +123,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
     }
 
     retrieveAllUnitsOfOrganization(): void {
-        this.authService.getUserData().then((user: any) => {
+        this.authService.getUserData().then((user) => {
             this.dataFound = false;
             this.loading = true;
             this.manageUserService
@@ -138,7 +151,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    createTableData(data: any): void {
+    createTableData(data: IOrganizationUnit[]): void {
         this.data = [];
         for (const item of data) {
             const children = [];
@@ -160,7 +173,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
             this.data.push({
                 data: {
                     unitName: item.unitName,
-                    unitDescription: item.unitDescription,
+                    unitDescription: item.unitDescription as string,
                     status: item.status,
                     createdDate: item.createdAt,
                     updatedDate: item.updatedAt,
@@ -185,8 +198,8 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    openAddStaffingModal(rowData: any): void {
-        const newOrganizationStaffingDialogOpen = this.dialogService.open(NewOrganizationStaffingComponent, { context: { rowData, mode: 'CREATE' }, hasBackdrop: true, closeOnBackdropClick: false });
+    openAddStaffingModal(rowData: IChildrenRow): void {
+        const newOrganizationStaffingDialogOpen = this.dialogService.open(NewOrganizationStaffingComponent, { context: { childRowData: rowData, mode: 'CREATE' }, hasBackdrop: true, closeOnBackdropClick: false });
         this.newOrganizationStaffingDialogClose = newOrganizationStaffingDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
                 this.pageChange(1);
@@ -194,7 +207,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    openOrganizationEditModal(rowData: any): void {
+    openOrganizationEditModal(rowData: IOrganizationUnit): void {
         const editOrganizationUnitDialogOpen = this.dialogService.open(EditOrganizationUnitComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
         this.editOrganizationUnitDialogClose = editOrganizationUnitDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close' && res.success) {
@@ -203,21 +216,21 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    openStaffingEditEditModal(rowData: any): void {
-        const newOrganizationStaffingDialogOpen = this.dialogService.open(NewOrganizationStaffingComponent, { context: { rowData, mode: 'EDIT' }, hasBackdrop: true, closeOnBackdropClick: false });
+    openStaffingEditModal(rowData: IChildrenRow): void {
+        const newOrganizationStaffingDialogOpen = this.dialogService.open(NewOrganizationStaffingComponent, { context: { childRowData: rowData, mode: 'EDIT' }, hasBackdrop: true, closeOnBackdropClick: false });
         this.newOrganizationStaffingDialogClose = newOrganizationStaffingDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
                 this.pageChange(1);
             }
         });
     }
-    onEnableOrganizationUnit(rowData: any): void {
-        this.manageUserService.enableOrganizationUnit(rowData._id).subscribe({
+
+    onEnableOrganizationUnit(rowData: IOrganizationUnit): void {
+        this.manageUserService.enableOrganizationUnit(rowData._id as string).subscribe({
             next: (res) => {
                 if (res && res.success) {
                     this.utilsService.showToast('success', res?.message);
                     this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
-                    this.tableData.sort((data1, data2) => new Date(data2.updatedAt).getTime() - new Date(data1.updatedAt).getTime());
                     this.totalRecords -= 1;
                     if (this.tableData.length < 1) {
                         this.dataFound = false;
@@ -232,16 +245,15 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    onDeleteOrganizationUnit(rowData: any): void {
+    onDeleteOrganizationUnit(rowData: IOrganizationUnit): void {
         const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_USERS.ORGANIZATION_UNIT.ALERT_MSG.DISABLE_ORGANIZATION_UNIT'), name: rowData.unitName }, hasBackdrop: true, closeOnBackdropClick: false });
         this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
-                this.manageUserService.deleteOrganizationUnit(rowData._id).subscribe({
+                this.manageUserService.deleteOrganizationUnit(rowData._id as string).subscribe({
                     next: (res) => {
                         if (res && res.success) {
                             this.utilsService.showToast('success', res?.message);
                             this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
-                            this.tableData.sort((data1, data2) => new Date(data2.updatedAt).getTime() - new Date(data1.updatedAt).getTime());
                             this.totalRecords -= 1;
                             if (this.tableData.length < 1) {
                                 this.dataFound = false;
@@ -258,11 +270,11 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    onDeleteOrganizationStaffing(rowData: any): void {
-        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_USERS.ORGANIZATION_UNIT.ALERT_MSG.DISABLE_ORGANIZATION_UNIT'), name: rowData.unitName }, hasBackdrop: true, closeOnBackdropClick: false });
+    onDeleteOrganizationStaffing(unitName: string, staffingId: string): void {
+        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_USERS.ORGANIZATION_UNIT.ALERT_MSG.DISABLE_ORGANIZATION_UNIT'), name: unitName }, hasBackdrop: true, closeOnBackdropClick: false });
         this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
-                this.manageUserService.deleteStaffingById(rowData.staffingId).subscribe({
+                this.manageUserService.deleteStaffingById(staffingId).subscribe({
                     next: (res) => {
                         if (res && res.success) {
                             this.utilsService.showToast('success', res?.message);
@@ -277,7 +289,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
         });
     }
 
-    onEnableOrganizationStaffing(rowData: any): void {
+    onEnableOrganizationStaffing(rowData: IOrganizationUnit): void {
         this.manageUserService.enableOrganizationStaffing(rowData._id).subscribe({
             next: (res) => {
                 if (res && res.success) {

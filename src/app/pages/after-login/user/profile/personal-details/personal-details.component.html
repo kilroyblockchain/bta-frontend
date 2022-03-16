@@ -6,9 +6,6 @@
         </button>
     </nb-card-header>
     <nb-card-body *ngIf="userData">
-        <div *ngIf="userData.userId" class="detail-row">
-            <b>{{ 'PERSONAL_DETAIL.LABEL.ID' | translate }}: </b> <span>{{ userData?.userId }}</span>
-        </div>
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b>
             <span><app-blockchain-verified [blockName]="userData?.firstName + ' ' + userData?.lastName | titlecase" [blockchainVerified]="userData?.blockchainVerified"></app-blockchain-verified></span>
@@ -20,10 +17,10 @@
             <b>{{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}: </b> <span>{{ userData?.phone }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ userData?.country?.name || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ userData?.countryName || 'N/a' }}</span>
         </div>
         <div class="detail-row">
-            <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ userData?.state?.name || 'N/a' }}</span>
+            <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ userData?.stateName || 'N/a' }}</span>
         </div>
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ userData?.city || 'N/a' }}</span>

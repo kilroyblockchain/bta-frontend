@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { User } from './user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocalStorageService } from 'src/app/@core/services/local-storage.service';
@@ -12,6 +12,12 @@ import { MSG_KEY_CONSTANT_COMMON, MSG_KEY_CONSTANT_ORGANIZATION } from 'src/app/
 import { DEFAULT_VALUES, ValidationRegexConstant } from 'src/app/@core/constants';
 import { TitleCasePipe } from '@angular/common';
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
+import { IUserRegisterFormData } from '../user-register.interface';
+import { AbstractControl } from '@angular/forms';
+import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
+import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
+import { ISubscription } from 'src/app/@core/interfaces/subscription.interface';
+import { ISubscriptionAndCountryList } from 'src/app/@core/services/subscription.service';
 
 @Component({
     selector: 'app-user',
@@ -25,15 +31,15 @@ export class UserComponent implements OnInit, OnDestroy {
     selectedSubscriber!: string;
     enableSubmitButton = false;
     recaptchaStr = '';
-    countries!: Array<any>;
-    states!: Array<any>;
-    subscriptions!: Array<any>;
+    countries!: ICountry[];
+    states!: IState[];
+    subscriptions!: ISubscription[];
     loading = false;
-    companyNames: any[] = [];
+    companyNames: string[] = [];
     filteredControlOptions$!: Observable<string[]>;
 
     @ViewChild('captchaRef')
-    captchaRef!: TemplateRef<any>;
+    captchaRef!: TemplateRef<RecaptchaComponent>;
 
     constructor(private fb: FormBuilder, private localStorageService: LocalStorageService, private authService: AuthService, private countryService: CountryService, private utilsService: UtilsService, private router: Router, private readonly subscriptionService: SubscriptionService, private titleCasePipe: TitleCasePipe) {}
 
@@ -75,22 +81,23 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
-    get UF(): any {
+    get UF(): { [key: string]: AbstractControl } {
         return this.registrationFormGroup.controls;
     }
 
     populateSubscriptionTypesAndCountries(): void {
-        this.subscriptionService.getAllSubscription(true).subscribe((res) => {
+        this.subscriptionService.getAllSubscription(true).subscribe((res: IAppResponse<ISubscription[] | ISubscriptionAndCountryList>) => {
             if (res && res.success) {
-                this.subscriptions = res?.data?.subscriptionList?.filter((subscription: any) => subscription.subscriptionTypeIdentifier !== 'super-admin');
-                this.countries = res?.data?.countryList;
+                const { subscriptionList, countryList } = res?.data as ISubscriptionAndCountryList;
+                this.subscriptions = subscriptionList?.filter((subscription: ISubscription) => subscription.subscriptionTypeIdentifier !== 'super-admin');
+                this.countries = countryList;
             }
         });
     }
 
     populateStates(countryId: string): void {
         this.states = [];
-        this.countryService.getStatesByCountryId(countryId).subscribe((res) => {
+        this.countryService.getStatesByCountryId(countryId).subscribe((res: IAppResponse<IState[]>) => {
             if (res && res.success) {
                 this.states = res.data;
             }
@@ -115,7 +122,7 @@ export class UserComponent implements OnInit, OnDestroy {
         captchaRef.execute();
     }
 
-    registrationSubmit(value: any, valid: boolean): void {
+    registrationSubmit({ value, valid }: Partial<FormGroup>): void {
         if (!valid) {
             return;
         }
@@ -126,16 +133,16 @@ export class UserComponent implements OnInit, OnDestroy {
             return;
         }
         value.reCaptchaToken = this.recaptchaStr;
-        const companyData = { companyName: this.UF.companyName.value, reCaptchaToken: this.recaptchaStr };
+        const companyData = { companyName: this.UF['companyName'].value, reCaptchaToken: this.recaptchaStr };
         const data = { ...value, ...companyData };
         this.postUserData(data);
     }
 
-    postUserData(userData: any): void {
+    postUserData(userData: IUserRegisterFormData): void {
         this.loading = true;
         userData.password = 'suyogkh';
         this.authService
-            .userRegister(userData, false)
+            .userRegister(userData)
             .pipe(
                 finalize(() => {
                     this.loading = false;
@@ -147,8 +154,8 @@ export class UserComponent implements OnInit, OnDestroy {
                     this.localStorageService.clearAllLocalStorageData();
                     this.router.navigate(['/auth/thank-you/casey-survey']);
                 },
-                error: (err) => {
-                    this.utilsService.showToast('warning', err?.message);
+                error: (err: Error) => {
+                    this.utilsService.showToast('warning', err.message);
                 }
             });
     }
@@ -157,14 +164,14 @@ export class UserComponent implements OnInit, OnDestroy {
         this.authService.getAllCompanyNames().subscribe((data: string[]) => {
             this.companyNames = data;
             this.filteredControlOptions$ = of(data);
-            this.filteredControlOptions$ = this.UF.companyName.valueChanges.pipe(
+            this.filteredControlOptions$ = this.UF['companyName'].valueChanges.pipe(
                 startWith(''),
                 map((filterString) => this.filter(filterString))
             );
         });
     }
 
-    private filter(value: any): string[] {
+    private filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.companyNames.filter((optionValue) => optionValue.toLowerCase().includes(filterValue));
     }
@@ -172,15 +179,15 @@ export class UserComponent implements OnInit, OnDestroy {
     public resolved(captchaResponse: string, { value, valid }: FormGroup): void {
         this.recaptchaStr = captchaResponse;
         if (this.recaptchaStr) {
-            this.registrationSubmit(value, valid);
+            this.registrationSubmit({ value, valid });
         }
     }
 
     subscriberChanged(): void {
-        this.selectedSubscriber = this.UF.subscriptionType.value;
+        this.selectedSubscriber = this.UF['subscriptionType'].value;
     }
 
-    changedOnAgreedOnTerms(checked: any): void {
+    changedOnAgreedOnTerms(checked: boolean): void {
         this.enableSubmitButton = checked;
     }
 

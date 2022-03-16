@@ -5,6 +5,7 @@ import { ALL_API_RES_MSG_EN, ALL_API_RES_MSG_ES } from '../constants/api-respons
 import { environment } from 'src/environments/environment';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { Params } from '@angular/router';
+import { IFeature, IFeatureAndAccess, IStaffing } from '../interfaces/manage-user.interface';
 
 const BASE_URL = environment.apiURL;
 
@@ -14,12 +15,11 @@ const BASE_URL = environment.apiURL;
 export class UtilsService {
     sortColumn!: string;
     sortDirection: NbSortDirection = NbSortDirection.NONE;
-    userData: any;
     FILE_URL = BASE_URL + '/files/file/';
     MS_PER_DAY = 1000 * 60 * 60 * 24;
     logFileName: string | undefined;
     constructor(protected readonly nbToasterService: NbToastrService, protected readonly authService: AuthService) {}
-    showToast(status: any, message: string | Array<string>, data?: string, options?: Partial<NbToastrConfig>): void {
+    showToast(status: string, message: string | Array<string>, data?: string, options?: Partial<NbToastrConfig>): void {
         this.logFileName = data;
         const messageData = this.mapApiErrorConstant(message);
         this.nbToasterService.show(status, messageData, { limit: 3, position: NbGlobalLogicalPosition.BOTTOM_START, status, duration: this.logFileName ? 20000 : 6000, destroyByClick: true, ...(options ? options : {}) });
@@ -43,23 +43,19 @@ export class UtilsService {
         return minWithForMultipleColumns + nextColumnStep * index;
     }
 
-    resetFilter(value: any): void {
+    resetFilter(value: HTMLInputElement): void {
         value.value = '';
         value.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    getControls(data: any): any {
-        return data.controls;
-    }
-
-    async canAccessFeature(featureIdentifier: any, featureAccessType: any): Promise<boolean> {
-        const userData: any = await this.authService.getUserData();
+    async canAccessFeature(featureIdentifier: string, featureAccessType: string[]): Promise<boolean> {
+        const userData = await this.authService.getUserData();
         let returnValue = await this.checkIsUserOrgAdmin();
         if (!returnValue && userData?.staffingId) {
-            userData?.staffingId.map((staffing: any) => {
-                staffing.featureAndAccess.map((feature: any) => {
-                    if (feature.featureId.featureIdentifier === featureIdentifier) {
-                        feature.accessType.map((access: any) => {
+            (userData?.staffingId as IStaffing[]).map((staffing) => {
+                staffing.featureAndAccess.map((feature: IFeatureAndAccess) => {
+                    if ((feature.featureId as IFeature).featureIdentifier === featureIdentifier) {
+                        feature.accessType.map((access) => {
                             if (featureAccessType.includes(access)) {
                                 returnValue = true;
                             }
@@ -71,8 +67,8 @@ export class UtilsService {
         return returnValue ?? false;
     }
 
-    mapApiErrorConstant(resMessage: any): string {
-        const message = resMessage && resMessage.message ? resMessage.message : resMessage || 'Error occured';
+    mapApiErrorConstant(resMessage: string | string[]): string {
+        const message = (resMessage && resMessage.length ? resMessage[0] : resMessage) ?? 'Error occurred';
         let constant;
         let finalMessage = '';
         if (Array.isArray(message)) {
@@ -93,7 +89,7 @@ export class UtilsService {
     getMsgStringFromConst(constant: string): string {
         const defaultLanguage = this.authService.getUserLang();
 
-        let apiResponseConstant: { [key: string]: any };
+        let apiResponseConstant: { [key: string]: string };
 
         switch (defaultLanguage) {
             case 'en':
@@ -113,16 +109,16 @@ export class UtilsService {
         return constant;
     }
 
-    getFullSubcriptionType(role: string): string {
-        let subcriptionType = '';
+    getFullSubscriptionType(role: string): string {
+        let subscriptionType = '';
         if (role === 'super-admin') {
-            subcriptionType = 'Super Admin';
+            subscriptionType = 'Super Admin';
         } else if (role === 'staff') {
-            subcriptionType = 'Staff';
+            subscriptionType = 'Staff';
         } else {
-            subcriptionType = 'Other';
+            subscriptionType = 'Other';
         }
-        return subcriptionType;
+        return subscriptionType;
     }
 
     generateArrayOfYears(): Array<number> {
@@ -135,10 +131,6 @@ export class UtilsService {
         return years;
     }
 
-    groupByKey(list: Array<any>, key: string): Array<any> {
-        return list.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {});
-    }
-
     setMenuItemLink(menuItems: Array<MenuItem>, menuKey: string, link: string, queryParams?: Params): void {
         const menu = menuItems.find((menuItem) => menuItem.key === menuKey);
         if (menu) {
@@ -148,7 +140,7 @@ export class UtilsService {
     }
 
     getResultsPerPage(): number {
-        if (environment.hasOwnProperty('resultsPerPage')) {
+        if (environment.resultsPerPage) {
             return environment.resultsPerPage;
         } else {
             return 15;
@@ -156,13 +148,13 @@ export class UtilsService {
     }
 
     async checkIsUserOrgAdmin(): Promise<boolean> {
-        const userData: any = await this.authService.getUserData();
-        const isDefaultCompanyAdmin = userData && userData.company && userData.company.some((company: any) => company.default && company.verified && !company.isDeleted && company.isAdmin);
+        const userData = await this.authService.getUserData();
+        const isDefaultCompanyAdmin = userData && userData.company && userData.company.some((company) => company.default && company.verified && !company.isDeleted && company.isAdmin);
         return isDefaultCompanyAdmin;
     }
 
     checkIsUserSuperAdmin(): boolean {
-        const userData: any = this.authService.getUserDataSync();
+        const userData = this.authService.getUserDataSync();
         if (userData.roles.includes('super-admin')) {
             return true;
         }

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'dateOfBirth'
 })
 export class DateOfBirthPipe implements PipeTransform {
-    public transform(value: any): any {
+    public transform(value: Date): string {
         try {
             if (value) {
                 return formatDate(new Date(new Date(value).getTime() + new Date().getTimezoneOffset() * 60 * 1000), 'yyyy-MM-dd', 'en');
@@ -13,6 +13,6 @@ export class DateOfBirthPipe implements PipeTransform {
         } catch (err) {
             console.error(err);
         }
-        return value;
+        return value?.toString();
     }
 }

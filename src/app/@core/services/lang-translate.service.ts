@@ -15,7 +15,7 @@ export class LangTranslateService {
         this.langChangeSubject.next(lang);
     }
 
-    getCurrentLangRequest(): Observable<any> {
+    getCurrentLangRequest(): Observable<string> {
         return this.langChangeSubject.asObservable();
     }
 

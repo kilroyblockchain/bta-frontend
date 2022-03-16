@@ -9,9 +9,8 @@ import { DataNotFoundComponent } from './data-not-found/data-not-found.component
 import { SearchInputComponent } from './search-input/search-input.component';
 import { InternationalizationModule } from 'src/app/@core/internationalization/internationalization.module';
 import { ValidationMessageComponent } from './validation-message/validation-message.component';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
-const SHARED_COMPONENTS = [NotFoundComponent, DataNotFoundComponent, LoaderComponent, BlockchainVerifiedComponent, AlertComponent, SearchInputComponent, ValidationMessageComponent, AutocompleteComponent];
+const SHARED_COMPONENTS = [NotFoundComponent, DataNotFoundComponent, LoaderComponent, BlockchainVerifiedComponent, AlertComponent, SearchInputComponent, ValidationMessageComponent];
 @NgModule({
     imports: [CommonModule, ...COMMON_SHARED_MODULE, InternationalizationModule],
     declarations: [...SHARED_COMPONENTS],

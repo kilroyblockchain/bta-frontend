@@ -35,7 +35,7 @@
     <div class="actions" *ngIf="isLoggedIn">
         <nb-actions size="small">
             <nb-action class="user-action" *ngIf="organizationMenu && organizationMenu.length === 1" (click)="navigateTo('u/user/profile/organization-details')"> <nb-icon icon="film-outline"></nb-icon> {{ organizationName }} </nb-action>
-            <nb-action class="user-action organization-dropdown" *ngIf="showOgranizationMenu" [nbContextMenu]="organizationMenu" nbContextMenuTag="organization-context-menu"> <nb-icon icon="film-outline"></nb-icon> {{ organizationName }} </nb-action>
+            <nb-action class="user-action organization-dropdown" *ngIf="showOrganizationMenu" [nbContextMenu]="organizationMenu" nbContextMenuTag="organization-context-menu"> <nb-icon icon="film-outline"></nb-icon> {{ organizationName }} </nb-action>
             <nb-action class="user-action" *ngIf="userMenu.length" [nbContextMenu]="userMenu">
                 <nb-icon icon="person-outline"></nb-icon>
             </nb-action>

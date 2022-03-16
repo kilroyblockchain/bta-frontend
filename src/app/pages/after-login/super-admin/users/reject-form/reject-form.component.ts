@@ -4,7 +4,7 @@ import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { UtilsService } from 'src/app/@core/services';
 import { UserRejectService } from 'src/app/@core/services/user-reject.service';
-import { IRejectInformation } from '../reject-informations/reject-information.interface';
+import { IRejectInformation, IRejectInformationFormData } from '../reject-informations/reject-information.interface';
 
 export function descriptionMinLength(minlength: number): ValidatorFn {
     return (descriptionControl: AbstractControl): ValidationErrors | null => {
@@ -56,7 +56,7 @@ export class RejectCompanyFormComponent implements OnInit {
         this.ref.close();
     }
 
-    createRejectInformation(value: any): void {
+    createRejectInformation(value: IRejectInformationFormData): void {
         this.loading = true;
         this.userRejectService
             .rejectUser(value)
@@ -76,7 +76,7 @@ export class RejectCompanyFormComponent implements OnInit {
             });
     }
 
-    updateRejectInformation(value: any): void {
+    updateRejectInformation(value: IRejectInformationFormData): void {
         this.loading = true;
         this.userRejectService
             .updateRejectInformation(this.rejectedInformation.id, value)

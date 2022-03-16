@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, Provider, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { AuthService, LocalStorageService, UtilsService } from './services/';
@@ -14,7 +14,8 @@ export class CoreModule {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
 
-    static forRoot(): any {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static forRoot(): { ngModule: any; providers: Provider[] } {
         return {
             ngModule: CoreModule,
             providers: [...CORE_PROVIDERS]

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as CryptoJS from 'crypto-js';
 import { Injectable } from '@angular/core';
 

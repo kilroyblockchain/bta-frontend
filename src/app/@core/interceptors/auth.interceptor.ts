@@ -7,9 +7,10 @@ import { catchError, filter, take, switchMap } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     refreshingAccessToken!: boolean;
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     constructor(public authService: AuthService) {}
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         req = req.clone({
             setHeaders: {
@@ -22,6 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         return next.handle(req).pipe(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             catchError((error: HttpErrorResponse): Observable<any> => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     if (req.url.includes('refresh-access-token')) {
@@ -35,7 +37,8 @@ export class AuthInterceptor implements HttpInterceptor {
         );
     }
 
-    private addToken(request: HttpRequest<any>, token: string): any {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
         return request.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`
@@ -43,6 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
         });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private handle401Error(request: HttpRequest<any>, next: HttpHandler): any {
         if (!this.refreshingAccessToken) {
             if (!this.authService.getAccessToken()) {
@@ -54,7 +58,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.refreshTokenSubject.next(null);
 
             return this.authService.getNewAccessToken().pipe(
-                switchMap((token: any) => {
+                switchMap((token: { accessToken: string }) => {
                     const accessToken = token.accessToken;
                     this.refreshingAccessToken = false;
                     this.authService.setAccessToken(accessToken);
@@ -75,7 +79,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 filter((token) => token != null),
                 take(1),
                 switchMap((jwt) => {
-                    return next.handle(this.addToken(request, jwt));
+                    return next.handle(this.addToken(request, jwt as string));
                 }),
                 catchError((err) => {
                     this.refreshingAccessToken = false;

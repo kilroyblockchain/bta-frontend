@@ -4,6 +4,7 @@ import { ManageUserService, UtilsService } from 'src/app/@core/services';
 import { finalize } from 'rxjs/operators';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { formatDate } from '@angular/common';
+import { IUserActivity } from './user-activity.interface';
 
 interface TreeNode<T> {
     data: T;
@@ -46,7 +47,7 @@ export class UserActivityLogComponent implements OnInit {
     options = {};
     loading = true;
     dataFound = false;
-    tableData: any[] = [];
+    tableData: IUserActivity[] = [];
     loadingTable = false;
     showLoggedInUsers = true;
     isUserSuperAdmin: boolean;
@@ -60,7 +61,7 @@ export class UserActivityLogComponent implements OnInit {
         this.pageChange(1);
     }
 
-    async setColumns(): Promise<any> {
+    async setColumns(): Promise<void> {
         if (this.isUserSuperAdmin) {
             this.columns = ['name', 'phone', 'organizationName', 'loggedInDate', 'loggedOutDate'];
             this.columnNames = ['COMMON.COLUMN_NAME.NAME', 'COMMON.COLUMN_NAME.PHONE', 'PERSONAL_DETAIL.LABEL.ORGANIZATION', 'COMMON.COLUMN_NAME.LOGGED_IN_AT', 'COMMON.COLUMN_NAME.LOGGED_OUT_AT'];
@@ -100,7 +101,7 @@ export class UserActivityLogComponent implements OnInit {
             });
     }
 
-    createTableData(users: Array<any>): Array<TreeNode<FSEntry>> {
+    createTableData(users: Array<IUserActivity>): Array<TreeNode<FSEntry>> {
         const dataArray = users.map((user) => {
             return {
                 data: {

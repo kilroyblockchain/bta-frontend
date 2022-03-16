@@ -5,6 +5,6 @@ export interface IBlockchainHistory {
     Value: {
         hash: string;
         payload: string;
-        [key: string]: any;
+        [key: string]: string;
     };
 }

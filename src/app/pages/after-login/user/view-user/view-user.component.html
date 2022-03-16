@@ -16,28 +16,28 @@
             </nb-card-header>
             <nb-card-body>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b> <app-blockchain-verified [blockName]="user?.firstName + ' ' + user?.lastName | titlecase" [blockchainVerified]="user?.blockchainVerified"></app-blockchain-verified>
+                    <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b> <app-blockchain-verified [blockName]="userDetail?.firstName + ' ' + userDetail?.lastName | titlecase" [blockchainVerified]="userDetail?.blockchainVerified"></app-blockchain-verified>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.EMAIL' | translate }}: </b> <span>{{ user?.email }}</span>
+                    <b> {{ 'COMMON.LABEL.EMAIL' | translate }}: </b> <span>{{ userDetail?.email }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}: </b> <span>{{ user?.phone }}</span>
+                    <b> {{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}: </b> <span>{{ userDetail?.phone }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ user?.country?.name || 'N/a' }}</span>
+                    <b> {{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ userDetail?.countryName || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ user?.state?.name || 'N/a' }}</span>
+                    <b> {{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ userDetail?.stateName || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ user?.city || 'N/a' }}</span>
+                    <b> {{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ userDetail?.city || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ user?.address || 'N/a' }}</span>
+                    <b> {{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ userDetail?.address || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b> {{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ user?.zipCode || 'N/a' }}</span>
+                    <b> {{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ userDetail?.zipCode || 'N/a' }}</span>
                 </div>
             </nb-card-body>
         </nb-card>
@@ -46,30 +46,30 @@
                 <h6>{{ 'MANAGE_USERS.USERS.DESCRIPTION.ORGANIZATION_DETAIL' | translate }}</h6>
             </nb-card-header>
             <nb-card-body>
-                <div class="detail-row" *ngIf="user?.companyID?.companyLogo">
+                <div class="detail-row" *ngIf="organizationDetail.companyLogo">
                     <div class="c-col centered">
                         <div class="image-holder">
-                            <img [src]="imageBaseUrl + user?.companyID.companyLogo" [alt]="user?.companyID?.companyName" />
+                            <img [src]="imageBaseUrl + organizationDetail.companyLogo" [alt]="organizationDetail.companyName" />
                         </div>
                     </div>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b> <app-blockchain-verified [blockName]="user?.company[0]?.companyId?.companyName || 'N/a'" [blockchainVerified]="user?.blockchainVerified"></app-blockchain-verified>
+                    <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b> <app-blockchain-verified [blockName]="organizationDetail?.companyName || 'N/a'" [blockchainVerified]="user.blockchainVerified"></app-blockchain-verified>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ user?.company[0]?.companyId?.country?.name || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ organizationDetail?.country || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ user?.company[0]?.companyId?.state?.name || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ organizationDetail?.state || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ user?.company[0]?.companyId?.city || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ organizationDetail?.city || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ user?.company[0]?.companyId?.address || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.ADDRESS' | translate }}: </b> <span>{{ organizationDetail?.address || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ user?.company[0]?.companyId?.zipCode || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ organizationDetail?.zipCode || 'N/a' }}</span>
                 </div>
             </nb-card-body>
         </nb-card>

@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbOptionComponent } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IFeature } from 'src/app/@core/interfaces/manage-user.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -10,9 +13,9 @@ import { AuthService, AppFeatureService, ManageUserService, UtilsService } from 
 })
 export class NewOrganizationUnitComponent implements OnInit {
     newOrganizationUnitForm!: FormGroup;
-    features!: Array<any>;
+    features!: Array<IFeature>;
     submitted!: boolean;
-    user: any;
+    user!: IUserRes;
     loading!: boolean;
     defaultSubscriptionType!: string;
     @ViewChild('allSelected')
@@ -38,7 +41,7 @@ export class NewOrganizationUnitComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.newOrganizationUnitForm.controls;
     }
 

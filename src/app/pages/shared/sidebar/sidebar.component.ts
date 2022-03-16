@@ -6,6 +6,7 @@ import { AuthService, LangTranslateService, UtilsService } from 'src/app/@core/s
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { environment } from 'src/environments/environment';
 import { TitleCasePipe } from '@angular/common';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 
 @Component({
     selector: 'app-sidebar',
@@ -18,7 +19,7 @@ export class SidebarComponent {
     superAdminMenuItems: MenuItem[] = [];
     companyUsersMenuItems: MenuItem[] = [];
     defaultMenuItems: MenuItem[] = [];
-    userData: any;
+    userData!: IUserRes;
     appTitle = environment.project;
 
     constructor(private utilsService: UtilsService, private authService: AuthService, private sidebarService: NbSidebarService, private langTranslateService: LangTranslateService, private titleCasePipe: TitleCasePipe) {
@@ -50,10 +51,6 @@ export class SidebarComponent {
         if (this.userData && this.userData.roles && this.userData.roles.length) {
             if (this.userData.roles.includes('super-admin')) {
                 await this.buildSuperAdminMenu();
-            }
-
-            if (this.userData.roles.length > 1 || !this.userData.roles.includes('super-admin')) {
-                await this.buildCompanyUsersMenu(this.userData);
             }
 
             await this.buildDefaultMenu();
@@ -131,12 +128,6 @@ export class SidebarComponent {
         }
     }
 
-    // company related menu
-    async buildCompanyUsersMenu(userData: any): Promise<void> {
-        if (userData && userData.roles) {
-        }
-    }
-
     // super admin related menu
     async buildSuperAdminMenu(): Promise<void> {
         await this.buildAppUserMenu();
@@ -155,32 +146,28 @@ export class SidebarComponent {
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.ORGANIZATION_ADMIN'
             });
-        }
-        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_ALL_USER, [ACCESS_TYPE.READ])) {
+
             usersMenuItems.push({
                 title: 'Unverified Organization',
                 link: '/u/admin/unverified-users',
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.UNVERIFIED_ORGANIZATION'
             });
-        }
-        if (true) {
+
             usersMenuItems.push({
                 title: 'Rejected Organization',
                 link: '/u/admin/rejected-companies',
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.REJECTED_ORGANIZATION'
             });
-        }
-        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_ALL_USER, [ACCESS_TYPE.READ])) {
+
             usersMenuItems.push({
                 title: 'Non Admin Users',
                 link: '/u/admin/company-users',
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.NON_ADMIN_USERS'
             });
-        }
-        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_ALL_USER, [ACCESS_TYPE.READ])) {
+
             usersMenuItems.push({
                 title: 'Blocked Users',
                 link: '/u/admin/blocked-users',

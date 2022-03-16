@@ -17,8 +17,6 @@ export class LoginSummaryComponent {
         this.getAllUsersLoginCount();
     }
 
-    prepareLoginCount(): void {}
-
     hideShowLoginSummary(collapse: boolean): void {
         this.isHidden = collapse;
         if (!collapse) {

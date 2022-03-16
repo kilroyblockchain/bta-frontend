@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { IUserRes } from '../interfaces/user-data.interface';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SuperAdminGaurd implements CanActivate {
-    userData: any;
+    userData!: IUserRes;
     constructor(public authService: AuthService, public router: Router) {}
 
-    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         const definedRole = route.data['role'];
         const data = await this.authService.getUserData();
         this.userData = { ...data };

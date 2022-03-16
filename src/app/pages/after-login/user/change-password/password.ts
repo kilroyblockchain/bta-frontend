@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LocalStorageService, UtilsService } from 'src/app/@core/services';
 
 @Component({
@@ -14,7 +16,7 @@ export class ChangePasswordComponent implements OnInit {
     changePasswordFormGroup!: FormGroup;
     submitted = false;
     passwordDoNotMatch!: true;
-    userData: any;
+    userData!: IUserRes;
     autoPassword!: boolean;
     loading!: boolean;
     constructor(protected ref: NbDialogRef<ChangePasswordComponent>, private fb: FormBuilder, private authService: AuthService, private utilsService: UtilsService, public router: Router, private localStorageService: LocalStorageService) {
@@ -36,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
         });
     }
 
-    get UF(): any {
+    get UF(): IFormControls {
         return this.changePasswordFormGroup.controls;
     }
 
@@ -46,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
             return;
         }
 
-        if (this.UF.password.value !== this.UF.confirmPassword.value) {
+        if (this.UF['password'].value !== this.UF['confirmPassword'].value) {
             this.passwordDoNotMatch = true;
             return;
         }

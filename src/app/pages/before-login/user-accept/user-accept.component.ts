@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/@core/services';
+import { IUserAcceptDetail } from 'src/app/@core/interfaces/manage-user.interface';
 
 @Component({
     selector: 'app-user-accept',
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/@core/services';
 })
 export class UserAcceptComponent implements OnInit {
     token: string;
-    userData!: any;
+    userData!: IUserAcceptDetail;
     userAccept!: boolean;
     error!: boolean;
     verified!: boolean;
@@ -21,6 +22,7 @@ export class UserAcceptComponent implements OnInit {
     ngOnInit(): void {
         this.getDetailsFromToken();
     }
+
     getDetailsFromToken(): void {
         this.loading = true;
         this.authService.getVerificationDetails(this.token).subscribe({

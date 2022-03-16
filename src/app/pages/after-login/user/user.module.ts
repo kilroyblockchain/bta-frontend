@@ -11,11 +11,13 @@ import { ViewUserComponent } from './view-user/view-user.component';
 import { ManageUsersModule } from 'src/app/pages/after-login/manage-users/manage-users.module';
 import { InternationalizationModule } from 'src/app/@core/internationalization/internationalization.module';
 import { CustomPipeModule } from 'src/app/@core/pipes/pipe.module';
+import { ProfileService } from './profile/profile.service';
 
 const PAGE_COMPONENT = [UserComponent, ProfileComponent, PersonalDetailsComponent, OrganizationDetailsComponent, EditOrganizationComponent, ViewUserComponent];
 
 @NgModule({
     imports: [...COMMON_SHARED_MODULE, UserRoutingModule, MiscellaneousModule, ManageUsersModule, InternationalizationModule, CustomPipeModule],
-    declarations: [...PAGE_COMPONENT]
+    declarations: [...PAGE_COMPONENT],
+    providers: [ProfileService]
 })
 export class UserModule {}
