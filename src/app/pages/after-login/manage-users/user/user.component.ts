@@ -124,7 +124,8 @@ export class UserComponent implements OnInit, OnDestroy {
                 })
             )
             .subscribe({
-                next: (data) => {
+                next: (res) => {
+                    const { data } = res;
                     if (data.total) {
                         this.totalRecords = data.total;
                         if (!this.totalRecords) {

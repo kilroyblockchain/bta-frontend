@@ -91,7 +91,7 @@ export class EditProfileComponent implements OnInit {
             )
             .subscribe({
                 next: (res) => {
-                    this.ref.close({ saveSuccess: true, data: res });
+                    this.ref.close({ saveSuccess: true, data: res.data });
                     this.utilsService.showToast('success', MSG_KEY_CONSTANT_USER.PERSONAL_DETAILS_UPDATED_SUCCESSFULLY);
                 },
                 error: (err) => {

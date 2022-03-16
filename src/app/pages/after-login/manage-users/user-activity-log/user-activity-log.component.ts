@@ -91,10 +91,11 @@ export class UserActivityLogComponent implements OnInit {
             )
             .subscribe({
                 next: (res) => {
-                    if (res && res.total && res.docs) {
-                        this.totalRecords = res.total;
+                    const { data } = res;
+                    if (data && data.total && data.docs) {
+                        this.totalRecords = data.total;
                         this.dataFound = true;
-                        this.tableData = res.docs;
+                        this.tableData = data.docs;
                         this.dataSource = this.dataSourceBuilder.create(this.createTableData(this.tableData));
                     }
                 }

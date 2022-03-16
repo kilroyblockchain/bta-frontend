@@ -107,7 +107,8 @@ export class UsersComponent implements OnInit {
                 })
             )
             .subscribe({
-                next: (data) => {
+                next: (res) => {
+                    const { data } = res;
                     this.totalRecords = data.total;
                     if (!this.totalRecords) {
                         this.dataFound = false;

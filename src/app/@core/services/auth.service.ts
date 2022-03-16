@@ -21,31 +21,31 @@ export class AuthService {
 
     constructor(private http: HttpService, private localStorageService: LocalStorageService, private router: Router) {}
 
-    userRegister(user: IUserRegisterFormData): Observable<IUserRegisterRes> {
+    userRegister(user: IUserRegisterFormData): Observable<IAppResponse<IUserRegisterRes>> {
         return this.http.post(URLConstant.userRegistrationURL, user);
     }
 
-    createUserForOrganization(user: IStaffUserFormData, defaultSubscriptionType: string): Observable<IUserRes> {
+    createUserForOrganization(user: IStaffUserFormData, defaultSubscriptionType: string): Observable<IAppResponse<IUserRes>> {
         return this.http.post(URLConstant.createUserForOrgURL + `/${defaultSubscriptionType}`, user);
     }
 
-    updatePersonalDetails(user: IUserRegisterFormData): Observable<IUserData> {
+    updatePersonalDetails(user: IUserRegisterFormData): Observable<IAppResponse<IUserData>> {
         return this.http.put(URLConstant.userUpdateURL, user);
     }
 
-    getUser(): Observable<IUserData> {
+    getUser(): Observable<IAppResponse<IUserData>> {
         return this.http.get(URLConstant.getUserData);
     }
 
-    getAllUserData(query: { [key: string]: unknown }): Observable<IPaginateResult<IUserRes>> {
+    getAllUserData(query: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IUserRes>>> {
         return this.http.get(URLConstant.getAllUserData, query);
     }
 
-    getAllCompanyNames(): Observable<string[]> {
+    getAllCompanyNames(): Observable<IAppResponse<string[]>> {
         return this.http.get(URLConstant.getAllCompanyNamesUrl);
     }
 
-    getOrganizationById(organizationId: string): Observable<ICompany> {
+    getOrganizationById(organizationId: string): Observable<IAppResponse<ICompany>> {
         return this.http.get(URLConstant.getOrganizationURL + '/' + organizationId);
     }
 
@@ -53,11 +53,11 @@ export class AuthService {
         return this.localStorageService.getLocalStorageData(LocalStorageConstant.companyId);
     }
 
-    updateOrganization(organizationId: string, organization: IOrganizationFormData, hasFormData: boolean): Observable<ICompany> {
+    updateOrganization(organizationId: string, organization: IOrganizationFormData, hasFormData: boolean): Observable<IAppResponse<ICompany>> {
         return this.http.put(URLConstant.updateOrganizationURL + '/' + organizationId, organization, hasFormData);
     }
 
-    userLogin(user: { email: string; password: string }): Observable<IUserRes> {
+    userLogin(user: { email: string; password: string }): Observable<IAppResponse<IUserRes>> {
         return this.http.post(URLConstant.loginURL, user);
     }
 
@@ -81,7 +81,7 @@ export class AuthService {
         return this.http.put(URLConstant.verifyUser, user);
     }
 
-    deleteUser(data: Partial<IUserActionRow>): Observable<{ success: boolean; message: string; user: IUserRes }> {
+    deleteUser(data: Partial<IUserActionRow>): Observable<IAppResponse<{ user: IUserRes }>> {
         return this.http.put(URLConstant.getUserData, data);
     }
 
@@ -93,7 +93,7 @@ export class AuthService {
         return this.http.put(URLConstant.setUserAcceptURL + `/${token}`);
     }
 
-    getNewAccessToken(): Observable<{ accessToken: string }> {
+    getNewAccessToken(): Observable<IAppResponse<{ accessToken: string }>> {
         const data = {
             accessToken: this.getAccessToken()
         };
@@ -177,7 +177,7 @@ export class AuthService {
         return this.http.put(URLConstant.addCompanyToUser, addCompanyDto);
     }
 
-    findUserIdByEmail(query: { [key: string]: unknown }): Observable<Partial<IUserData>> {
+    findUserIdByEmail(query: { [key: string]: unknown }): Observable<IAppResponse<Partial<IUserData>>> {
         const encodedEmail = encodeURIComponent(query['email'] as string);
         return this.http.get(URLConstant.getUserIdByEmail, { email: encodedEmail });
     }

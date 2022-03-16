@@ -161,7 +161,8 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getAllCompanyNames(): void {
-        this.authService.getAllCompanyNames().subscribe((data: string[]) => {
+        this.authService.getAllCompanyNames().subscribe((res) => {
+            const { data } = res;
             this.companyNames = data;
             this.filteredControlOptions$ = of(data);
             this.filteredControlOptions$ = this.UF['companyName'].valueChanges.pipe(

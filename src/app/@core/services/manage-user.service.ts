@@ -42,11 +42,11 @@ export class ManageUserService {
         return this.http.put(URLConstant.enableOrganizationUnit + `/${organizationUnitId}`);
     }
 
-    getAllUserOfOrganization(query: { [key: string]: unknown }): Observable<IPaginateResult<IUserRes>> {
+    getAllUserOfOrganization(query: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IUserRes>>> {
         return this.http.get(URLConstant.getAllUserOfOrganization, query);
     }
 
-    getAllUserActivityOfOrganization(query: { [key: string]: unknown }): Observable<IPaginateResult<IUserActivity>> {
+    getAllUserActivityOfOrganization(query: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IUserActivity>>> {
         return this.http.get(URLConstant.getAllUserActivityOfOrganization, query);
     }
 
@@ -54,7 +54,7 @@ export class ManageUserService {
         return this.http.get(URLConstant.getAllUsersLoginCount);
     }
 
-    editUserForOrganization(userId: string, data: IStaffUserFormData): Observable<IUserRes> {
+    editUserForOrganization(userId: string, data: IStaffUserFormData): Observable<IAppResponse<IUserRes>> {
         return this.http.put(URLConstant.updateOrganizationUser + `/${userId}`, data);
     }
 

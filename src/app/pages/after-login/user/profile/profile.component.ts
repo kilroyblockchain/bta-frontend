@@ -61,7 +61,8 @@ export class ProfileComponent implements OnInit {
                 })
             )
             .subscribe({
-                next: (data) => {
+                next: (res) => {
+                    const { data } = res;
                     this.dataFound = true;
                     this.userData = this.profileService.getPersonalDetail(data);
                     this.organization = this.profileService.getOrganizationDetail(data);
