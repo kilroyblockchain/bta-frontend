@@ -68,7 +68,7 @@ export class UtilsService {
     }
 
     mapApiErrorConstant(resMessage: string | string[]): string {
-        const message = (resMessage && resMessage.length ? resMessage[0] : resMessage) ?? 'Error occurred';
+        const message = (resMessage && typeof resMessage === 'string' ? resMessage : resMessage.length ? resMessage[0] : undefined) ?? 'Error occurred';
         let constant;
         let finalMessage = '';
         if (Array.isArray(message)) {
