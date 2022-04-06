@@ -399,7 +399,8 @@
                 "EDIT_USER": "es Edit User"
             },
             "BUTTON": {
-                "ADD_USER": "es Add User"
+                "ADD_USER": "es Add User",
+                "ADD_ANOTHER_UNIT_STAFF": "es Add another unit staff"
             },
             "LABEL": {
                 "ORGANIZATION_UNIT": "es Organization Unit",

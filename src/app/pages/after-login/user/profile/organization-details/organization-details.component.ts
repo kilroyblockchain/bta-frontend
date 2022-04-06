@@ -19,11 +19,36 @@ export class OrganizationDetailsComponent implements OnInit {
     showOrganizationEditButton = false;
     showOrganizationDetail = false;
     appTitle = environment.project;
+    organizationUnitDetailList!: { orgUnit: string; staffingUnit: string[] }[];
 
     constructor(public utilsService: UtilsService, private dialogService: NbDialogService) {}
 
     ngOnInit(): void {
         this.checkAccessData();
+        this.setOrganizationUnitDetails();
+    }
+
+    setOrganizationUnitDetails(): void {
+        const selectedStaffing = this.staffs;
+        const mergeCommonOrgUnit = (acc: { unitId: string; orgUnit: string; staffingUnit: string[] }[], staff: IStaffing) => {
+            const index = acc.findIndex((detail) => detail.unitId === staff?.organizationUnitId?._id);
+            if (index < 0) {
+                acc.push({
+                    unitId: staff?.organizationUnitId?._id,
+                    orgUnit: staff?.organizationUnitId?.unitName,
+                    staffingUnit: [staff?.staffingName]
+                });
+            } else {
+                acc[index] = {
+                    unitId: staff?.organizationUnitId?._id,
+                    orgUnit: staff?.organizationUnitId?.unitName,
+                    staffingUnit: [...acc[index].staffingUnit, staff?.staffingName]
+                };
+            }
+            return acc;
+        };
+        const units = selectedStaffing.reduce(mergeCommonOrgUnit, []);
+        this.organizationUnitDetailList = units;
     }
 
     async checkAccessData(): Promise<void> {

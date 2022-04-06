@@ -69,13 +69,6 @@
                             </div>
                             <div class="table-col" *ngSwitchCase="'organizationUnit'">
                                 <span [nbTooltip]="'MANAGE_USERS.USERS.TOOLTIP.ORGANIZATION_UNIT' | translate" nbTooltipPlacement="left">{{ row.data[column] }}</span>
-                                <span [nbTooltip]="'MANAGE_USERS.USERS.TOOLTIP.STAFFING' | translate" nbTooltipPlacement="left">
-                                    <small>
-                                        <i>
-                                            {{ row.data['staffing'] || '-' }}
-                                        </i>
-                                    </small>
-                                </span>
                             </div>
                             <div class="table-col" *ngSwitchCase="'country'">
                                 <span [nbTooltip]="'COMMON.LABEL.COUNTRY' | translate" nbTooltipPlacement="left">{{ row.data[column] }}</span>

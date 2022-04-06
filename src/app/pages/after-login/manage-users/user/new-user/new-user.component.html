@@ -44,27 +44,34 @@
                             <b>{{ 'COMMON.LABEL.PHONE_NUMBER' | translate }}:</b> <span>{{ userDetail.phone }}</span>
                         </div>
                     </div>
-
-                    <div class="form-inner-container two-col">
-                        <div class="form-holder">
-                            <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
-                            <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="organizationUnit" (selectedChange)="onUnitChange($event)" [ngClass]="{ 'status-danger': submitted && ExistingUserForm['organizationUnit'].errors }">
-                                <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
-                            </nb-select>
-                            <div *ngIf="submitted && ExistingUserForm['organizationUnit'].errors as err" class="invalid-feedback">
-                                <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                    <nb-card formArrayName="staffing">
+                        <nb-card-body *ngFor="let staffingFormGroup of StaffingFormGroupArray.controls; let i = index" [formGroupName]="i">
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder">
+                                    <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
+                                    <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="orgUnit" (selectedChange)="onUnitChangeForExistingUser($event, i)" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'orgUnit').errors }">
+                                        <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'orgUnit').errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-holder">
+                                    <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
+                                    <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors }">
+                                        <nb-option *ngFor="let staffing of staffingFormGroup.get('staffingList')?.value" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-holder">
-                            <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
-                            <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingId" [ngClass]="{ 'status-danger': submitted && ExistingUserForm['staffingId'].errors }">
-                                <nb-option *ngFor="let staffing of staffings" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
-                            </nb-select>
-                            <div *ngIf="submitted && ExistingUserForm['staffingId'].errors as err" class="invalid-feedback">
-                                <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
-                            </div>
-                        </div>
-                    </div>
+                            <button nbButton hero status="primary" *ngIf="StaffingFormGroupArray.controls.length > 1" size="small" type="button" (click)="removeStaffForExistingUser(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
+                        </nb-card-body>
+                        <nb-card-footer>
+                            <button nbButton hero status="primary" *ngIf="organizationUnits && organizationUnits.length > 1" size="small" type="button" (click)="addStaffForExistingUser()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
+                        </nb-card-footer>
+                    </nb-card>
                 </ng-container>
                 <ng-container *ngIf="activeForm && !userAlreadyExist">
                     <div class="user-detail-card">
@@ -89,26 +96,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-inner-container two-col">
-                        <div class="form-holder">
-                            <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
-                            <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="organizationUnit" (selectedChange)="onUnitChange($event)" [ngClass]="{ 'status-danger': submitted && UF['organizationUnit'].errors }">
-                                <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
-                            </nb-select>
-                            <div *ngIf="submitted && UF['organizationUnit'].errors as err" class="invalid-feedback">
-                                <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                    <nb-card formArrayName="staffing">
+                        <nb-card-body *ngFor="let staffingFormGroup of StaffingFormGroupArray.controls; let i = index" [formGroupName]="i">
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder">
+                                    <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
+                                    <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="orgUnit" (selectedChange)="onUnitChange($event, i)" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'orgUnit').errors }">
+                                        <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'orgUnit').errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-holder">
+                                    <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
+                                    <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors }">
+                                        <nb-option *ngFor="let staffing of staffingFormGroup.get('staffingList')?.value" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-holder">
-                            <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
-                            <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingId" [ngClass]="{ 'status-danger': submitted && UF['staffingId'].errors }">
-                                <nb-option *ngFor="let staffing of staffings" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
-                            </nb-select>
-                            <div *ngIf="submitted && UF['staffingId'].errors as err" class="invalid-feedback">
-                                <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
-                            </div>
-                        </div>
-                    </div>
+                            <button nbButton hero status="primary" *ngIf="StaffingFormGroupArray.controls.length > 1" size="small" type="button" (click)="removeStaff(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
+                        </nb-card-body>
+                        <nb-card-footer>
+                            <button nbButton hero status="primary" *ngIf="organizationUnits && organizationUnits.length > 1" size="small" type="button" (click)="addStaff()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
+                        </nb-card-footer>
+                    </nb-card>
                     <div class="form-inner-container two-col">
                         <div class="form-holder floating">
                             <input name="phone" nbInput fullWidth [placeholder]="'*' + ('COMMON.LABEL.PHONE_NUMBER' | translate)" formControlName="phone" [ngClass]="{ 'status-danger': submitted && UF['phone'].errors }" />

@@ -57,10 +57,10 @@
                     <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b> <app-blockchain-verified [blockName]="organizationDetail?.companyName || 'N/a'" [blockchainVerified]="user.blockchainVerified"></app-blockchain-verified>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ organizationDetail?.country || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.COUNTRY' | translate }}: </b> <span>{{ organizationDetail?.countryName || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
-                    <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ organizationDetail?.state || 'N/a' }}</span>
+                    <b>{{ 'COMMON.LABEL.STATE' | translate }}: </b> <span>{{ organizationDetail?.stateName || 'N/a' }}</span>
                 </div>
                 <div class="detail-row">
                     <b>{{ 'COMMON.LABEL.CITY' | translate }}: </b> <span>{{ organizationDetail?.city || 'N/a' }}</span>
@@ -70,6 +70,12 @@
                 </div>
                 <div class="detail-row">
                     <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ organizationDetail?.zipCode || 'N/a' }}</span>
+                </div>
+                <div class="unit-container" *ngFor="let unit of organizationDetail?.units">
+                    <div class="detail-row">
+                        <b>{{ 'ORGANIZATION_DETAILS.LABEL.UNIT_NAME' | translate }}: </b> <span>{{ unit?.orgUnit || 'N/a' }}</span> (<small [nbTooltip]="'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate">{{ unit?.staffingUnit?.join(', ') || 'N/a' }}</small
+                        >)
+                    </div>
                 </div>
             </nb-card-body>
         </nb-card>
