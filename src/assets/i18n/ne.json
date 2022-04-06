@@ -399,7 +399,8 @@
                 "EDIT_USER": "ne Edit User"
             },
             "BUTTON": {
-                "ADD_USER": "ne Add User"
+                "ADD_USER": "ne Add User",
+                "ADD_ANOTHER_UNIT_STAFF": "ne Add another unit staff"
             },
             "LABEL": {
                 "ORGANIZATION_UNIT": "ne Organization Unit",

@@ -34,12 +34,11 @@
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.ZIP_CODE' | translate }}: </b> <span>{{ organization.zipCode || 'N/a' }}</span>
         </div>
-        <div class="detail-row">
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.UNIT_NAME' | translate }}: </b> <span>{{ staffs[0]?.organizationUnitId?.unitName || 'N/a' }}</span>
-            <small>{{ staffs[0]?.organizationUnitId?.unitDescription }}</small>
-        </div>
-        <div class="detail-row">
-            <b>{{ 'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate }}: </b> <span>{{ staffs[0]?.staffingName || 'N/a' }}</span>
+        <div class="unit-container" *ngFor="let unit of organizationUnitDetailList">
+            <div class="detail-row">
+                <b>{{ 'ORGANIZATION_DETAILS.LABEL.UNIT_NAME' | translate }}: </b> <span>{{ unit?.orgUnit || 'N/a' }}</span> (<small [nbTooltip]="'ORGANIZATION_DETAILS.LABEL.STAFFING_NAME' | translate">{{ unit?.staffingUnit?.join(', ') || 'N/a' }}</small
+                >)
+            </div>
         </div>
     </nb-card-body>
 </nb-card>

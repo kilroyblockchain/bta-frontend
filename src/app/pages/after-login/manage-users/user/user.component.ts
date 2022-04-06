@@ -26,7 +26,6 @@ interface FSEntry {
     lastName: string;
     email: string;
     organizationUnit: string;
-    staffing: string;
     address: string;
     country: string;
     state: string;
@@ -148,13 +147,12 @@ export class UserComponent implements OnInit, OnDestroy {
     createTableData(data: IUserRes[], status: boolean): void {
         this.data = [];
         for (const item of data) {
-            const { organizationUnit, staffing, staffingIdArray } = this.getPosition(item.company);
+            const { organizationUnit, staffingIdArray } = this.getPosition(item.company);
             this.data.push({
                 data: {
                     firstName: this.titleCasePipe.transform(item.firstName),
                     lastName: this.titleCasePipe.transform(item.lastName),
                     organizationUnit,
-                    staffing: staffing.join(', '),
                     email: item.email,
                     address: item.address ?? '-',
                     verified: status,
@@ -170,23 +168,20 @@ export class UserComponent implements OnInit, OnDestroy {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
-    getPosition(companyArray: Array<IUserCompany>): { organizationUnit: string; staffing: string[]; staffingIdArray: string[] } {
+    getPosition(companyArray: Array<IUserCompany>): { organizationUnit: string; staffingIdArray: string[] } {
         let unit = '';
-        const positions: string[] = [];
         const staffingIdArray: string[] = [];
         const companyRow = this.getCompanyRow(companyArray);
         const fieldToPopulate = this.toggleStatusFilter ? 'staffingId' : 'deletedStaffingId';
         if (companyRow) {
             companyRow[fieldToPopulate].forEach((element) => {
                 const staffing = element as IStaffing;
-                unit = unit ? `${unit}` : staffing?.organizationUnitId?.unitName;
-                positions.push(staffing.staffingName);
+                unit = unit ? `${unit}, ${staffing?.organizationUnitId?.unitName} - ${staffing.staffingName}` : `${staffing?.organizationUnitId?.unitName} - ${staffing.staffingName}`;
                 staffingIdArray.push(staffing._id);
             });
         }
         return {
             organizationUnit: unit,
-            staffing: positions,
             staffingIdArray
         };
     }

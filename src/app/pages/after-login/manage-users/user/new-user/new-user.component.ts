@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { MSG_KEY_CONSTANT_USER } from 'src/app/@core/constants/message-key-constants';
@@ -8,8 +8,9 @@ import { AuthService, ManageUserService, StaffingService, UtilsService } from 's
 import { CountryService } from 'src/app/@core/services/country.service';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
-import { IOrganizationUnit, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { IOrganizationUnit } from 'src/app/@core/interfaces/manage-user.interface';
 import { IUserData } from 'src/app/@core/interfaces/user-data.interface';
+import { getFormControl } from 'src/app/@core/utils/form-helper';
 
 @Component({
     selector: 'app-new-user',
@@ -25,7 +26,6 @@ export class NewUserComponent implements OnInit {
     states!: Array<IState>;
     loading!: boolean;
     organizationUnits!: IOrganizationUnit[];
-    staffings!: Array<IStaffing>;
     submitted!: boolean;
     defaultSubscriptionType!: string;
     userAlreadyExist!: boolean;
@@ -45,8 +45,8 @@ export class NewUserComponent implements OnInit {
         this.newUserForm = this.fb.group({
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
+            staffing: this.fb.array([this.createStaffingFormArray()]),
             staffingId: [[], [Validators.required]],
-            organizationUnit: ['', [Validators.required]],
             phone: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(18), Validators.pattern(ValidationRegexConstant.PHONE)]],
             email: ['', [Validators.required, Validators.email]],
             country: [DEFAULT_VALUES.COUNTRY],
@@ -57,10 +57,11 @@ export class NewUserComponent implements OnInit {
         });
         this.existingUserForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
-            staffingId: [[], [Validators.required]],
-            organizationUnit: ['', [Validators.required]]
+            staffing: this.fb.array([this.createStaffingFormArray()]),
+            staffingId: [[], [Validators.required]]
         });
         this.setOrgUnits();
+        this.patchStaffing();
     }
 
     buildSearchUserForm(): void {
@@ -69,8 +70,48 @@ export class NewUserComponent implements OnInit {
         });
     }
 
+    patchStaffing(): void {
+        this.newUserForm.get('staffing')?.valueChanges.subscribe((staffing) => {
+            const staffingIdList = this.accumulateStaffingIdFromStaffingFormArrayValues(staffing);
+            this.newUserForm.get('staffingId')?.setValue(staffingIdList);
+        });
+        this.existingUserForm.get('staffing')?.valueChanges.subscribe((staffing: { staffingUnit: string[] }[]) => {
+            const staffingIdList = this.accumulateStaffingIdFromStaffingFormArrayValues(staffing);
+            this.existingUserForm.get('staffingId')?.setValue(staffingIdList);
+        });
+    }
+
+    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string[] }[]): string[] {
+        const staffingIdList = staffing.reduce((acc: string[], staff: { staffingUnit: string[] }) => {
+            staff.staffingUnit.forEach((staffId) => {
+                if (!acc.includes(staffId)) {
+                    acc.push(staffId);
+                }
+            });
+            return acc;
+        }, []);
+        return staffingIdList;
+    }
+
+    createStaffingFormArray(): FormGroup {
+        const staffingFormGroup = this.fb.group({
+            orgUnit: ['', [Validators.required]],
+            staffingUnit: [[], [Validators.required]],
+            staffingList: [[]]
+        });
+        return staffingFormGroup;
+    }
+
     get UF(): IFormControls {
         return this.newUserForm.controls;
+    }
+
+    get StaffingFormGroupArray(): FormArray {
+        return this.newUserForm.get('staffing') as FormArray;
+    }
+
+    get StaffingFormGroupArrayForExistingUser(): FormArray {
+        return this.existingUserForm.get('staffing') as FormArray;
     }
 
     get SearchUserForm(): IFormControls {
@@ -79,6 +120,30 @@ export class NewUserComponent implements OnInit {
 
     get ExistingUserForm(): IFormControls {
         return this.existingUserForm.controls;
+    }
+
+    addStaff(): void {
+        this.StaffingFormGroupArray.push(this.createStaffingFormArray());
+    }
+
+    removeStaff(index: number): void {
+        if (this.StaffingFormGroupArray && this.StaffingFormGroupArray.length > 1) {
+            this.StaffingFormGroupArray.removeAt(index);
+        }
+    }
+
+    addStaffForExistingUser(): void {
+        this.StaffingFormGroupArrayForExistingUser.push(this.createStaffingFormArray());
+    }
+
+    removeStaffForExistingUser(index: number): void {
+        if (this.StaffingFormGroupArrayForExistingUser && this.StaffingFormGroupArrayForExistingUser.length > 1) {
+            this.StaffingFormGroupArrayForExistingUser.removeAt(index);
+        }
+    }
+
+    getFormControl(formGroup: FormGroup | AbstractControl, controlName: string): AbstractControl {
+        return getFormControl(formGroup, controlName);
     }
 
     setOrgUnits(): void {
@@ -148,10 +213,22 @@ export class NewUserComponent implements OnInit {
         });
     }
 
-    onUnitChange(unitId: string): void {
+    onUnitChange(unitId: string, index: number): void {
         this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
             if (res && res.success) {
-                this.staffings = res.data;
+                this.StaffingFormGroupArray.at(index).patchValue({
+                    staffingList: res.data
+                });
+            }
+        });
+    }
+
+    onUnitChangeForExistingUser(unitId: string, index: number): void {
+        this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
+            if (res && res.success) {
+                this.StaffingFormGroupArrayForExistingUser.at(index).patchValue({
+                    staffingList: res.data
+                });
             }
         });
     }

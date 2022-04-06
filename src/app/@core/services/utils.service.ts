@@ -69,28 +69,18 @@ export class UtilsService {
 
     mapApiErrorConstant(resMessage: string | string[]): string {
         const message = (resMessage && typeof resMessage === 'string' ? resMessage : resMessage.length ? resMessage[0] : undefined) ?? 'Error occurred';
-        let constant;
-        let finalMessage = '';
-        if (Array.isArray(message)) {
-            constant = message[0];
-            if (message.length > 1) {
-                const valueForMessage = message[1];
-                const messageToInsertValue = this.getMsgStringFromConst(constant);
-                finalMessage = messageToInsertValue.replace('{{value}}', valueForMessage);
-                return finalMessage;
-            }
-        } else {
-            constant = message;
+        if (Array.isArray(resMessage) && resMessage.length > 1) {
+            const message = resMessage[0];
+            const valueForMessage = resMessage[1];
+            const messageToInsertValue = this.getMsgStringFromConst(message);
+            return messageToInsertValue.replace('{{value}}', valueForMessage);
         }
-        finalMessage = this.getMsgStringFromConst(constant);
-        return finalMessage;
+        return this.getMsgStringFromConst(message);
     }
 
     getMsgStringFromConst(constant: string): string {
         const defaultLanguage = this.authService.getUserLang();
-
         let apiResponseConstant: { [key: string]: string };
-
         switch (defaultLanguage) {
             case 'en':
                 apiResponseConstant = ALL_API_RES_MSG_EN;
@@ -102,7 +92,6 @@ export class UtilsService {
                 apiResponseConstant = ALL_API_RES_MSG_EN;
                 break;
         }
-
         if (apiResponseConstant[constant]) {
             return apiResponseConstant[constant];
         }

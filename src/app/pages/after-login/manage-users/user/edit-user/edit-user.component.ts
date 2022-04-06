@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
 import { ValidationRegexConstant } from 'src/app/@core/constants';
@@ -11,6 +11,7 @@ import { IOrganizationUnit, IStaffing } from 'src/app/@core/interfaces/manage-us
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { CountryService } from 'src/app/@core/services/country.service';
+import { getFormControl } from 'src/app/@core/utils/form-helper';
 
 @Component({
     selector: 'app-edit-user',
@@ -33,17 +34,18 @@ export class EditUserComponent implements OnInit {
     ngOnInit(): void {
         this.defaultSubscriptionType = this.authService.getDefaultSubscriptionType();
         this.userData = this.authService.getUserDataSync();
+        this.populateCountries();
         this.buildEditUserForm();
     }
 
     buildEditUserForm(): void {
         const row = this.getCompany(this.rowData.company) as IUserCompany;
         const selectedStaffing = row.staffingId;
-        this.populateStaffing(selectedStaffing[0]?.organizationUnitId?._id);
         this.populateStates(this.rowData?.country?._id);
         this.editUserForm = this.fb.group({
             firstName: [this.titleCasePipe.transform(this.rowData?.firstName), [Validators.required]],
             lastName: [this.titleCasePipe.transform(this.rowData?.lastName), [Validators.required]],
+            staffing: this.fb.array([this.createStaffingFormGroup()]),
             staffingId: [selectedStaffing.map((staffing) => staffing._id), [Validators.required]],
             organizationUnit: [selectedStaffing[0]?.organizationUnitId?._id, [Validators.required]],
             phone: [this.rowData?.phone, [Validators.required, Validators.minLength(7), Validators.maxLength(18), Validators.pattern(ValidationRegexConstant.PHONE)]],
@@ -55,10 +57,88 @@ export class EditUserComponent implements OnInit {
             zipCode: [this.rowData?.zipCode]
         });
         this.setOrgUnits();
+        this.patchStaffing(selectedStaffing);
+        this.patchRuntimeStaffing();
     }
 
     get UF(): IFormControls {
         return this.editUserForm.controls;
+    }
+
+    get StaffingFormGroupArray(): FormArray {
+        return this.editUserForm.get('staffing') as FormArray;
+    }
+
+    getFormControl(formGroup: FormGroup | AbstractControl, controlName: string): AbstractControl {
+        return getFormControl(formGroup, controlName);
+    }
+
+    patchStaffing(staffing: IStaffing[]): void {
+        const mergeCommonOrgUnit = (acc: { orgUnit: string; staffingUnit: string[] }[], staff: IStaffing) => {
+            const index = acc.findIndex((detail) => detail.orgUnit === staff?.organizationUnitId?._id);
+            if (index < 0) {
+                acc.push({
+                    orgUnit: staff?.organizationUnitId?._id,
+                    staffingUnit: [staff?._id]
+                });
+            } else {
+                acc[index] = {
+                    orgUnit: staff?.organizationUnitId?._id,
+                    staffingUnit: [...acc[index].staffingUnit, staff?._id]
+                };
+            }
+            return acc;
+        };
+        staffing.reduce(mergeCommonOrgUnit, []).forEach((staff, index) => {
+            if (index === 0) {
+                this.StaffingFormGroupArray.at(index).patchValue({
+                    orgUnit: staff.orgUnit,
+                    staffingUnit: staff.staffingUnit
+                });
+                this.populateStaffing(staff.orgUnit, index);
+            } else {
+                this.StaffingFormGroupArray.push(this.createStaffingFormGroup(staff));
+                this.populateStaffing(staff.orgUnit, index);
+            }
+        });
+    }
+
+    patchRuntimeStaffing(): void {
+        this.editUserForm.get('staffing')?.valueChanges.subscribe((staffing) => {
+            const staffingIdList = this.accumulateStaffingIdFromStaffingFormArrayValues(staffing);
+            this.editUserForm.get('staffingId')?.setValue(staffingIdList);
+        });
+    }
+
+    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string[] }[]): string[] {
+        const staffingIdList = staffing.reduce((acc: string[], staff: { staffingUnit: string[] }) => {
+            staff.staffingUnit.forEach((staffId) => {
+                if (!acc.includes(staffId)) {
+                    acc.push(staffId);
+                }
+            });
+            return acc;
+        }, []);
+        return staffingIdList;
+    }
+
+    createStaffingFormGroup(staff?: { orgUnit: string; staffingUnit: string[] }): FormGroup {
+        const staffingFormGroup = this.fb.group({
+            orgUnit: [staff?.orgUnit ?? '', [Validators.required]],
+            staffingUnit: [staff?.staffingUnit ?? [], [Validators.required]],
+            staffingList: [[]]
+        });
+        return staffingFormGroup;
+    }
+
+    addStaff(): void {
+        this.StaffingFormGroupArray.push(this.createStaffingFormGroup());
+    }
+
+    removeStaff(index: number): void {
+        if (this.StaffingFormGroupArray && this.StaffingFormGroupArray.length > 1) {
+            this.StaffingFormGroupArray.removeAt(index);
+        }
     }
 
     setOrgUnits(): void {
@@ -85,19 +165,25 @@ export class EditUserComponent implements OnInit {
             }
         });
     }
-    populateStaffing(unitId: string): void {
+
+    populateStaffing(unitId: string, index: number): void {
         this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
             if (res && res.success) {
-                this.staffings = res.data;
+                this.StaffingFormGroupArray.at(index).patchValue({
+                    staffingList: res.data
+                });
             }
         });
     }
 
-    onUnitChange(unitId: string): void {
-        this.editUserForm.patchValue({
-            staffingId: []
+    onUnitChange(unitId: string, index: number): void {
+        this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
+            if (res && res.success) {
+                this.StaffingFormGroupArray.at(index).patchValue({
+                    staffingList: res.data
+                });
+            }
         });
-        this.populateStaffing(unitId);
     }
 
     onSelectChange(countryId: string): void {
@@ -130,7 +216,7 @@ export class EditUserComponent implements OnInit {
                 next: (res) => {
                     if (res.data) {
                         this.utilsService.showToast('success', MSG_KEY_CONSTANT_USER.USER_UPDATED);
-                        this.ref.close(res);
+                        this.ref.close(res.data);
                     } else {
                         this.utilsService.showToast('warning', MSG_KEY_CONSTANT_USER.USER_UPDATE_FAILED);
                     }

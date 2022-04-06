@@ -16,7 +16,7 @@ export const getFormGroup = (group: FormGroup, groupName: string): FormGroup => 
  * @param controlName - Name of a property which is a form control
  * @returns Return a formControl from a formgroup
  */
-export const getFormControl = (group: FormGroup, controlName: string): AbstractControl => {
+export const getFormControl = (group: FormGroup | AbstractControl, controlName: string): AbstractControl => {
     return <AbstractControl>group.get(controlName);
 };
 
