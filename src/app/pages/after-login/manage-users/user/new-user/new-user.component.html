@@ -49,19 +49,19 @@
                             <div class="form-inner-container two-col">
                                 <div class="form-holder">
                                     <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
-                                    <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="orgUnit" (selectedChange)="onUnitChangeForExistingUser($event, i)" [ngClass]="{ 'status-danger': submitted && getFormControl(StaffingFormGroupArrayForExistingUser, 'orgUnit').errors }">
+                                    <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_ORGANIZATION_UNIT' | translate" fullWidth formControlName="orgUnit" (selectedChange)="onUnitChangeForExistingUser($event, i)" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'orgUnit').errors }">
                                         <nb-option *ngFor="let orgUnitRow of organizationUnits" [value]="orgUnitRow._id">{{ orgUnitRow.unitName }}</nb-option>
                                     </nb-select>
-                                    <div *ngIf="submitted && getFormControl(StaffingFormGroupArrayForExistingUser, 'orgUnit').errors as err" class="invalid-feedback">
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'orgUnit').errors as err" class="invalid-feedback">
                                         <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.ORGANIZATION_UNIT_IS_REQUIRED' | translate }}</span>
                                     </div>
                                 </div>
                                 <div class="form-holder">
                                     <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
-                                    <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(StaffingFormGroupArrayForExistingUser, 'staffingUnit').errors }">
+                                    <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors }">
                                         <nb-option *ngFor="let staffing of staffingFormGroup.get('staffingList')?.value" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
                                     </nb-select>
-                                    <div *ngIf="submitted && getFormControl(StaffingFormGroupArrayForExistingUser, 'staffingUnit').errors as err" class="invalid-feedback">
+                                    <div *ngIf="submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors as err" class="invalid-feedback">
                                         <span *ngIf="err['required']">{{ 'MANAGE_USERS.USERS.VALIDATIONS.STAFFING_IS_REQUIRED' | translate }}</span>
                                     </div>
                                 </div>
