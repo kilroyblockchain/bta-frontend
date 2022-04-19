@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <nb-card formArrayName="staffing">
-                        <nb-card-body *ngFor="let staffingFormGroup of StaffingFormGroupArray.controls; let i = index" [formGroupName]="i">
+                        <nb-card-body *ngFor="let staffingFormGroup of StaffingFormGroupArrayForExistingUser.controls; let i = index" [formGroupName]="i">
                             <div class="form-inner-container two-col">
                                 <div class="form-holder">
                                     <label for="organizationUnit" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.ORGANIZATION_UNIT' | translate) }}</label>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button nbButton hero status="primary" *ngIf="StaffingFormGroupArray.controls.length > 1" size="small" type="button" (click)="removeStaffForExistingUser(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
+                            <button nbButton hero status="primary" *ngIf="StaffingFormGroupArrayForExistingUser.controls.length > 1" size="small" type="button" (click)="removeStaffForExistingUser(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
                         </nb-card-body>
                         <nb-card-footer>
                             <button nbButton hero status="primary" *ngIf="organizationUnits && organizationUnits.length > 1" size="small" type="button" (click)="addStaffForExistingUser()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
