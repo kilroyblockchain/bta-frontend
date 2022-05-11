@@ -311,6 +311,9 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     onSearch(query: ISearchQuery): void {
+        if (query.searchValue) {
+            query.searchValue = encodeURIComponent(query.searchValue);
+        }
         this.options = { ...this.options, ...query };
         this.pageChange(1);
     }
