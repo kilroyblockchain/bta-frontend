@@ -39,6 +39,7 @@ export const URLConstant = {
     deleteOrganizationUser: '/user/organization-user',
     updateOrganizationUser: '/user/organization-user',
     enableOrganizationStaffing: '/organization-staffing/enable-organization-staffing',
+    unblockCompanyUser: '/user/unblock-company-user',
     getAllCompanyNamesUrl: '/organization/all-company-names',
     getCompanyTransferDataByTransferToken: '/company-transfer/transfer-token',
     createUserFromCompanyTransfer: '/user/company-transfer/create',

@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbDialogService, NbTabComponent, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, ManageUserService, UtilsService } from 'src/app/@core/services';
+import { AuthService, LangTranslateService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { ViewUserComponent } from '../../user/view-user/view-user.component';
@@ -63,8 +63,10 @@ export class UserComponent implements OnInit, OnDestroy {
     canDeleteUser!: boolean;
     user!: IUserRes;
     defaultSubscriptionType!: string;
+    tabId!: string;
+    canManageBlockedUser!: boolean;
 
-    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe) {
+    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe, private langTranslateService: LangTranslateService) {
         this.setCompanyId();
         this.checkAccess();
     }
@@ -87,6 +89,10 @@ export class UserComponent implements OnInit, OnDestroy {
         this.canAddUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.WRITE]);
         this.canUpdateUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.UPDATE]);
         this.canDeleteUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.DELETE]);
+        this.canManageBlockedUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_BLOCKED_COMPANY_USERS, [ACCESS_TYPE.UPDATE]);
+        if (!this.canManageBlockedUser) {
+            this.tabId = 'user-list';
+        }
     }
 
     setCompanyId(): void {
@@ -205,7 +211,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 const companyRow = this.getCompanyRow(rowData.company);
                 if (rowData) {
                     const user = {
-                        userId: rowData.id,
+                        userId: rowData._id,
                         companyRowId: companyRow._id,
                         staffingId: rowData.staffingId as string[],
                         subscriptionType: companyRow.subscriptionType
@@ -322,11 +328,60 @@ export class UserComponent implements OnInit, OnDestroy {
         return company.find((compRowId) => compRowId.subscriptionType === this.defaultSubscriptionType && compRowId.companyId._id === this.user.companyId) as IUserCompany;
     }
 
+    isGrayBGRow(rowData: IUserRes): boolean {
+        const adminUser = this.findAdminUser(rowData);
+        return adminUser || (rowData.id ?? rowData._id) === (this.user.id ?? this.user._id);
+    }
+
     findAdminUser(rowData: IUserRes): boolean {
         const adminUser = rowData.company.find((company) => company.companyId._id === this.user.companyId && company.isAdmin);
         if (adminUser) {
             return true;
         }
         return false;
+    }
+
+    getTabData(event: NbTabComponent): void {
+        this.tabId = event.tabId;
+        this.options = { ...this.options, page: this.page.toString(), limit: this.resultperpage.toString(), status: this.toggleStatusFilter ? 'true' : 'false' };
+        let additionalQuery = {};
+        switch (this.tabId) {
+            case 'blocked-list':
+                additionalQuery = { blocked: 'true' };
+                break;
+            case 'user-list':
+                if (this.options['blocked']) delete this.options['blocked'];
+                break;
+            default:
+                break;
+        }
+        this.options = { ...this.options, ...additionalQuery };
+        this.pageChange(1);
+    }
+
+    unblockUser(user: IUserRes): void {
+        const dialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.langTranslateService.translateKey('SUPER_ADMIN.ALERT_MSG.UNBLOCK_USER', { name: `${user.firstName} ${user.lastName}` }) }, hasBackdrop: true, closeOnBackdropClick: false });
+        dialogOpen.onClose.subscribe((dialogRes) => {
+            if (dialogRes) {
+                this.loadingTable = true;
+                this.manageUserService
+                    .unblockCompanyUser(user.id ?? user._id)
+                    .pipe(finalize(() => (this.loadingTable = false)))
+                    .subscribe({
+                        next: (res) => {
+                            this.totalRecords -= 1;
+                            if (!this.totalRecords) {
+                                this.dataFound = false;
+                            }
+                            this.tableData = this.tableData.filter((data) => data._id !== user?._id);
+                            this.createTableData(this.tableData, this.options['status'] === 'verified' ? true : false);
+                            this.utilsService.showToast('success', res.message);
+                        },
+                        error: (err) => {
+                            this.utilsService.showToast('warning', err.message);
+                        }
+                    });
+            }
+        });
     }
 }

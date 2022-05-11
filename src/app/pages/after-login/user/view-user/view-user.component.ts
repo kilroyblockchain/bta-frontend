@@ -37,8 +37,8 @@ export class ViewUserComponent implements OnInit {
             city: user.city,
             address: user.address,
             zipCode: user.zipCode,
-            countryName: user.country.name,
-            stateName: user.state.name,
+            countryName: user.country?.name,
+            stateName: user.state?.name,
             blockchainVerified: user.blockchainVerified
         };
 

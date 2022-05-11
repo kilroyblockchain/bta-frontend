@@ -86,7 +86,7 @@ export class VerifyUserComponent implements OnInit {
     verifyUser(data: FSEntry): void {
         this.loading = true;
         const user: IUserActionRow = {
-            userId: this.rowData.id,
+            userId: this.rowData.id ?? this.rowData._id,
             companyRowId: data.id as string,
             companyId: data.companyId,
             isRegisteredUser: true,

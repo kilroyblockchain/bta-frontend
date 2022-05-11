@@ -66,5 +66,9 @@ export const API_RES_MSG_USER = {
     FAILED_TO_UNBLOCK_USER: 'es Failed to unblock user',
     CANNOT_DISABLE_ADMIN: 'es Sorry, admin user cannot be disabled.',
     USER_HAS_BEEN_LOGGED_OUT: 'es User has been logged out',
-    LOGOUT_SUCCESS: 'es Logout success'
+    LOGOUT_SUCCESS: 'es Logout success',
+    YOU_DONT_HAVE_ACCESS_TO_MANAGE_BLOCKED_COMPANY_USERS: `es You don't have access to manage blocked company users`,
+    YOU_CANT_UNBLOCK_THIS_USER: `es You can't unblock this user`,
+    SUCCESSFULLY_UNBLOCKED_COMPANY_USER: 'es Successfully unblocked company user',
+    FAILED_TO_UNBLOCK_COMPANY_USER: 'es Failed to unblock company user'
 };
