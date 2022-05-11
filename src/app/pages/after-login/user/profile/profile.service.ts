@@ -7,8 +7,8 @@ export class ProfileService {
     getPersonalDetail(userData: IUserData): IUserData {
         return {
             ...userData,
-            countryName: (userData.country as ICountry).name,
-            stateName: (userData.state as IState).name
+            countryName: (userData.country as ICountry)?.name,
+            stateName: (userData.state as IState)?.name
         };
     }
 

@@ -90,6 +90,7 @@
             "MANAGE": "ne Manage",
             "ENABLE": "ne Enable",
             "DISABLE": "ne Disable",
+            "UNBLOCK": "ne Unblock",
             "EDIT": "ne Edit",
             "VIEW": "ne View",
             "BC_HISTORY": "ne BC History",
@@ -106,6 +107,7 @@
             "DELETE": "ne Delete",
             "ENABLE": "ne Enable",
             "DISABLE": "ne Disable",
+            "UNBLOCK": "ne Unblock",
             "VIEW": "ne View",
             "ADD": "ne Add",
             "VERIFY": "ne Verify",
@@ -152,7 +154,9 @@
             "DEPARTMENT": "ne Department",
             "OTHER": "ne Other",
             "FROM_DATE": "ne From Date",
-            "TO_DATE": "ne To Date"
+            "TO_DATE": "ne To Date",
+            "COMPANY_USERS": "ne Company Users",
+            "BLOCKED_USERS": "ne Blocked Users"
         },
         "VALIDATIONS": {
             "EMAIL_IS_REQUIRED": "ne Email is required",

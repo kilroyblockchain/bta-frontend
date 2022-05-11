@@ -3,8 +3,8 @@ import { IStaffing } from './manage-user.interface';
 import { ISubscription } from './subscription.interface';
 
 export interface IUserRes {
-    _id?: string;
-    id: string;
+    _id: string;
+    id?: string;
     firstName: string;
     lastName: string;
     email: string;

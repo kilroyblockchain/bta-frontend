@@ -54,7 +54,7 @@ export class UtilsService {
         if (!returnValue && userData?.staffingId) {
             (userData?.staffingId as IStaffing[]).map((staffing) => {
                 staffing.featureAndAccess.map((feature: IFeatureAndAccess) => {
-                    if ((feature.featureId as IFeature).featureIdentifier === featureIdentifier) {
+                    if (feature.featureId && (feature.featureId as IFeature).featureIdentifier === featureIdentifier) {
                         feature.accessType.map((access) => {
                             if (featureAccessType.includes(access)) {
                                 returnValue = true;

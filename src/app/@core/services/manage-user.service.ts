@@ -73,4 +73,8 @@ export class ManageUserService {
     enableOrganizationStaffing(organizationStaffingId: string): Observable<IAppResponse<IStaffing>> {
         return this.http.put(URLConstant.enableOrganizationStaffing + `/${organizationStaffingId}`);
     }
+
+    unblockCompanyUser(userId: string): Observable<IAppResponse<void>> {
+        return this.http.put(URLConstant.unblockCompanyUser + `/${userId}`);
+    }
 }

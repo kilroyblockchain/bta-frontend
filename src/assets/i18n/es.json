@@ -90,6 +90,7 @@
             "MANAGE": "es Manage",
             "ENABLE": "es Enable",
             "DISABLE": "es Disable",
+            "UNBLOCK": "es Unblock",
             "EDIT": "es Edit",
             "VIEW": "es View",
             "BC_HISTORY": "es BC History",
@@ -106,6 +107,7 @@
             "DELETE": "es Delete",
             "ENABLE": "es Enable",
             "DISABLE": "es Disable",
+            "UNBLOCK": "es Unblock",
             "VIEW": "es View",
             "ADD": "es Add",
             "VERIFY": "es Verify",
@@ -152,7 +154,9 @@
             "DEPARTMENT": "es Department",
             "OTHER": "es Other",
             "FROM_DATE": "es From Date",
-            "TO_DATE": "es To Date"
+            "TO_DATE": "es To Date",
+            "COMPANY_USERS": "es Company Users",
+            "BLOCKED_USERS": "es Blocked Users"
         },
         "VALIDATIONS": {
             "EMAIL_IS_REQUIRED": "es Email is required",
