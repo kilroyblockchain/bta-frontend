@@ -65,6 +65,7 @@ export class UserComponent implements OnInit, OnDestroy {
     defaultSubscriptionType!: string;
     tabId!: string;
     canManageBlockedUser!: boolean;
+    getAllUserOfOrganizationSubscription!: Subscription;
 
     constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe, private langTranslateService: LangTranslateService) {
         this.setCompanyId();
@@ -83,6 +84,7 @@ export class UserComponent implements OnInit, OnDestroy {
         if (this.dialogClose) {
             this.dialogClose.unsubscribe();
         }
+        this.getAllUserOfOrganizationSubscription ? this.getAllUserOfOrganizationSubscription.unsubscribe() : null;
     }
 
     async checkAccess(): Promise<void> {
@@ -120,7 +122,10 @@ export class UserComponent implements OnInit, OnDestroy {
     getAllUsers(): void {
         this.dataFound = false;
         this.loading = true;
-        this.manageUserService
+        if (this.getAllUserOfOrganizationSubscription) {
+            this.getAllUserOfOrganizationSubscription.unsubscribe();
+        }
+        this.getAllUserOfOrganizationSubscription = this.manageUserService
             .getAllUserOfOrganization(this.options)
             .pipe(
                 finalize(() => {
