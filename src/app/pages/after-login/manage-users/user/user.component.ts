@@ -78,12 +78,8 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.newUserDialogClose) {
-            this.newUserDialogClose.unsubscribe();
-        }
-        if (this.dialogClose) {
-            this.dialogClose.unsubscribe();
-        }
+        this.newUserDialogClose ? this.newUserDialogClose.unsubscribe() : null;
+        this.dialogClose ? this.dialogClose.unsubscribe() : null;
         this.getAllUserOfOrganizationSubscription ? this.getAllUserOfOrganizationSubscription.unsubscribe() : null;
     }
 
