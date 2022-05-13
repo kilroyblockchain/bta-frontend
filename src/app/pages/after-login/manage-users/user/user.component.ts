@@ -116,11 +116,11 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getAllUsers(): void {
-        this.dataFound = false;
-        this.loading = true;
         if (this.getAllUserOfOrganizationSubscription) {
             this.getAllUserOfOrganizationSubscription.unsubscribe();
         }
+        this.dataFound = false;
+        this.loading = true;
         this.getAllUserOfOrganizationSubscription = this.manageUserService
             .getAllUserOfOrganization(this.options)
             .pipe(
