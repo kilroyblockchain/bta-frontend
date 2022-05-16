@@ -11,6 +11,7 @@ import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.inter
 import { AuthService, LangTranslateService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { ChangePasswordComponent } from '../../user/change-password/password';
 import { ViewUserComponent } from '../../user/view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { NewUserComponent } from './new-user/new-user.component';
@@ -65,6 +66,7 @@ export class UserComponent implements OnInit, OnDestroy {
     defaultSubscriptionType!: string;
     tabId!: string;
     canManageBlockedUser!: boolean;
+    canChangeUserPassword!: boolean;
 
     constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe, private langTranslateService: LangTranslateService) {
         this.setCompanyId();
@@ -90,6 +92,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.canUpdateUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.UPDATE]);
         this.canDeleteUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.DELETE]);
         this.canManageBlockedUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_BLOCKED_COMPANY_USERS, [ACCESS_TYPE.UPDATE]);
+        this.canChangeUserPassword = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.CHANGE_USER_PASSWORD, [ACCESS_TYPE.WRITE]);
         if (!this.canManageBlockedUser) {
             this.tabId = 'user-list';
         }
@@ -383,5 +386,9 @@ export class UserComponent implements OnInit, OnDestroy {
                     });
             }
         });
+    }
+
+    resetUserPassword(user: IUserRes): void {
+        this.dialogService.open(ChangePasswordComponent, { context: { type: 'user', userId: user._id, description: this.langTranslateService.translateKey('CHANGE_PASSWORD.DESCRIPTION.CHANGE_USER_PASSWORD', { userFullName: `${user.firstName} ${user.lastName}` }) }, hasBackdrop: true, closeOnBackdropClick: false });
     }
 }

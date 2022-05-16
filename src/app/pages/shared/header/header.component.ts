@@ -167,7 +167,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.menuClickSubscription = this.menuService.onItemClick().subscribe((event: NbMenuBag) => {
             switch (event.item.title) {
                 case this.translate.instant('HEADER.MENU_ITEM.CHANGE_PASSWORD'):
-                    this.dialogService.open(ChangePasswordComponent, { closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
+                    this.dialogService.open(ChangePasswordComponent, { context: { type: 'own' }, closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
                     break;
                 default:
                     break;

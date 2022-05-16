@@ -1,5 +1,6 @@
 export enum FEATURE_IDENTIFIER {
     MANAGE_ALL_USER = 'manage-all-user',
+    CHANGE_USER_PASSWORD = 'change-user-password',
     PERSONAL_DETAIL = 'personal-detail',
     ORGANIZATION_DETAIL = 'organization-detail',
     ORGANIZATION_UNIT = 'organization-unit',

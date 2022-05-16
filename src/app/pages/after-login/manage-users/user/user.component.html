@@ -115,6 +115,9 @@
                         <button *ngIf="tabId === 'user-list' && row.data.verified && row.data.isDeleted && canDeleteUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="deleteUser(row.data['action'])">
                             <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.DISABLE' | translate" icon="lock-outline" pack="eva"> </nb-icon>
                         </button>
+                        <button *ngIf="tabId === 'user-list' && canChangeUserPassword && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="resetUserPassword(row.data['action'])">
+                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.CHANGE_PASSWORD' | translate" icon="repeat-outline" pack="eva"> </nb-icon>
+                        </button>
                         <button *ngIf="tabId === 'blocked-list' && canManageBlockedUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="unblockUser(row.data['action'])">
                             <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.UNBLOCK' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
                         </button>

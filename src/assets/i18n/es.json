@@ -94,7 +94,8 @@
             "EDIT": "es Edit",
             "VIEW": "es View",
             "BC_HISTORY": "es BC History",
-            "DELETE": "es Delete"
+            "DELETE": "es Delete",
+            "CHANGE_PASSWORD": "es Change Password"
         },
         "TOOLTIP": {
             "BLOCKCHAIN_VERIFIED": "es Kilroy Blockchain Verified",
@@ -319,7 +320,8 @@
             "CHANGE_PASSWORD": "es Change Password"
         },
         "DESCRIPTION": {
-            "PLEASE_ENTER_YOUR_CURRENT_PASSWORD": "es Please enter your current password and new password in order to change your password"
+            "PLEASE_ENTER_YOUR_CURRENT_PASSWORD": "es Please enter your current password and new password in order to change your password",
+            "CHANGE_USER_PASSWORD": "es Please enter your current password and new password of {{userFullName}} in order to change password"
         },
         "LABEL": {
             "CURRENT_PASSWORD": "es Current Password"

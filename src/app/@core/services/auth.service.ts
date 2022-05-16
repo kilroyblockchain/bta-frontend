@@ -77,6 +77,10 @@ export class AuthService {
         return this.http.put(URLConstant.changePasswordURL, user);
     }
 
+    changeUserPassword(userId: string, changePasswordData: { currentPassword: string; password: string }): Observable<IAppResponse<void>> {
+        return this.http.put(URLConstant.changePasswordURL + `/${userId}`, changePasswordData);
+    }
+
     verifyUser(user: IUserActionRow): Observable<IAppResponse<void>> {
         return this.http.put(URLConstant.verifyUser, user);
     }
