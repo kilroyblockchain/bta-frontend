@@ -65,6 +65,7 @@ export class UserComponent implements OnInit, OnDestroy {
     defaultSubscriptionType!: string;
     tabId!: string;
     canManageBlockedUser!: boolean;
+    getAllUserOfOrganizationSubscription!: Subscription;
 
     constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe, private langTranslateService: LangTranslateService) {
         this.setCompanyId();
@@ -77,12 +78,9 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.newUserDialogClose) {
-            this.newUserDialogClose.unsubscribe();
-        }
-        if (this.dialogClose) {
-            this.dialogClose.unsubscribe();
-        }
+        this.newUserDialogClose ? this.newUserDialogClose.unsubscribe() : null;
+        this.dialogClose ? this.dialogClose.unsubscribe() : null;
+        this.getAllUserOfOrganizationSubscription ? this.getAllUserOfOrganizationSubscription.unsubscribe() : null;
     }
 
     async checkAccess(): Promise<void> {
@@ -118,9 +116,12 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getAllUsers(): void {
+        if (this.getAllUserOfOrganizationSubscription) {
+            this.getAllUserOfOrganizationSubscription.unsubscribe();
+        }
         this.dataFound = false;
         this.loading = true;
-        this.manageUserService
+        this.getAllUserOfOrganizationSubscription = this.manageUserService
             .getAllUserOfOrganization(this.options)
             .pipe(
                 finalize(() => {
