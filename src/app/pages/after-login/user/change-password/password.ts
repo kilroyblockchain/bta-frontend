@@ -13,12 +13,16 @@ import { AuthService, LocalStorageService, UtilsService } from 'src/app/@core/se
     templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent implements OnInit {
+    userId!: string;
+    type!: string;
+    description!: string;
     changePasswordFormGroup!: FormGroup;
     submitted = false;
     passwordDoNotMatch!: true;
     userData!: IUserRes;
     autoPassword!: boolean;
     loading!: boolean;
+
     constructor(protected ref: NbDialogRef<ChangePasswordComponent>, private fb: FormBuilder, private authService: AuthService, private utilsService: UtilsService, public router: Router, private localStorageService: LocalStorageService) {
         this.authService.getUserData().then((data) => {
             this.userData = { ...data };
@@ -58,34 +62,53 @@ export class ChangePasswordComponent implements OnInit {
             password: value.password
         };
         this.loading = true;
-        this.authService
-            .changePassword(newData)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                })
-            )
-            .subscribe({
-                next: (res) => {
-                    if (res && res.success) {
-                        this.authService.getUserData().then((user) => {
-                            const newUser = { ...user, autoPassword: false };
-                            this.authService.setUserData(newUser);
-                            if (this.autoPassword) {
-                                this.router.navigate(['/u']);
-                                this.autoPassword = false;
-                            }
-                            this.ref.close({ saveSuccess: true, data: res.data });
-                            this.utilsService.showToast('success', res?.message);
-                        });
-                    } else {
-                        this.utilsService.showToast('warning', res && res.message ? res.message : MSG_KEY_CONSTANT_USER.FAILED_TO_CHANGE_PASSWORD);
+        if (this.type === 'user') {
+            this.authService
+                .changeUserPassword(this.userId, newData)
+                .pipe(
+                    finalize(() => {
+                        this.loading = false;
+                    })
+                )
+                .subscribe({
+                    next: (res) => {
+                        this.utilsService.showToast('success', res.message);
+                        this.ref.close();
+                    },
+                    error: (err) => {
+                        this.utilsService.showToast('warning', err.message);
                     }
-                },
-                error: (err) => {
-                    this.utilsService.showToast('warning', err?.message);
-                }
-            });
+                });
+        } else {
+            this.authService
+                .changePassword(newData)
+                .pipe(
+                    finalize(() => {
+                        this.loading = false;
+                    })
+                )
+                .subscribe({
+                    next: (res) => {
+                        if (res && res.success) {
+                            this.authService.getUserData().then((user) => {
+                                const newUser = { ...user, autoPassword: false };
+                                this.authService.setUserData(newUser);
+                                if (this.autoPassword) {
+                                    this.router.navigate(['/u']);
+                                    this.autoPassword = false;
+                                }
+                                this.ref.close({ saveSuccess: true, data: res.data });
+                                this.utilsService.showToast('success', res?.message);
+                            });
+                        } else {
+                            this.utilsService.showToast('warning', res && res.message ? res.message : MSG_KEY_CONSTANT_USER.FAILED_TO_CHANGE_PASSWORD);
+                        }
+                    },
+                    error: (err) => {
+                        this.utilsService.showToast('warning', err?.message);
+                    }
+                });
+        }
     }
 
     closeModal(): void {

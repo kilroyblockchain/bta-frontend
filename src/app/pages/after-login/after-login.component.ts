@@ -43,7 +43,7 @@ export class AfterLoginComponent {
 
     checkAutoPassword(): void {
         if (this.autoPassword) {
-            const changePasswordDialog = this.dialogService.open(ChangePasswordComponent, { hasBackdrop: true, closeOnBackdropClick: false, closeOnEsc: false });
+            const changePasswordDialog = this.dialogService.open(ChangePasswordComponent, { context: { type: 'own' }, hasBackdrop: true, closeOnBackdropClick: false, closeOnEsc: false });
             changePasswordDialog.onClose.subscribe((res) => {
                 if (res && res !== 'close') {
                     if (res.saveSuccess) {
