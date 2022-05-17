@@ -70,5 +70,6 @@ export const API_RES_MSG_USER = {
     YOU_DONT_HAVE_ACCESS_TO_MANAGE_BLOCKED_COMPANY_USERS: `es You don't have access to manage blocked company users`,
     YOU_CANT_UNBLOCK_THIS_USER: `es You can't unblock this user`,
     SUCCESSFULLY_UNBLOCKED_COMPANY_USER: 'es Successfully unblocked company user',
+    PLEASE_ENTER_CORRECT_PASSWORD_TO_CONTINUE: 'es Please enter correct password to continue',
     FAILED_TO_UNBLOCK_COMPANY_USER: 'es Failed to unblock company user'
 };
