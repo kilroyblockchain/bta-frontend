@@ -13,10 +13,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageConstant } from 'src/app/@core/constants';
 import { ICompany, IUserRes, IUserCompany } from 'src/app/@core/interfaces/user-data.interface';
 
-interface IorgMenu extends NbMenuItem {
-    companyId: string;
-}
-
 interface IOrgDetail {
     companyName: string;
     value: string;
@@ -164,23 +160,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     initMenuSubscription(): void {
-        this.menuClickSubscription = this.menuService.onItemClick().subscribe((event: NbMenuBag) => {
-            switch (event.item.title) {
-                case this.translate.instant('HEADER.MENU_ITEM.CHANGE_PASSWORD'):
-                    this.dialogService.open(ChangePasswordComponent, { context: { type: 'own' }, closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
-                    break;
-                default:
-                    break;
+        this.menuClickSubscription = this.menuService.onItemClick().subscribe(({ item, tag }: NbMenuBag) => {
+            if (tag === 'userHeaderMenu') {
+                switch (item.title) {
+                    case this.translate.instant('HEADER.MENU_ITEM.CHANGE_PASSWORD'):
+                        this.dialogService.open(ChangePasswordComponent, { context: { type: 'own' }, closeOnBackdropClick: !this.autoPassword, closeOnEsc: !this.autoPassword });
+                        break;
+                    default:
+                        break;
+                }
             }
 
-            if (event.item.title === this.translate.instant('HEADER.MENU_ITEM.LOGOUT')) {
+            if (item.title === this.translate.instant('HEADER.MENU_ITEM.LOGOUT')) {
                 this.authService.logout();
             }
-            if (event.tag === 'organization-context-menu') {
-                const item = event.item as IorgMenu;
-                this.organizationName = event.item.title;
-                this.localStorageService.setLocalStorageData('selectedOrganization', { id: item.companyId });
-                const selectedOrg = this.organizationMenu.find((element) => element.value === item.companyId);
+            if (tag === 'organization-context-menu') {
+                this.organizationName = item.title;
+                this.localStorageService.setLocalStorageData('selectedOrganization', { id: (item as IOrgMenu).companyId });
+                const selectedOrg = this.organizationMenu.find((element) => element.value === (item as IOrgMenu).companyId);
                 this.authService.changeDefaultCompany({ companyId: selectedOrg?.companyId as string, subscriptionType: selectedOrg?.subscriptionType as string }).subscribe((res) => {
                     this.authService.setUserData(res.data);
                     this.setDefaultSubscriptionTypeOnCompanyChange(res.data);

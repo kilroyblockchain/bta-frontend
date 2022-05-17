@@ -102,26 +102,11 @@
                             </small>
                         </span>
                     </div>
-                    <div class="table-col" *ngSwitchCase="'action'">
-                        <button nbSuffix nbButton ghost (click)="viewUser(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.VIEW' | translate" icon="eye-outline" pack="eva"> </nb-icon>
-                        </button>
-                        <button nbSuffix nbButton ghost *ngIf="tabId === 'user-list' && !row.data.verified && !row.data.isDeleted && canUpdateUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" (click)="enableUser(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.ENABLE' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
-                        </button>
-                        <button *ngIf="tabId === 'user-list' && canUpdateUser && !findAdminUser(row.data['action']) && !(user.id === row.data['action'].id)" nbSuffix nbButton ghost (click)="editUser(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
-                        </button>
-                        <button *ngIf="tabId === 'user-list' && row.data.verified && row.data.isDeleted && canDeleteUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="deleteUser(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.DISABLE' | translate" icon="lock-outline" pack="eva"> </nb-icon>
-                        </button>
-                        <button *ngIf="tabId === 'user-list' && canChangeUserPassword && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="resetUserPassword(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.CHANGE_PASSWORD' | translate" icon="repeat-outline" pack="eva"> </nb-icon>
-                        </button>
-                        <button *ngIf="tabId === 'blocked-list' && canManageBlockedUser && !(user.id === row.data['action'].id) && !findAdminUser(row.data['action'])" nbSuffix nbButton ghost (click)="unblockUser(row.data['action'])">
-                            <nb-icon [nbTooltip]="'COMMON.MENU_ITEM.UNBLOCK' | translate" icon="unlock-outline" pack="eva"> </nb-icon>
-                        </button>
-                    </div>
+                    <nb-actions size="small" *ngSwitchCase="'action'">
+                        <nb-action nbContextMenuTag="userMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
+                            <nb-icon icon="more-vertical-outline"></nb-icon>
+                        </nb-action>
+                    </nb-actions>
                     <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
                 </div>
             </td>
