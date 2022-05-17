@@ -1,12 +1,13 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbDialogService, NbTabComponent, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbDialogService, NbMenuBag, NbMenuService, NbTabComponent, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { ACCESS_TYPE } from 'src/app/@core/constants/accessType.enum';
 import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.enum';
 import { IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
+import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LangTranslateService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
@@ -60,18 +61,29 @@ export class UserComponent implements OnInit, OnDestroy {
     toggleStatusFilter = true;
     dialogClose!: Subscription;
     canAddUser!: boolean;
-    canUpdateUser!: boolean;
-    canDeleteUser!: boolean;
+    canManageBlockedUser!: boolean;
     user!: IUserRes;
     defaultSubscriptionType!: string;
     tabId!: string;
-    canManageBlockedUser!: boolean;
-    canChangeUserPassword!: boolean;
     getAllUserOfOrganizationSubscription!: Subscription;
+    menuItems: Array<MenuItem> = [];
+    destroy$: Subject<void> = new Subject<void>();
+    rowUser!: IUserRes;
 
-    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private readonly manageUserService: ManageUserService, private readonly dialogService: NbDialogService, private translate: TranslateService, private titleCasePipe: TitleCasePipe, private langTranslateService: LangTranslateService) {
+    constructor(
+        public utilsService: UtilsService,
+        private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+        private authService: AuthService,
+        private readonly manageUserService: ManageUserService,
+        private readonly dialogService: NbDialogService,
+        private translate: TranslateService,
+        private titleCasePipe: TitleCasePipe,
+        private langTranslateService: LangTranslateService,
+        private menuService: NbMenuService
+    ) {
         this.setCompanyId();
         this.checkAccess();
+        this.initMenu();
     }
 
     ngOnInit(): void {
@@ -80,20 +92,65 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
         this.newUserDialogClose ? this.newUserDialogClose.unsubscribe() : null;
         this.dialogClose ? this.dialogClose.unsubscribe() : null;
         this.getAllUserOfOrganizationSubscription ? this.getAllUserOfOrganizationSubscription.unsubscribe() : null;
     }
 
+    initMenu(): void {
+        this.menuService
+            .onItemClick()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(({ item, tag }: NbMenuBag) => {
+                if (tag === 'userMenu') {
+                    switch ((item as MenuItem).key) {
+                        case 'COMMON.MENU_ITEM.VIEW':
+                            this.viewUser(this.rowUser);
+                            break;
+                        case 'COMMON.MENU_ITEM.EDIT':
+                            this.editUser(this.rowUser);
+                            break;
+                        case 'COMMON.MENU_ITEM.ENABLE':
+                            this.enableUser(this.rowUser);
+                            break;
+                        case 'COMMON.MENU_ITEM.DISABLE':
+                            this.deleteUser(this.rowUser);
+                            break;
+                        case 'COMMON.MENU_ITEM.CHANGE_PASSWORD':
+                            this.resetUserPassword(this.rowUser);
+                            break;
+                        case 'COMMON.MENU_ITEM.UNBLOCK':
+                            this.unblockUser(this.rowUser);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+    }
+
     async checkAccess(): Promise<void> {
         this.canAddUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.WRITE]);
-        this.canUpdateUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.UPDATE]);
-        this.canDeleteUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.DELETE]);
+        const canUpdateUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.UPDATE]);
+        const canDeleteUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_USER, [ACCESS_TYPE.DELETE]);
         this.canManageBlockedUser = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_BLOCKED_COMPANY_USERS, [ACCESS_TYPE.UPDATE]);
-        this.canChangeUserPassword = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.CHANGE_USER_PASSWORD, [ACCESS_TYPE.WRITE]);
-        if (!this.canManageBlockedUser) {
+        const canChangeUserPassword = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.CHANGE_USER_PASSWORD, [ACCESS_TYPE.WRITE]);
+        if (canUpdateUser) {
+            this.menuItems.push({ key: 'COMMON.MENU_ITEM.EDIT', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.EDIT') });
+        }
+        this.menuItems.push({ key: 'COMMON.MENU_ITEM.VIEW', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.VIEW') });
+        if (canChangeUserPassword) this.menuItems.push({ key: 'COMMON.MENU_ITEM.CHANGE_PASSWORD', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.CHANGE_PASSWORD') });
+        if (this.canManageBlockedUser) {
+            this.menuItems.push({ key: 'COMMON.MENU_ITEM.UNBLOCK', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.UNBLOCK') });
+        } else {
             this.tabId = 'user-list';
         }
+        if (canUpdateUser) {
+            this.menuItems.push({ key: 'COMMON.MENU_ITEM.ENABLE', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.ENABLE') });
+        }
+        if (canDeleteUser) this.menuItems.push({ key: 'COMMON.MENU_ITEM.DISABLE', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.DISABLE') });
     }
 
     setCompanyId(): void {
@@ -391,5 +448,22 @@ export class UserComponent implements OnInit, OnDestroy {
 
     resetUserPassword(user: IUserRes): void {
         this.dialogService.open(ChangePasswordComponent, { context: { type: 'user', userId: user._id, description: this.langTranslateService.translateKey('CHANGE_PASSWORD.DESCRIPTION.CHANGE_USER_PASSWORD', { userFullName: `${user.firstName} ${user.lastName}` }) }, hasBackdrop: true, closeOnBackdropClick: false });
+    }
+
+    openMenu(user: IUserRes): void {
+        this.rowUser = user;
+        this.menuItems = this.menuItems.map((menu) => {
+            if (menu.key === 'COMMON.MENU_ITEM.UNBLOCK') {
+                menu.hidden = this.tabId === 'user-list';
+            }
+            if (menu.key === 'COMMON.MENU_ITEM.DISABLE' || menu.key === 'COMMON.MENU_ITEM.ENABLE') {
+                if (this.toggleStatusFilter) {
+                    menu.hidden = menu.key.includes('.ENABLE');
+                } else {
+                    menu.hidden = menu.key.includes('.DISABLE');
+                }
+            }
+            return menu;
+        });
     }
 }
