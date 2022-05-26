@@ -1,0 +1,62 @@
+@import '/src/styles/mixins/responsive';
+
+$text-color: #2b5867;
+
+::ng-deep {
+    .auth-holder {
+        min-height: 100%;
+        align-items: center;
+
+        .form-container {
+            width: 100%;
+            margin-right: 0;
+
+            @include lg {
+                width: 60%;
+                margin-right: 40px;
+            }
+        }
+
+        .form-inner-container {
+            width: 100%;
+            display: inline-block;
+        }
+
+        .image-holder-lg {
+            display: none;
+            visibility: hidden;
+
+            img {
+                max-width: 100%;
+            }
+
+            @include lg {
+                width: calc(40% - 40px);
+                display: flex;
+                visibility: visible;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+
+    .form-holder {
+        display: inline-block;
+
+        &.full {
+            width: 100%;
+        }
+    }
+
+    .action-holder {
+        margin-bottom: 20px;
+
+        & > * {
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+}

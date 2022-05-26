@@ -1,0 +1,64 @@
+@import '/src/styles/mixins/responsive';
+
+.landing-holder {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    .highlight {
+        background: linear-gradient(#598bff, #36f);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    }
+
+    .text-container {
+        width: 50%;
+
+        h1 {
+            font-size: 50px;
+            line-height: 45px;
+
+            small {
+                font-size: 25px;
+                font-weight: 300;
+            }
+        }
+
+        p {
+            font-size: 25px;
+            font-weight: 300;
+            line-height: 25px;
+
+            b {
+                font-weight: 400;
+            }
+        }
+
+        .action {
+            margin-top: 50px;
+
+            p {
+                font-size: 14px;
+                line-height: auto;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+.image-holder-lg {
+    display: none;
+    visibility: hidden;
+
+    img {
+        max-width: 100%;
+    }
+
+    @include lg {
+        width: calc(50% - 40px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

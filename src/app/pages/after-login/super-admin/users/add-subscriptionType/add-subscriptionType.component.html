@@ -1,0 +1,37 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header class="card-header">
+        <h6 *ngIf="type === 'CREATE'">{{ 'SUPER_ADMIN.TITLE.ASSIGN_NEW_SUBSCRIPTION_TYPE' | translate: { name: name } }}</h6>
+        <h6 *ngIf="type === 'EDIT'">{{ 'SUPER_ADMIN.TITLE.UPDATE_ASSIGNED_SUBSCRIPTION_TYPE' | translate: { name: name } }}</h6>
+        <button nbButton (click)="closeModal()">
+            <nb-icon icon="close-circle-outline" pack="eva"> </nb-icon>
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="addSubscriptionFormGroup">
+            <div class="form-inner-container">
+                <div class="form-holder">
+                    <label for="Organizations" class="label">*{{ 'SUPER_ADMIN.LABEL.ORGANIZATION' | translate }}</label>
+                    <nb-select fullWidth id="companyId" name="companyId" [placeholder]="'SUPER_ADMIN.PLACEHOLDER.SELECT_ORGANIZATION' | translate" formControlName="companyId" [ngClass]="{ 'status-danger': submitted && UF['companyId'].errors }" (selectedChange)="onCompanyChange($event)">
+                        <nb-option *ngFor="let item of organizationList" value="{{ item._id }}">{{ item.companyName }}</nb-option>
+                    </nb-select>
+                    <div *ngIf="submitted && UF['companyId'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'SUPER_ADMIN.VALIDATIONS.SELECT_ONE_ORGANIZATION' | translate }}</span>
+                    </div>
+                </div>
+                <div class="form-holder">
+                    <label for="subscriptionTypes" class="label">*{{ 'SUPER_ADMIN.LABEL.SUBSCRIPTION_TYPES' | translate }}</label>
+                    <nb-select multiple fullWidth id="subscriptionType" name="subscriptionType" placeholder="Select Subscription Type(s)" formControlName="subscriptionType" [ngClass]="{ 'status-danger': submitted && UF['subscriptionType'].errors }">
+                        <nb-option *ngFor="let item of subscriptionTypes" value="{{ item.subscriptionTypeIdentifier }}">{{ item.subscriptionType }}</nb-option>
+                    </nb-select>
+                    <div *ngIf="submitted && UF['subscriptionType'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'SUPER_ADMIN.LABEL.SELECT_ONE_SUBSCRIPTION_TYPE' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button *ngIf="type === 'CREATE'" nbButton hero status="primary" type="submit" (click)="submitaddSubscriptionFormGroup(addSubscriptionFormGroup)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+        <button *ngIf="type === 'EDIT'" nbButton hero status="primary" type="submit" (click)="submitaddSubscriptionFormGroup(addSubscriptionFormGroup)">{{ 'COMMON.BUTTON.UPDATE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

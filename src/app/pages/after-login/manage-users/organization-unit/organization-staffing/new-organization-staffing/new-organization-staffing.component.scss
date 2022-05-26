@@ -1,0 +1,19 @@
+.feature-list {
+    .feature-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .feature-name {
+        margin-bottom: 5px;
+    }
+
+    .access-list {
+        margin-bottom: 15px;
+
+        nb-checkbox {
+            margin-right: 15px;
+        }
+    }
+}

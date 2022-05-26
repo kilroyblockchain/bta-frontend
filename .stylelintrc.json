@@ -1,0 +1,19 @@
+{
+    "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
+    "rules": {
+        "indentation": 4,
+        "selector-type-no-unknown": [true, { "ignore": "custom-elements" }],
+        "no-descending-specificity": null,
+        "declaration-colon-newline-after": null,
+        "string-quotes": "single",
+        "max-line-length": 400,
+        "scss/no-global-function-names": null,
+        "selector-pseudo-element-no-unknown": [
+            true,
+            {
+                "ignorePseudoElements": ["ng-deep", "host"]
+            }
+        ],
+        "at-rule-no-unknown": null
+    }
+}

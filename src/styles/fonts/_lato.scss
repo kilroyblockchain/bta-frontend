@@ -1,0 +1,72 @@
+$font-name: 'Lato';
+$font-filename: 'Lato';
+$font-src: '../../assets/fonts/lato';
+$lato-stack: 'Lato', sans-serif;
+
+@font-face {
+    font-family: $font-name;
+    font-style: normal;
+    src: url('#{$font-src}/#{$font-filename}-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-style: italic;
+    src: url('#{$font-src}/#{$font-filename}-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 100;
+    font-style: normal;
+    src: url('#{$font-src}/#{$font-filename}-Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 100;
+    font-style: italic;
+    src: url('#{$font-src}/#{$font-filename}-ThinItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 300;
+    font-style: normal;
+    src: url('#{$font-src}/#{$font-filename}-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 300;
+    font-style: italic;
+    src: url('#{$font-src}/#{$font-filename}-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 700;
+    font-style: normal;
+    src: url('#{$font-src}/#{$font-filename}-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 700;
+    font-style: italic;
+    src: url('#{$font-src}/#{$font-filename}-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 900;
+    font-style: normal;
+    src: url('#{$font-src}/#{$font-filename}-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: $font-name;
+    font-weight: 900;
+    font-style: italic;
+    src: url('#{$font-src}/#{$font-filename}-BlackItalic.ttf') format('truetype');
+}

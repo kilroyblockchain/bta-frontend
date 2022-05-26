@@ -1,0 +1,46 @@
+@import '/src/styles/mixins/responsive';
+
+::ng-deep {
+    .profile-row {
+        display: flex;
+        padding: 20px;
+        width: 100%;
+        flex-direction: column;
+
+        @include lg {
+            flex-direction: row;
+            width: 80vw;
+            margin: 0 auto;
+        }
+
+        nb-card {
+            width: 100%;
+
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+
+            @include lg {
+                width: calc((100% - 30px) / 2);
+
+                &:not(:last-child) {
+                    margin-right: 30px;
+                }
+            }
+        }
+    }
+
+    nb-card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    app-organization-details {
+        width: 100%;
+        display: block;
+
+        nb-card {
+            width: 100% !important;
+        }
+    }
+}

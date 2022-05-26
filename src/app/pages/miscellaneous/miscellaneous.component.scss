@@ -1,0 +1,12 @@
+.data-not-found-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    flex-direction: column;
+
+    img {
+        width: 600px;
+    }
+}

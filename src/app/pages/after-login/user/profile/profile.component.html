@@ -1,0 +1,20 @@
+<div class="page-title">
+    <div class="title-holder">
+        <h4 *ngIf="url === 'personal-details'">{{ 'PERSONAL_DETAIL.TITLE.PERSONAL_DETAILS' | translate }}</h4>
+        <h4 *ngIf="url === 'organization-details'">{{ 'ORGANIZATION_DETAILS.TITLE.ORG_DETAIL' | translate }}</h4>
+    </div>
+</div>
+<div *ngIf="dataFound && !loading">
+    <div *ngIf="url === 'personal-details' && userData" class="fixed-width-container">
+        <app-personal-details [userData]="userData"></app-personal-details>
+    </div>
+    <div *ngIf="url === 'organization-details'" class="fixed-width-container">
+        <app-organization-details [organization]="organization" [staffs]="staffs"></app-organization-details>
+    </div>
+</div>
+<div *ngIf="!dataFound && loading">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!dataFound && !loading">
+    <app-data-not-found></app-data-not-found>
+</div>

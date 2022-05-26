@@ -1,0 +1,18 @@
+<footer>
+    <div class="left">
+        <label>
+            <span>
+                {{ 'FOOTER.LABEL.SELECT' | translate }}
+            </span>
+            <nb-select size="small" [(selected)]="defaultLanguage" (selectedChange)="languageChanged($event)">
+                <nb-option *ngFor="let lang of languageList" [value]="lang.code">
+                    {{ lang.label }}
+                </nb-option>
+            </nb-select>
+        </label>
+    </div>
+
+    <div class="right">
+        <p>{{ 'FOOTER.TITLE.COPYRIGHT_TEXT' | translate: { currentYear: curDate | date: 'yyyy' } }}</p>
+    </div>
+</footer>

@@ -1,0 +1,34 @@
+@import '/src/styles/mixins/responsive';
+
+::ng-deep {
+    .dashboard-column {
+        display: flex;
+        flex-wrap: wrap;
+
+        & > * {
+            display: block;
+            width: 100%;
+            min-width: 626px;
+
+            @include rwd(1356) {
+                width: calc((100% - 2rem) / 2);
+
+                &:nth-child(2n) {
+                    margin-left: 2rem;
+                }
+            }
+        }
+    }
+
+    .chart-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & > * {
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+        }
+    }
+}

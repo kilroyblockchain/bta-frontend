@@ -1,0 +1,10 @@
+<div class="case-name">
+    <span *ngIf="showOnline" class="indicator-online grid-online"></span>
+    <ng-container *ngIf="tooltip; else noTooltip">
+        <span nbTooltip="{{ tooltip | translate }}">{{ blockName || 'N/a' }}</span>
+    </ng-container>
+    <ng-template #noTooltip>
+        {{ blockName || 'N/a' }}
+    </ng-template>
+    <img *ngIf="blockchainVerified" nbTooltip="{{ 'COMMON.TOOLTIP.BLOCKCHAIN_VERIFIED' | translate }}" src="/assets/images/svg/blockchain.svg" class="blockchain-verified" />
+</div>

@@ -1,0 +1,45 @@
+.thank-body {
+    margin: 50px 0 40px;
+
+    ol {
+        counter-reset: my-awesome-counter;
+        list-style: none;
+        padding-left: 50px;
+
+        li {
+            counter-increment: my-awesome-counter;
+            position: relative;
+            margin-bottom: 35px;
+
+            &::before {
+                content: counter(my-awesome-counter);
+                color: white;
+                font-size: 1rem;
+                font-weight: bold;
+                position: absolute;
+                left: calc(-1 * 38px - 13px);
+                line-height: 38px;
+                width: 38px;
+                height: 38px;
+                top: 0;
+                background: #9c1b1f;
+                border-radius: 38px;
+                text-align: center;
+            }
+        }
+    }
+
+    span {
+        color: #9b1313;
+    }
+
+    hr {
+        opacity: 0.2;
+        margin: 40px 0;
+    }
+
+    a {
+        color: #9c1b1f;
+        font-weight: 500;
+    }
+}

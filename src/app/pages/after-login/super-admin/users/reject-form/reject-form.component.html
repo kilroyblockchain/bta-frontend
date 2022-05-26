@@ -1,0 +1,28 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'SUPER_ADMIN.TITLE.ADDITIONAL_REJECT_INFORMATION' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="rejectCompanyFormGroup">
+            <div class="form-inner-container">
+                <div class="form-holder">
+                    <textarea id="description" nbInput fullWidth type="text" [placeholder]="'SUPER_ADMIN.PLACEHOLDER.DESCRIPTION' | translate" formControlName="description" [ngClass]="{ 'status-danger': submitted && getControl('description').errors }"></textarea>
+                    <label for="description" [attr.data-content]="'COMMON.LABEL.DESCRIPTION' | translate"></label>
+                    <div *ngIf="submitted && getControl('description').errors as err" class="invalid-feedback">
+                        <span *ngIf="err['minlength']">{{ 'SUPER_ADMIN.VALIDATIONS.DESCRIPTION_SHOULD_HAVE_MINIMUM_CHARACTERS' | translate: { minlength: err['minlength'] } }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type="submit" (click)="onSubmit(rejectCompanyFormGroup)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>
