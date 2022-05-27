@@ -1,0 +1,30 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header *ngIf="userData">
+        <h6>You are assigned with following roles. Is this you?</h6>
+    </nb-card-header>
+    <nb-card-body *ngIf="userData && !error">
+        <div class="user-detail-card">
+            <div class="detail-row">
+                <b>Name: </b><span>{{ userData.userName }}</span>
+            </div>
+            <div class="detail-row">
+                <b>Subscription Type:</b><span>{{ userData.subscriptionType }}</span>
+            </div>
+            <div class="detail-row">
+                <b>Roles:</b><span>{{ userData.roles }}</span>
+            </div>
+            <div class="detail-row">
+                <b>Requested By:</b><span>{{ userData.requestedBy }}</span>
+            </div>
+        </div>
+        <button *ngIf="!verified" nbButton hero status="primary" (click)="verify()">Verify</button>
+        <h6 *ngIf="verified">Thank You for your Confirmation!</h6>
+    </nb-card-body>
+    <nb-card-footer *ngIf="error">
+        <div class="user-detail-card">
+            <div class="detail-row">
+                <b>{{ errorMessage === 'USER_ALREADY_ACCEPTED_THIS_REQUEST' ? 'This Request has been already accepted.' : errorMessage.replace('_', ' ') }}</b>
+            </div>
+        </div>
+    </nb-card-footer>
+</nb-card>

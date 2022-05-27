@@ -1,0 +1,70 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'ORGANIZATION_DETAILS.TITLE.EDIT_ORGANIZATION' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="editOrganizationForm">
+            <div class="form-holder full image-upload">
+                <label class="upload-holder" for="companyLogo">
+                    <div class="upload-button">
+                        <nb-icon icon="camera-outline"></nb-icon>
+                    </div>
+                    <img [src]="logoURL ? logoURL : '/assets/images/logo/logo-holder.png'" />
+                </label>
+                <input nbInput type="file" hidden id="companyLogo" formControlName="companyLogo" (change)="onFileChange($event)" />
+            </div>
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input id="companyName" nbInput fullWidth type="text" [placeholder]="'ORGANIZATION_DETAILS.PLACEHOLDER.COMPANY_NAME' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" />
+                    <label for="companyName" [attr.data-content]="'ORGANIZATION_DETAILS.LABEL.COMPANY_NAME' | translate"></label>
+                    <div *ngIf="submitted && UF['companyName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'ORGANIZATION_DETAILS.VALIDATIONS.COMPANY_NAME_IS_REQUIRED' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inner-container two-col">
+                <div class="form-holder">
+                    <label for="country" class="label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+                    <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)">
+                        <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
+                    </nb-select>
+                </div>
+
+                <div class="form-holder">
+                    <label for="state" class="label">{{ 'COMMON.LABEL.STATE' | translate }}</label>
+                    <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="state" [ngClass]="{ 'status-danger': submitted && stateRequiredErr }">
+                        <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
+                    </nb-select>
+                    <div *ngIf="submitted && stateRequiredErr" class="invalid-feedback">
+                        <span *ngIf="stateRequiredErr">{{ 'ORGANIZATION_DETAILS.VALIDATIONS.STATE_IS_REQUIRED_IF_COUNTRY_IS_SELECTED' | translate }}</span>
+                    </div>
+                </div>
+
+                <div class="form-holder floating">
+                    <input id="city" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.CITY' | translate" formControlName="city" />
+                    <label for="city" [attr.data-content]="'COMMON.LABEL.CITY' | translate"></label>
+                </div>
+
+                <div class="form-holder floating">
+                    <input id="address" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ADDRESS' | translate" formControlName="address" />
+                    <label for="address" [attr.data-content]="'ORGANIZATION_DETAILS.LABEL.COMPANY_ADDRESS' | translate"></label>
+                </div>
+
+                <div class="form-holder floating">
+                    <input id="zipcode" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ZIP_CODE' | translate" formControlName="zipCode" />
+                    <label for="zipcode" [attr.data-content]="'COMMON.LABEL.ZIP_CODE' | translate"></label>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" (click)="updateOrganizationFormSubmit(editOrganizationForm)">{{ 'COMMON.BUTTON.UPDATE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

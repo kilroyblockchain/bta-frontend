@@ -1,0 +1,70 @@
+@import '/src/styles/mixins/responsive';
+
+.form-inner-container {
+    margin-top: 30px;
+}
+
+.form-container {
+    width: 100%;
+    margin-right: 0;
+
+    @include lg {
+        width: 60%;
+        margin-right: 40px;
+    }
+}
+
+.payment-holder {
+    width: 100%;
+
+    @include lg {
+        width: calc(40% - 40px);
+    }
+
+    .payment-container {
+        margin-bottom: 40px;
+    }
+
+    h4 {
+        margin: 0;
+        padding-bottom: 20px;
+    }
+
+    img {
+        width: 30px;
+        padding-right: 10px;
+    }
+
+    nb-select {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    ::ng-deep {
+        .payment-method {
+            nb-radio {
+                label {
+                    width: 100%;
+                    border: 1px solid #e4e9f2;
+                    padding: 15px 30px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                .outer-circle,
+                .inner-circle {
+                    left: 20px;
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 15px;
+                }
+
+                .text {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+:host {
+    display: inline-block;
+}
+
+.blockchain-verified {
+    width: 25px;
+}
+
+.case-name {
+    display: flex;
+    align-items: center;
+
+    img {
+        margin-left: 5px;
+    }
+
+    .grid-online {
+        width: 0.7em !important;
+        height: 0.7em !important;
+    }
+}

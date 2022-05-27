@@ -1,0 +1,81 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'PERSONAL_DETAIL.TITLE.UPDATE_PERSONAL_DETAILS' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="personalDetailsForm">
+            <div class="form-inner-container two-col">
+                <div class="form-holder floating">
+                    <input id="firstname" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.FIRST_NAME' | translate" formControlName="firstName" [ngClass]="{ 'status-danger': submitted && UF['firstName'].errors }" />
+                    <label for="firstname" [attr.data-content]="'COMMON.LABEL.FIRST_NAME' | translate"></label>
+                    <div *ngIf="submitted && UF['firstName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'COMMON.VALIDATIONS.FIRSTNAME_IS_REQUIRED' | translate }}</span>
+                        <span *ngIf="err['minlength']">{{ 'COMMON.VALIDATIONS.FIRSTNAME_MIN_LENGTH' | translate }}</span>
+                    </div>
+                </div>
+
+                <div class="form-holder floating">
+                    <input id="lastname" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.LAST_NAME' | translate" formControlName="lastName" [ngClass]="{ 'status-danger': submitted && UF['lastName'].errors }" />
+                    <label for="lastname" [attr.data-content]="'COMMON.LABEL.LAST_NAME' | translate"></label>
+                    <div *ngIf="submitted && UF['lastName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'COMMON.VALIDATIONS.LASTNAME_IS_REQUIRED' | translate }}</span>
+                        <span *ngIf="err['minlength']">{{ 'COMMON.VALIDATIONS.LASTNAME_MIN_LENGTH' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inner-container two-col">
+                <div class="form-holder floating">
+                    <input id="phone" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.PHONE_NUMBER' | translate" formControlName="phone" [ngClass]="{ 'status-danger': submitted && UF['phone'].errors }" />
+                    <label for="phone" [attr.data-content]="'COMMON.LABEL.PHONE_NUMBER' | translate"></label>
+                    <div *ngIf="submitted && UF['phone'].errors as err" class="invalid-feedback">
+                        <app-validation-message field="phone" [error]="err"></app-validation-message>
+                    </div>
+                </div>
+                <div class="form-holder">
+                    <label for="country" class="label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+                    <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)" [ngClass]="{ 'status-danger': submitted && UF['country'].errors }">
+                        <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
+                    </nb-select>
+                </div>
+            </div>
+            <div class="form-inner-container two-col">
+                <div class="form-holder">
+                    <label for="state" class="label">{{ 'COMMON.LABEL.STATE' | translate }}</label>
+                    <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="state" [ngClass]="{ 'status-danger': submitted && UF['state'].errors }">
+                        <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
+                    </nb-select>
+                </div>
+                <div class="form-holder floating">
+                    <input id="city" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.CITY' | translate" formControlName="city" [ngClass]="{ 'status-danger': submitted && UF['city'].errors }" />
+                    <label for="city" [attr.data-content]="'COMMON.LABEL.CITY' | translate"></label>
+                </div>
+            </div>
+            <div class="form-inner-container two-col">
+                <div class="form-holder floating">
+                    <input id="address" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ADDRESS' | translate" formControlName="address" [ngClass]="{ 'status-danger': submitted && UF['address'].errors }" />
+                    <label for="address" [attr.data-content]="'COMMON.LABEL.ADDRESS' | translate"></label>
+                    <div *ngIf="submitted && UF['address'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['minlength']">{{ 'COMMON.VALIDATIONS.ADDRESS_MIN_LENGTH' | translate }}</span>
+                    </div>
+                </div>
+                <div class="form-holder floating">
+                    <input id="zipcode" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ZIP_CODE' | translate" formControlName="zipCode" [ngClass]="{ 'status-danger': submitted && UF['zipCode'].errors }" />
+                    <label for="zipcode" [attr.data-content]="'COMMON.LABEL.ZIP_CODE' | translate"></label>
+                    <div *ngIf="submitted && UF['zipCode'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['minlength']">{{ 'COMMON.VALIDATIONS.ZIP_CODE_MIN_LENGTH' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" (click)="updatePersonalDetails(personalDetailsForm)">{{ 'COMMON.BUTTON.UPDATE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

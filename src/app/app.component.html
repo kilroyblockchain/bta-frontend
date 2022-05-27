@@ -1,0 +1,16 @@
+<ng-container>
+    <nb-layout>
+        <nb-layout-header fixed>
+            <app-header></app-header>
+        </nb-layout-header>
+        <nb-sidebar *ngIf="isLoggedIn" tag="left" [state]="sidebarState">
+            <app-sidebar></app-sidebar>
+        </nb-sidebar>
+        <nb-layout-column>
+            <router-outlet></router-outlet>
+        </nb-layout-column>
+        <nb-layout-footer>
+            <app-footer></app-footer>
+        </nb-layout-footer>
+    </nb-layout>
+</ng-container>

@@ -1,0 +1,111 @@
+<div class="c-row billing-holder">
+    <form class="form-container">
+        <h4 class="title">Billing Details</h4>
+        <div class="form-inner-container two-col">
+            <div class="form-holder full">
+                <nb-checkbox status="basic">Use the same information from the registration page</nb-checkbox>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="firstname" nbInput fullWidth type="text" placeholder="a" />
+                <label for="firstname" data-content="First Name"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="lastname" nbInput fullWidth type="text" placeholder="a" />
+                <label for="lastname" data-content="Last Name"></label>
+            </div>
+
+            <div class="form-holder floating full">
+                <input id="org-name" nbInput fullWidth type="text" placeholder="a" />
+                <label for="org-name" data-content="Organization Name"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="position" nbInput fullWidth type="text" placeholder="a" />
+                <label for="position" data-content="Position"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="phone" nbInput fullWidth type="text" placeholder="a" />
+                <label for="phone" data-content="Phone No."></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="country" nbInput fullWidth type="text" placeholder="a" />
+                <label for="country" data-content="Country"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="city" nbInput fullWidth type="text" placeholder="a" />
+                <label for="city" data-content="City"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="state" nbInput fullWidth type="text" placeholder="a" />
+                <label for="state" data-content="State/Province"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="address1" nbInput fullWidth type="text" placeholder="a" />
+                <label for="address1" data-content="Street Address 1"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="address2" nbInput fullWidth type="text" placeholder="a" />
+                <label for="address2" data-content="Street Address 2"></label>
+            </div>
+
+            <div class="form-holder floating">
+                <input id="zipcode" nbInput fullWidth type="text" placeholder="a" />
+                <label for="zipcode" data-content="Zip Code"></label>
+            </div>
+        </div>
+    </form>
+
+    <div class="payment-holder">
+        <div class="payment-container">
+            <h4>Select Payment</h4>
+            <div class="payment-content">
+                <nb-select placeholder="Select Payment">
+                    <nb-option *ngFor="let option of paymentOptions" [value]="option.value">{{ option.label }}</nb-option>
+                </nb-select>
+            </div>
+        </div>
+
+        <div class="payment-container">
+            <h4>Choose Payment Method</h4>
+            <div class="payment-content payment-method">
+                <nb-radio-group>
+                    <nb-radio *ngFor="let option of paymentMethodOptions" [value]="option.value">
+                        <img [src]="'/assets/images/svg/' + option.icon + '.svg'" [alt]="option.label" />
+                        {{ option.label }}
+                    </nb-radio>
+                </nb-radio-group>
+                <div class="payment-form">
+                    <h5>Pay using Credit / Debit card</h5>
+                    <div class="form-holder floating">
+                        <input id="cardno" nbInput fullWidth type="text" placeholder="a" />
+                        <label for="cardno" data-content="Card Number"></label>
+                    </div>
+                    <div class="inline-form">
+                        <div class="form-holder floating">
+                            <input id="year" nbInput fullWidth type="text" placeholder="a" />
+                            <label for="year" data-content="Year"></label>
+                        </div>
+                        <div class="form-holder floating">
+                            <input id="month" nbInput fullWidth type="text" placeholder="a" />
+                            <label for="month" data-content="Month"></label>
+                        </div>
+                    </div>
+                    <div class="form-holder floating">
+                        <input id="cvv" nbInput fullWidth type="text" placeholder="a" />
+                        <label for="cvv" data-content="CVV"></label>
+                    </div>
+                    <p class="info-text">By clicking the button, you agree to the Terms and Conditions</p>
+                    <button nbButton hero status="primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

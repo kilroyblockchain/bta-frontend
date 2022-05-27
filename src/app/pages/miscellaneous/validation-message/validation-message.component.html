@@ -1,0 +1,8 @@
+<ng-container *ngIf="error && field === 'phone'">
+    <span *ngIf="error['required']">{{ 'COMMON.VALIDATIONS.' + (fieldTitle | uppercase) + '_IS_REQUIRED' | translate }}</span>
+    <ng-container *ngIf="!error['pattern']">
+        <span *ngIf="error['minlength']">{{ 'COMMON.VALIDATIONS.PHONE_MIN_LENGTH' | translate: { minLength: error['minlength'].requiredLength } }}</span>
+        <span *ngIf="error['maxlength']">{{ 'COMMON.VALIDATIONS.PHONE_MAX_LENGTH' | translate: { maxLength: error['maxlength'].requiredLength } }}</span>
+    </ng-container>
+    <span *ngIf="error['pattern']">{{ 'COMMON.VALIDATIONS.INVALID_PHONE' | translate }}</span>
+</ng-container>

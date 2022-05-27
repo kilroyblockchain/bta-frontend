@@ -1,0 +1,21 @@
+.dialog-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.unit-container {
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+::ng-deep {
+    nb-card {
+        nb-card {
+            width: 100% !important;
+
+            nb-card-body {
+                display: block;
+            }
+        }
+    }
+}
