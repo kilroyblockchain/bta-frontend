@@ -11,6 +11,7 @@ import { UnverifiedUsersComponent } from './unverified-users/unverified-users.co
 import { RejectedCompaniesComponent } from './rejected-companies/rejected-companies.component';
 import { BlockedUsersComponent } from './blocked-users/blocked-users.component';
 import { AppDashboardComponent } from '../dashboard/dashboard.component';
+import { LogPageComponent } from './log-page/log-page.component';
 
 @Injectable()
 export class SuperAdminAccessGuard implements CanActivate {
@@ -77,6 +78,12 @@ const ROUTES: Routes = [
                 component: BlockedUsersComponent,
                 canActivate: [SuperAdminAccessGuard],
                 data: { featureIdentifier: FEATURE_IDENTIFIER.MANAGE_ALL_USER, pageTitle: 'PAGE_TITLE.BLOCKED_USERS' }
+            },
+            {
+                path: 'logs',
+                canActivate: [SuperAdminAccessGuard],
+                component: LogPageComponent,
+                data: { featureIdentifier: FEATURE_IDENTIFIER.APPLICATION_LOGS, pageTitle: 'PAGE_TITLE.APPLICATION_LOGS' }
             },
             {
                 path: '**',

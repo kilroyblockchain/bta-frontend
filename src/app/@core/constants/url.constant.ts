@@ -51,5 +51,6 @@ export const URLConstant = {
     setUserAcceptURL: '/user/user-accept',
     channelDetailBaseURL: '/channel-detail',
     rejectUserInformationBaseURL: '/rejected-informations',
-    unblockUserURL: '/user/unblock-user'
+    unblockUserURL: '/user/unblock-user',
+    getLogFileStreamURL: '/files/logs'
 };
