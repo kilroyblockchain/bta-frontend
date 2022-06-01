@@ -551,7 +551,8 @@
             "SHOW_ENABLED_USERS": "Show Enabled Users",
             "DESCRIPTION": "Description",
             "ORGANIZATION": "Organization",
-            "SUBSCRIPTION_TYPES": "Subscription Type(s)"
+            "SUBSCRIPTION_TYPES": "Subscription Type(s)",
+            "LOG_LIST": "Log List"
         },
         "PLACEHOLDER": {
             "TITLE": "Title",
