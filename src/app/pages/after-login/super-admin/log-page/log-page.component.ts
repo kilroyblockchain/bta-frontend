@@ -10,6 +10,7 @@ import { LogPageService } from 'src/app/@core/services';
 export class LogPageComponent implements OnInit, AfterViewInit {
     logText!: string;
     loading!: boolean;
+    logFiles: string[] = [];
     @ViewChild('logContent') logContentTemplate!: ElementRef<HTMLElement>;
 
     constructor(private readonly logPageService: LogPageService) {}
@@ -21,13 +22,10 @@ export class LogPageComponent implements OnInit, AfterViewInit {
     fetchLogs(): void {
         this.loading = true;
         this.logPageService
-            .getLogStreams()
+            .getLogs()
             .pipe(finalize(() => (this.loading = false)))
-            .subscribe((res: Blob) => {
-                const reader = res.stream().getReader();
-                reader.read().then((data) => {
-                    this.processText(data, reader);
-                });
+            .subscribe((res) => {
+                this.logFiles = res ?? [];
             });
     }
 
@@ -56,5 +54,14 @@ export class LogPageComponent implements OnInit, AfterViewInit {
 
     refreshLog(): void {
         this.fetchLogs();
+    }
+
+    openLog(filename: string): void {
+        this.logPageService.getLogFile(filename).subscribe((file: Blob) => {
+            const urlCreator = window.URL || window.webkitURL;
+            const url = urlCreator.createObjectURL(file);
+            window.open(url);
+            urlCreator.revokeObjectURL(url);
+        });
     }
 }
