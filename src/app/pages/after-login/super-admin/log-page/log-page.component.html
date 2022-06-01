@@ -8,20 +8,19 @@
         </div>
     </div>
     <nb-card>
-        <nb-card-body>
-            <pre class="log-container" #logContent>
-                <ng-container *ngIf="!loading && logText; else elseBlock">
-                    {{ logText }}
-                </ng-container>
-                <ng-template #elseBlock>
-                    <ng-container *ngIf="loading;else dataNotFoundBlock">
-                        <app-loader></app-loader>
-                    </ng-container>
-                </ng-template>
-                <ng-template #dataNotFoundBlock>
-                    <app-data-not-found></app-data-not-found>
-                </ng-template>
-            </pre>
+        <nb-card-header>{{ 'SUPER_ADMIN.LABEL.LOG_LIST' | translate }}</nb-card-header>
+        <nb-list *ngIf="!loading && logFiles?.length">
+            <nb-list-item *ngFor="let logFile of logFiles">
+                <a (click)="openLog(logFile)">{{ logFile }}</a>
+            </nb-list-item>
+        </nb-list>
+        <nb-card-body *ngIf="loading || !logFiles?.length">
+            <ng-container *ngIf="loading; else dataNotFoundBlock">
+                <app-loader></app-loader>
+            </ng-container>
+            <ng-template #dataNotFoundBlock>
+                <app-data-not-found></app-data-not-found>
+            </ng-template>
         </nb-card-body>
     </nb-card>
 </div>

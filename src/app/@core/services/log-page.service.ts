@@ -7,7 +7,11 @@ import { HttpService } from './http.service';
 export class LogPageService {
     constructor(private http: HttpService) {}
 
-    getLogStreams(): Observable<any> {
-        return this.http.get(URLConstant.getLogFileStreamURL, {}, { formType: 'blob' });
+    getLogs(): Observable<string[]> {
+        return this.http.get(URLConstant.getLogFilesURL);
+    }
+
+    getLogFile(filename: string): Observable<any> {
+        return this.http.get(URLConstant.getLogFilesURL + `/${filename}`, {}, { formType: 'blob' });
     }
 }

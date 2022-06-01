@@ -551,7 +551,8 @@
             "SHOW_ENABLED_USERS": "ne Show Enabled Users",
             "DESCRIPTION": "ne Description",
             "ORGANIZATION": "ne Organization",
-            "SUBSCRIPTION_TYPES": "ne Subscription Type(s)"
+            "SUBSCRIPTION_TYPES": "ne Subscription Type(s)",
+            "LOG_LIST": "ne Log List"
         },
         "PLACEHOLDER": {
             "TITLE": "ne Title",
