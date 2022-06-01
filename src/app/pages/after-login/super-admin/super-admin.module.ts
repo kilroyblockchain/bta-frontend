@@ -15,9 +15,10 @@ import { RejectCompanyFormComponent } from './users/reject-form/reject-form.comp
 import { RejectInformationsComponent } from './users/reject-informations/reject-informations.component';
 import { BlockedUsersComponent } from './blocked-users/blocked-users.component';
 import { AfterLoginSharedModule } from '../after-login-shared/after-login-shared.module';
+import { LogPageComponent } from './log-page/log-page.component';
 
 const CUSTOM_MODULE = [SharedModule];
-const PAGE_COMPONENT = [SuperAdminComponent, UsersComponent, CompanyUsersComponent, VerifyUserComponent, AddSubscriptionTypeComponent, UnverifiedUsersComponent, RejectedCompaniesComponent, RejectCompanyFormComponent, RejectInformationsComponent, BlockedUsersComponent];
+const PAGE_COMPONENT = [SuperAdminComponent, UsersComponent, CompanyUsersComponent, VerifyUserComponent, AddSubscriptionTypeComponent, UnverifiedUsersComponent, RejectedCompaniesComponent, RejectCompanyFormComponent, RejectInformationsComponent, BlockedUsersComponent, LogPageComponent];
 @NgModule({
     declarations: [...PAGE_COMPONENT],
     imports: [SuperAdminRoutingModule, ...CUSTOM_MODULE, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],
