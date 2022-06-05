@@ -63,7 +63,7 @@
             "CREATED_AT": "Created At",
             "ACTION": "Actions",
             "CREATED_DATE": "Created Date",
-            "UPDATED_DATE": "Updated-Date",
+            "UPDATED_DATE": "Updated Date",
             "STATUS": "Status",
             "DATE_OF_BIRTH": "Birth Date",
             "LOCATION": "Location",
@@ -495,7 +495,9 @@
             "MANAGE_USERS": "Manage Users",
             "ORGANIZATION_UNIT": "Organization Unit",
             "USER": "User",
-            "USER_ACTIVITY": "User Activity"
+            "USER_ACTIVITY": "User Activity",
+            "MANAGE_PROJECTS": "Manage Projects",
+            "PROJECT": "Project"
         }
     },
     "ORGANIZATION_DETAILS": {
@@ -588,6 +590,25 @@
         },
         "ALERT_MSG": {
             "UNBLOCK_USER": "Do you want to unblock user {{name}}"
+        }
+    },
+    "MANAGE_PROJECTS": {
+        "PROJECT": {
+            "TITLE": {
+                "ALL_PROJECTS": "All Projects"
+            },
+            "BUTTON": {
+                "ADD_PROJECT": "Add Project"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_UNIT": "Show Active Projects"
+            },
+            "COLUMN_NAME": {
+                "PROJECT_NAME": "Project Name",
+                "PROJECT_DETAILS": "Project Details",
+                "PROJECT_DOMAIN": "Project Domain",
+                "PROJECT_PURPOSE": "Project Purpose"
+            }
         }
     }
 }

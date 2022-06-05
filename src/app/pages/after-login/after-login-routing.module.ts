@@ -36,6 +36,10 @@ const ROUTES: Routes = [
                 data: { role: ['super-admin'], pageTitle: 'PAGE_TITLE.ADMIN' }
             },
             {
+                path: 'manage-projects',
+                loadChildren: async () => (await import('./manage-projects/manage-projects.module')).ManageProjectsModule
+            },
+            {
                 path: '**',
                 component: NotFoundComponent
             }
