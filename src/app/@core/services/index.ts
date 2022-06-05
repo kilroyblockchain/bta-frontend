@@ -7,5 +7,6 @@ import { SubscriptionService } from './subscription.service';
 import { AppFeatureService } from './app-features.service';
 import { ManageUserService } from './manage-user.service';
 import { LangTranslateService } from './lang-translate.service';
+import { ManageProjectService } from './manage-project.service';
 
-export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService };
+export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageProjectService };
