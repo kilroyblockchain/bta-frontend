@@ -595,19 +595,36 @@
     "MANAGE_PROJECTS": {
         "PROJECT": {
             "TITLE": {
-                "ALL_PROJECTS": "All Projects"
+                "ALL_PROJECTS": "All Projects",
+                "ADD_NEW_PROJECT": "Add New Project"
             },
             "BUTTON": {
                 "ADD_PROJECT": "Add Project"
             },
             "LABEL": {
-                "SHOW_ACTIVE_UNIT": "Show Active Projects"
+                "SHOW_ACTIVE_UNIT": "Show Active Projects",
+                "PROJECT_NAME": "Project Name",
+                "PROJECT_DOMAIN": "Project Domain",
+                "MEMBERS": "Member(s)",
+                "PROJECT_DETAILS": "Project Details"
+            },
+            "PLACEHOLDER": {
+                "PROJECT_NAME": "Project name",
+                "PROJECT_DOMAIN": "Project domain",
+                "SELECT_MEMBERS": "Select member(s)",
+                "PROJECT_DETAILS": "Project details"
             },
             "COLUMN_NAME": {
                 "PROJECT_NAME": "Project Name",
                 "PROJECT_DETAILS": "Project Details",
                 "PROJECT_DOMAIN": "Project Domain",
                 "PROJECT_PURPOSE": "Project Purpose"
+            },
+            "VALIDATIONS": {
+                "PROJECT_NAME": "Project name is required",
+                "PROJECT_DOMAIN": "Project domain is required",
+                "PROJECT_MEMBERS": "Select at least one member",
+                "PROJECT_DETAILS": "Project details is required"
             }
         }
     }

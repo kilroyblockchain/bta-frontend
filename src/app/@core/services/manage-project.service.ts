@@ -12,4 +12,8 @@ export class ManageProjectService {
     getAllProject(query: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IProject>>> {
         return this.http.get(URLConstant.getAllProjectURL, query);
     }
+
+    addNewProject(data: IProject): Observable<IAppResponse<IProject>> {
+        return this.http.post(URLConstant.createProjectURL, data);
+    }
 }

@@ -6,8 +6,9 @@ import { AfterLoginSharedModule } from 'src/app/pages/after-login/after-login-sh
 import { ManageProjectsRoutingModule } from './manage-projects-routing.module';
 import { MangeProjectsComponent } from './manage-projects.component';
 import { ProjectComponent } from './project/project.component';
+import { AddProjectComponent } from './project/add-project/add-project.component';
 
-const PAGE_COMPONENT = [MangeProjectsComponent, ProjectComponent];
+const PAGE_COMPONENT = [MangeProjectsComponent, ProjectComponent, AddProjectComponent];
 
 @NgModule({
     imports: [ManageProjectsRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

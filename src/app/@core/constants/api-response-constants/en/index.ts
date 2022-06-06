@@ -5,6 +5,7 @@ import { API_RES_MSG_ORGANIZATION_STAFFING } from './organization-staffing.const
 import { API_RES_MSG_ORGANIZATION_UNIT } from './organization-unit.constant';
 import { API_RES_MSG_ORGANIZATION } from './organization.constant';
 import { API_RES_MSG_SUBSCRIPTION_TYPE } from './subscription-type.constant';
+import { API_RES_MSG_MANAGE_PROJECT } from './manage-project.constant';
 import { API_RES_MSG_USER } from './user.constant';
 
 const ALL_API_RES_MSG_EN = {
@@ -15,7 +16,8 @@ const ALL_API_RES_MSG_EN = {
     ...API_RES_MSG_ORGANIZATION_UNIT,
     ...API_RES_MSG_ORGANIZATION,
     ...API_RES_MSG_SUBSCRIPTION_TYPE,
-    ...API_RES_MSG_USER
+    ...API_RES_MSG_USER,
+    ...API_RES_MSG_MANAGE_PROJECT
 };
 
 export { ALL_API_RES_MSG_EN };

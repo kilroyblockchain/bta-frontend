@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 interface TreeNode<T> {
     data: T;
@@ -30,7 +31,7 @@ interface FSEntry {
     selector: 'app-project',
     templateUrl: './project.component.html'
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
     dataSource!: NbTreeGridDataSource<FSEntry>;
     private data: TreeNode<FSEntry>[] = [];
 
@@ -47,6 +48,7 @@ export class ProjectComponent implements OnInit {
     columnsName: Array<string> = [];
 
     getAllProject!: Subscription;
+    newProjectDialogClose!: Subscription;
     tableData!: Array<IProject>;
     loadingTable!: boolean;
 
@@ -54,7 +56,7 @@ export class ProjectComponent implements OnInit {
     canUpdateProject!: boolean;
     canDeleteProject!: boolean;
 
-    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private manageProjectService: ManageProjectService, public utilsService: UtilsService, private readonly authService: AuthService, private translate: TranslateService) {
+    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, public utilsService: UtilsService, private readonly authService: AuthService, private translate: TranslateService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.checkAccess();
     }
@@ -64,6 +66,9 @@ export class ProjectComponent implements OnInit {
         this.pageChange(1);
     }
 
+    ngOnDestroy(): void {
+        this.newProjectDialogClose ? this.newProjectDialogClose.unsubscribe() : null;
+    }
     languageChange(): void {
         this.translate.onLangChange.subscribe(() => {
             this.setTranslatedTableColumns();
@@ -138,6 +143,7 @@ export class ProjectComponent implements OnInit {
                 }
             });
     }
+
     createTableData(data: IProject[]): void {
         this.data = [];
         for (const item of data) {
@@ -157,5 +163,14 @@ export class ProjectComponent implements OnInit {
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
+    }
+
+    addNewProjectModal(): void {
+        const newProjectDialogOpen = this.dialogService.open(AddProjectComponent, { context: {}, hasBackdrop: true, closeOnBackdropClick: false });
+        this.newProjectDialogClose = newProjectDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close') {
+                this.pageChange(1);
+            }
+        });
     }
 }

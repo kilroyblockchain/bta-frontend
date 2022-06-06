@@ -5,7 +5,7 @@
       <div class="actions"></div>
     </div>
     <div *ngIf="canAddProject" class="actions">
-      <button nbButton hero status="primary" size="small">
+      <button nbButton hero status="primary" size="small" (click)="addNewProjectModal()">
         <nb-icon icon="plus-circle-outline"></nb-icon>{{ 'MANAGE_PROJECTS.PROJECT.BUTTON.ADD_PROJECT' | translate }}
       </button>
     </div>

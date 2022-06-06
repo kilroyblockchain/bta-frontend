@@ -52,5 +52,6 @@ export const URLConstant = {
     channelDetailBaseURL: '/channel-detail',
     rejectUserInformationBaseURL: '/rejected-informations',
     unblockUserURL: '/user/unblock-user',
-    getAllProjectURL: '/project/all'
+    getAllProjectURL: '/project/all',
+    createProjectURL: '/project'
 };
