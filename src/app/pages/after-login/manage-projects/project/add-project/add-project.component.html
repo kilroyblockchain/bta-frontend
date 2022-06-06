@@ -1,76 +1,60 @@
-<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large"
-  nbSpinnerMessage="">
-  <nb-card-header>
-    <section class="dialog-head">
-      <h6>{{'MANAGE_PROJECTS.PROJECT.TITLE.ADD_NEW_PROJECT' | translate}}</h6>
-    </section>
-    <div class="close-dialog">
-      <button nbButton class="icon" (click)="closeModal()">
-        <nb-icon icon="close-circle-outline"></nb-icon>
-      </button>
-    </div>
-  </nb-card-header>
-  <nb-card-body>
-    <form class="form-container" [formGroup]="addProjectForm">
-      <div class="form-inner-container">
-        <div class="form-holder floating">
-          <input name="name" nbInput fullWidth
-            [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_NAME' | translate)"
-            formControlName="name" [ngClass]="{ 'status-danger': submitted && UF['name'].errors }" />
-          <label for="name"
-            [attr.data-content]="'*' + ('MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate)"></label>
-          <div *ngIf="submitted && UF['name'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_NAME' | translate }}</span>
-          </div>
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'MANAGE_PROJECTS.PROJECT.TITLE.ADD_NEW_PROJECT' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
         </div>
-      </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="addProjectForm">
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="name" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_NAME' | translate)" formControlName="name" [ngClass]="{ 'status-danger': submitted && UF['name'].errors }" />
+                    <label for="name" [attr.data-content]="'*' + ('MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate)"></label>
+                    <div *ngIf="submitted && UF['name'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_NAME' | translate }}</span>
+                    </div>
+                </div>
+            </div>
 
-      <div class="form-inner-container">
-        <div class="form-holder floating">
-          <input name="domain" nbInput fullWidth
-            [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DOMAIN' | translate)"
-            formControlName="domain" [ngClass]="{ 'status-danger': submitted && UF['domain'].errors }" />
-          <label for="domain"
-            [attr.data-content]="'*' + ('MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DOMAIN' | translate)"></label>
-          <div *ngIf="submitted && UF['domain'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DOMAIN' | translate }}</span>
-          </div>
-        </div>
-      </div>
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="domain" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DOMAIN' | translate)" formControlName="domain" [ngClass]="{ 'status-danger': submitted && UF['domain'].errors }" />
+                    <label for="domain" [attr.data-content]="'*' + ('MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DOMAIN' | translate)"></label>
+                    <div *ngIf="submitted && UF['domain'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DOMAIN' | translate }}</span>
+                    </div>
+                </div>
+            </div>
 
-      <div class="form-inner-container">
-        <div class="form-holder">
-          <label for="members" class="label">{{ '*' + ('MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS' | translate)
-            }}</label>
-          <nb-select multiple fullWidth [placeholder]="'MANAGE_PROJECTS.PROJECT.PLACEHOLDER.SELECT_MEMBERS' | translate"
-            name="members" formControlName="members" [ngClass]="{ 'status-danger': submitted && UF['members'].errors }">
-            <nb-option [value]="0" class="select-all" #allSelected (click)="toggleAllSelection()">SELECT ALL
-            </nb-option>
-            <nb-option *ngFor="let projectMembers of members" [value]="projectMembers._id" (click)="togglePerOne()">{{
-              projectMembers.email }}</nb-option>
-          </nb-select>
-          <div *ngIf="submitted && UF['members'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{
-              'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_MEMBERS' | translate }}</span>
-          </div>
-        </div>
-      </div>
+            <div class="form-inner-container">
+                <div class="form-holder">
+                    <label for="members" class="label">{{ '*' + ('MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS' | translate) }}</label>
+                    <nb-select multiple fullWidth [placeholder]="'MANAGE_PROJECTS.PROJECT.PLACEHOLDER.SELECT_MEMBERS' | translate" name="members" formControlName="members" [ngClass]="{ 'status-danger': submitted && UF['members'].errors }">
+                        <nb-option [value]="0" class="select-all" #allSelected (click)="toggleAllSelection()">SELECT ALL </nb-option>
+                        <nb-option *ngFor="let projectMembers of members" [value]="projectMembers._id" (click)="togglePerOne()">{{ projectMembers.email }}</nb-option>
+                    </nb-select>
+                    <div *ngIf="submitted && UF['members'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_MEMBERS' | translate }}</span>
+                    </div>
+                </div>
+            </div>
 
-      <div class="form-inner-container">
-        <div class="form-holder floating">
-          <textarea name="details" nbInput fullWidth
-            [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DETAILS' | translate)"
-            formControlName="details" [ngClass]="{ 'status-danger': submitted && UF['details'].errors }"></textarea>
-          <div *ngIf="submitted && UF['details'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DETAILS' |
-              translate }}</span>
-          </div>
-        </div>
-      </div>
-    </form>
-  </nb-card-body>
-  <nb-card-footer>
-    <button nbButton hero status="primary" type="submit" (click)="saveNewProject(addProjectForm)">{{
-      'COMMON.BUTTON.SAVE' | translate }}</button>
-  </nb-card-footer>
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <textarea name="details" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DETAILS' | translate)" formControlName="details" [ngClass]="{ 'status-danger': submitted && UF['details'].errors }"></textarea>
+                    <div *ngIf="submitted && UF['details'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DETAILS' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type="submit" (click)="saveNewProject(addProjectForm)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
 </nb-card>

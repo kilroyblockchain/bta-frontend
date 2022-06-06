@@ -625,6 +625,9 @@
                 "PROJECT_DOMAIN": "Project domain is required",
                 "PROJECT_MEMBERS": "Select at least one member",
                 "PROJECT_DETAILS": "Project details is required"
+            },
+            "ALERT_MSG": {
+                "DISABLE_PROJECT": "Do you want to disable project"
             }
         }
     }

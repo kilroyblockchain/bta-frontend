@@ -53,5 +53,6 @@ export const URLConstant = {
     rejectUserInformationBaseURL: '/rejected-informations',
     unblockUserURL: '/user/unblock-user',
     getAllProjectURL: '/project/all',
-    createProjectURL: '/project'
+    createProjectURL: '/project',
+    deleteProjectURL: '/project/delete'
 };

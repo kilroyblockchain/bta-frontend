@@ -5,6 +5,7 @@ import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddProjectComponent } from './add-project/add-project.component';
 
@@ -49,6 +50,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     getAllProject!: Subscription;
     newProjectDialogClose!: Subscription;
+    deleteDialogClose!: Subscription;
+
     tableData!: Array<IProject>;
     loadingTable!: boolean;
 
@@ -68,7 +71,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.newProjectDialogClose ? this.newProjectDialogClose.unsubscribe() : null;
+        this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
     }
+
     languageChange(): void {
         this.translate.onLangChange.subscribe(() => {
             this.setTranslatedTableColumns();
@@ -170,6 +175,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.newProjectDialogClose = newProjectDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
                 this.pageChange(1);
+            }
+        });
+    }
+
+    onDeleteProject(rowData: IProject): void {
+        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.DISABLE_PROJECT'), name: rowData.name }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
+            if (closeRes) {
+                this.manageProjectService.deleteProject(rowData._id as string).subscribe({
+                    next: (res) => {
+                        if (res && res.success) {
+                            this.utilsService.showToast('success', res?.message);
+                            this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
+                            this.totalRecords -= 1;
+                            if (this.tableData.length < 1) {
+                                this.dataFound = false;
+                                this.loading = false;
+                            } else {
+                                this.createTableData(this.tableData);
+                            }
+                        }
+                    },
+                    error: (err) => {
+                        this.utilsService.showToast('warning', err?.message);
+                    }
+                });
             }
         });
     }
