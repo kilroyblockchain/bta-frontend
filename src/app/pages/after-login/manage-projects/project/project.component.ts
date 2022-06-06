@@ -15,15 +15,15 @@ interface TreeNode<T> {
 
 interface FSEntry {
     _id: string;
-    name?: string;
-    details?: string;
-    domain?: string;
+    name: string;
+    details: string;
+    domain: string;
     propose?: string;
-    createdAt?: Date;
-    status?: boolean;
-    updatedAt?: Date;
-    action?: unknown;
-    subrow?: boolean;
+    createdAt: Date;
+    status: boolean;
+    updatedAt: Date;
+    action: unknown;
+    subrow: boolean;
 }
 
 @Component({
