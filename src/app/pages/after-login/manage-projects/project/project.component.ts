@@ -204,4 +204,27 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    onEnableProject(rowData: IProject): void {
+        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.ENABLE_PROJECT'), name: rowData.name }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
+            if (closeRes) {
+                this.manageProjectService.enableProject(rowData._id as string).subscribe({
+                    next: (res) => {
+                        if (res && res.success) {
+                            this.utilsService.showToast('success', res?.message);
+                            this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
+                            this.totalRecords -= 1;
+                            if (this.tableData.length < 1) {
+                                this.dataFound = false;
+                                this.loading = false;
+                            } else {
+                                this.createTableData(this.tableData);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
 }

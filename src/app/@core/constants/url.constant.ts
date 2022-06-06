@@ -54,5 +54,6 @@ export const URLConstant = {
     unblockUserURL: '/user/unblock-user',
     getAllProjectURL: '/project/all',
     createProjectURL: '/project',
-    deleteProjectURL: '/project/delete'
+    deleteProjectURL: '/project/delete',
+    enableProjectURL: '/project/enable'
 };

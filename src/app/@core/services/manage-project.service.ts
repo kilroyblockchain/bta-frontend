@@ -20,4 +20,8 @@ export class ManageProjectService {
     deleteProject(projectId: string): Observable<IAppResponse<IProject>> {
         return this.http.delete(URLConstant.deleteProjectURL + `/${projectId}`);
     }
+
+    enableProject(projectId: string) {
+        return this.http.patch(URLConstant.enableProjectURL + `/${projectId}`);
+    }
 }

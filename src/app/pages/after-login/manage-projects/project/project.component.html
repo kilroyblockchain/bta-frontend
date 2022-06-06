@@ -48,7 +48,8 @@
                 {{ row.data[column] | date: 'yyyy-MM-dd' }}
               </div>
               <div class="table-col" *ngSwitchCase="'action'">
-                <button nbSuffix nbButton ghost *ngIf="!row.data['status'] && !row.data['subrow'] && canDeleteProject">
+                <button nbSuffix nbButton ghost *ngIf="!row.data['status'] && !row.data['subrow'] && canDeleteProject"
+                  (click)="onEnableProject(row.data[column])">
                   <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-left-outline" pack="eva">
                   </nb-icon>
                 </button>

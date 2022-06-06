@@ -627,7 +627,8 @@
                 "PROJECT_DETAILS": "Project details is required"
             },
             "ALERT_MSG": {
-                "DISABLE_PROJECT": "Do you want to disable project"
+                "DISABLE_PROJECT": "Do you want to disable project",
+                "ENABLE_PROJECT": "Do you want to enable project"
             }
         }
     }
