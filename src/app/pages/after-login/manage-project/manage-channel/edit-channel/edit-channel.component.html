@@ -1,0 +1,42 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'Add New Channel Details' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="editChannelForm">
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="channelName" nbInput fullWidth placeholder="*Channel Name" formControlName="channelName" [ngClass]="{ 'status-danger': submitted && UF['channelName'].errors }" />
+                    <label for="channelName" [attr.data-content]="'*' + ('Channel Name' | translate)"></label>
+                    <div *ngIf="submitted && UF['channelName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'Channel Name is Required' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="connectionProfileName" nbInput fullWidth placeholder="*Connection Profile Name" formControlName="connectionProfileName" [ngClass]="{ 'status-danger': submitted && UF['connectionProfileName'].errors }" />
+                    <label for="connectionProfileName" [attr.data-content]="'*' + ('Connection Profile Name' | translate)"></label>
+                    <div *ngIf="submitted && UF['connectionProfileName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'Connection Profile Name is Required' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-holder full">
+                <nb-checkbox formControlName="isDefault" [checked]="false" name="isDefault">
+                    <p [innerHTML]="'Is Default' | translate"></p>
+                </nb-checkbox>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" (click)="editChannel(editChannelForm)" type="submit">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

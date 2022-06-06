@@ -28,7 +28,10 @@ const ROUTES: Routes = [
                 path: 'manage-users',
                 loadChildren: async () => (await import('./manage-users/manage-users.module')).ManageUsersModule
             },
-
+            {
+                path: 'manage-project',
+                loadChildren: async () => (await import('./manage-project/manage-project.module')).ManageProjectModule
+            },
             {
                 path: 'admin',
                 loadChildren: async () => (await import('./super-admin/super-admin.module')).SuperAdminModule,
