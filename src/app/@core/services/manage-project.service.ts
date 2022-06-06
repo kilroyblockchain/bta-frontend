@@ -21,7 +21,7 @@ export class ManageProjectService {
         return this.http.delete(URLConstant.deleteProjectURL + `/${projectId}`);
     }
 
-    enableProject(projectId: string) {
+    enableProject(projectId: string): Observable<IAppResponse<IProject>> {
         return this.http.patch(URLConstant.enableProjectURL + `/${projectId}`);
     }
 }

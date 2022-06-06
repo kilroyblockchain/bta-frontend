@@ -222,6 +222,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 this.createTableData(this.tableData);
                             }
                         }
+                    },
+                    error: (err) => {
+                        this.utilsService.showToast('warning', err?.message);
                     }
                 });
             }
