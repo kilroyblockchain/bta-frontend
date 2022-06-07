@@ -5,6 +5,7 @@ import { AuthService, UtilsService } from 'src/app/@core/services';
 import { MSG_KEY_CONSTANT_COMMON } from 'src/app/@core/constants/message-key-constants';
 import { RecaptchaComponent, RecaptchaErrorParameters } from 'ng-recaptcha';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-request-password',
@@ -19,6 +20,7 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
 
     @ViewChild('captchaRef')
     captchaRef!: TemplateRef<RecaptchaComponent>;
+    disableCaptcha = environment.disableCaptcha;
 
     constructor(private fb: FormBuilder, private authService: AuthService, private utilsService: UtilsService, private router: Router) {}
 
@@ -50,12 +52,12 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
         if (!valid) {
             return;
         }
-        if (!this.recaptchaStr) {
+        if (!this.recaptchaStr && !this.disableCaptcha) {
             this.loading = false;
             this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
             return;
         }
-        value.reCaptchaToken = this.recaptchaStr;
+        value.reCaptchaToken = this.disableCaptcha ? '123456' : this.recaptchaStr;
         this.loading = true;
         this.authService.requestPassword(value).subscribe({
             next: () => {
@@ -74,15 +76,19 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
         this.router.navigate(['/auth/login']);
     }
 
-    executeCaptcha({ valid }: FormGroup, captchaRef: RecaptchaComponent) {
+    executeCaptcha({ valid, value }: FormGroup, captchaRef: RecaptchaComponent) {
         this.submitted = true;
         if (!valid) {
             return;
         }
-        if (this.recaptchaStr) {
-            captchaRef.reset();
+        if (!this.disableCaptcha) {
+            if (this.recaptchaStr) {
+                captchaRef.reset();
+            }
+            captchaRef.execute();
+        } else {
+            this.requestPasswordFormSubmit({ value, valid });
         }
-        captchaRef.execute();
     }
 
     resolved(captchaResponse: string, { value, valid }: FormGroup): void {
@@ -93,8 +99,10 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
     }
 
     onError(errorDetails: RecaptchaErrorParameters): void {
-        this.loading = false;
-        console.log(`reCAPTCHA error encountered; details:`, errorDetails);
-        this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        if (!this.disableCaptcha) {
+            this.loading = false;
+            console.log(`reCAPTCHA error encountered; details:`, errorDetails);
+            this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        }
     }
 }
