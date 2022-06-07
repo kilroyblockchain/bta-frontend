@@ -8,5 +8,6 @@ import { AppFeatureService } from './app-features.service';
 import { ManageUserService } from './manage-user.service';
 import { LangTranslateService } from './lang-translate.service';
 import { ManageProjectService } from './manage-project.service';
+import { ManageChannelDetailsService } from './channel-details.service';
 
-export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageProjectService };
+export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageChannelDetailsService, ManageProjectService };

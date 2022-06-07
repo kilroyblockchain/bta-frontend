@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MangeProjectsComponent } from './manage-projects.component';
+import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
+import { ManageProjectComponent } from './manage-project.component';
 import { ProjectComponent } from './project/project.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: MangeProjectsComponent,
+        component: ManageProjectComponent,
         children: [
             {
                 path: 'all',
                 component: ProjectComponent
+            },
+            {
+                path: 'channel-setup',
+                component: ChannelSetUpComponent,
+                data: { pageTitle: 'Channel Details' }
             }
         ]
     }
@@ -20,4 +26,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ManageProjectsRoutingModule {}
+export class ManageProjectRoutingModule {}

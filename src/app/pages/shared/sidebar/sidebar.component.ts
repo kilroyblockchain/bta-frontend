@@ -132,7 +132,7 @@ export class SidebarComponent {
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ])) {
             manageProjectMenuItem.push({
                 title: 'Project',
-                link: '/u/manage-projects/all',
+                link: '/u/manage-project/all',
                 pathMatch: 'full',
                 key: 'HEADER.MENU_ITEM.PROJECT'
             });
@@ -192,6 +192,13 @@ export class SidebarComponent {
                 link: '/u/admin/blocked-users',
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.BLOCKED_USERS'
+            });
+
+            usersMenuItems.push({
+                title: 'Channel SetUp',
+                link: '/u/manage-project/channel-setup',
+                pathMatch: 'full',
+                key: 'Channel Setup'
             });
         }
         if (usersMenuItems.length) {
