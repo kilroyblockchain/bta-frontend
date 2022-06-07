@@ -1,6 +1,5 @@
-.log-container {
-    height: 60vh;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-y: auto;
+.log-list {
+    a:hover {
+        cursor: pointer;
+    }
 }
