@@ -11,8 +11,9 @@ import { BillingComponent } from './billing/billing.component';
 import { COMMON_SHARED_MODULE } from 'src/app/@core/constants/common-shared-modules.constant';
 import { InternationalizationModule } from 'src/app/@core/internationalization/internationalization.module';
 import { RecaptchaModule, RecaptchaSettings, RECAPTCHA_SETTINGS } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
-const globalSettings: RecaptchaSettings = { siteKey: '6LcUDd8ZAAAAAIdmWMZYIjD_CWTK6WdMdNINPFht' };
+const globalSettings: RecaptchaSettings = { siteKey: environment.recaptchaSiteKey };
 const CUSTOM_MODULE = [AuthRoutingModule, SharedModule, InternationalizationModule];
 const PAGE_COMPONENT = [AuthComponent, LoginComponent, RequestPasswordComponent, ResetPasswordComponent, ThankYouComponent, BillingComponent];
 const PAGE_MODULE = [RegisterModule];

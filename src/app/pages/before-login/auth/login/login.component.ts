@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     loading = false;
     recaptchaStr!: string;
     appTitle = environment.project;
+    disableCaptcha = environment.disableCaptcha;
 
     @ViewChild('captchaRef')
     captchaRef!: TemplateRef<RecaptchaComponent>;
@@ -50,15 +51,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         return this.loginFormGroup.controls;
     }
 
-    executeCaptcha({ valid }: FormGroup, captchaRef: RecaptchaComponent) {
+    executeCaptcha({ valid, value }: FormGroup, captchaRef: RecaptchaComponent) {
         this.submitted = true;
         if (!valid) {
             return;
         }
-        if (this.recaptchaStr) {
-            captchaRef.reset();
+        if (!this.disableCaptcha) {
+            if (this.recaptchaStr) {
+                captchaRef.reset();
+            }
+            captchaRef.execute();
+        } else {
+            this.loginFormSubmit({ value, valid });
         }
-        captchaRef.execute();
     }
 
     loginFormSubmit({ value, valid }: Partial<FormGroup>): void {
@@ -66,12 +71,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (!valid) {
             return;
         }
-        if (!this.recaptchaStr) {
+        if (!this.recaptchaStr && !this.disableCaptcha) {
             this.loading = false;
             this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
             return;
         }
-        value.reCaptchaToken = this.recaptchaStr;
+        value.reCaptchaToken = this.disableCaptcha ? '123456' : this.recaptchaStr;
         this.loading = true;
         this.authService.userLogin(value).subscribe({
             next: (res) => {
@@ -124,8 +129,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     onError(errorDetails: RecaptchaErrorParameters): void {
-        this.loading = false;
-        console.log(`reCAPTCHA error encountered; details:`, errorDetails);
-        this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        if (!this.disableCaptcha) {
+            this.loading = false;
+            console.log(`reCAPTCHA error encountered; details:`, errorDetails);
+            this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        }
     }
 }

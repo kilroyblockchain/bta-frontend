@@ -18,6 +18,7 @@ import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
 import { ICountry, IState } from 'src/app/@core/interfaces/country.interface';
 import { ISubscription } from 'src/app/@core/interfaces/subscription.interface';
 import { ISubscriptionAndCountryList } from 'src/app/@core/services/subscription.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-user',
@@ -37,6 +38,7 @@ export class UserComponent implements OnInit, OnDestroy {
     loading = false;
     companyNames: string[] = [];
     filteredControlOptions$!: Observable<string[]>;
+    disableCaptcha = environment.disableCaptcha;
 
     @ViewChild('captchaRef')
     captchaRef!: TemplateRef<RecaptchaComponent>;
@@ -111,15 +113,19 @@ export class UserComponent implements OnInit, OnDestroy {
         this.populateStates(countryId);
     }
 
-    executeCaptcha({ valid }: FormGroup, captchaRef: RecaptchaComponent): void {
+    executeCaptcha({ valid, value }: FormGroup, captchaRef: RecaptchaComponent): void {
         this.submitted = true;
         if (!valid) {
             return;
         }
-        if (this.recaptchaStr) {
-            captchaRef.reset();
+        if (!this.disableCaptcha) {
+            if (this.recaptchaStr) {
+                captchaRef.reset();
+            }
+            captchaRef.execute();
+        } else {
+            this.registrationSubmit({ value, valid });
         }
-        captchaRef.execute();
     }
 
     registrationSubmit({ value, valid }: Partial<FormGroup>): void {
@@ -127,12 +133,12 @@ export class UserComponent implements OnInit, OnDestroy {
             return;
         }
         this.loading = true;
-        if (!this.recaptchaStr) {
+        if (!this.recaptchaStr && !this.disableCaptcha) {
             this.loading = false;
             this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
             return;
         }
-        value.reCaptchaToken = this.recaptchaStr;
+        value.reCaptchaToken = this.disableCaptcha ? '123456' : this.recaptchaStr;
         const companyData = { companyName: this.UF['companyName'].value, reCaptchaToken: this.recaptchaStr };
         const data = { ...value, ...companyData };
         this.postUserData(data);
@@ -193,8 +199,10 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     onError(errorDetails: RecaptchaErrorParameters): void {
-        this.loading = false;
-        console.log(`reCAPTCHA error encountered; details:`, errorDetails);
-        this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        if (!this.disableCaptcha) {
+            this.loading = false;
+            console.log(`reCAPTCHA error encountered; details:`, errorDetails);
+            this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.THE_RECAPTCHA_WAS_INVALID);
+        }
     }
 }
