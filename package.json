@@ -15,7 +15,8 @@
         "prod:live": "ng build --configuration=production",
         "stylelint": "stylelint \"**/*.scss\" --fix",
         "prettier:check": "prettier --config .prettierrc --loglevel warn --check \"src/**/*.{ts,css,scss,html,json}\"",
-        "prettier:write": "prettier --config .prettierrc --loglevel warn --write \"src/**/*.{ts,css,scss,html,json}\""
+        "prettier:write": "prettier --config .prettierrc --loglevel warn --write \"src/**/*.{ts,css,scss,html,json}\"",
+        "prepare": "husky install"
     },
     "private": true,
     "dependencies": {
