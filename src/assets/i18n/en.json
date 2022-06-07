@@ -589,5 +589,25 @@
         "ALERT_MSG": {
             "UNBLOCK_USER": "Do you want to unblock user {{name}}"
         }
-    }
+    },
+    "AI_TEST_RESULT": {
+      "TITLE": "Hyper Prameters",
+      "EPHOS": "Epochs",
+      "TEST_METRICS": "Test Metrics",
+      "LABEL": {
+          "HIDDEN_SIZE": "Hidden Size",
+          "LEARNING_RATE": "Learning Rate",
+          "DATA_DIR": "Data Dir."
+      },
+      "VALUE_ACCURACY" : "Value Accuracy",
+      "VALUE_LOSS" : "Value Loss",
+      "TRAIN_ACCURACY" : "Train Accuracy",
+      "TRAIN_LOSS" : "Train Loss",
+      "TEST_SCORE": "Test Score",
+      "EPOCH_NO" : "Epoch No",
+      "METRIC_NO" : "Metric No",
+      "TEST_ACCURACY" : "Test Accuracy",
+      "DETAILS" : "Details",
+      "AI_TEST_RESULT" : "AI Test Result"
+  }
 }

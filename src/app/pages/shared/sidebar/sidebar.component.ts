@@ -174,6 +174,13 @@ export class SidebarComponent {
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.BLOCKED_USERS'
             });
+
+            usersMenuItems.push({
+                title: 'Channel SetUp',
+                link: '/u/manage-project/channel-setup',
+                pathMatch: 'full',
+                key: 'Channel Setup'
+            });
         }
         if (usersMenuItems.length) {
             this.superAdminMenuItems.push({
