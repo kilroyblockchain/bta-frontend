@@ -8,6 +8,7 @@ import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/s
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { EditProjectComponent } from './edit-project/edit-project.component';
 
 interface TreeNode<T> {
     data: T;
@@ -50,6 +51,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     getAllProject!: Subscription;
     newProjectDialogClose!: Subscription;
+    editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
 
     tableData!: Array<IProject>;
@@ -179,6 +181,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
     }
 
+    openProjectEditModal(rowData: IProject): void {
+        const editProjectDialogOpen = this.dialogService.open(EditProjectComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editProjectDialogClose = editProjectDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
+            }
+        });
+    }
     onDeleteProject(rowData: IProject): void {
         const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.DISABLE_PROJECT'), name: rowData.name }, hasBackdrop: true, closeOnBackdropClick: false });
         this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {

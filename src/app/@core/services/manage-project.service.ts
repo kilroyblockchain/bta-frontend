@@ -17,6 +17,9 @@ export class ManageProjectService {
         return this.http.post(URLConstant.createProjectURL, data);
     }
 
+    updateProject(data: IProject, projectId: string): Observable<IAppResponse<IProject>> {
+        return this.http.put(URLConstant.updateProjectURL + `/${projectId}`, data);
+    }
     deleteProject(projectId: string): Observable<IAppResponse<IProject>> {
         return this.http.delete(URLConstant.deleteProjectURL + `/${projectId}`);
     }

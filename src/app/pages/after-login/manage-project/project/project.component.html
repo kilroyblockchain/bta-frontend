@@ -53,7 +53,8 @@
                   <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-left-outline" pack="eva">
                   </nb-icon>
                 </button>
-                <button *ngIf="!row.data['subrow'] && canUpdateProject" nbSuffix nbButton ghost>
+                <button *ngIf="!row.data['subrow'] && canUpdateProject" nbSuffix nbButton ghost
+                  (click)="openProjectEditModal(row.data[column])">
                   <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                 </button>
                 <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && row.data['status'] && canDeleteProject"

@@ -616,7 +616,8 @@
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",
-                "ADD_NEW_PROJECT": "Add New Project"
+                "ADD_NEW_PROJECT": "Add New Project",
+                "EDIT_PROJECT": "Edit Project"
             },
             "BUTTON": {
                 "ADD_PROJECT": "Add Project"

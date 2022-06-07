@@ -59,6 +59,7 @@ export const URLConstant = {
     updateChannelDetails: '/channel-detail',
     getAllProjectURL: '/project/all',
     createProjectURL: '/project',
+    updateProjectURL: '/project/update',
     deleteProjectURL: '/project/delete',
     enableProjectURL: '/project/enable'
 };
