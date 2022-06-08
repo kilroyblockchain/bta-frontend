@@ -6,12 +6,16 @@ import { InternationalizationModule } from 'src/app/@core/internationalization/i
 import { ManageProjectComponent } from './manage-project.component';
 import { MiscellaneousModule } from 'src/app/pages/miscellaneous/miscellaneous.module';
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
-import { EditChannelComponent } from './manage-channel/edit-channel/edit-channel.component';
 import { NewChannelComponent } from './manage-channel/new-channel/new-channel.component';
+import { EditChannelComponent } from './manage-channel/edit-channel/edit-channel.component';
+import { ProjectComponent } from './project/project.component';
+import { AddProjectComponent } from './project/add-project/add-project.component';
+import { EditProjectComponent } from './project/edit-project/edit-project.component';
+
+const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent];
 
 @NgModule({
     imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],
-    declarations: [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent],
-    exports: []
+    declarations: [...PAGE_COMPONENT]
 })
 export class ManageProjectModule {}

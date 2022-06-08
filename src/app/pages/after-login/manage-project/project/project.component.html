@@ -1,0 +1,85 @@
+<div>
+  <div class="page-title">
+    <div class="title-holder">
+      <h4>{{ 'MANAGE_PROJECTS.PROJECT.TITLE.ALL_PROJECTS' | translate }}</h4>
+      <div class="actions"></div>
+    </div>
+    <div *ngIf="canAddProject" class="actions">
+      <button nbButton hero status="primary" size="small" (click)="addNewProjectModal()">
+        <nb-icon icon="plus-circle-outline"></nb-icon>{{ 'MANAGE_PROJECTS.PROJECT.BUTTON.ADD_PROJECT' | translate }}
+      </button>
+    </div>
+  </div>
+  <nb-card class="medium-card-width">
+    <nb-card-body>
+      <app-filter-bar [totalRecords]="totalRecords" [paginateId]="'table_paginate_id'" [dataFound]="dataFound"
+        [filterLabel]="'MANAGE_PROJECTS.PROJECT.LABEL.SHOW_ACTIVE_UNIT'" (toggleTableEmit)="toggleTable()"
+        (pageChanged)="pageChange($event)" (searchValue)="onSearch($event)"></app-filter-bar>
+
+      <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+        <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+        <ng-container *ngFor="
+                        let column of columns
+                            | paginate
+                                : {
+                                      id: 'table_paginate_id',
+                                      itemsPerPage: resultperpage,
+                                      currentPage: page,
+                                      totalItems: totalRecords
+                                  };
+                        let index = index
+                    " [nbTreeGridColumnDef]="column" [showOn]="utilsService.getShowOn(index)">
+          <ng-container [ngSwitch]="column">
+            <ng-container *ngSwitchDefault>
+              <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                {{ columnsName[index] }}
+              </th>
+            </ng-container>
+          </ng-container>
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <nb-tree-grid-row-toggle [expanded]="row.expanded"
+              *ngIf="column === 'projectName' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
+            <div [ngSwitch]="column">
+              <div class="table-col" *ngSwitchCase="'createdAt'">
+                {{ row.data[column] | date: 'yyyy-MM-dd' }}
+              </div>
+              <div class="table-col" *ngSwitchCase="'updatedAt'">
+                {{ row.data[column] | date: 'yyyy-MM-dd' }}
+              </div>
+              <div class="table-col" *ngSwitchCase="'action'">
+                <button nbSuffix nbButton ghost *ngIf="!row.data['status'] && !row.data['subrow'] && canDeleteProject"
+                  (click)="onEnableProject(row.data[column])">
+                  <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-left-outline" pack="eva">
+                  </nb-icon>
+                </button>
+                <button *ngIf="!row.data['subrow'] && canUpdateProject" nbSuffix nbButton ghost
+                  (click)="openProjectEditModal(row.data[column])">
+                  <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
+                </button>
+                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && row.data['status'] && canDeleteProject"
+                  (click)="onDeleteProject(row.data[column])">
+                  <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva">
+                  </nb-icon>
+                </button>
+              </div>
+              <div class="table-col" *ngSwitchCase="'status'">
+                <ng-container *ngIf="row.data['status']; else elseBlock">
+                  {{ 'COMMON.DESCRIPTION.ENABLED' | translate }}
+                </ng-container>
+                <ng-template #elseBlock>{{ 'COMMON.DESCRIPTION.DISABLED' | translate }}</ng-template>
+              </div>
+              <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
+            </div>
+          </td>
+        </ng-container>
+      </table>
+      <div *ngIf="!dataFound && loading && !loadingTable">
+        <app-loader></app-loader>
+      </div>
+      <div *ngIf="!dataFound && !loading">
+        <app-data-not-found></app-data-not-found>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

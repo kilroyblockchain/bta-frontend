@@ -92,6 +92,8 @@ export class SidebarComponent {
 
     async buildDefaultMenu(): Promise<void> {
         const manageUserMenuItem = [];
+        const manageProjectMenuItem = [];
+
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.READ])) {
             manageUserMenuItem.push({
                 title: 'Organization Unit',
@@ -124,6 +126,23 @@ export class SidebarComponent {
                 title: 'Users',
                 children: <MenuItem[]>manageUserMenuItem,
                 key: 'HEADER.MENU_ITEM.MANAGE_USERS'
+            });
+        }
+
+        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ])) {
+            manageProjectMenuItem.push({
+                title: 'Project',
+                link: '/u/manage-project/all',
+                pathMatch: 'full',
+                key: 'HEADER.MENU_ITEM.PROJECT'
+            });
+        }
+
+        if (manageProjectMenuItem.length) {
+            this.companyUsersMenuItems.push({
+                title: 'Project',
+                children: <MenuItem[]>manageProjectMenuItem,
+                key: 'HEADER.MENU_ITEM.MANAGE_PROJECTS'
             });
         }
     }

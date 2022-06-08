@@ -589,5 +589,15 @@
         "ALERT_MSG": {
             "UNBLOCK_USER": "ne Do you want to unblock user {{name}}"
         }
+    },
+    "MANAGE_PROJECTS": {
+        "PROJECT": {
+            "TITLE": {
+                "ALL_PROJECTS": "ne All Projects"
+            },
+            "BUTTON": {
+                "ADD_PROJECT": "ne Add Project"
+            }
+        }
     }
 }

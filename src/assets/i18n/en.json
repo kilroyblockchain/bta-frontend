@@ -63,7 +63,7 @@
             "CREATED_AT": "Created At",
             "ACTION": "Actions",
             "CREATED_DATE": "Created Date",
-            "UPDATED_DATE": "Updated-Date",
+            "UPDATED_DATE": "Updated Date",
             "STATUS": "Status",
             "DATE_OF_BIRTH": "Birth Date",
             "LOCATION": "Location",
@@ -495,7 +495,9 @@
             "MANAGE_USERS": "Manage Users",
             "ORGANIZATION_UNIT": "Organization Unit",
             "USER": "User",
-            "USER_ACTIVITY": "User Activity"
+            "USER_ACTIVITY": "User Activity",
+            "MANAGE_PROJECTS": "Manage Projects",
+            "PROJECT": "Project"
         }
     },
     "ORGANIZATION_DETAILS": {
@@ -591,23 +593,64 @@
         }
     },
     "AI_TEST_RESULT": {
-      "TITLE": "Hyper Prameters",
-      "EPHOS": "Epochs",
-      "TEST_METRICS": "Test Metrics",
-      "LABEL": {
-          "HIDDEN_SIZE": "Hidden Size",
-          "LEARNING_RATE": "Learning Rate",
-          "DATA_DIR": "Data Dir."
-      },
-      "VALUE_ACCURACY" : "Value Accuracy",
-      "VALUE_LOSS" : "Value Loss",
-      "TRAIN_ACCURACY" : "Train Accuracy",
-      "TRAIN_LOSS" : "Train Loss",
-      "TEST_SCORE": "Test Score",
-      "EPOCH_NO" : "Epoch No",
-      "METRIC_NO" : "Metric No",
-      "TEST_ACCURACY" : "Test Accuracy",
-      "DETAILS" : "Details",
-      "AI_TEST_RESULT" : "AI Test Result"
-  }
+        "TITLE": "Hyper Prameters",
+        "EPHOS": "Epochs",
+        "TEST_METRICS": "Test Metrics",
+        "LABEL": {
+            "HIDDEN_SIZE": "Hidden Size",
+            "LEARNING_RATE": "Learning Rate",
+            "DATA_DIR": "Data Dir."
+        },
+        "VALUE_ACCURACY": "Value Accuracy",
+        "VALUE_LOSS": "Value Loss",
+        "TRAIN_ACCURACY": "Train Accuracy",
+        "TRAIN_LOSS": "Train Loss",
+        "TEST_SCORE": "Test Score",
+        "EPOCH_NO": "Epoch No",
+        "METRIC_NO": "Metric No",
+        "TEST_ACCURACY": "Test Accuracy",
+        "DETAILS": "Details",
+        "AI_TEST_RESULT": "AI Test Result"
+    },
+    "MANAGE_PROJECTS": {
+        "PROJECT": {
+            "TITLE": {
+                "ALL_PROJECTS": "All Projects",
+                "ADD_NEW_PROJECT": "Add New Project",
+                "EDIT_PROJECT": "Edit Project"
+            },
+            "BUTTON": {
+                "ADD_PROJECT": "Add Project"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_UNIT": "Show Active Projects",
+                "PROJECT_NAME": "Project Name",
+                "PROJECT_DOMAIN": "Project Domain",
+                "MEMBERS": "Member(s)",
+                "PROJECT_DETAILS": "Project Details"
+            },
+            "PLACEHOLDER": {
+                "PROJECT_NAME": "Project name",
+                "PROJECT_DOMAIN": "Project domain",
+                "SELECT_MEMBERS": "Select member(s)",
+                "PROJECT_DETAILS": "Project details"
+            },
+            "COLUMN_NAME": {
+                "PROJECT_NAME": "Project Name",
+                "PROJECT_DETAILS": "Project Details",
+                "PROJECT_DOMAIN": "Project Domain",
+                "PROJECT_PURPOSE": "Project Purpose"
+            },
+            "VALIDATIONS": {
+                "PROJECT_NAME": "Project name is required",
+                "PROJECT_DOMAIN": "Project domain is required",
+                "PROJECT_MEMBERS": "Select at least one member",
+                "PROJECT_DETAILS": "Project details is required"
+            },
+            "ALERT_MSG": {
+                "DISABLE_PROJECT": "Do you want to disable project",
+                "ENABLE_PROJECT": "Do you want to enable project"
+            }
+        }
+    }
 }

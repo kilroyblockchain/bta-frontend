@@ -25,6 +25,10 @@ export class HttpService {
         return this.http.put(BASE_URL + URL, body, this.getHeader(formData)).pipe(catchError(this.errorHandle));
     }
 
+    patch(URL: string, body?: any, formData?: boolean): Observable<any> {
+        return this.http.patch(BASE_URL + URL, body, this.getHeader(formData)).pipe(catchError(this.errorHandle));
+    }
+
     delete(URL: string, query?: any): Observable<any> {
         return this.http.delete(BASE_URL + URL, this.getHeaderWithParams(query)).pipe(catchError(this.errorHandle));
     }
