@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbDialogService, NbMenuBag, NbMenuService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize, Subscription } from 'rxjs';
+import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
-import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
-import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
+import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
@@ -19,13 +20,13 @@ interface TreeNode<T> {
 
 interface FSEntry {
     _id: string;
-    name: string;
+    name?: string;
     details: string;
     domain: string;
     propose?: string;
-    createdAt: Date;
-    status: boolean;
-    updatedAt: Date;
+    createdAt?: Date;
+    status?: boolean;
+    updatedAt?: Date;
     action: unknown;
     subrow: boolean;
 }
@@ -63,9 +64,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canUpdateProject!: boolean;
     canDeleteProject!: boolean;
 
-    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, public utilsService: UtilsService, private readonly authService: AuthService, private translate: TranslateService) {
+    menuItems: Array<MenuItem> = [];
+    rowVersion!: IProjectVersion;
+    destroy$: Subject<void> = new Subject<void>();
+
+    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private menuService: NbMenuService, private manageProjectService: ManageProjectService, public utilsService: UtilsService, private readonly authService: AuthService, private translate: TranslateService, private langTranslateService: LangTranslateService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.checkAccess();
+        this.initMenu();
     }
 
     ngOnInit(): void {
@@ -74,6 +80,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+
         this.newProjectDialogClose ? this.newProjectDialogClose.unsubscribe() : null;
         this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
         this.editProjectDialogClose ? this.editProjectDialogClose.unsubscribe() : null;
@@ -97,6 +106,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.WRITE]);
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.DELETE]);
+        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
     }
 
     pageChange(pageNumber: number): void {
@@ -158,6 +168,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
     createTableData(data: IProject[]): void {
         this.data = [];
         for (const item of data) {
+            const children = [];
+            for (const version of item.projectVersions) {
+                children.push({
+                    data: {
+                        details: version.versionName,
+                        domain: version.versionStatus,
+                        action: version,
+                        subrow: true,
+                        _id: version._id
+                    }
+                });
+            }
             this.data.push({
                 data: {
                     _id: item._id,
@@ -170,7 +192,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     status: item.status,
                     action: item,
                     subrow: false
-                }
+                },
+                children
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
@@ -252,5 +275,30 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.pageChange(1);
             }
         });
+    }
+
+    openMenu(rowData: IProjectVersion) {
+        this.rowVersion = rowData;
+    }
+
+    initMenu(): void {
+        this.menuService
+            .onItemClick()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(({ item, tag }: NbMenuBag) => {
+                if (tag === 'versionMenu') {
+                    switch ((item as MenuItem).key) {
+                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS':
+                            this.viewVersion(this.rowVersion);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+    }
+
+    viewVersion(versionData: IProjectVersion): void {
+        console.log(versionData);
     }
 }

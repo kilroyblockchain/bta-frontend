@@ -616,6 +616,9 @@
         "TOOLTIP": {
             "ADD_VERSION": "Add Version"
         },
+        "MENU_ITEM": {
+            "VERSION_DETAILS": "Version Details"
+        },
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",

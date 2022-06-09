@@ -12,6 +12,7 @@ export interface IProject {
     createdAt: Date;
     createdBy: IUserRes;
     companyId: ICompany;
+    projectVersions: Array<IProjectVersion>;
 }
 
 export interface IProjectVersion {
