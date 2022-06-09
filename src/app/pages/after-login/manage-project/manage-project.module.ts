@@ -11,8 +11,10 @@ import { EditChannelComponent } from './manage-channel/edit-channel/edit-channel
 import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './project/add-project/add-project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
+import { ProjectVersionComponent } from './project-version/project-version.component';
+import { AddVersionComponent } from './project-version/add-version/add-version.component';
 
-const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent];
+const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, ProjectVersionComponent, AddVersionComponent];
 
 @NgModule({
     imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

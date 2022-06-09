@@ -7,6 +7,7 @@ import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 
@@ -53,6 +54,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     newProjectDialogClose!: Subscription;
     editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
+    addVersionDialogClose!: Subscription;
 
     tableData!: Array<IProject>;
     loadingTable!: boolean;
@@ -74,6 +76,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.newProjectDialogClose ? this.newProjectDialogClose.unsubscribe() : null;
         this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
+        this.editProjectDialogClose ? this.editProjectDialogClose.unsubscribe() : null;
+        this.addVersionDialogClose ? this.addVersionDialogClose.unsubscribe() : null;
     }
 
     languageChange(): void {
@@ -237,6 +241,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         this.utilsService.showToast('warning', err?.message);
                     }
                 });
+            }
+        });
+    }
+
+    addNewProjectVersion(rowData: IProject): void {
+        const addVersionOpen = this.dialogService.open(AddVersionComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.addVersionDialogClose = addVersionOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
             }
         });
     }

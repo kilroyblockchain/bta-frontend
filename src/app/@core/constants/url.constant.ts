@@ -61,5 +61,6 @@ export const URLConstant = {
     createProjectURL: '/project',
     updateProjectURL: '/project/update',
     deleteProjectURL: '/project/delete',
-    enableProjectURL: '/project/enable'
+    enableProjectURL: '/project/enable',
+    addProjectVersionURL: '/project-version'
 };

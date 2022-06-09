@@ -61,6 +61,10 @@
                   (click)="onDeleteProject(row.data[column])">
                   <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva">
                   </nb-icon>
+                </button><button *ngIf="!row.data['subrow'] && canAddProject"
+                  (click)="addNewProjectVersion(row.data[column])" nbSuffix nbButton ghost>
+                  <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.ADD_VERSION' | translate" icon="plus-outline"
+                    pack="eva"> </nb-icon>
                 </button>
               </div>
               <div class="table-col" *ngSwitchCase="'status'">

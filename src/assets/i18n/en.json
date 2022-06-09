@@ -613,6 +613,9 @@
         "AI_TEST_RESULT": "AI Test Result"
     },
     "MANAGE_PROJECTS": {
+        "TOOLTIP": {
+            "ADD_VERSION": "Add Version"
+        },
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",
@@ -650,6 +653,49 @@
             "ALERT_MSG": {
                 "DISABLE_PROJECT": "Do you want to disable project",
                 "ENABLE_PROJECT": "Do you want to enable project"
+            }
+        },
+        "VERSION": {
+            "TITLE": {
+                "ADD_NEW_VERSION": "Add New Version"
+            },
+            "PLACEHOLDER": {
+                "VERSION_NAME": "version name",
+                "VERSION_MODEL": "version model",
+                "LOG_FILE_PATH": "log file path",
+                "LOG_FILE_VERSION": "log file version",
+                "TEST_DATA_SETS": "test data sets",
+                "TRAIN_DATA_SETS": "train data sets",
+                "NOTE_BOOK_VERSION": "notebook version",
+                "ARTIFACTS": "artifacts",
+                "CODE_REPO": "code repo",
+                "CODE_VERSION": "code version",
+                "COMMENT": "Comment"
+            },
+            "LABEL": {
+                "VERSION_NAME": "Version Name",
+                "VERSION_MODEL": "Version Model",
+                "LOG_FILE_PATH": "Log File Path",
+                "LOG_FILE_VERSION": "Log File Version",
+                "TEST_DATA_SETS": "Test Data Sets",
+                "TRAIN_DATA_SETS": "Train data sets",
+                "NOTE_BOOK_VERSION": "NoteBook Version",
+                "ARTIFACTS": "Artifacts",
+                "CODE_REPO": "Code Repo",
+                "CODE_VERSION": "Code Version"
+            },
+            "VALIDATIONS": {
+                "VERSION_NAME": "Version name is required",
+                "VERSION_MODEL": "Version model is required",
+                "LOG_FILE_PATH": "Log file path is required",
+                "LOG_FILE_VERSION": "Log file version is required",
+                "TEST_DATA_SETS": "Test data sets is required",
+                "TRAIN_DATA_SETS": "Train data sets is required",
+                "NOTE_BOOK_VERSION": "Notebook version is required",
+                "ARTIFACTS": "Artifacts is required",
+                "CODE_REPO": "Code repo is required",
+                "CODE_VERSION": "Code version is required",
+                "COMMENT": "Comment is required"
             }
         }
     }
