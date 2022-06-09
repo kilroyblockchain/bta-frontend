@@ -27,6 +27,9 @@ export class SidebarComponent {
         this.buildMenu();
     }
 
+    /**
+     * Function that listen language change and translate according to language
+     */
     listenLanguageChange(): void {
         this.langTranslateService.getCurrentLangRequest().subscribe(() => {
             if (this.superAdminMenuItems.length) {
@@ -44,6 +47,9 @@ export class SidebarComponent {
         });
     }
 
+    /**
+     * Function that build sidebar menu
+     */
     async buildMenu(): Promise<void> {
         this.userData = await this.authService.getUserData().then((data) => {
             return { ...data };
@@ -52,44 +58,52 @@ export class SidebarComponent {
             if (this.userData.roles.includes('super-admin')) {
                 await this.buildSuperAdminMenu();
             }
-
             await this.buildDefaultMenu();
-
-            if (this.superAdminMenuItems.length) {
-                this.menuItems.push({
-                    title: 'Super Admin',
-                    key: 'HEADER.MENU_ITEM.SUPER_ADMIN',
-                    group: true
-                });
-                this.menuItems.push(...this.superAdminMenuItems);
-            }
-            if (this.companyUsersMenuItems.length || this.defaultMenuItems.length) {
-                this.menuItems.unshift({
-                    title: 'Dashboard',
-                    key: 'HEADER.MENU_ITEM.DASHBOARD',
-                    link: '/u/dashboard',
-                    pathMatch: 'full'
-                });
-                if (this.userData.roles.includes('super-admin')) {
-                    this.menuItems.push({
-                        title: 'Organizational',
-                        key: 'HEADER.MENU_ITEM.ORGANIZATIONAL',
-                        group: true
-                    });
-                }
-
-                if (this.defaultMenuItems.length) {
-                    this.menuItems.push(...this.defaultMenuItems);
-                }
-
-                if (this.companyUsersMenuItems.length) {
-                    this.menuItems.push(...this.companyUsersMenuItems);
-                }
-            }
+            await this.buildAppUserMenu();
+            this.mergeMenus();
         }
         this.listenLanguageChange();
     }
 
+    /**
+     * Function that merge all menus to one
+     * - Super Admin Menu, Default Menu, App Subscription Menu
+     */
+    mergeMenus(): void {
+        if (this.superAdminMenuItems.length) {
+            this.menuItems.push({
+                title: 'Super Admin',
+                key: 'HEADER.MENU_ITEM.SUPER_ADMIN',
+                group: true
+            });
+            this.menuItems.push(...this.superAdminMenuItems);
+        }
+        if (this.companyUsersMenuItems.length || this.defaultMenuItems.length) {
+            this.menuItems.unshift({
+                title: 'Dashboard',
+                key: 'HEADER.MENU_ITEM.DASHBOARD',
+                link: '/u/dashboard',
+                pathMatch: 'full'
+            });
+            if (this.userData.roles.includes('super-admin')) {
+                this.menuItems.push({
+                    title: 'Organizational',
+                    key: 'HEADER.MENU_ITEM.ORGANIZATIONAL',
+                    group: true
+                });
+            }
+            if (this.defaultMenuItems.length) {
+                this.menuItems.push(...this.defaultMenuItems);
+            }
+            if (this.companyUsersMenuItems.length) {
+                this.menuItems.push(...this.companyUsersMenuItems);
+            }
+        }
+    }
+
+    /**
+     * Function that build default menu
+     */
     async buildDefaultMenu(): Promise<void> {
         const manageUserMenuItem = [];
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.READ])) {
@@ -128,16 +142,10 @@ export class SidebarComponent {
         }
     }
 
-    // super admin related menu
+    /**
+     * Function that build super-admin menu
+     */
     async buildSuperAdminMenu(): Promise<void> {
-        await this.buildAppUserMenu();
-        this.langTranslateService.translateMenu(this.superAdminMenuItems);
-        if (!this.superAdminMenuItems.length) {
-            this.sidebarService.collapse();
-        }
-    }
-
-    async buildAppUserMenu(): Promise<void> {
         const usersMenuItems = [];
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_ALL_USER, [ACCESS_TYPE.READ])) {
             usersMenuItems.push({
@@ -192,5 +200,24 @@ export class SidebarComponent {
             key: 'SUPER_ADMIN.SIDEBAR_MENU.APPLICATION_LOGS',
             hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.APPLICATION_LOGS, [ACCESS_TYPE.READ]))
         });
+
+        if (!this.superAdminMenuItems.length) {
+            this.sidebarService.collapse();
+        }
+    }
+
+    /**
+     * Function that build App user menu according to subscription type
+     */
+    async buildAppUserMenu(): Promise<void> {
+        this.buildStaffSubscriptionMenu();
+    }
+
+    buildStaffSubscriptionMenu(): void {
+        if (this.userData.roles.includes('staff')) {
+            this.companyUsersMenuItems.push({
+                title: 'Manage Staff'
+            });
+        }
     }
 }
