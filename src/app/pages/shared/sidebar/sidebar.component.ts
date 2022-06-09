@@ -129,7 +129,7 @@ export class SidebarComponent {
             });
         }
 
-        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ])) {
+        if (!this.utilsService.checkIsUserSuperAdmin() && (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ]))) {
             manageProjectMenuItem.push({
                 title: 'Project',
                 link: '/u/manage-project/all',
