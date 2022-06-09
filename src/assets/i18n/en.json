@@ -616,9 +616,7 @@
         "TOOLTIP": {
             "ADD_VERSION": "Add Version"
         },
-        "MENU_ITEM": {
-            "VERSION_DETAILS": "Version Details"
-        },
+        "MENU_ITEM": {},
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",
@@ -660,7 +658,8 @@
         },
         "VERSION": {
             "TITLE": {
-                "ADD_NEW_VERSION": "Add New Version"
+                "ADD_NEW_VERSION": "Add New Version",
+                "VERSION_DETAILS": "Version Details"
             },
             "PLACEHOLDER": {
                 "VERSION_NAME": "version name",
@@ -681,11 +680,13 @@
                 "LOG_FILE_PATH": "Log File Path",
                 "LOG_FILE_VERSION": "Log File Version",
                 "TEST_DATA_SETS": "Test Data Sets",
-                "TRAIN_DATA_SETS": "Train data sets",
+                "TRAIN_DATA_SETS": "Train Data sets",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
                 "ARTIFACTS": "Artifacts",
                 "CODE_REPO": "Code Repo",
-                "CODE_VERSION": "Code Version"
+                "CODE_VERSION": "Code Version",
+                "VERSION_STATUS": "Version Status",
+                "COMMENT": "Comment"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",

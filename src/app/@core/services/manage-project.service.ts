@@ -32,4 +32,8 @@ export class ManageProjectService {
     addVersion(versionData: IProjectVersion, projectId: string): Observable<IAppResponse<IProjectVersion>> {
         return this.http.post(URLConstant.addProjectVersionURL + `/${projectId}`, versionData);
     }
+
+    getVersionInfo(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.get(URLConstant.getVersionInfoURL + `/${versionId}`);
+    }
 }

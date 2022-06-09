@@ -9,6 +9,7 @@ import { AuthService, LangTranslateService, ManageProjectService, UtilsService }
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
+import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 
@@ -56,6 +57,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
     addVersionDialogClose!: Subscription;
+    viewVersionDetailsClose!: Subscription;
 
     tableData!: Array<IProject>;
     loadingTable!: boolean;
@@ -87,6 +89,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
         this.editProjectDialogClose ? this.editProjectDialogClose.unsubscribe() : null;
         this.addVersionDialogClose ? this.addVersionDialogClose.unsubscribe() : null;
+        this.viewVersionDetailsClose ? this.viewVersionDetailsClose.unsubscribe() : null;
     }
 
     languageChange(): void {
@@ -106,7 +109,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.WRITE]);
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.DELETE]);
-        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
+        this.menuItems.push({ key: 'COMMON.MENU_ITEM.VIEW', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.VIEW') });
     }
 
     pageChange(pageNumber: number): void {
@@ -288,7 +291,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             .subscribe(({ item, tag }: NbMenuBag) => {
                 if (tag === 'versionMenu') {
                     switch ((item as MenuItem).key) {
-                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS':
+                        case 'COMMON.MENU_ITEM.VIEW':
                             this.viewVersion(this.rowVersion);
                             break;
                         default:
@@ -299,6 +302,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     viewVersion(versionData: IProjectVersion): void {
-        console.log(versionData);
+        const viewVersionDetailOpen = this.dialogService.open(ViewProjectVersionComponent, { context: { versionData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.viewVersionDetailsClose = viewVersionDetailOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
+            }
+        });
     }
 }
