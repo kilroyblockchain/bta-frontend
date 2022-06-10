@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectGuard } from 'src/app/@core/gaurd/project.guard';
+import { ProjectGuard } from 'src/app/@core/guard/project.guard';
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { ProjectComponent } from './project/project.component';

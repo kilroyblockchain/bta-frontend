@@ -11,4 +11,4 @@ import { ManageProjectService } from './manage-project.service';
 import { ManageChannelDetailsService } from './channel-details.service';
 import { LogPageService } from './log-page.service';
 
-export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageChannelDetailsService, ManageProjectService,LogPageService };
+export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageChannelDetailsService, ManageProjectService, LogPageService };
