@@ -1,9 +1,8 @@
-import { UserGaurd } from 'src/app/@core/gaurd/user.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AfterLoginComponent } from './after-login.component';
 import { NotFoundComponent } from '../miscellaneous/not-found/not-found.component';
-import { SuperAdminGaurd } from 'src/app/@core/gaurd/super-admin.gaurd';
+import { SuperAdminGuard, UserGuard } from 'src/app/@core/guard';
 import { AppDashboardComponent } from './dashboard/dashboard.component';
 
 const ROUTES: Routes = [
@@ -13,7 +12,7 @@ const ROUTES: Routes = [
         children: [
             {
                 path: '',
-                canActivate: [UserGaurd]
+                canActivate: [UserGuard]
             },
             {
                 path: 'dashboard',
@@ -35,7 +34,7 @@ const ROUTES: Routes = [
             {
                 path: 'admin',
                 loadChildren: async () => (await import('./super-admin/super-admin.module')).SuperAdminModule,
-                canActivate: [SuperAdminGaurd],
+                canActivate: [SuperAdminGuard],
                 data: { role: ['super-admin'], pageTitle: 'PAGE_TITLE.ADMIN' }
             },
             {

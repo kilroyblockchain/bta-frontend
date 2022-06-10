@@ -1,8 +1,10 @@
 export const environment = {
+    project: 'base-proj',
     production: true,
-    project: 'flo',
+    apiURL: 'https://prod-api.baseproj.net/api/v1',
+    hostURL: 'https://prod-api.baseproj.net/#/',
     internationalization: 'enabled',
-    apiURL: 'http://localhost:8848/api/v1',
-    hostURL: 'http://localhost:4200/#/',
-    resultsPerPage: 15
+    resultsPerPage: 15,
+    disableCaptcha: false,
+    recaptchaSiteKey: '6LdKDNYfAAAAAHIhducYusgXcLHj_-3xF4qAesXZ'
 };

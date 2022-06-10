@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { GuestGaurd } from './../../@core/gaurd/guest.gaurd';
+import { GuestGuard } from 'src/app/@core/guard';
 import { BeforeLoginComponent } from './before-login.component';
 import { NotFoundComponent } from '../miscellaneous/not-found/not-found.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
             {
                 path: 'auth',
                 loadChildren: async () => (await import('./auth/auth.module')).AuthModule,
-                canActivate: [GuestGaurd]
+                canActivate: [GuestGuard]
             },
             {
                 path: 'terms-and-conditions',

@@ -239,7 +239,8 @@
         "BLOCKCHAIN_HISTORY": "es Blockchain History",
         "REJECTED_COMPANY_LIST": "es Rejected Organization List",
         "BLOCKED_USERS": "es Blocked Users",
-        "USER_ACTIVITY_LOG": "es User Activity"
+        "USER_ACTIVITY_LOG": "es User Activity",
+        "APPLICATION_LOGS": "es Application Logs"
     },
     "FOOTER": {
         "TITLE": {
@@ -532,7 +533,8 @@
             "BLOCKED_USERS": "es Blocked Users",
             "TAB_TITLE": {
                 "ALL": "es All"
-            }
+            },
+            "APPLICATION_LOGS": "es Application Logs"
         },
         "SIDEBAR_MENU": {
             "APP_USERS": "es {{appTitle}} Users",
@@ -540,7 +542,8 @@
             "UNVERIFIED_ORGANIZATION": "es Unverified Organization",
             "REJECTED_ORGANIZATION": "es Rejected Organization",
             "NON_ADMIN_USERS": "es Non Admin Users",
-            "BLOCKED_USERS": "es Blocked Users"
+            "BLOCKED_USERS": "es Blocked Users",
+            "APPLICATION_LOGS": "es Application Logs"
         },
         "LABEL": {
             "TITLE": "es Title",
@@ -548,7 +551,8 @@
             "SHOW_ENABLED_USERS": "es Show Enabled Users",
             "DESCRIPTION": "es Description",
             "ORGANIZATION": "es Organization",
-            "SUBSCRIPTION_TYPES": "es Subscription Type(s)"
+            "SUBSCRIPTION_TYPES": "es Subscription Type(s)",
+            "LOG_LIST": "es Log List"
         },
         "PLACEHOLDER": {
             "TITLE": "es Title",
