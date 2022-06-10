@@ -211,5 +211,12 @@ export class SidebarComponent {
                 }
             });
         }
+        this.superAdminMenuItems.push({
+            title: 'Application Logs',
+            link: '/u/admin/logs',
+            pathMatch: 'full',
+            key: 'SUPER_ADMIN.SIDEBAR_MENU.APPLICATION_LOGS',
+            hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.APPLICATION_LOGS, [ACCESS_TYPE.READ]))
+        });
     }
 }

@@ -1,10 +1,10 @@
 export const environment = {
-    production: false,
     project: 'base-proj',
+    production: true,
+    apiURL: 'https://dev-api.baseproj.net/api/v1',
+    hostURL: 'https://dev-api.baseproj.net/#/',
     internationalization: 'enabled',
-    apiURL: 'http://localhost:3340/api/v1',
-    hostURL: 'http://localhost:4200/#/',
     resultsPerPage: 15,
-    disableCaptcha: true,
+    disableCaptcha: false,
     recaptchaSiteKey: '6LdKDNYfAAAAAHIhducYusgXcLHj_-3xF4qAesXZ'
 };

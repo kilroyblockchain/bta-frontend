@@ -10,10 +10,14 @@
         "lint": "ng lint --fix",
         "e2e": "ng e2e",
         "debug": "ng serve --configuration=local",
+        "prod:dev": "ng build --configuration=dev",
+        "prod:beta": "ng build --configuration=beta",
+        "prod:live": "ng build --configuration=production",
         "stylelint": "stylelint \"**/*.scss\" --fix",
         "prepare": "husky install",
         "prettier:check": "prettier --config .prettierrc --loglevel warn --check \"src/**/*.{ts,css,scss,html,json}\"",
-        "prettier:write": "prettier --config .prettierrc --loglevel warn --write \"src/**/*.{ts,css,scss,html,json}\""
+        "prettier:write": "prettier --config .prettierrc --loglevel warn --write \"src/**/*.{ts,css,scss,html,json}\"",
+        "prepare": "husky install"
     },
     "private": true,
     "dependencies": {

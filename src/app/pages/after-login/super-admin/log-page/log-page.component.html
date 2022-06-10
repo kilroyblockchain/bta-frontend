@@ -1,0 +1,26 @@
+<div class="user-list-container">
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'SUPER_ADMIN.TITLE.APPLICATION_LOGS' | translate }}</h4>
+        </div>
+        <div class="actions">
+            <button nbButton hero status="primary" size="small" (click)="refreshLog()"><nb-icon icon="refresh-outline"></nb-icon>Refresh Logs</button>
+        </div>
+    </div>
+    <nb-card>
+        <nb-card-header>{{ 'SUPER_ADMIN.LABEL.LOG_LIST' | translate }}</nb-card-header>
+        <nb-list *ngIf="!loading && logFiles?.length" class="log-list">
+            <nb-list-item *ngFor="let logFile of logFiles">
+                <a (click)="openLog(logFile)" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"><nb-icon icon="file-text-outline"></nb-icon>{{ logFile }}</a>
+            </nb-list-item>
+        </nb-list>
+        <nb-card-body *ngIf="loading || !logFiles?.length">
+            <ng-container *ngIf="loading; else dataNotFoundBlock">
+                <app-loader></app-loader>
+            </ng-container>
+            <ng-template #dataNotFoundBlock>
+                <app-data-not-found></app-data-not-found>
+            </ng-template>
+        </nb-card-body>
+    </nb-card>
+</div>
