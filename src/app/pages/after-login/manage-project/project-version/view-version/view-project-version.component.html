@@ -12,121 +12,90 @@
   <nb-card-body>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong> <span>{{
-        versionDetails?.versionName
-        }}</span>
+        versionDetails?.versionName }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong> <span>{{
-        versionDetails?.logFilePath
-        }}</span>
+        versionDetails?.logFilePath }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}: </strong> <span>{{
-        versionDetails?.logFileVersion
-        || 'N/a' }}</span>
+        versionDetails?.logFileVersion || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}: </strong> <span>{{
-        versionDetails?.versionModel ||
-        'N/a' }}</span>
+        versionDetails?.versionModel || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong> <span>{{
-        versionDetails?.noteBookVersion
-        || 'N/a' }}</span>
+        versionDetails?.noteBookVersion || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong> <span>{{
-        versionDetails?.trainDataSets
-        ||
-        'N/a' }}</span>
+        versionDetails?.trainDataSets || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong> <span>{{
-        versionDetails?.testDataSets
-        ||
-        'N/a' }}</span>
+        versionDetails?.testDataSets || 'N/a' }}</span>
     </div>
     <div class="detail-row">
-      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.ARTIFACTS' | translate }}: </strong> <span>{{ versionDetails?.artifacts
-        ||
-        'N/a' }}</span>
+      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.ARTIFACTS' | translate }}: </strong> <span>{{
+        versionDetails?.artifacts || 'N/a' }}</span>
     </div>
     <div class="detail-row">
-      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong> <span>{{ versionDetails?.codeRepo
-        ||
-        'N/a' }}</span>
+      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong> <span>{{
+        versionDetails?.codeRepo || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong> <span>{{
-        versionDetails?.codeVersion ||
-        'N/a' }}</span>
+        versionDetails?.codeVersion || 'N/a' }}</span>
     </div>
     <div class="detail-row">
       <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}: </strong> <span>{{
-        versionDetails?.versionStatus
-        || 'N/a'
-        }}</span>
+        versionDetails?.versionStatus || 'N/a' }}</span>
     </div>
     <div class="detail-row">
-      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong> <span>{{ versionDetails?.comment ||
-        'N/a'
-        }}</span>
+      <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong> <span>{{
+        versionDetails?.comment || 'N/a' }}</span>
     </div>
     <div class="detail-row">
-      <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong> <span>{{ (versionDetails?.createdAt |
-        date:
-        'fullDate') || 'N/a'
-        }}</span>
+      <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong> <span>{{ (versionDetails?.createdAt
+        | date: 'fullDate') || 'N/a' }}</span>
     </div>
     <div class="detail-row">
-      <strong> {{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}: </strong> <span>{{ (versionDetails?.updatedAt |
-        date:
-        'fullDate') || 'N/a'
-        }}</span>
+      <strong> {{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}: </strong> <span>{{ (versionDetails?.updatedAt
+        | date: 'fullDate') || 'N/a' }}</span>
     </div>
 
     <nb-card accent="info">
-      <nb-card-header>
-        Project Information
-      </nb-card-header>
+      <nb-card-header> {{'MANAGE_PROJECTS.VERSION.TITLE.PROJECT_INFO' | translate}} </nb-card-header>
       <nb-card-body>
         <div class="detail-row">
-          <strong> {{ 'COMMON.LABEL.NAME' | translate }}: </strong> <span>{{ versionDetails?.project?.name
-            }}
+          <strong> {{ 'COMMON.LABEL.NAME' | translate }}: </strong> <span>{{ versionDetails?.project?.name }}
           </span>
         </div>
         <div class="detail-row">
           <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DOMAIN' | translate }}: </strong> <span>{{
-            versionDetails?.project?.domain
-            }}
-          </span>
+            versionDetails?.project?.domain }} </span>
         </div>
         <div class="detail-row">
           <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DETAILS' | translate }}: </strong> <span>{{
-            versionDetails?.project?.details
-            }}
-          </span>
+            versionDetails?.project?.details }} </span>
         </div>
       </nb-card-body>
     </nb-card>
     <nb-card accent="info">
-      <nb-card-header>
-        AI Engineer Information
-      </nb-card-header>
+      <nb-card-header> {{'MANAGE_PROJECTS.VERSION.TITLE.CREATED_BY_INFO' | translate }}</nb-card-header>
       <nb-card-body>
         <div class="detail-row">
-          <strong> {{ 'COMMON.LABEL.NAME' | translate }}: </strong> <span>{{ versionDetails?.createdBy?.firstName
-            }}
-            {{versionDetails?.createdBy?.lastName}}</span>
+          <strong> {{ 'COMMON.LABEL.NAME' | translate }}: </strong> <span>{{
+            versionDetails?.createdBy?.firstName }} {{ versionDetails?.createdBy?.lastName }}</span>
         </div>
         <div class="detail-row">
           <strong> {{ 'COMMON.LABEL.EMAIL' | translate }}: </strong> <span>{{ versionDetails?.createdBy?.email
-            }}
-          </span>
+            }} </span>
         </div>
       </nb-card-body>
     </nb-card>
-
   </nb-card-body>
 </nb-card>

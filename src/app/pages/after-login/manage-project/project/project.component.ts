@@ -12,6 +12,7 @@ import { AddVersionComponent } from '../project-version/add-version/add-version.
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
+import { ViewProjectComponent } from './view-project/view-project.component';
 
 interface TreeNode<T> {
     data: T;
@@ -56,6 +57,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     newProjectDialogClose!: Subscription;
     editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
+    viewProjectDetailsClose!: Subscription;
     addVersionDialogClose!: Subscription;
     viewVersionDetailsClose!: Subscription;
 
@@ -88,6 +90,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.newProjectDialogClose ? this.newProjectDialogClose.unsubscribe() : null;
         this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
         this.editProjectDialogClose ? this.editProjectDialogClose.unsubscribe() : null;
+        this.viewProjectDetailsClose ? this.viewProjectDetailsClose.unsubscribe() : null;
         this.addVersionDialogClose ? this.addVersionDialogClose.unsubscribe() : null;
         this.viewVersionDetailsClose ? this.viewVersionDetailsClose.unsubscribe() : null;
     }
@@ -267,6 +270,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         this.utilsService.showToast('warning', err?.message);
                     }
                 });
+            }
+        });
+    }
+
+    viewProjectDetails(projectData: IProject): void {
+        const viewProjectDetailOpen = this.dialogService.open(ViewProjectComponent, { context: { projectData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.viewProjectDetailsClose = viewProjectDetailOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
             }
         });
     }

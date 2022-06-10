@@ -631,7 +631,9 @@
                 "PROJECT_NAME": "Project Name",
                 "PROJECT_DOMAIN": "Project Domain",
                 "MEMBERS": "Member(s)",
-                "PROJECT_DETAILS": "Project Details"
+                "PROJECT_DETAILS": "Project Details",
+                "PROJECT_VERSION_DETAILS": "Project Version Details",
+                "PROJECT_MEMBERS_DETAILS": "Project members Details"
             },
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
@@ -659,7 +661,9 @@
         "VERSION": {
             "TITLE": {
                 "ADD_NEW_VERSION": "Add New Version",
-                "VERSION_DETAILS": "Version Details"
+                "VERSION_DETAILS": "Version Details",
+                "PROJECT_INFO": "Project Information",
+                "CREATED_BY_INFO": "Creator Information"
             },
             "PLACEHOLDER": {
                 "VERSION_NAME": "version name",
