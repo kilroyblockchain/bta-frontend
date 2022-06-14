@@ -8,7 +8,9 @@
     <nb-card-body *ngIf="userData">
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.NAME' | translate }}: </b>
-            <span><app-blockchain-verified [blockName]="userData?.firstName + ' ' + userData?.lastName | titlecase" [blockchainVerified]="userData?.blockchainVerified"></app-blockchain-verified></span>
+            <span>
+                <app-blockchain-verified [blockName]="userData?.firstName + ' ' + userData?.lastName | titlecase" [blockchainVerified]="userData?.blockchainVerified"></app-blockchain-verified>
+            </span>
         </div>
         <div class="detail-row">
             <b>{{ 'COMMON.LABEL.EMAIL' | translate }}: </b> <span>{{ userData?.email }}</span>

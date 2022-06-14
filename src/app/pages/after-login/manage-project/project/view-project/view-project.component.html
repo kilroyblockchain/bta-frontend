@@ -1,0 +1,125 @@
+<nb-card class="medium-card-width" *ngIf="projectDetails">
+    <nb-card-header>
+        <section class="dialog-head"></section>
+        <div class="close-dialog">
+            <button nbButton (click)="closeModel()">
+                <nb-icon icon="close-circle-outline" pack="eva"> </nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-card class="medium-card-width" accent="info">
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DETAILS' | translate }}</h6>
+            </nb-card-header>
+            <nb-card-body>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.STATUS' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ projectDetails.name }}</td>
+                            <td>{{ projectDetails.details }}</td>
+                            <td>{{ projectDetails.domain }}</td>
+                            <td>{{ projectDetails.purpose || 'N/A' }}</td>
+                            <td>{{ projectDetails.createdAt | date: 'yyyy-MM-dd' }}</td>
+                            <td>{{ projectDetails.status ? ('COMMON.DESCRIPTION.ENABLED' | translate) : ('COMMON.DESCRIPTION.DISABLED' | translate) }}</td>
+                            <td>{{ projectDetails.updatedAt | date: 'yyyy-MM-dd' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+    <nb-card-body>
+        <nb-card class="medium-card-width" accent="info">
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_VERSION_DETAILS' | translate }}</h6>
+            </nb-card-header>
+            <nb-card-body *ngIf="projectDetails.projectVersions?.length; else elseBlock">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.STATUS' | translate }}</th>
+                            <th scope="col">{{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let version of projectDetails.projectVersions">
+                        <tr>
+                            <td>{{ version.versionName }}</td>
+                            <td>{{ version.versionModel }}</td>
+                            <td>{{ version.logFilePath }}</td>
+                            <td>{{ version.logFileVersion }}</td>
+                            <td>{{ version.testDataSets }}</td>
+                            <td>{{ version.trainDataSets }}</td>
+                            <td>{{ version.noteBookVersion }}</td>
+                            <td>{{ version.codeRepo }}</td>
+                            <td>{{ version.codeVersion }}</td>
+                            <td>{{ version.versionStatus }}</td>
+                            <td>{{ version.comment }}</td>
+                            <td>{{ version.createdAt | date: 'yyyy-MM-dd' }}</td>
+                            <td>{{ version.updatedAt | date: 'yyyy-MM-dd' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-card-body>
+            <ng-template #elseBlock>
+                <nb-card-body>
+                    <h6>No Versions are added</h6>
+                </nb-card-body>
+            </ng-template>
+        </nb-card>
+    </nb-card-body>
+
+    <nb-card-body>
+        <nb-card class="medium-card-width" accent="info">
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_MEMBERS_DETAILS' | translate }}</h6>
+            </nb-card-header>
+            <nb-card-body *ngIf="projectDetails.members?.length">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.NAME' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.EMAIL' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.ADDRESS' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.PHONE' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let members of projectDetails.members">
+                        <tr>
+                            <td>{{ members.firstName }} {{ members.lastName }}</td>
+                            <td>{{ members.email }}</td>
+                            <td>{{ members.address }}</td>
+                            <td>{{ members.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+</nb-card>
+
+<div *ngIf="!projectDetails">
+    <app-data-not-found></app-data-not-found>
+</div>

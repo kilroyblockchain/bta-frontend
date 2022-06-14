@@ -62,5 +62,7 @@ export const URLConstant = {
     updateProjectURL: '/project/update',
     deleteProjectURL: '/project/delete',
     enableProjectURL: '/project/enable',
+    addProjectVersionURL: '/project-version',
+    getVersionInfoURL: '/project-version/info',
     getLogFilesURL: '/files/logs'
 };
