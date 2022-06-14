@@ -207,4 +207,8 @@ export class AuthService {
     unblockUser(userId: string): Observable<IAppResponse<void>> {
         return this.http.put(`${URLConstant.unblockUserURL}/${userId}`);
     }
+
+    addSubscriptionType(data: { companyId: string; subscriptionType: string[]; userId: string }): Observable<IAppResponse<IUserRes>> {
+        return this.http.put(URLConstant.addSubscriptionTypeUrl, data);
+    }
 }

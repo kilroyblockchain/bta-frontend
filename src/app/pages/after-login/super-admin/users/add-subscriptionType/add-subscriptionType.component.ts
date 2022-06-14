@@ -1,18 +1,19 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { SubscriptionService, UtilsService } from 'src/app/@core/services';
+import { AuthService, SubscriptionService, UtilsService } from 'src/app/@core/services';
 import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
 import { ISubscription } from 'src/app/@core/interfaces/subscription.interface';
 import { ISubscriptionAndCountryList } from 'src/app/@core/services/subscription.service';
 import { ICompany, IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-add-subscription-type',
     templateUrl: './add-subscriptionType.component.html'
 })
-export class AddSubscriptionTypeComponent implements OnInit {
+export class AddSubscriptionTypeComponent implements OnInit, OnDestroy {
     data!: IUserRes;
     companyId!: string;
     name!: string;
@@ -25,8 +26,9 @@ export class AddSubscriptionTypeComponent implements OnInit {
     organizationList!: ICompany[];
     subscriptionTypes!: ISubscription[];
     ownCompany!: IUserCompany | undefined;
+    destroy$: Subject<void> = new Subject<void>();
 
-    constructor(private fb: FormBuilder, public utilsService: UtilsService, protected ref: NbDialogRef<AddSubscriptionTypeComponent>, private readonly subscriptionService: SubscriptionService) {
+    constructor(private fb: FormBuilder, public utilsService: UtilsService, protected ref: NbDialogRef<AddSubscriptionTypeComponent>, private readonly subscriptionService: SubscriptionService, private authService: AuthService) {
         this.populateSubscriptionTypes();
     }
 
@@ -40,6 +42,11 @@ export class AddSubscriptionTypeComponent implements OnInit {
             companyId: [this.ownCompany?.companyId?._id ? this.ownCompany?.companyId?._id : userCompanies[0]?._id, [Validators.required]]
         });
         this.patchSubscriptionTypes((this.ownCompany?.companyId as ICompany) ?? userCompanies[0]);
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     patchSubscriptionTypes(selectedCompany: ICompany): void {
@@ -61,12 +68,30 @@ export class AddSubscriptionTypeComponent implements OnInit {
         this.patchSubscriptionTypes(this.organizationList.find((company: ICompany) => company._id === companyId) as ICompany);
     }
 
-    submitaddSubscriptionFormGroup({ valid }: FormGroup): void {
+    submitAddSubscriptionFormGroup({ valid, value }: FormGroup): void {
         this.submitted = true;
         if (!valid) {
             return;
         }
         this.loading = true;
+
+        this.authService
+            .addSubscriptionType(value)
+            .pipe(
+                finalize(() => {
+                    this.loading = false;
+                })
+            )
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (res) => {
+                    this.utilsService.showToast('success', res?.message);
+                    this.ref.close('save');
+                },
+                error: (err) => {
+                    this.utilsService.showToast('warning', err?.message);
+                }
+            });
     }
 
     get UF(): IFormControls {
