@@ -83,7 +83,12 @@
             "FOR": "ne For",
             "POSITION": "ne Position",
             "LOGGED_IN_AT": "ne Logged In At",
-            "LOGGED_OUT_AT": "ne Logged Out At"
+            "LOGGED_OUT_AT": "ne Logged Out At",
+            "TRANSACTION_ID": "ne Transaction Id",
+            "HASH_CODE": "ne Hash Code",
+            "TIMESTAMP": "ne Timestamp",
+            "IS_DELETED": "ne Is deleted?",
+            "OPERATION": "ne Operation"
         },
         "MENU_ITEM": {
             "DEACTIVATE": "ne Deactivate",

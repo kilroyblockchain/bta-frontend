@@ -41,7 +41,7 @@ export class BlockchainHistoryGridComponent implements OnChanges {
     blockchainHistoryTitle!: string;
     @Input()
     loading!: boolean;
-    columnNames = ['CONTACT_TRACING.COLUMN_NAME.TRANSACTION_ID', 'CONTACT_TRACING.COLUMN_NAME.HASH_CODE', 'CONTACT_TRACING.COLUMN_NAME.TIMESTAMP', 'CONTACT_TRACING.COLUMN_NAME.ISDELETED', 'CONTACT_TRACING.COLUMN_NAME.OPERATION'];
+    columnNames = ['COMMON.COLUMN_NAME.TRANSACTION_ID', 'COMMON.COLUMN_NAME.HASH_CODE', 'COMMON.COLUMN_NAME.TIMESTAMP', 'COMMON.COLUMN_NAME.IS_DELETED', 'COMMON.COLUMN_NAME.OPERATION'];
     columns = ['TxId', 'hashCode', 'timestamp', 'isDeleted', 'operation'];
     dataSource!: NbTreeGridDataSource<FSEntry>;
     totalRecords!: number;

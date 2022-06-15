@@ -74,7 +74,7 @@
         "validate-branch-name": "^1.3.0"
     },
     "validate-branch-name": {
-        "pattern": "^(feature|bugfix|hotfix)/(FLO-).+$",
+        "pattern": "^(feature|bugfix|hotfix)/(KT-).+$",
         "errorMsg": "Branch Name should only have proper pattern"
     },
     "jira-prepare-commit-msg": {

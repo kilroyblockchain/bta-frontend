@@ -83,7 +83,12 @@
             "FOR": "es For",
             "POSITION": "es Position",
             "LOGGED_IN_AT": "es Logged In At",
-            "LOGGED_OUT_AT": "es Logged Out At"
+            "LOGGED_OUT_AT": "es Logged Out At",
+            "TRANSACTION_ID": "es Transaction Id",
+            "HASH_CODE": "es Hash Code",
+            "TIMESTAMP": "es Timestamp",
+            "IS_DELETED": "es Is deleted?",
+            "OPERATION": "es Operation"
         },
         "MENU_ITEM": {
             "DEACTIVATE": "es Deactivate",
