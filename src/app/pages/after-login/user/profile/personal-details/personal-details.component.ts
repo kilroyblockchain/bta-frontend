@@ -28,7 +28,7 @@ export class PersonalDetailsComponent implements OnInit {
     }
 
     async checkAccessData(): Promise<void> {
-        if (this.loggedInUser.roles.length === 1 && this.loggedInUser.roles.includes('vaccinated-user')) {
+        if (this.loggedInUser.roles.length === 1) {
             this.showProfileEditButton = true;
         } else {
             this.showProfileEditButton = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PERSONAL_DETAIL, [ACCESS_TYPE.UPDATE]);
