@@ -42,3 +42,20 @@ export enum VersionStatus {
     ACCEPT = 'ACCEPT',
     DECLINE = 'DECLINE'
 }
+
+export interface IMonitoringReport {
+    _id: string;
+    subject: string;
+    description: string;
+    documents: Array<IReportDocs>;
+    updatedAt: Date;
+    createdAt: Date;
+    version: IProjectVersion;
+    createdBy: IUserRes;
+}
+
+interface IReportDocs {
+    _id?: string;
+    docURL: string;
+    docName: string;
+}

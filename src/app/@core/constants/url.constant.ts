@@ -64,5 +64,7 @@ export const URLConstant = {
     enableProjectURL: '/project/enable',
     addProjectVersionURL: '/project-version',
     getVersionInfoURL: '/project-version/info',
-    getLogFilesURL: '/files/logs'
+    getLogFilesURL: '/files/logs',
+    getFileFromFolderURL: '/files/file',
+    versionReportsURL: '/version-reports'
 };

@@ -1,0 +1,76 @@
+<div class="user-group-container">
+  <div class="page-title">
+    <div class="title-holder">
+      <h4>{{ 'MANAGE_PROJECTS.PAGE_TITLE.MONITORING_REPORT' | translate }}</h4>
+    </div>
+  </div>
+</div>
+<nb-card class="medium-card-width">
+  <nb-card-body>
+    <nb-card class="medium-card-width info-card">
+      <nb-card-body>
+        <p class="card-paragraph">
+          <strong>
+            <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' |
+            translate}}:
+          </strong>&nbsp;{{ versionData?.project?.name}}
+        </p>
+        <p class="card-paragraph">
+          <strong>
+            <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' |
+            translate}}:
+          </strong>&nbsp;{{ versionData?.versionName}}
+        </p>
+        <p class="card-paragraph">
+          <strong>
+            <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA_SCIENTIST' |
+            translate}}:
+          </strong>&nbsp;{{
+          versionData?.createdBy?.firstName }}&nbsp;{{versionData?.createdBy?.lastName}}
+        </p>
+      </nb-card-body>
+    </nb-card>
+
+    <nb-card accent="info">
+      <nb-card-header>
+        <div class="title-holder">
+          <h6>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.TITLE.ALL_REPORTS' | translate }}</h6>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <ng-container *ngFor="let reports of monitoringReports">
+          <nb-card class="medium-card-width">
+            <nb-card-body>
+              <p><strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_TITLE' |
+                  translate}}:</strong>&nbsp;{{reports.subject}}
+              </p>
+              <p><strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' |
+                  translate}}:</strong>{{reports.description}}</p>
+              <p *ngIf="reports.documents.length"><strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DOCUMENTS'
+                  |
+                  translate}}:</strong></p>
+              <ng-container *ngFor="let docs of reports.documents; let i = index">
+                <a (click)="openDocs(docs.docURL)">
+                  <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName"
+                    [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate">
+                  </nb-tag>
+                </a>
+              </ng-container>
+              <p><strong>{{ 'COMMON.LABEL.CREATED_BY' |
+                  translate}}:</strong>&nbsp;{{reports?.createdBy?.firstName}}&nbsp;{{reports?.createdBy?.lastName}}
+              </p>
+              <p><strong>{{ 'COMMON.LABEL.CREATED_AT' | translate}}:</strong>&nbsp;{{reports.createdAt | date
+                :'yyyy-mm-dd'}}</p>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+      </nb-card-body>
+    </nb-card>
+    <div *ngIf="!dataFound && loading">
+      <app-loader></app-loader>
+    </div>
+    <div *ngIf="!reportsData && !loading">
+      <app-data-not-found></app-data-not-found>
+    </div>
+  </nb-card-body>
+</nb-card>

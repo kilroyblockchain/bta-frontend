@@ -28,7 +28,8 @@ import {
     NbAlertModule,
     NbAutocompleteModule,
     NbProgressBarModule,
-    NbTimepickerModule
+    NbTimepickerModule,
+    NbTagModule
 } from '@nebular/theme';
 
 export const NEBULAR_MODULE = [
@@ -62,5 +63,6 @@ export const NEBULAR_MODULE = [
     NbAlertModule,
     NbAutocompleteModule,
     NbProgressBarModule,
-    NbTimepickerModule
+    NbTimepickerModule,
+    NbTagModule
 ];

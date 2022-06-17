@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbDialogService, NbMenuBag, NbMenuService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
@@ -72,7 +73,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
     rowVersion!: IProjectVersion;
     destroy$: Subject<void> = new Subject<void>();
 
-    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private menuService: NbMenuService, private manageProjectService: ManageProjectService, public utilsService: UtilsService, private readonly authService: AuthService, private translate: TranslateService, private langTranslateService: LangTranslateService) {
+    constructor(
+        private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+        private router: Router,
+        private dialogService: NbDialogService,
+        private menuService: NbMenuService,
+        private manageProjectService: ManageProjectService,
+        public utilsService: UtilsService,
+        private readonly authService: AuthService,
+        private translate: TranslateService,
+        private langTranslateService: LangTranslateService
+    ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.checkAccess();
         this.initMenu();
@@ -113,6 +124,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.DELETE]);
         this.menuItems.push({ key: 'COMMON.MENU_ITEM.VIEW', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.VIEW') });
+        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
+    }
+
+    navigateTo(URL: string, id: string): void {
+        this.router.navigate([URL, id]);
     }
 
     pageChange(pageNumber: number): void {
@@ -306,6 +322,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         case 'COMMON.MENU_ITEM.VIEW':
                             this.viewVersion(this.rowVersion);
                             break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT':
+                            this.viewVersionReports(this.rowVersion);
+                            break;
                         default:
                             break;
                     }
@@ -320,5 +339,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.pageChange(1);
             }
         });
+    }
+
+    viewVersionReports(versionData: IProjectVersion): void {
+        const URL = '/u/manage-project/version-reports';
+        this.navigateTo(URL, versionData._id);
     }
 }

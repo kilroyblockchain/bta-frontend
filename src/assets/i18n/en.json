@@ -620,7 +620,19 @@
         "TOOLTIP": {
             "ADD_VERSION": "Add Version"
         },
-        "MENU_ITEM": {},
+        "PAGE_TITLE": {
+            "MANAGE_PROJECT": "Manage Project",
+            "CHANNEL_DETAIL": "Channel Detail",
+            "MONITORING_REPORT": "Monitoring Report"
+        },
+        "MENU_ITEM": {
+            "MONITORING_REPORT": "Monitoring Report"
+        },
+        "COMMON": {
+            "LABEL": {
+                "DATA_SCIENTIST": "Data Scientist"
+            }
+        },
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",
@@ -708,6 +720,16 @@
                 "CODE_REPO": "Code repo is required",
                 "CODE_VERSION": "Code version is required",
                 "COMMENT": "Comment is required"
+            }
+        },
+        "MONITORING_REPORT": {
+            "LABEL": {
+                "REPORT_TITLE": "Title",
+                "REPORT_DESCRIPTION": "Description",
+                "REPORT_DOCUMENTS": "Documents"
+            },
+            "TITLE": {
+                "ALL_REPORTS": "All Reports"
             }
         }
     }
