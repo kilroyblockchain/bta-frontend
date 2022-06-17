@@ -40,4 +40,8 @@ export class ManageProjectService {
     getVersionReports(versionId: string): Observable<IAppResponse<IPaginateResult<IMonitoringReport>>> {
         return this.http.get(URLConstant.versionReportsURL + `/${versionId}`);
     }
+
+    addVersionReports(versionId: string, data: FormData, hasFormData = true): Observable<IAppResponse<IMonitoringReport>> {
+        return this.http.post(URLConstant.versionReportsURL + `/${versionId}`, data, hasFormData);
+    }
 }

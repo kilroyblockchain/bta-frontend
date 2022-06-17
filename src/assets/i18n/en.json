@@ -726,10 +726,24 @@
             "LABEL": {
                 "REPORT_TITLE": "Title",
                 "REPORT_DESCRIPTION": "Description",
-                "REPORT_DOCUMENTS": "Documents"
+                "REPORT_DOCUMENTS": "Documents",
+                "MONITORING_SUBJECT": "Monitoring Subject",
+                "MONITORING_DOCUMENTS": "Monitoring Documents"
             },
             "TITLE": {
-                "ALL_REPORTS": "All Reports"
+                "ALL_REPORTS": "All Reports",
+                "ADD_MONITORING_REPORT": "Add Monitoring Report"
+            },
+            "PLACEHOLDER": {
+                "MONITORING_SUBJECT": "Monitoring subject",
+                "MONITORING_DESCRIPTION": "Monitoring description"
+            },
+            "VALIDATIONS": {
+                "MONITORING_SUBJECT": "Monitoring subject is required",
+                "MONITORING_DESCRIPTION": "Monitoring description is required"
+            },
+            "BUTTON": {
+                "ADD_MONITORING_REPORT": "Add Monitoring Report"
             }
         }
     }

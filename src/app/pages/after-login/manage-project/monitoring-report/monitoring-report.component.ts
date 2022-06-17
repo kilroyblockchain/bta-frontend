@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { NbDialogService } from '@nebular/theme';
+import { finalize, Subscription } from 'rxjs';
 import { IMonitoringReport, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, FileService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { NewMonitoringReportComponent } from './new-monitoring-report/new-monitoring-report.component';
 
 @Component({
     selector: 'app-monitoring-report',
@@ -16,7 +18,7 @@ import { AuthService, FileService, ManageProjectService, UtilsService } from 'sr
         `
     ]
 })
-export class MonitoringReportComponent implements OnInit {
+export class MonitoringReportComponent implements OnInit, OnDestroy {
     versionData!: IProjectVersion;
     monitoringReports!: Array<IMonitoringReport>;
 
@@ -27,13 +29,17 @@ export class MonitoringReportComponent implements OnInit {
     page!: number;
     resultperpage = this.utilsService.getResultsPerPage();
     options!: { [key: string]: unknown };
+    newMonitoringReportDialogClose!: Subscription;
 
-    constructor(private activeRoute: ActivatedRoute, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService, private readonly fileService: FileService) {}
+    constructor(private activeRoute: ActivatedRoute, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService, private readonly fileService: FileService, private dialogService: NbDialogService) {}
 
     ngOnInit(): void {
         this.pageChange(1);
     }
 
+    ngOnDestroy(): void {
+        this.newMonitoringReportDialogClose ? this.newMonitoringReportDialogClose.unsubscribe() : null;
+    }
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
@@ -115,6 +121,15 @@ export class MonitoringReportComponent implements OnInit {
             const url = urlCreator.createObjectURL(file);
             window.open(url);
             urlCreator.revokeObjectURL(url);
+        });
+    }
+
+    addNewMonitoringReportModal(versionId: string): void {
+        const newMonitoringReportDialogOpen = this.dialogService.open(NewMonitoringReportComponent, { context: { versionId }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.newMonitoringReportDialogClose = newMonitoringReportDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close') {
+                this.pageChange(1);
+            }
         });
     }
 }
