@@ -5,9 +5,8 @@
     </div>
     <div class="actions">
       <button nbButton hero status="primary" size="small" (click)="addNewMonitoringReportModal(versionData._id)">
-        <nb-icon icon="plus-circle-outline"></nb-icon>{{
-        'MANAGE_PROJECTS.MONITORING_REPORT.BUTTON.ADD_MONITORING_REPORT' |
-        translate }}
+        <nb-icon icon="plus-circle-outline"></nb-icon>
+        {{ 'MANAGE_PROJECTS.MONITORING_REPORT.BUTTON.ADD_MONITORING_REPORT' | translate }}
       </button>
     </div>
   </div>
@@ -17,22 +16,24 @@
         <nb-card-body>
           <p class="card-paragraph">
             <strong>
-              <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' |
-              translate}}:
-            </strong>&nbsp;{{ versionData?.project?.name}}
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+              {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate}}:
+            </strong>
+            {{ versionData?.project?.name}}
           </p>
           <p class="card-paragraph">
             <strong>
-              <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' |
-              translate}}:
-            </strong>&nbsp;{{ versionData?.versionName}}
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+              {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate}}:
+            </strong>
+            {{ versionData?.versionName}}
           </p>
           <p class="card-paragraph">
             <strong>
-              <nb-icon icon="chevron-right-outline"></nb-icon>{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA_SCIENTIST' |
-              translate}}:
-            </strong>&nbsp;{{
-            versionData?.createdBy?.firstName }}&nbsp;{{versionData?.createdBy?.lastName}}
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+              {{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA_SCIENTIST' | translate}}:
+            </strong>
+            {{ versionData?.createdBy?.firstName }}&nbsp;{{versionData?.createdBy?.lastName}}
           </p>
         </nb-card-body>
       </nb-card>
@@ -47,15 +48,18 @@
           <ng-container *ngFor="let reports of monitoringReports">
             <nb-card class="medium-card-width">
               <nb-card-body>
-                <p><strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_TITLE' |
-                    translate}}:</strong>&nbsp;{{reports.subject}}
+                <p>
+                  <strong>
+                    {{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_TITLE' | translate}}:</strong>
+                  {{reports.subject}}
                 </p>
-                <p><strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' |
-                    translate}}:</strong>{{reports.description}}</p>
-                <p *ngIf="reports.documents.length"><strong>{{
-                    'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DOCUMENTS'
-                    |
-                    translate}}:</strong></p>
+                <p>
+                  <strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' | translate}}:</strong>
+                  {{reports.description}}
+                </p>
+                <p *ngIf="reports.documents.length">
+                  <strong>{{'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DOCUMENTS'| translate}}:</strong>
+                </p>
                 <ng-container *ngFor="let docs of reports.documents; let i = index">
                   <a (click)="openDocs(docs.docURL)">
                     <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName"
@@ -63,11 +67,14 @@
                     </nb-tag>
                   </a>
                 </ng-container>
-                <p><strong>{{ 'COMMON.LABEL.CREATED_BY' |
-                    translate}}:</strong>&nbsp;{{reports?.createdBy?.firstName}}&nbsp;{{reports?.createdBy?.lastName}}
+                <p>
+                  <strong>{{ 'COMMON.LABEL.CREATED_BY' | translate}}:</strong>
+                  {{reports?.createdBy?.firstName}}&nbsp;{{reports?.createdBy?.lastName}}
                 </p>
-                <p><strong>{{ 'COMMON.LABEL.CREATED_AT' | translate}}:</strong>&nbsp;{{reports.createdAt | date
-                  :'yyyy-mm-dd'}}</p>
+                <p>
+                  <strong>{{ 'COMMON.LABEL.CREATED_AT' | translate}}:</strong>
+                  {{reports.createdAt | date :'yyyy-mm-dd'}}
+                </p>
               </nb-card-body>
             </nb-card>
           </ng-container>

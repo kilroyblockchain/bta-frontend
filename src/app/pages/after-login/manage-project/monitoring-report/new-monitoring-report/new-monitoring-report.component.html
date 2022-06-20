@@ -21,8 +21,9 @@
           <label for="name"
             [attr.data-content]="'*' +('MANAGE_PROJECTS.MONITORING_REPORT.LABEL.MONITORING_SUBJECT' | translate)"></label>
           <div *ngIf=" submitted && UF['subject'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_SUBJECT' |
-              translate }}</span>
+            <span *ngIf="err['required']">
+              {{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_SUBJECT' | translate }}
+            </span>
           </div>
         </div>
       </div>
@@ -34,8 +35,9 @@
             formControlName="description"
             [ngClass]="{ 'status-danger': submitted && UF['description'].errors}"></textarea>
           <div *ngIf="submitted && UF['description'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_DESCRIPTION' |
-              translate }}</span>
+            <span *ngIf="err['required']">
+              {{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_DESCRIPTION' | translate }}
+            </span>
           </div>
         </div>
       </div>
