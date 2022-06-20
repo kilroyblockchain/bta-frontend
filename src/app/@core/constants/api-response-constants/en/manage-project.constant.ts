@@ -10,5 +10,7 @@ export const API_RES_MSG_MANAGE_PROJECT = {
     PROJECT_RECORD_UPDATED: 'Project Updated Successfully',
     PROJECT_VERSION_ALREADY_EXITS: 'This Version Is Already Exist',
     UNABLE_TO_ADD_VERSION: 'Unable To Add Version',
-    NEW_VERSION_ADDED_SUCCESS: 'New Version Added Successfully'
+    NEW_VERSION_ADDED_SUCCESS: 'New Version Added Successfully',
+    UNABLE_TO_ADD_MONITORING_REPORT: 'Unable To Add Monitoring Report',
+    MONITORING_REPORT_ADDED_SUCCESS: 'New Report Added Successfully'
 };

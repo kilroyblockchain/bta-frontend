@@ -1,0 +1,64 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large"
+  nbSpinnerMessage="">
+  <nb-card-header>
+    <section class="dialog-head">
+      <h6>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.TITLE.ADD_MONITORING_REPORT' | translate }}</h6>
+    </section>
+    <div class="close-dialog">
+      <button nbButton class="icon" (click)="closeModal()">
+        <nb-icon icon="close-circle-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form class="form-container" [formGroup]="monitoringInfoForm">
+
+      <div class="form-inner-container">
+        <div class="form-holder floating">
+          <input name="subject" nbInput fullWidth
+            [placeholder]="'*' + ('MANAGE_PROJECTS.MONITORING_REPORT.PLACEHOLDER.MONITORING_SUBJECT' | translate)"
+            formControlName="subject" [ngClass]="{ 'status-danger': submitted && UF['subject'].errors}" />
+          <label for="name"
+            [attr.data-content]="'*' +('MANAGE_PROJECTS.MONITORING_REPORT.LABEL.MONITORING_SUBJECT' | translate)"></label>
+          <div *ngIf=" submitted && UF['subject'].errors as err" class="invalid-feedback">
+            <span *ngIf="err['required']">
+              {{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_SUBJECT' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-inner-container">
+        <div class="form-holder floating">
+          <textarea name="description" nbInput fullWidth
+            [placeholder]="'*' + ('MANAGE_PROJECTS.MONITORING_REPORT.PLACEHOLDER.MONITORING_DESCRIPTION' | translate)"
+            formControlName="description"
+            [ngClass]="{ 'status-danger': submitted && UF['description'].errors}"></textarea>
+          <div *ngIf="submitted && UF['description'].errors as err" class="invalid-feedback">
+            <span *ngIf="err['required']">
+              {{ 'MANAGE_PROJECTS.MONITORING_REPORT.VALIDATIONS.MONITORING_DESCRIPTION' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-inner-container">
+        <div class="form-holder floating">
+          <input id="documents" nbInput type="file" #fileInput multiple fullWidth (change)="onFilesChange($event)" />
+          <label for="documents"
+            [attr.data-content]="('MANAGE_PROJECTS.MONITORING_REPORT.LABEL.MONITORING_DOCUMENTS' | translate)"></label>
+        </div>
+        <nb-tag-list (tagRemove)="onTagRemove($event)">
+          <nb-tag *ngFor="let file of myFiles; let i = index" [text]="(i+1) +'.'+ file.name"
+            [removable]="myFiles.length > 0">
+          </nb-tag>
+        </nb-tag-list>
+      </div>
+
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="primary" type="submit" (click)="saveVersionReports(monitoringInfoForm)">{{
+      'COMMON.BUTTON.SAVE' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

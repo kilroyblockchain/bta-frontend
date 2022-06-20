@@ -106,7 +106,6 @@ export class SidebarComponent {
      */
     async buildDefaultMenu(): Promise<void> {
         const manageUserMenuItem = [];
-        const manageProjectMenuItem = [];
 
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.READ])) {
             manageUserMenuItem.push({
@@ -140,23 +139,6 @@ export class SidebarComponent {
                 title: 'Users',
                 children: <MenuItem[]>manageUserMenuItem,
                 key: 'HEADER.MENU_ITEM.MANAGE_USERS'
-            });
-        }
-
-        if (!this.utilsService.checkIsUserSuperAdmin() && (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ]))) {
-            manageProjectMenuItem.push({
-                title: 'Project',
-                link: '/u/manage-project/all',
-                pathMatch: 'full',
-                key: 'HEADER.MENU_ITEM.PROJECT'
-            });
-        }
-
-        if (manageProjectMenuItem.length) {
-            this.companyUsersMenuItems.push({
-                title: 'Project',
-                children: <MenuItem[]>manageProjectMenuItem,
-                key: 'HEADER.MENU_ITEM.MANAGE_PROJECTS'
             });
         }
     }
@@ -236,14 +218,29 @@ export class SidebarComponent {
      * Function that build App user menu according to subscription type
      */
     async buildAppUserMenu(): Promise<void> {
-        this.buildStaffSubscriptionMenu();
+        await this.buildStaffSubscriptionMenu();
     }
 
-    buildStaffSubscriptionMenu(): void {
+    async buildStaffSubscriptionMenu(): Promise<void> {
+        const manageProjectMenuItem = [];
+
         if (this.userData.roles.includes('staff')) {
-            this.companyUsersMenuItems.push({
-                title: 'Manage Staff'
-            });
+            if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ])) {
+                manageProjectMenuItem.push({
+                    title: 'Project',
+                    link: '/u/manage-project/all',
+                    pathMatch: 'full',
+                    key: 'HEADER.MENU_ITEM.PROJECT'
+                });
+            }
+
+            if (manageProjectMenuItem.length) {
+                this.companyUsersMenuItems.push({
+                    title: 'Project',
+                    children: <MenuItem[]>manageProjectMenuItem,
+                    key: 'HEADER.MENU_ITEM.MANAGE_PROJECTS'
+                });
+            }
         }
     }
 }
