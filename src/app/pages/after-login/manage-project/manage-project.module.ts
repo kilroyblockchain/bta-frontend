@@ -17,8 +17,9 @@ import { ViewProjectVersionComponent } from './project-version/view-version/view
 import { ViewProjectComponent } from './project/view-project/view-project.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 import { NewMonitoringReportComponent } from './monitoring-report/new-monitoring-report/new-monitoring-report.component';
+import { AiModelComponent } from './ai-model/ai-model.component';
 
-const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, ViewProjectComponent, ProjectVersionComponent, AddVersionComponent, ViewProjectVersionComponent, MonitoringReportComponent, NewMonitoringReportComponent];
+const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, ViewProjectComponent, ProjectVersionComponent, AddVersionComponent, ViewProjectVersionComponent, MonitoringReportComponent, NewMonitoringReportComponent, AiModelComponent];
 
 @NgModule({
     imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

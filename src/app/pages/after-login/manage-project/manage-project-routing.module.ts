@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AiModelComponent } from './ai-model/ai-model.component';
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
@@ -24,6 +25,11 @@ const routes: Routes = [
                 path: 'version-reports/:id',
                 component: MonitoringReportComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.MONITORING_REPORT' }
+            },
+            {
+                path: 'version-details/:id',
+                component: AiModelComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.VERSION_DETAILS' }
             }
         ]
     }

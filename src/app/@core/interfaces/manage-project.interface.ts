@@ -59,3 +59,12 @@ interface IReportDocs {
     docURL: string;
     docName: string;
 }
+
+export interface IAiModel {
+    _id: string;
+    expNo: string;
+    updatedAt: Date;
+    createdAt: Date;
+    projectId: IProject;
+    versionId: IProjectVersion;
+}
