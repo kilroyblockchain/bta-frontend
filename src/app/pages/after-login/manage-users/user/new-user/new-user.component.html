@@ -68,8 +68,8 @@
                             </div>
                             <button nbButton hero status="primary" *ngIf="StaffingFormGroupArrayForExistingUser.controls.length > 1" size="small" type="button" (click)="removeStaffForExistingUser(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
                         </nb-card-body>
-                        <nb-card-footer>
-                            <button nbButton hero status="primary" *ngIf="organizationUnits && organizationUnits.length > 1" size="small" type="button" (click)="addStaffForExistingUser()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
+                        <nb-card-footer *ngIf="organizationUnits && organizationUnits.length > 1">
+                            <button nbButton hero status="primary" size="small" type="button" (click)="addStaffForExistingUser()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
                         </nb-card-footer>
                     </nb-card>
                 </ng-container>
