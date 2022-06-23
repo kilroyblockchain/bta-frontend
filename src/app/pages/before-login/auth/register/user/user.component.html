@@ -96,8 +96,7 @@
         </div>
 
         <div class="form-holder floating">
-            <input *ngIf="UF['subscriptionType'].value !== 'vaccination-appointment'" id="company" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.COMPANY' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" />
-            <input *ngIf="UF['subscriptionType'].value === 'vaccination-appointment'" id="company" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.COMPANY' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" [nbAutocomplete]="autoControl" />
+            <input id="company" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.COMPANY' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" />
             <label for="company" [attr.data-content]="'*' + ('REGISTER.LABEL.COMPANY' | translate)"></label>
             <div *ngIf="submitted && UF['companyName'].errors as err" class="invalid-feedback">
                 <span *ngIf="err['required']">{{ 'REGISTER.VALIDATIONS.COMPANY_IS_REQUIRED' | translate }}</span>

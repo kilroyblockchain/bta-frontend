@@ -54,7 +54,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     searchString = '';
     selectedOrganization!: { id: string };
     menuClickSubscription!: Subscription;
-    onlyVaccinatedUser!: boolean;
     canReadOrganizationDetail!: boolean;
     appTitle = environment.project;
 
@@ -91,15 +90,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
             }
         });
         if (this.isLoggedIn) {
-            if (this.userData.roles.length === 1 && this.userData.roles.includes('vaccinated-user')) {
+            if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PERSONAL_DETAIL, [ACCESS_TYPE.READ])) {
                 this.getTranslatedValue('HEADER.MENU_ITEM.PROFILE', 'u/user/profile/personal-details');
-            } else {
-                if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PERSONAL_DETAIL, [ACCESS_TYPE.READ])) {
-                    this.getTranslatedValue('HEADER.MENU_ITEM.PROFILE', 'u/user/profile/personal-details');
-                }
-                if (this.canReadOrganizationDetail) {
-                    this.getTranslatedValue('HEADER.MENU_ITEM.YOUR_ORGANIZATION_DETAILS', 'u/user/profile/organization-details');
-                }
+            }
+            if (this.canReadOrganizationDetail) {
+                this.getTranslatedValue('HEADER.MENU_ITEM.YOUR_ORGANIZATION_DETAILS', 'u/user/profile/organization-details');
             }
             this.getTranslatedValue('HEADER.MENU_ITEM.CHANGE_PASSWORD');
             this.getTranslatedValue('HEADER.MENU_ITEM.LOGOUT');
@@ -204,7 +199,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     checkShowDashboard(role: string): boolean {
-        return role === 'vaccinated-user' || role === 'super-admin';
+        return role === 'super-admin';
     }
 
     setDefaultSubscriptionTypeOnCompanyChange(userData: IUserRes): void {
