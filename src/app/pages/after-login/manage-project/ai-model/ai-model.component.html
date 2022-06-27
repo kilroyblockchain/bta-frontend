@@ -1,7 +1,7 @@
 <div>
   <div class="page-title">
     <div class="title-holder">
-      <h4>{{ 'MANAGE_PROJECTS.AI_MODEL.TITLE.VERSION_DETAILS' | translate }}</h4>
+      <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
     </div>
     <div class="actions">
       <button nbButton hero status="primary" size="small">
@@ -59,7 +59,7 @@
                   {{ row.data[column] | date: 'yyyy-MM-dd' }}
                 </div>
                 <div class="table-col" *ngSwitchCase="'action'">
-                  <button nbSuffix nbButton ghost>
+                  <button nbSuffix nbButton ghost (click)="viewExperimentDetails(row.data['_id'])">
                     <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DETAILS' | translate" icon="eye-outline"
                       pack="eva"> </nb-icon>
                   </button>

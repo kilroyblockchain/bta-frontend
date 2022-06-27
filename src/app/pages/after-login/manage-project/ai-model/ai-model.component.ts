@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
@@ -45,7 +45,7 @@ export class AiModelComponent implements OnInit {
     tableData!: Array<IAiModel>;
     loadingTable!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, private authService: AuthService) {
+    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -58,6 +58,10 @@ export class AiModelComponent implements OnInit {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
         this.getVersionData();
+    }
+
+    navigateTo(URL: string, id: string): void {
+        this.router.navigate([URL, id]);
     }
 
     setTranslatedTableColumns(): void {
@@ -157,5 +161,10 @@ export class AiModelComponent implements OnInit {
 
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
+    }
+
+    viewExperimentDetails(rowId: string): void {
+        const URL = '/u/manage-project/logs-experiment-detail';
+        this.navigateTo(URL, rowId);
     }
 }

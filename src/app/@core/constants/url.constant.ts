@@ -67,5 +67,7 @@ export const URLConstant = {
     getLogFilesURL: '/files/logs',
     getFileFromFolderURL: '/files/file',
     versionReportsURL: '/version-reports',
-    getVersionAllExpURL: '/ai-model/all'
+    getVersionAllExpURL: '/ai-model/all',
+    getExperimentDetailsURL: '/ai-model/expDetails',
+    getExperimentInfoURL: '/ai-model/expInfo'
 };

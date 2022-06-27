@@ -605,7 +605,8 @@
             "MANAGE_PROJECT": "Manage Project",
             "CHANNEL_DETAIL": "Channel Detail",
             "MONITORING_REPORT": "Monitoring Report",
-            "VERSION_DETAILS": "Version Details"
+            "VERSION_DETAILS": "Version Details",
+            "EXPERIMENT_DETAILS": "Experiment Details"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
@@ -613,7 +614,9 @@
         },
         "COMMON": {
             "LABEL": {
-                "DATA_SCIENTIST": "Data Scientist"
+                "DATA_SCIENTIST": "Data Scientist",
+                "MODEL_DETAILS": "Model Details",
+                "VERSION_DETAILS": "Version Details"
             }
         },
         "PROJECT": {
@@ -689,7 +692,9 @@
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
                 "VERSION_STATUS": "Version Status",
-                "COMMENT": "Comment"
+                "COMMENT": "Comment",
+                "FRAMEWORK": "Framework",
+                "FRAMEWORK_VERSION": "Framework Version"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",
@@ -730,34 +735,29 @@
             }
         },
         "AI_MODEL": {
-            "TITLE": {
-                "VERSION_DETAILS": "Version Details",
-                "Hyper_Parameters": "Hyper Parameters"
-            },
             "BUTTON": {
                 "REVIEW_MODEL": "Review Model"
             },
-            "EPHOS": "Epochs",
-            "TEST_METRICS": "Test Metrics",
             "LABEL": {
-                "HIDDEN_SIZE": "Hidden Size",
-                "LEARNING_RATE": "Learning Rate",
-                "DATA_DIR": "Data Dir."
+                "EXPERIMENT_NAME": "Experiment Name",
+                "HYPER_PARAMETERS": "Hyper Parameters",
+                "TEST_METRICS": "Test Metrics",
+                "EPOCHS": "Epochs"
             },
             "COLUMN_NAME": {
                 "EXP_ID": "Exp Id/No",
-                "DATE": "Date"
-            },
-            "VALUE_ACCURACY": "Value Accuracy",
-            "VALUE_LOSS": "Value Loss",
-            "TRAIN_ACCURACY": "Train Accuracy",
-            "TRAIN_LOSS": "Train Loss",
-            "TEST_SCORE": "Test Score",
-            "EPOCH_NO": "Epoch No",
-            "METRIC_NO": "Metric No",
-            "TEST_ACCURACY": "Test Accuracy",
-            "DETAILS": "Details",
-            "AI_TEST_RESULT": "AI Test Result"
+                "DATE": "Date",
+                "EPOCH_NO": "Epoch No",
+                "TRAIN_ACCURACY": "Train Accuracy",
+                "TRAIN_LOSS": "Train Loss",
+                "VALIDATION_ACCURACY": "Validation Accuracy",
+                "VALIDATION_LOSS": "Validation Loss",
+                "TEST_SCORE": "Test Score",
+                "TEST_ACCURACY": "Test Accuracy",
+                "TRAIN_F1_SCORE": "Train F1 Score",
+                "TRAIN_PRECISION": "Train Precision",
+                "TRAIN_RECALL": "Train Recall"
+            }
         }
     }
 }
