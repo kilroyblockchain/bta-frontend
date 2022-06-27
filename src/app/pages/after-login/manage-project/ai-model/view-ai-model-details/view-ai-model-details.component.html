@@ -1,144 +1,134 @@
 <nb-card class="medium-card-width">
-  <nb-card-header>
-    <section class="dialog-head">
-      <h6>
-        <nb-icon icon="chevron-right-outline"></nb-icon>
-        {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:&nbsp;{{ experiment?.exp_no }}
-      </h6>
-    </section>
-    <div class="close-dialog">
-      <button nbButton class="icon" (click)="back()">
-        <nb-icon icon="close-circle-outline"></nb-icon>
-      </button>
-    </div>
-  </nb-card-header>
-  <nb-card-body>
-    <div class="card-row">
-      <div class="card-col">
-        <nb-card size="medium">
-          <nb-card-header>
-            <h6>{{'MANAGE_PROJECTS.COMMON.LABEL.MODEL_DETAILS' | translate}}</h6>
-          </nb-card-header>
-          <nb-card-body *ngIf="dataFound">
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
-              {{experimentInfo?.project?.name}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
-              {{experimentInfo?.version?.versionName}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
-              {{experimentInfo?.version?.codeVersion}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
-              {{experimentInfo?.version?.codeRepo}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
-              {{experimentInfo?.version?.noteBookVersion}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
-              {{experimentInfo?.version?.trainDataSets}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
-              {{experimentInfo?.version?.testDataSets}}
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.FRAMEWORK' | translate }}: </strong>
-              N/A
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.FRAMEWORK_VERSION' | translate }}: </strong>
-              N/A
-            </div>
-            <div class="detail-row">
-              <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
-              {{experimentInfo?.version?.logFilePath}}
-            </div>
-          </nb-card-body>
-          <div *ngIf="!dataFound && !loading">
-            <app-data-not-found></app-data-not-found>
-          </div>
-        </nb-card>
-      </div>
-      <div class="card-col">
-        <nb-card size="tiny">
-          <nb-card-header>
-            <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.HYPER_PARAMETERS' | translate }}</h6>
-          </nb-card-header>
-          <nb-card-body>
-            <ng-container *ngFor="let hyperparameter of hyperparameterData | keyvalue">
-              <div class="detail-row">
-                <strong>{{ hyperparameter.key }}: </strong> {{hyperparameter.value }}
-              </div>
-            </ng-container>
-            <div *ngIf="loading">
-              <app-loader></app-loader>
-            </div>
-            <div *ngIf="!dataFound && !loading">
-              Sorry, data not found !!!
-            </div>
-          </nb-card-body>
-        </nb-card>
-        <nb-card size="tiny">
-          <nb-card-header>
-            <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.TEST_METRICS' | translate }}</h6>
-          </nb-card-header>
-          <nb-card-body>
-            <ng-container *ngFor="let testMetric of testMetricsData | keyvalue">
-              <div class="detail-row">
-                <strong>{{ testMetric.key }}: </strong> {{testMetric.value }}
-              </div>
-            </ng-container>
-            <div *ngIf="loading">
-              <app-loader></app-loader>
-            </div>
-            <div *ngIf="!dataFound && !loading">
-              Sorry, data not found !!!
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-  </nb-card-body>
-  <nb-card>
-    <nb-card accent="info" size="large">
-      <nb-card-header>
-        <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EPOCHS' | translate }}</h6>
-      </nb-card-header>
-      <nb-card-body>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.EPOCH_NO' | translate }}</th>
-              <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.TRAIN_ACCURACY' | translate }}</th>
-              <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.TRAIN_LOSS' | translate }}</th>
-              <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.VALIDATION_ACCURACY' | translate }}</th>
-              <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.VALIDATION_LOSS' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let epoch of epochData | keyvalue; let i = index">
-              <td>{{ i }}</td>
-              <td>{{ epoch.value.train_acc }}</td>
-              <td>{{ epoch.value.train_loss }}</td>
-              <td>{{ epoch.value.val_accuracy }}</td>
-              <td>{{ epoch.value.val_loss }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div *ngIf="loading">
-          <app-loader></app-loader>
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>
+                <nb-icon icon="chevron-right-outline"></nb-icon>
+                {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:&nbsp;{{ experiment?.exp_no }}
+            </h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="back()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
         </div>
-        <div *ngIf="!dataFound && !loading">
-          <app-data-not-found></app-data-not-found>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="card-row">
+            <div class="card-col">
+                <nb-card size="medium">
+                    <nb-card-header>
+                        <h6>{{ 'MANAGE_PROJECTS.COMMON.LABEL.MODEL_DETAILS' | translate }}</h6>
+                    </nb-card-header>
+                    <nb-card-body *ngIf="dataFound">
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
+                            {{ experimentInfo?.project?.name }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+                            {{ experimentInfo?.version?.versionName }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
+                            {{ experimentInfo?.version?.codeVersion }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
+                            {{ experimentInfo?.version?.codeRepo }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
+                            {{ experimentInfo?.version?.noteBookVersion }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
+                            {{ experimentInfo?.version?.trainDataSets }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
+                            {{ experimentInfo?.version?.testDataSets }}
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.FRAMEWORK' | translate }}: </strong>
+                            N/A
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.FRAMEWORK_VERSION' | translate }}: </strong>
+                            N/A
+                        </div>
+                        <div class="detail-row">
+                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
+                            {{ experimentInfo?.version?.logFilePath }}
+                        </div>
+                    </nb-card-body>
+                    <div *ngIf="!dataFound && !loading">
+                        <app-data-not-found></app-data-not-found>
+                    </div>
+                </nb-card>
+            </div>
+            <div class="card-col">
+                <nb-card size="tiny">
+                    <nb-card-header>
+                        <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.HYPER_PARAMETERS' | translate }}</h6>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <ng-container *ngFor="let hyperparameter of hyperparameterData | keyvalue">
+                            <div class="detail-row">
+                                <strong>{{ hyperparameter.key }}: </strong> {{ hyperparameter.value }}
+                            </div>
+                        </ng-container>
+                        <div *ngIf="loading">
+                            <app-loader></app-loader>
+                        </div>
+                        <div *ngIf="!dataFound && !loading">Sorry, data not found !!!</div>
+                    </nb-card-body>
+                </nb-card>
+                <nb-card size="tiny">
+                    <nb-card-header>
+                        <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.TEST_METRICS' | translate }}</h6>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <ng-container *ngFor="let testMetric of testMetricsData | keyvalue">
+                            <div class="detail-row">
+                                <strong>{{ testMetric.key }}: </strong> {{ testMetric.value }}
+                            </div>
+                        </ng-container>
+                        <div *ngIf="loading">
+                            <app-loader></app-loader>
+                        </div>
+                        <div *ngIf="!dataFound && !loading">Sorry, data not found !!!</div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
         </div>
-      </nb-card-body>
+    </nb-card-body>
+    <nb-card>
+        <nb-card accent="info" size="large">
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EPOCHS' | translate }}</h6>
+            </nb-card-header>
+            <nb-card-body>
+                <table>
+                    <thead>
+                        <tr *ngIf="epochData && epochData[0]">
+                            <th scope="col">{{ 'MANAGE_PROJECTS.AI_MODEL.COLUMN_NAME.EPOCH_NO' | translate }}</th>
+                            <th *ngFor="let epoch of epochData[0] | keyvalue">{{ epoch.key }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let epochValue of epochData | keyvalue; let i = index">
+                            <td>{{ i }}</td>
+                            <td *ngFor="let epoch of epochData[i] | keyvalue">{{ epoch.value }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="loading">
+                    <app-loader></app-loader>
+                </div>
+                <div *ngIf="!dataFound && !loading">
+                    <app-data-not-found></app-data-not-found>
+                </div>
+            </nb-card-body>
+        </nb-card>
     </nb-card>
-  </nb-card>
 </nb-card>
