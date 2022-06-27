@@ -123,7 +123,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.WRITE]);
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.DELETE]);
-        this.menuItems.push({ key: 'COMMON.MENU_ITEM.VIEW', title: this.langTranslateService.translateKey('COMMON.MENU_ITEM.VIEW') });
+        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
         this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
     }
 
@@ -319,8 +319,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
             .subscribe(({ item, tag }: NbMenuBag) => {
                 if (tag === 'versionMenu') {
                     switch ((item as MenuItem).key) {
-                        case 'COMMON.MENU_ITEM.VIEW':
-                            this.viewVersion(this.rowVersion);
+                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS':
+                            this.viewVersionDetails(this.rowVersion);
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT':
                             this.viewVersionReports(this.rowVersion);
@@ -339,6 +339,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.pageChange(1);
             }
         });
+    }
+
+    viewVersionDetails(versionData: IProjectVersion): void {
+        const URL = '/u/manage-project/version-details';
+        this.navigateTo(URL, versionData._id);
     }
 
     viewVersionReports(versionData: IProjectVersion): void {
