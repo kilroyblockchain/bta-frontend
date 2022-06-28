@@ -68,6 +68,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canAddProject!: boolean;
     canUpdateProject!: boolean;
     canDeleteProject!: boolean;
+    canViewProjectDetails!: boolean;
     canAddVersion!: boolean;
     canViewVersionDetails!: boolean;
     canViewMonitoringReport!: boolean;
@@ -138,6 +139,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.WRITE]);
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.DELETE]);
+        this.canViewProjectDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT_DETAILS, [ACCESS_TYPE.READ]);
         this.canAddVersion = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.WRITE]);
         this.canViewVersionDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.READ]);
         if (this.canViewVersionDetails) {

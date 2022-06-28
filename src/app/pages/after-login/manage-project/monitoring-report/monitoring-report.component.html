@@ -3,7 +3,7 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.PAGE_TITLE.MONITORING_REPORT' | translate }}</h4>
         </div>
-        <div class="actions">
+        <div class="actions" *ngIf="canAddMonitoringReports">
             <button nbButton hero status="primary" size="small" (click)="addNewMonitoringReportModal(versionData._id)">
                 <nb-icon icon="plus-circle-outline"></nb-icon>
                 {{ 'MANAGE_PROJECTS.MONITORING_REPORT.BUTTON.ADD_MONITORING_REPORT' | translate }}
