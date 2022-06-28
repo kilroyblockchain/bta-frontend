@@ -225,7 +225,7 @@ export class SidebarComponent {
         const manageProjectMenuItem = [];
 
         if (this.userData.roles.includes('staff')) {
-            if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.READ])) {
+            if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.READ])) {
                 manageProjectMenuItem.push({
                     title: 'Project',
                     link: '/u/manage-project/all',

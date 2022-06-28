@@ -652,7 +652,8 @@
                 "PROJECT_NAME": "Project Name",
                 "PROJECT_DETAILS": "Project Details",
                 "PROJECT_DOMAIN": "Project Domain",
-                "PROJECT_PURPOSE": "Project Purpose"
+                "PROJECT_PURPOSE": "Project Purpose",
+                "LATEST_VERSION": "Latest Version"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",
