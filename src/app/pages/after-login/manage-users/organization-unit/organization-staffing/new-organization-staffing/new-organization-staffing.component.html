@@ -2,22 +2,10 @@
     <nb-card-header>
         <section class="dialog-head">
             <h6 *ngIf="mode === 'CREATE'">
-                {{
-                    'MANAGE_USERS.ORG_STAFFING.TITLE.ADD_ORGANIZATION_STAFFING'
-                        | translate
-                            : {
-                                  unitName: unitName
-                              }
-                }}
+                {{ 'MANAGE_USERS.ORG_STAFFING.TITLE.ADD_ORGANIZATION_STAFFING' | translate: { unitName: unitName } }}
             </h6>
             <h6 *ngIf="mode === 'EDIT'">
-                {{
-                    'MANAGE_USERS.ORG_STAFFING.TITLE.UPDATE_ORGANIZATION_STAFFING'
-                        | translate
-                            : {
-                                  unitName: unitName
-                              }
-                }}
+                {{ 'MANAGE_USERS.ORG_STAFFING.TITLE.UPDATE_ORGANIZATION_STAFFING' | translate: { unitName: unitName } }}
             </h6>
         </section>
         <div class="close-dialog">
