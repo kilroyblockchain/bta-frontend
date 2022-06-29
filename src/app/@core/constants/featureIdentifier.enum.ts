@@ -8,6 +8,11 @@ export enum FEATURE_IDENTIFIER {
     ORGANIZATION_USER = 'organization-user',
     USER_ACTIVITY = 'user-activity',
     MANAGE_BLOCKED_COMPANY_USERS = 'manage-blocked-company-user',
-    MANAGE_PROJECT = 'manage-project',
+    PROJECT = 'project',
+    PROJECT_DETAILS = 'project-details',
+    PROJECT_PURPOSE = 'project-purpose',
+    MODEL_VERSION = 'model-version',
+    MODEL_REVIEWS = 'model-reviews',
+    MODEL_MONITORING = 'model-monitoring',
     APPLICATION_LOGS = 'application-logs'
 }

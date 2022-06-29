@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { finalize, Subscription } from 'rxjs';
+import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IMonitoringReport, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, FileService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { NewMonitoringReportComponent } from './new-monitoring-report/new-monitoring-report.component';
@@ -31,21 +32,28 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
     options!: { [key: string]: unknown };
     newMonitoringReportDialogClose!: Subscription;
 
+    canAddMonitoringReports!: boolean;
+
     constructor(private activeRoute: ActivatedRoute, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService, private readonly fileService: FileService, private dialogService: NbDialogService) {}
 
     ngOnInit(): void {
         this.pageChange(1);
+        this.checkAccess();
     }
 
     ngOnDestroy(): void {
         this.newMonitoringReportDialogClose ? this.newMonitoringReportDialogClose.unsubscribe() : null;
     }
+
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
         this.getVersionData();
     }
 
+    async checkAccess(): Promise<void> {
+        this.canAddMonitoringReports = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.WRITE]);
+    }
     getVersionData(): void {
         const versionId = this.activeRoute.snapshot.params['id'];
         this.retrieveVersionData(versionId);

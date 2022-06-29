@@ -1,85 +1,84 @@
 <div>
-  <div class="page-title">
-    <div class="title-holder">
-      <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
+        </div>
+        <div class="actions" *ngIf="canViewReview">
+            <button nbButton hero status="primary" size="small">
+                {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
+            </button>
+        </div>
     </div>
-    <div class="actions">
-      <button nbButton hero status="primary" size="small">
-        {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
-      </button>
-    </div>
-  </div>
-  <nb-card class="medium-card-width">
-    <nb-card-body>
-      <p class="card-paragraph">
-        <strong>
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-          {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate}}:
-        </strong>
-        {{ versionData?.project?.name}}
-      </p>
-      <p class="card-paragraph">
-        <strong>
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-          {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate}}:
-        </strong>
-        {{ versionData?.versionName}}
-      </p>
-    </nb-card-body>
-    <nb-card>
-      <nb-card-body>
-        <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource"
-          (sort)="utilsService.updateSort($event)">
-          <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
-          <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
-          <ng-container *ngFor="
-                  let column of columns
-                      | paginate
-                          : {
-                                id: 'table_paginate_id',
-                                itemsPerPage: resultperpage,
-                                currentPage: page,
-                                totalItems: totalRecords
-                            };
-                  let index = index
-              " [nbTreeGridColumnDef]="column" [showOn]="utilsService.getShowOn(index)">
-            <ng-container [ngSwitch]="column">
-              <ng-container *ngSwitchDefault>
-                <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)"
-                  *nbTreeGridHeaderCellDef>
-                  {{ columnsName[index] }}
-                </th>
-              </ng-container>
-            </ng-container>
-            <td nbTreeGridCell *nbTreeGridCellDef="let row">
-              <nb-tree-grid-row-toggle [expanded]="row.expanded"
-                *ngIf="column === 'name' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
-              <div [ngSwitch]="column">
-                <div class="table-col" *ngSwitchCase="'date'">
-                  {{ row.data[column] | date: 'yyyy-MM-dd' }}
+    <nb-card class="medium-card-width">
+        <nb-card-body>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
+                </strong>
+                {{ versionData?.project?.name }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
+                </strong>
+                {{ versionData?.versionName }}
+            </p>
+        </nb-card-body>
+        <nb-card>
+            <nb-card-body>
+                <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+                    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+                    <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+                    <ng-container
+                        *ngFor="
+                            let column of columns
+                                | paginate
+                                    : {
+                                          id: 'table_paginate_id',
+                                          itemsPerPage: resultperpage,
+                                          currentPage: page,
+                                          totalItems: totalRecords
+                                      };
+                            let index = index
+                        "
+                        [nbTreeGridColumnDef]="column"
+                        [showOn]="utilsService.getShowOn(index)"
+                    >
+                        <ng-container [ngSwitch]="column">
+                            <ng-container *ngSwitchDefault>
+                                <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                    {{ columnsName[index] }}
+                                </th>
+                            </ng-container>
+                        </ng-container>
+                        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                            <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'name' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
+                            <div [ngSwitch]="column">
+                                <div class="table-col" *ngSwitchCase="'date'">
+                                    {{ row.data[column] | date: 'yyyy-MM-dd' }}
+                                </div>
+                                <div class="table-col" *ngSwitchCase="'action'">
+                                    <button nbSuffix nbButton ghost (click)="viewExperimentDetails(row.data['_id'])">
+                                        <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DETAILS' | translate" icon="eye-outline" pack="eva"> </nb-icon>
+                                    </button>
+                                </div>
+                                <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
+                            </div>
+                        </td>
+                    </ng-container>
+                </table>
+                <div *ngIf="loading && loadingTable">
+                    <app-loader></app-loader>
                 </div>
-                <div class="table-col" *ngSwitchCase="'action'">
-                  <button nbSuffix nbButton ghost (click)="viewExperimentDetails(row.data['_id'])">
-                    <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DETAILS' | translate" icon="eye-outline"
-                      pack="eva"> </nb-icon>
-                  </button>
+                <div *ngIf="loadingTable && !loading && !logsData">
+                    <app-loader></app-loader>
                 </div>
-                <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
-              </div>
-            </td>
-          </ng-container>
-        </table>
-        <div *ngIf="loading && loadingTable">
-          <app-loader></app-loader>
-        </div>
-        <div *ngIf="loadingTable && !loading && !logsData">
-          <app-loader></app-loader>
-        </div>
-        <div *ngIf="!loadingTable && !loading && !logsData">
-          <app-data-not-found></app-data-not-found>
-        </div>
-      </nb-card-body>
+                <div *ngIf="!loadingTable && !loading && !logsData">
+                    <app-data-not-found></app-data-not-found>
+                </div>
+            </nb-card-body>
+        </nb-card>
     </nb-card>
-
-  </nb-card>
 </div>

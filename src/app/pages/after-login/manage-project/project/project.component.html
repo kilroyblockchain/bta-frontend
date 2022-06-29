@@ -47,38 +47,31 @@
                                 {{ row.data[column] | date: 'yyyy-MM-dd' }}
                             </div>
                             <div class="table-col" *ngSwitchCase="'action'">
-                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow']" (click)="viewProjectDetails(row.data[column])">
+                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && canViewProjectDetails && (isAIEng || isCompanyAdmin)" (click)="viewProjectDetails(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate" icon="eye-outline" pack="eva"> </nb-icon>
                                 </button>
 
-                                <button nbSuffix nbButton ghost *ngIf="!row.data['status'] && !row.data['subrow'] && canDeleteProject" (click)="onEnableProject(row.data[column])">
-                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-left-outline" pack="eva"> </nb-icon>
+                                <button *ngIf="!row.data['subrow'] && canAddVersion && (isAIEng || isCompanyAdmin)" (click)="addNewProjectVersion(row.data[column])" nbSuffix nbButton ghost>
+                                    <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.ADD_VERSION' | translate" icon="plus-outline" pack="eva"> </nb-icon>
                                 </button>
+
                                 <button *ngIf="!row.data['subrow'] && canUpdateProject" nbSuffix nbButton ghost (click)="openProjectEditModal(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
-                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && row.data['status'] && canDeleteProject" (click)="onDeleteProject(row.data[column])">
-                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva"> </nb-icon>
+
+                                <button nbSuffix nbButton ghost *ngIf="row.data['subrow'] && (isCompanyAdmin || isAIEng)" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
+                                    <nb-icon icon="more-vertical-outline"></nb-icon>
                                 </button>
-                                <button *ngIf="!row.data['subrow'] && canAddProject" (click)="addNewProjectVersion(row.data[column])" nbSuffix nbButton ghost>
-                                    <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.ADD_VERSION' | translate" icon="plus-outline" pack="eva"> </nb-icon>
-                                </button>
-                                <button nbSuffix nbButton ghost *ngIf="row.data['subrow'] && canDeleteProject && canUpdateProject" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
+
+                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && (isMLOpsEng || isStakeHolder)" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
                                     <nb-icon icon="more-vertical-outline"></nb-icon>
                                 </button>
                             </div>
-                            <div class="table-col" *ngSwitchCase="'status'">
-                                <ng-container *ngIf="!row.data['subrow'] && row.data['status']">
-                                    {{ 'COMMON.DESCRIPTION.ENABLED' | translate }}
-                                </ng-container>
-                                <ng-container *ngIf="!row.data['subrow'] && !row.data['status']">
-                                    {{ 'COMMON.DESCRIPTION.DISABLED' | translate }}
-                                </ng-container>
-                                <ng-container *ngIf="row.data['subrow'] && (!row.data['status'] || row.data['status'])">
-                                    {{ '' }}
-                                </ng-container>
+
+                            <div *ngSwitchDefault>
+                                <ng-container *ngIf="!row.data['subrow']">{{ row.data[column] || '-' }}</ng-container>
+                                <ng-container *ngIf="row.data['subrow']">{{ row.data[column] || '' }}</ng-container>
                             </div>
-                            <div *ngSwitchDefault>{{ row.data[column] || '' }}</div>
                         </div>
                     </td>
                 </ng-container>

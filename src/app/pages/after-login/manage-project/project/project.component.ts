@@ -4,10 +4,12 @@ import { NbDialogService, NbMenuBag, NbMenuService, NbTreeGridDataSource, NbTree
 import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
+import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
 import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
-import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
+// import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
@@ -25,13 +27,13 @@ interface FSEntry {
     _id: string;
     name?: string;
     details: string;
-    domain: string;
-    propose?: string;
-    createdAt?: Date;
-    status?: boolean;
-    updatedAt?: Date;
+    domain?: string;
+    purpose: string;
+    status?: string;
+    latestVersion?: string;
     action: unknown;
     subrow: boolean;
+    versionId?: string;
 }
 
 @Component({
@@ -50,8 +52,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     page!: number;
     options: { [key: string]: unknown } = {};
 
-    columns: Array<string> = ['name', 'details', 'domain', 'purpose', 'createdAt', 'status', 'updatedAt', 'action'];
-    columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'COMMON.COLUMN_NAME.CREATED_DATE', 'COMMON.COLUMN_NAME.STATUS', 'COMMON.COLUMN_NAME.UPDATED_DATE', 'COMMON.COLUMN_NAME.ACTION'];
+    columns!: Array<string>;
+    columnNameKeys!: Array<string>;
     columnsName: Array<string> = [];
 
     getAllProject!: Subscription;
@@ -68,10 +70,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canAddProject!: boolean;
     canUpdateProject!: boolean;
     canDeleteProject!: boolean;
+    canViewProjectDetails!: boolean;
+    canAddVersion!: boolean;
+    canViewVersionDetails!: boolean;
+    canViewMonitoringReport!: boolean;
 
     menuItems: Array<MenuItem> = [];
     rowVersion!: IProjectVersion;
     destroy$: Subject<void> = new Subject<void>();
+
+    user!: IUserRes;
+    isCompanyAdmin!: boolean;
+    isAIEng!: boolean;
+    isMLOpsEng!: boolean;
+    isStakeHolder!: boolean;
 
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
@@ -85,13 +97,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private langTranslateService: LangTranslateService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
-        this.checkAccess();
         this.initMenu();
+        this.getProjectUser();
     }
 
     ngOnInit(): void {
         this.setTranslatedTableColumns();
         this.pageChange(1);
+        this.checkAccess();
     }
 
     ngOnDestroy(): void {
@@ -114,17 +127,44 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     setTranslatedTableColumns(): void {
+        this.columns = ['name', ...(this.isCompanyAdmin ? ['details', 'purpose', 'domain', 'latestVersion', 'status'] : []), ...(this.isAIEng ? ['details', 'purpose', 'domain'] : []), ...(this.isMLOpsEng || this.isStakeHolder ? ['details', 'purpose', 'status'] : []), 'action'];
+        this.columnNameKeys = [
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
+            ...(this.isCompanyAdmin ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.LATEST_VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            ...(this.isAIEng ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN'] : []),
+            ...(this.isMLOpsEng || this.isStakeHolder ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.AI_ENGINEER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            'COMMON.COLUMN_NAME.ACTION'
+        ];
+
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
             this.columnsName = Object.values(data);
         });
     }
 
+    getProjectUser(): void {
+        this.user = this.authService.getUserDataSync();
+        this.isCompanyAdmin = !!this.user.company.find((f) => f.companyId._id === this.user.companyId && f.isAdmin === true);
+
+        this.isAIEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.AI_ENGINEER.toLowerCase())));
+        this.isMLOpsEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.MLOps_ENGINEER.toLowerCase())));
+        this.isStakeHolder = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.STAKEHOLDER.toLowerCase())));
+    }
+
     async checkAccess(): Promise<void> {
-        this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.WRITE]);
-        this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.UPDATE]);
-        this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MANAGE_PROJECT, [ACCESS_TYPE.DELETE]);
-        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
-        this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
+        this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.WRITE]);
+        this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);
+        this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.DELETE]);
+        this.canViewProjectDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT_DETAILS, [ACCESS_TYPE.READ]);
+        this.canAddVersion = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.WRITE]);
+        this.canViewVersionDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.READ]);
+        if (this.canViewVersionDetails) {
+            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
+        }
+
+        this.canViewMonitoringReport = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.READ]);
+        if (this.canViewMonitoringReport) {
+            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
+        }
     }
 
     navigateTo(URL: string, id: string): void {
@@ -189,35 +229,53 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     createTableData(data: IProject[]): void {
         this.data = [];
+
         for (const item of data) {
-            const children = [];
-            for (const version of item.projectVersions) {
-                children.push({
+            if (this.isCompanyAdmin && this.isAIEng) {
+                const children = [];
+                for (const version of item.projectVersions) {
+                    children.push({
+                        data: {
+                            details: version.versionName,
+                            purpose: version.versionStatus,
+                            action: version,
+                            subrow: true,
+                            _id: version._id
+                        }
+                    });
+                }
+                this.data.push({
                     data: {
-                        details: version.versionName,
-                        domain: version.versionStatus,
-                        action: version,
-                        subrow: true,
-                        _id: version._id
-                    }
+                        _id: item._id,
+                        name: item.name,
+                        domain: item.domain,
+                        details: item.details,
+                        purpose: item.purpose,
+                        latestVersion: item.projectVersions[item.projectVersions.length - 1]?.versionName,
+                        status: item.projectVersions[item.projectVersions.length - 1]?.versionStatus,
+                        action: item,
+                        subrow: false
+                    },
+                    children
                 });
+                this.dataSource = this.dataSourceBuilder.create(this.data);
+            } else {
+                for (const version of item.projectVersions) {
+                    this.data.push({
+                        data: {
+                            _id: item._id,
+                            name: item.name,
+                            details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
+                            purpose: version.versionName,
+                            status: version.versionStatus,
+                            action: version,
+                            subrow: false,
+                            versionId: version._id
+                        }
+                    });
+                    this.dataSource = this.dataSourceBuilder.create(this.data);
+                }
             }
-            this.data.push({
-                data: {
-                    _id: item._id,
-                    name: item.name,
-                    domain: item.domain,
-                    details: item.details,
-                    propose: item.purpose,
-                    createdAt: item.createdAt,
-                    updatedAt: item.updatedAt,
-                    status: item.status,
-                    action: item,
-                    subrow: false
-                },
-                children
-            });
-            this.dataSource = this.dataSourceBuilder.create(this.data);
         }
     }
 
@@ -235,57 +293,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.editProjectDialogClose = editProjectDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close' && res.success) {
                 this.pageChange(1);
-            }
-        });
-    }
-    onDeleteProject(rowData: IProject): void {
-        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.DISABLE_PROJECT'), name: rowData.name }, hasBackdrop: true, closeOnBackdropClick: false });
-        this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
-            if (closeRes) {
-                this.manageProjectService.deleteProject(rowData._id as string).subscribe({
-                    next: (res) => {
-                        if (res && res.success) {
-                            this.utilsService.showToast('success', res?.message);
-                            this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
-                            this.totalRecords -= 1;
-                            if (this.tableData.length < 1) {
-                                this.dataFound = false;
-                                this.loading = false;
-                            } else {
-                                this.createTableData(this.tableData);
-                            }
-                        }
-                    },
-                    error: (err) => {
-                        this.utilsService.showToast('warning', err?.message);
-                    }
-                });
-            }
-        });
-    }
-
-    onEnableProject(rowData: IProject): void {
-        const deleteDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.ENABLE_PROJECT'), name: rowData.name }, hasBackdrop: true, closeOnBackdropClick: false });
-        this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
-            if (closeRes) {
-                this.manageProjectService.enableProject(rowData._id as string).subscribe({
-                    next: (res) => {
-                        if (res && res.success) {
-                            this.utilsService.showToast('success', res?.message);
-                            this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
-                            this.totalRecords -= 1;
-                            if (this.tableData.length < 1) {
-                                this.dataFound = false;
-                                this.loading = false;
-                            } else {
-                                this.createTableData(this.tableData);
-                            }
-                        }
-                    },
-                    error: (err) => {
-                        this.utilsService.showToast('warning', err?.message);
-                    }
-                });
             }
         });
     }

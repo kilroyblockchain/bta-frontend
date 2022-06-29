@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
+import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IAiModel, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
@@ -45,6 +46,8 @@ export class AiModelComponent implements OnInit {
     tableData!: Array<IAiModel>;
     loadingTable!: boolean;
 
+    canViewReview!: boolean;
+
     constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
@@ -52,12 +55,17 @@ export class AiModelComponent implements OnInit {
     ngOnInit(): void {
         this.pageChange(1);
         this.setTranslatedTableColumns();
+        this.checkAccess();
     }
 
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
         this.getVersionData();
+    }
+
+    async checkAccess(): Promise<void> {
+        this.canViewReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
     }
 
     navigateTo(URL: string, id: string): void {
