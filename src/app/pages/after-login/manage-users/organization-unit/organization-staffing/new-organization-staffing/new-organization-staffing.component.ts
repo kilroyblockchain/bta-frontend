@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbCheckboxComponent, NbDialogRef } from '@nebular/theme';
+import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
 import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IFeature, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
@@ -41,7 +42,14 @@ export class NewOrganizationStaffingComponent implements OnInit {
     masterSelected: boolean;
     @ViewChild('allSelected')
     allSelected!: NbCheckboxComponent;
+
+    @ViewChild('staffingName')
+    staffingName!: ElementRef;
+    updateStaffingName!: string;
+
     totalFeaturesCount = 0;
+
+    defaultStaffingName = [PROJECT_USER.AI_ENGINEER, PROJECT_USER.MLOps_ENGINEER, PROJECT_USER.STAKEHOLDER];
 
     constructor(private ref: NbDialogRef<NewOrganizationStaffingComponent>, private fb: FormBuilder, private readonly staffingService: StaffingService, private readonly manageUserService: ManageUserService, private readonly utilsService: UtilsService) {
         that = this;
@@ -66,8 +74,10 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     buildEditOrganizationStaffingForm(data: IChildrenRow): void {
+        const splitStaffingName = data.unitName.split('-');
+        this.updateStaffingName = splitStaffingName[1];
         this.newOrganizationStaffingForm.patchValue({
-            staffingName: data.unitName
+            staffingName: splitStaffingName[0]
         });
         this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
             featureId: access.featureId as string,
@@ -161,11 +171,19 @@ export class NewOrganizationStaffingComponent implements OnInit {
             this.accessListRequiredError = true;
             return;
         }
+
         this.accessListRequiredError = false;
         value.featureAndAccess = this.accessList;
         value.organizationUnitId = this.childRowData._id;
         this.loading = true;
         if (this.mode === 'CREATE') {
+            if (this.staffingName.nativeElement.value) {
+                this.newOrganizationStaffingForm.patchValue({
+                    staffingName: this.newOrganizationStaffingForm.get('staffingName')?.value + '-' + this.staffingName.nativeElement.value
+                });
+                value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
+            }
+
             this.staffingService.createNewStaffing(value).subscribe({ next: this.successRes, error: this.errorRes });
         }
 

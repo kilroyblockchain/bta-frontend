@@ -4,6 +4,7 @@ import { NbDialogService, NbMenuBag, NbMenuService, NbTreeGridDataSource, NbTree
 import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
+import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
 import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
@@ -32,6 +33,7 @@ interface FSEntry {
     latestVersion?: string;
     action: unknown;
     subrow: boolean;
+    versionId?: string;
 }
 
 @Component({
@@ -79,6 +81,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     user!: IUserRes;
     isCompanyAdmin!: boolean;
+    isAIEng!: boolean;
+    isMLOpsEng!: boolean;
+    isStakeHolder!: boolean;
 
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
@@ -122,8 +127,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['name', 'details', 'purpose', 'domain', ...(this.isCompanyAdmin ? ['latestVersion', 'status'] : []), 'action'];
-        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', ...(this.isCompanyAdmin ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.LATEST_VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []), 'COMMON.COLUMN_NAME.ACTION'];
+        this.columns = ['name', ...(this.isCompanyAdmin ? ['details', 'purpose', 'domain', 'latestVersion', 'status'] : []), ...(this.isAIEng ? ['details', 'purpose', 'domain'] : []), ...(this.isMLOpsEng || this.isStakeHolder ? ['details', 'purpose', 'status'] : []), 'action'];
+        this.columnNameKeys = [
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
+            ...(this.isCompanyAdmin ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.LATEST_VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            ...(this.isAIEng ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN'] : []),
+            ...(this.isMLOpsEng || this.isStakeHolder ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.AI_ENGINEER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            'COMMON.COLUMN_NAME.ACTION'
+        ];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
             this.columnsName = Object.values(data);
@@ -133,6 +144,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     getProjectUser(): void {
         this.user = this.authService.getUserDataSync();
         this.isCompanyAdmin = !!this.user.company.find((f) => f.companyId._id === this.user.companyId && f.isAdmin === true);
+
+        this.isAIEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.AI_ENGINEER.toLowerCase())));
+        this.isMLOpsEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.MLOps_ENGINEER.toLowerCase())));
+        this.isStakeHolder = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.STAKEHOLDER.toLowerCase())));
     }
 
     async checkAccess(): Promise<void> {
@@ -215,32 +230,50 @@ export class ProjectComponent implements OnInit, OnDestroy {
     createTableData(data: IProject[]): void {
         this.data = [];
         for (const item of data) {
-            const children = [];
-            for (const version of item.projectVersions) {
-                children.push({
+            if (this.isAIEng || this.isCompanyAdmin) {
+                const children = [];
+                for (const version of item.projectVersions) {
+                    children.push({
+                        data: {
+                            details: version.versionName,
+                            purpose: version.versionStatus,
+                            action: version,
+                            subrow: true,
+                            _id: version._id
+                        }
+                    });
+                }
+                this.data.push({
                     data: {
-                        details: version.versionName,
-                        purpose: version.versionStatus,
-                        action: version,
-                        subrow: true,
-                        _id: version._id
-                    }
+                        _id: item._id,
+                        name: item.name,
+                        domain: item.domain,
+                        details: item.details,
+                        purpose: item.purpose,
+                        latestVersion: item.projectVersions[item.projectVersions.length - 1].versionName,
+                        status: item.projectVersions[item.projectVersions.length - 1].versionStatus,
+                        action: item,
+                        subrow: false
+                    },
+                    children
                 });
+            } else {
+                for (const version of item.projectVersions) {
+                    this.data.push({
+                        data: {
+                            _id: item._id,
+                            name: item.name,
+                            details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
+                            purpose: version.versionName,
+                            status: version.versionStatus,
+                            action: version,
+                            subrow: false,
+                            versionId: version._id
+                        }
+                    });
+                }
             }
-            this.data.push({
-                data: {
-                    _id: item._id,
-                    name: item.name,
-                    domain: item.domain,
-                    details: item.details,
-                    purpose: item.purpose,
-                    latestVersion: item.projectVersions[item.projectVersions.length - 1].versionName,
-                    status: item.projectVersions[item.projectVersions.length - 1].versionStatus,
-                    action: item,
-                    subrow: false
-                },
-                children
-            });
+            this.totalRecords = this.data.length;
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
     }

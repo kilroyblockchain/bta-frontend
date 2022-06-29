@@ -47,11 +47,11 @@
                                 {{ row.data[column] | date: 'yyyy-MM-dd' }}
                             </div>
                             <div class="table-col" *ngSwitchCase="'action'">
-                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && canViewProjectDetails" (click)="viewProjectDetails(row.data[column])">
+                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && canViewProjectDetails && (isAIEng || isCompanyAdmin)" (click)="viewProjectDetails(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate" icon="eye-outline" pack="eva"> </nb-icon>
                                 </button>
 
-                                <button *ngIf="!row.data['subrow'] && canAddVersion" (click)="addNewProjectVersion(row.data[column])" nbSuffix nbButton ghost>
+                                <button *ngIf="!row.data['subrow'] && canAddVersion && (isAIEng || isCompanyAdmin)" (click)="addNewProjectVersion(row.data[column])" nbSuffix nbButton ghost>
                                     <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.ADD_VERSION' | translate" icon="plus-outline" pack="eva"> </nb-icon>
                                 </button>
 
@@ -59,7 +59,11 @@
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
 
-                                <button nbSuffix nbButton ghost *ngIf="row.data['subrow']" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
+                                <button nbSuffix nbButton ghost *ngIf="row.data['subrow'] && (isCompanyAdmin || isAIEng)" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
+                                    <nb-icon icon="more-vertical-outline"></nb-icon>
+                                </button>
+
+                                <button nbSuffix nbButton ghost *ngIf="!row.data['subrow'] && (isMLOpsEng || isStakeHolder)" nbContextMenuTag="versionMenu" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" (click)="openMenu(row.data['action'])">
                                     <nb-icon icon="more-vertical-outline"></nb-icon>
                                 </button>
                             </div>
