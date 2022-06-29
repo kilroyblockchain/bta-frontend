@@ -188,6 +188,12 @@ export class NewOrganizationStaffingComponent implements OnInit {
         }
 
         if (this.mode === 'EDIT') {
+            if (this.staffingName.nativeElement.value) {
+                this.newOrganizationStaffingForm.patchValue({
+                    staffingName: this.newOrganizationStaffingForm.get('staffingName')?.value + '-' + this.staffingName.nativeElement.value
+                });
+                value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
+            }
             this.staffingService.updateStaffingById(this.childRowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
         }
     }
