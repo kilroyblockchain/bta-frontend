@@ -230,50 +230,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
     createTableData(data: IProject[]): void {
         this.data = [];
         for (const item of data) {
-            if (this.isAIEng || this.isCompanyAdmin) {
-                const children = [];
-                for (const version of item.projectVersions) {
-                    children.push({
-                        data: {
-                            details: version.versionName,
-                            purpose: version.versionStatus,
-                            action: version,
-                            subrow: true,
-                            _id: version._id
-                        }
-                    });
-                }
-                this.data.push({
+            const children = [];
+            for (const version of item.projectVersions) {
+                children.push({
                     data: {
-                        _id: item._id,
-                        name: item.name,
-                        domain: item.domain,
-                        details: item.details,
-                        purpose: item.purpose,
-                        latestVersion: item.projectVersions[item.projectVersions.length - 1].versionName,
-                        status: item.projectVersions[item.projectVersions.length - 1].versionStatus,
-                        action: item,
-                        subrow: false
-                    },
-                    children
+                        details: version.versionName,
+                        purpose: version.versionStatus,
+                        action: version,
+                        subrow: true,
+                        _id: version._id
+                    }
                 });
-            } else {
-                for (const version of item.projectVersions) {
-                    this.data.push({
-                        data: {
-                            _id: item._id,
-                            name: item.name,
-                            details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
-                            purpose: version.versionName,
-                            status: version.versionStatus,
-                            action: version,
-                            subrow: false,
-                            versionId: version._id
-                        }
-                    });
-                }
             }
-            this.totalRecords = this.data.length;
+            this.data.push({
+                data: {
+                    _id: item._id,
+                    name: item.name,
+                    domain: item.domain,
+                    details: item.details,
+                    purpose: item.purpose,
+                    latestVersion: item.projectVersions[item.projectVersions.length - 1]?.versionName,
+                    status: item.projectVersions[item.projectVersions.length - 1]?.versionStatus,
+                    action: item,
+                    subrow: false
+                },
+                children
+            });
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
     }

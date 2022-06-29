@@ -67,7 +67,11 @@
                                     <nb-icon icon="more-vertical-outline"></nb-icon>
                                 </button>
                             </div>
-                            <div *ngSwitchDefault>{{ row.data[column] || '' }}</div>
+
+                            <div *ngSwitchDefault>
+                                <ng-container *ngIf="!row.data['subrow']">{{ row.data[column] || '-' }}</ng-container>
+                                <ng-container *ngIf="row.data['subrow']">{{ row.data[column] || '' }}</ng-container>
+                            </div>
                         </div>
                     </td>
                 </ng-container>
