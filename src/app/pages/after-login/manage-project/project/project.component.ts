@@ -73,6 +73,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canViewProjectDetails!: boolean;
     canAddVersion!: boolean;
     canViewVersionDetails!: boolean;
+    canViewModelReview!: boolean;
     canViewMonitoringReport!: boolean;
 
     menuItems: Array<MenuItem> = [];
@@ -160,7 +161,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         if (this.canViewVersionDetails) {
             this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
         }
-
+        this.canViewModelReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
+        if (this.canViewModelReview) {
+            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') });
+        }
         this.canViewMonitoringReport = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.READ]);
         if (this.canViewMonitoringReport) {
             this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
@@ -231,7 +235,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.data = [];
 
         for (const item of data) {
-            if (this.isCompanyAdmin && this.isAIEng) {
+            if (this.isCompanyAdmin || this.isAIEng) {
                 const children = [];
                 for (const version of item.projectVersions) {
                     children.push({
@@ -274,6 +278,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         }
                     });
                     this.dataSource = this.dataSourceBuilder.create(this.data);
+                    this.totalRecords = this.data.length;
                 }
             }
         }
@@ -332,6 +337,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         case 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT':
                             this.viewVersionReports(this.rowVersion);
                             break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
+                            this.viewModelReviews(this.rowVersion);
+                            break;
                         default:
                             break;
                     }
@@ -355,6 +363,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     viewVersionReports(versionData: IProjectVersion): void {
         const URL = '/u/manage-project/version-reports';
+        this.navigateTo(URL, versionData._id);
+    }
+
+    viewModelReviews(versionData: IProjectVersion): void {
+        const URL = 'u/manage-project/model-reviews';
         this.navigateTo(URL, versionData._id);
     }
 }

@@ -69,5 +69,6 @@ export const URLConstant = {
     versionReportsURL: '/version-reports',
     getVersionAllExpURL: '/ai-model/all',
     getExperimentDetailsURL: '/ai-model/expDetails',
-    getExperimentInfoURL: '/ai-model/expInfo'
+    getExperimentInfoURL: '/ai-model/expInfo',
+    modelReviewURL: '/model-reviews'
 };

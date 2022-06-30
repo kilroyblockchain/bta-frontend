@@ -1,0 +1,46 @@
+:host nb-tab {
+    padding: 1.25rem;
+}
+
+::ng-deep {
+    nb-card {
+        nb-card {
+            width: 100% !important;
+
+            nb-card-body {
+                display: block;
+            }
+        }
+    }
+}
+
+.rating {
+    font-size: 1.1rem;
+    color: #fa0;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffd684;
+    }
+}
+
+.default {
+    font-size: 1.1rem;
+    color: #b1b1b1;
+    cursor: pointer;
+
+    &:hover {
+        color: #fdc960;
+    }
+}
+
+.dialog-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.docs {
+    cursor: pointer;
+    margin: 2px;
+}

@@ -20,10 +20,13 @@ export interface IProjectVersion {
     versionName: string;
     logFilePath: string;
     logFileVersion: string;
+    logFileBCHash?: string;
     versionModel: string;
     noteBookVersion: string;
     trainDataSets: string;
+    trainDatasetBCHash?: string;
     testDataSets: string;
+    testDatasetBCHash?: string;
     artifacts: string;
     codeVersion: string;
     codeRepo: string;
@@ -37,24 +40,28 @@ export interface IProjectVersion {
 }
 
 export enum VersionStatus {
-    PENDING = 'PENDING',
-    PROCESSING = 'PROCESSING',
-    ACCEPT = 'ACCEPT',
-    DECLINE = 'DECLINE'
+    PENDING = 'Pending',
+    REVIEW = 'Reviewing',
+    REVIEW_PASSED = 'Review Passed',
+    REVIEW_FAILED = 'Review Failed',
+    PRODUCTION = 'Production',
+    DEPLOYED = 'Deployed',
+    MONITORING = 'Monitoring',
+    COMPLETE = 'Complete'
 }
 
 export interface IMonitoringReport {
     _id: string;
     subject: string;
     description: string;
-    documents: Array<IReportDocs>;
+    documents: Array<IDocuments>;
     updatedAt: Date;
     createdAt: Date;
     version: IProjectVersion;
     createdBy: IUserRes;
 }
 
-interface IReportDocs {
+interface IDocuments {
     _id?: string;
     docURL: string;
     docName: string;
@@ -103,4 +110,21 @@ export interface ITestMetrics {
     test_recall: string;
     test_precision: string;
     test_loss: string;
+}
+
+export interface IModelReview {
+    _id: string;
+    comment: string;
+    status: string;
+    rating: number;
+    version: IProjectVersion;
+    documents: Array<IDocuments>;
+    reviewModel: IProjectVersion;
+    deployedModelURL: string;
+    deployedModelInstruction: string;
+    productionURL: string;
+    createdBy: IUserRes;
+    staffing: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

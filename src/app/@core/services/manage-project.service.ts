@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
-import { IAiModel, IAiModelExp, IMonitoringReport, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
+import { IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -55,5 +55,13 @@ export class ManageProjectService {
 
     getExperimentInfo(experimentId: string): Observable<IAppResponse<IAiModel>> {
         return this.http.get(URLConstant.getExperimentInfoURL + `/${experimentId}`);
+    }
+
+    addModelReview(versionId: string, data: FormData, hasFormData = true): Observable<IAppResponse<IModelReview>> {
+        return this.http.post(URLConstant.modelReviewURL + `/${versionId}`, data, hasFormData);
+    }
+
+    getModelReview(query: { [key: string]: unknown }, versionId: string): Observable<IAppResponse<IPaginateResult<IModelReview>>> {
+        return this.http.get(URLConstant.modelReviewURL + `/${versionId}`, query);
     }
 }

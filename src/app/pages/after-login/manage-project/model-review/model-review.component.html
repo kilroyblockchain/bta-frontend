@@ -1,0 +1,154 @@
+<nb-card class="medium-card-width">
+    <nb-card-body>
+        <nb-tabset fullWidth>
+            <nb-tab tabTitle="{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TAB_TITLE.MODEL_DETAILS' | translate }}">
+                <nb-card>
+                    <nb-card-body>
+                        <div *ngIf="dataFound">
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+                                <span> {{ versionData?.versionName }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
+                                <span> {{ versionData?.logFilePath }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}: </strong>
+                                <span>{{ versionData?.logFileVersion }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}: </strong>
+                                <span> {{ versionData?.logFileBCHash || 'N/a' }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}: </strong>
+                                <span>{{ versionData?.versionModel }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
+                                <span>{{ versionData?.noteBookVersion }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
+                                <span>{{ versionData?.trainDataSets }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}: </strong>
+                                <span>{{ versionData?.trainDatasetBCHash || 'N/a' }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
+                                <span>{{ versionData?.testDataSets || 'N/a' }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}: </strong>
+                                <span>{{ versionData?.testDatasetBCHash || 'N/a' }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.ARTIFACTS' | translate }}: </strong>
+                                <span>{{ versionData?.artifacts }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
+                                <span>{{ versionData?.codeRepo }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
+                                <span>{{ versionData?.codeVersion }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}: </strong>
+                                <span>{{ versionData?.versionStatus }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong>
+                                <span>{{ versionData?.comment }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong>
+                                <span>{{ versionData?.createdAt | date: 'fullDate' }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong> {{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}: </strong>
+                                <span>{{ versionData?.updatedAt | date: 'fullDate' }}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="!dataFound && loading">
+                            <app-loader></app-loader>
+                        </div>
+                        <div *ngIf="!dataFound && !loading">
+                            <app-data-not-found></app-data-not-found>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </nb-tab>
+            <nb-tab tabTitle="{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TAB_TITLE.REVIEWS' | translate }}" [active]="true">
+                <nb-card>
+                    <nb-card-header>
+                        <section class="dialog-head">
+                            <h4>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.ALL_REVIEWS' | translate }}</h4>
+                        </section>
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin">
+                            <button nbButton hero status="primary" size="small">
+                                <nb-icon icon="plus-circle-outline"></nb-icon>
+                                {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
+                            </button>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <div>
+                            <ng-container *ngFor="let review of modelReviews">
+                                <nb-card>
+                                    <nb-card-body>
+                                        <p>
+                                            <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_STATUS' | translate }}:</strong>
+                                            {{ review.status }}
+                                        </p>
+                                        <div>
+                                            <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_RATING' | translate }}:&nbsp;</strong>
+                                            <ng-container *ngFor="let total of totalRating(); let i = index">
+                                                <nb-icon [ngClass]="i < createRange(review.rating).length ? 'rating' : 'default'" icon="star" pack="eva"> </nb-icon>
+                                            </ng-container>
+                                        </div>
+                                        <p>
+                                            <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_COMMENT' | translate }}:</strong>
+                                            {{ review.comment }}
+                                        </p>
+                                        <p *ngIf="review.documents.length">
+                                            <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_DOCUMENTS' | translate }}:</strong>
+                                        </p>
+                                        <p>
+                                            <ng-container *ngFor="let docs of review.documents; let i = index">
+                                                <a (click)="openDocs(docs.docURL)">
+                                                    <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"> </nb-tag>
+                                                </a>
+                                            </ng-container>
+                                        </p>
+                                        <p>
+                                            <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATED_AT' | translate }}:</strong>
+                                            {{ review.createdAt | date: 'yyyy-MM-dd, h:mm:ss' }}
+                                        </p>
+                                        <p>
+                                            <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATED_BY' | translate }}</strong> {{ review.createdBy.firstName }}&nbsp;{{ review.createdBy.lastName }}
+                                        </p>
+                                        <p>
+                                            <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.STAFFING_NAME' | translate }}:</strong>
+                                            {{ review.staffing }}
+                                        </p>
+                                    </nb-card-body>
+                                </nb-card>
+                            </ng-container>
+                            <div *ngIf="!reviewData && loading">
+                                <app-loader></app-loader>
+                            </div>
+                            <div *ngIf="!reviewData && !loading">
+                                <app-data-not-found></app-data-not-found>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

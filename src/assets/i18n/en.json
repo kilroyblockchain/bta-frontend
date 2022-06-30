@@ -611,17 +611,22 @@
             "CHANNEL_DETAIL": "Channel Detail",
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
-            "EXPERIMENT_DETAILS": "Experiment Details"
+            "EXPERIMENT_DETAILS": "Experiment Details",
+            "MODEL_REVIEWS": "Model Reviews"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
-            "VERSION_DETAILS": "Version Details"
+            "VERSION_DETAILS": "Version Details",
+            "MODEL_REVIEWS": "Reviews"
         },
         "COMMON": {
             "LABEL": {
                 "DATA_SCIENTIST": "Data Scientist",
                 "MODEL_DETAILS": "Model Details",
-                "VERSION_DETAILS": "Version Details"
+                "VERSION_DETAILS": "Version Details",
+                "CREATED_BY": "Created By",
+                "CREATED_AT": "Created At",
+                "STAFFING_NAME": "Staffing"
             }
         },
         "PROJECT": {
@@ -693,8 +698,11 @@
                 "VERSION_MODEL": "Version Model",
                 "LOG_FILE_PATH": "Log File Path",
                 "LOG_FILE_VERSION": "Log File Version",
+                "LOG_FILE_BC_HASH": "Log File BC Hash",
                 "TEST_DATA_SETS": "Test Data Sets",
-                "TRAIN_DATA_SETS": "Train Data sets",
+                "TEST_DATA_SETS_BC_HASH": "Test DataSets BC Hash",
+                "TRAIN_DATA_SETS": "Train Data Sets",
+                "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
                 "ARTIFACTS": "Artifacts",
                 "CODE_REPO": "Code Repo",
@@ -765,6 +773,24 @@
                 "TRAIN_F1_SCORE": "Train F1 Score",
                 "TRAIN_PRECISION": "Train Precision",
                 "TRAIN_RECALL": "Train Recall"
+            }
+        },
+        "MODEL_REVIEW": {
+            "TITLE": {
+                "ALL_REVIEWS": "All Reviews"
+            },
+            "TAB_TITLE": {
+                "MODEL_DETAILS": "Model Details",
+                "REVIEWS": "REVIEWS"
+            },
+            "BUTTON": {
+                "ADD_REVIEW": "Add Review"
+            },
+            "LABEL": {
+                "REVIEW_COMMENT": "Comment",
+                "REVIEW_STATUS": "Status",
+                "REVIEW_DOCUMENTS": "Documents",
+                "REVIEW_RATING": "Rating"
             }
         }
     }
