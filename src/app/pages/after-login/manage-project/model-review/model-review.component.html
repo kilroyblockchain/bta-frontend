@@ -135,26 +135,22 @@
                                             <p>
                                                 <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED_MODEL_URL' | translate }}: </strong>
                                                 <a [href]="review.deployedModelURL" target="”_blank”">{{ review.deployedModelURL }}</a>
-                                            </p></ng-container
-                                        >
+                                            </p>
+                                        </ng-container>
 
                                         <ng-container *ngIf="review.deployedModelInstruction">
                                             <p>
                                                 <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED_MODEL_INSTRUCTION' | translate }}: </strong>
                                                 {{ review.deployedModelInstruction }}
                                             </p>
-
-                                            <p></p
-                                        ></ng-container>
+                                        </ng-container>
 
                                         <ng-container *ngIf="review.productionURL">
                                             <p>
                                                 <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION_URL' | translate }}: </strong>
                                                 <a [href]="review.productionURL" target="”_blank”">{{ review.productionURL }}</a>
                                             </p>
-
-                                            <p></p
-                                        ></ng-container>
+                                        </ng-container>
 
                                         <p>
                                             <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATED_AT' | translate }}:</strong>
