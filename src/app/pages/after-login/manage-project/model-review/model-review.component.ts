@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
-import { IModelReview, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IModelReview, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, FileService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
+import { AddModelReviewComponent } from './add-review/add-review.component';
 
 @Component({
     selector: 'app-model-component',
@@ -28,15 +31,19 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     totalRecords = 0;
 
     isCompanyAdmin!: boolean;
-    isAIEng!: boolean;
-    isMLOpsEng!: boolean;
     isStakeHolder!: boolean;
 
     canAddReview!: boolean;
 
+    isReviewStatusPending!: boolean;
+    isReviewStatusReviewing!: boolean;
+    isReviewStatusPass!: boolean;
+    isReviewStatusMonitoring!: boolean;
+    isReviewStatusComplete!: boolean;
+
     newReviewDialogClose!: Subscription;
 
-    constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
+    constructor(private dialogService: NbDialogService, private router: Router, private activeRoute: ActivatedRoute, private translate: TranslateService, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
         this.getProjectUser();
     }
 
@@ -49,8 +56,6 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
         this.user = this.authService.getUserDataSync();
 
         this.isCompanyAdmin = !!this.user.company.find((f) => f.companyId._id === this.user.companyId && f.isAdmin === true);
-        this.isAIEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.AI_ENGINEER.toLowerCase())));
-        this.isMLOpsEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.MLOps_ENGINEER.toLowerCase())));
         this.isStakeHolder = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.STAKEHOLDER.toLowerCase())));
     }
 
@@ -60,6 +65,14 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.newReviewDialogClose ? this.newReviewDialogClose.unsubscribe() : null;
+    }
+
+    checkModelStatus(versionStatus: string): void {
+        this.isReviewStatusPending = versionStatus === VersionStatus.PENDING;
+        this.isReviewStatusReviewing = versionStatus === VersionStatus.REVIEW;
+        this.isReviewStatusPass = versionStatus === VersionStatus.REVIEW_PASSED;
+        this.isReviewStatusMonitoring = versionStatus === VersionStatus.MONITORING;
+        this.isReviewStatusComplete = versionStatus === VersionStatus.COMPLETE;
     }
 
     pageChange(pageNumber: number): void {
@@ -93,6 +106,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
                             this.dataFound = false;
                         } else {
                             this.versionData = data;
+                            this.checkModelStatus(this.versionData.versionStatus);
                             this.dataFound = true;
                         }
                     } else {
@@ -153,5 +167,23 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
             window.open(url);
             urlCreator.revokeObjectURL(url);
         });
+    }
+
+    addNewReviewModal(versionData: IProjectVersion): void {
+        if (this.isStakeHolder && (this.isReviewStatusPending || this.isReviewStatusReviewing || this.isReviewStatusPass)) {
+            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.MODEL_REVIEW.ALERT_MSG.MODEL_NOT_DEPLOYED_YET') }, hasBackdrop: true, closeOnBackdropClick: false });
+        } else {
+            const newReviewDialogOpen = this.dialogService.open(AddModelReviewComponent, { context: { versionData }, hasBackdrop: true, closeOnBackdropClick: false });
+            this.newReviewDialogClose = newReviewDialogOpen.onClose.subscribe((res) => {
+                if (res && res !== 'close') {
+                    this.pageChange(1);
+                }
+            });
+        }
+    }
+
+    openReviewDetails(modelReviewId: string): void {
+        const URL = '/u/manage-project/version-details';
+        this.router.navigate([URL, modelReviewId]);
     }
 }

@@ -64,4 +64,8 @@ export class ManageProjectService {
     getModelReview(query: { [key: string]: unknown }, versionId: string): Observable<IAppResponse<IPaginateResult<IModelReview>>> {
         return this.http.get(URLConstant.modelReviewURL + `/${versionId}`, query);
     }
+
+    addNewModelReview(versionData: IProjectVersion, projectId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.post(URLConstant.addNewModelReviewURL + `/${projectId}`, versionData);
+    }
 }

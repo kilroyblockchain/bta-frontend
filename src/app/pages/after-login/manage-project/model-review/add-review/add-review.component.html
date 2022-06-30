@@ -1,0 +1,278 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.MODEL_REVIEW' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton (click)="closeModel()">
+                <nb-icon icon="close-circle-outline" pack="eva"> </nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-tabset fullWidth>
+            <nb-tab tabTitle="{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TAB_TITLE.REVIEWS' | translate }}" [active]="!showModelReview">
+                <nb-card>
+                    <nb-card-body>
+                        <form class="form-container" [formGroup]="addReviewForm">
+                            <div class="form-inner-container" *ngIf="isReviewStatusPending && !isStakeHolder">
+                                <div class="form-holder">
+                                    <input type="checkbox" id="status" [value]="versionStatus.REVIEW" formControlName="reviewStatus" (change)="checkBoxValue($event)" [ngClass]="{ 'status-danger': rSubmitted && RF['status'].errors }" />
+                                    <label for="status">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.MODEL_REVIEW_STATUS' | translate }}
+                                    </label>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container" *ngIf="isReviewStatusReviewing && !isStakeHolder">
+                                <div class="form-holder">
+                                    <label for="status" class="label">
+                                        {{ '*' + ('MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_STATUS' | translate) }}
+                                    </label>
+                                    <nb-select fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.REVIEW_STATUS' | translate)" id="status" formControlName="status" [ngClass]="{ 'status-danger': rSubmitted && RF['status'].errors }">
+                                        <nb-option [value]="versionStatus.REVIEW_PASSED">{{ versionStatus.REVIEW_PASSED }}</nb-option>
+                                        <nb-option [value]="versionStatus.REVIEW_FAILED">{{ versionStatus.REVIEW_FAILED }}</nb-option>
+                                    </nb-select>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']"> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container" *ngIf="isReviewStatusPass && !isStakeHolder">
+                                <div class="form-holder">
+                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.DEPLOYED" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
+                                    <label for="reviewStatus">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED' | translate }}
+                                    </label>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="addReviewForm.value.status === versionStatus.DEPLOYED && !isStakeHolder">
+                                <div class="form-inner-container">
+                                    <div class="form-holder floating">
+                                        <input nbInput fullWidth id="deployedModelURL" formControlName="deployedModelURL" [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.DEPLOYED_MODEL_URL' | translate)" [ngClass]="{ 'status-danger': rSubmitted && !RF['deployedModelURL']?.value }" />
+                                        <label for="deployedModelURL" [attr.data-content]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED_MODEL_URL' | translate)"></label>
+                                        <div *ngIf="rSubmitted && !RF['deployedModelURL']?.value" class="invalid-feedback">
+                                            <span>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.DEPLOYED_MODEL_URL' | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-inner-container">
+                                    <div class="form-holder">
+                                        <textarea name="deployedModelInstruction" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.DEPLOYED_MODEL_INSTRUCTION' | translate)" formControlName="deployedModelInstruction" [ngClass]="{ 'status-danger': rSubmitted && RF['comment'].errors }"></textarea>
+                                        <div *ngIf="rSubmitted && !RF['deployedModelInstruction']?.value" class="invalid-feedback">
+                                            <span>
+                                                {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.DEPLOYED_MODEL_INSTRUCTION' | translate }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="form-inner-container" *ngIf="isReviewStatusDeployed && !isStakeHolder">
+                                <div class="form-holder">
+                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.PRODUCTION" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
+                                    <label for="reviewStatus">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION' | translate }}
+                                    </label>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="addReviewForm.value.status === versionStatus.PRODUCTION && !isStakeHolder">
+                                <div class="form-holder floating">
+                                    <input nbInput fullWidth id="productionURL" formControlName="productionURL" [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.PRODUCTION_URL' | translate)" [ngClass]="{ 'status-danger': rSubmitted && !RF['productionURL']?.value }" />
+                                    <label for="productionURL" [attr.data-content]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION_URL' | translate)"> </label>
+                                    <div *ngIf="rSubmitted && !RF['productionURL']?.value" class="invalid-feedback">
+                                        <span>
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.PRODUCTION_URL' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="form-inner-container" *ngIf="isReviewStatusProduction && !isStakeHolder">
+                                <div class="form-holder">
+                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.MONITORING" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
+                                    <label for="reviewStatus">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.MONITORING' | translate }}
+                                    </label>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container" *ngIf="isReviewStatusMonitoring && isStakeHolder">
+                                <div class="form-holder">
+                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.COMPLETE" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
+                                    <label for="reviewStatus">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.COMPLETE' | translate }}
+                                    </label>
+                                    <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.MODEL_REVIEW_STATUS' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!isReviewStatusPending">
+                                <div class="form-inner-container">
+                                    <div class="form-holder floating file-names">
+                                        <input name="documents" nbInput type="file" #fileInput multiple fullWidth (change)="onFilesChange($event)" />
+                                        <label for="documents" [attr.data-content]="'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_SUPPORTING_DOCUMENTS' | translate"> </label>
+                                    </div>
+                                    <nb-tag-list (tagRemove)="onTagRemove($event)">
+                                        <nb-tag *ngFor="let file of myFiles; let i = index" [text]="i + 1 + '.' + file.name" [removable]="myFiles.length > 0"> </nb-tag>
+                                    </nb-tag-list>
+                                </div>
+
+                                <div class="form-inner-container">
+                                    <div class="form-holder">
+                                        <p class="label">{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_RATING' | translate }}</p>
+                                        <ul *ngFor="let value of ratings; let i = index">
+                                            <li>
+                                                <label>
+                                                    <input name="rating" type="radio" [value]="toggleValue" hidden formControlName="rating" />
+                                                    <nb-icon [ngClass]="i < toggleValue ? 'rating' : 'default'" icon="star" pack="eva" (click)="toggle(value)"> </nb-icon>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container">
+                                <div class="form-holder floating">
+                                    <textarea name="comment" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.COMMENT' | translate)" formControlName="comment" [ngClass]="{ 'status-danger': rSubmitted && RF['comment'].errors }"></textarea>
+                                    <div *ngIf="rSubmitted && RF['comment'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.COMMENT' | translate }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </nb-card-body>
+                </nb-card>
+            </nb-tab>
+
+            <nb-tab tabTitle="Model Review" [disabled]="!showModelReview" [active]="showModelReview">
+                <nb-card>
+                    <nb-card-body>
+                        <form class="form-container" [formGroup]="addModelReviewForm">
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder floating">
+                                    <input name="versionName" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NAME' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
+                                    <label for="versionName" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                                    <div *ngIf="submitted && UF['versionName'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_NAME' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-holder floating">
+                                <input name="versionModel" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_MODEL' | translate)" formControlName="versionModel" [ngClass]="{ 'status-danger': submitted && UF['versionModel'].errors }" />
+                                <label for="versionModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate)"></label>
+                                <div *ngIf="submitted && UF['versionModel'].errors as err" class="invalid-feedback">
+                                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_MODEL' | translate }}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder floating">
+                                    <input name="logFilePath" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_PATH' | translate)" formControlName="logFilePath" [ngClass]="{ 'status-danger': submitted && UF['logFilePath'].errors }" />
+                                    <label for="logFilePath" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate)"></label>
+                                    <div *ngIf="submitted && UF['logFilePath'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.LOG_FILE_PATH' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-holder floating">
+                                <input name="logFileVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_VERSION' | translate)" formControlName="logFileVersion" [ngClass]="{ 'status-danger': submitted && UF['logFileVersion'].errors }" />
+                                <label for="logFileVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate)"></label>
+                                <div *ngIf="submitted && UF['logFileVersion'].errors as err" class="invalid-feedback">
+                                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.LOG_FILE_VERSION' | translate }}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder floating">
+                                    <input name="testDataSets" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TEST_DATA_SETS' | translate)" formControlName="testDataSets" [ngClass]="{ 'status-danger': submitted && UF['testDataSets'].errors, 'status-warning': !submitted }" />
+                                    <label for="testDataSets" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate)"></label>
+                                    <div *ngIf="submitted && UF['testDataSets'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.TEST_DATA_SETS' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-holder floating">
+                                <input name="noteBookVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.NOTE_BOOK_VERSION' | translate)" formControlName="noteBookVersion" [ngClass]="[submitted && UF['noteBookVersion'].errors] ? 'status-danger' : 'status-warning'" />
+                                <label for="noteBookVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate)"></label>
+                                <div *ngIf="submitted && UF['noteBookVersion'].errors as err" class="invalid-feedback">
+                                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.NOTE_BOOK_VERSION' | translate }}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container two-col">
+                                <div class="form-holder floating">
+                                    <input name="codeRepo" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_REPO' | translate)" formControlName="codeRepo" [ngClass]="{ 'status-danger': submitted && UF['codeRepo'].errors }" />
+                                    <label for="codeRepo" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate)"></label>
+                                    <div *ngIf="submitted && UF['codeRepo'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_REPO' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-holder floating">
+                                <input name="codeVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
+                                <label for="codeVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate)"></label>
+                                <div *ngIf="submitted && UF['codeVersion'].errors as err" class="invalid-feedback">
+                                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_VERSION' | translate }}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-inner-container">
+                                <div class="form-holder floating">
+                                    <textarea name="comment" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.COMMENT' | translate)" formControlName="comment" [ngClass]="{ 'status-danger': submitted && UF['comment'].errors }"></textarea>
+                                    <div *ngIf="submitted && UF['comment'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.COMMENT' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </nb-card-body>
+                </nb-card>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type=" submit" (click)="saveNewReview(addReviewForm)" *ngIf="!RF['reviewStatus'].value || RF['status']?.value !== versionStatus.DEPLOYED || isStakeHolder">
+            {{ 'COMMON.BUTTON.SAVE' | translate }}
+        </button>
+        <button nbButton hero status="primary" type="submit" (click)="openModelReviewTab(addReviewForm)" *ngIf="RF['status']?.value === versionStatus.DEPLOYED && !isStakeHolder && !showModelReview">
+            {{ 'Add Review Model' | translate }}
+        </button>
+        <button nbButton hero status="primary" [hidden]="!showModelReview" type="submit" (click)="addReviewVersion()">
+            {{ 'COMMON.BUTTON.SAVE' | translate }}
+        </button>
+    </nb-card-footer>
+</nb-card>

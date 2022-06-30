@@ -777,20 +777,49 @@
         },
         "MODEL_REVIEW": {
             "TITLE": {
-                "ALL_REVIEWS": "All Reviews"
+                "ALL_REVIEWS": "All Reviews",
+                "MODEL_REVIEW": "Model Review"
             },
             "TAB_TITLE": {
                 "MODEL_DETAILS": "Model Details",
                 "REVIEWS": "REVIEWS"
             },
             "BUTTON": {
-                "ADD_REVIEW": "Add Review"
+                "ADD_REVIEW": "Add Review",
+                "NEW_REVIEW": "New Review"
             },
             "LABEL": {
                 "REVIEW_COMMENT": "Comment",
                 "REVIEW_STATUS": "Status",
                 "REVIEW_DOCUMENTS": "Documents",
-                "REVIEW_RATING": "Rating"
+                "REVIEW_RATING": "Rating",
+                "MODEL_REVIEW_STATUS": "Review Status",
+                "DEPLOYED": "Deployed",
+                "DEPLOYED_MODEL_URL": "Deployed Model URL",
+                "DEPLOYED_MODEL_INSTRUCTION": "Deployed Model Instruction",
+                "PRODUCTION": "Production",
+                "PRODUCTION_URL": "Production URL",
+                "MONITORING": "Monitoring",
+                "COMPLETE": "Complete",
+                "REVIEW_SUPPORTING_DOCUMENTS": "Review Supporting Documents",
+                "REVIEW_MODEL_DETAILS": "Review Model Details"
+            },
+            "PLACEHOLDER": {
+                "REVIEW_STATUS": "Status",
+                "DEPLOYED_MODEL_URL": "Deployed Model URL",
+                "DEPLOYED_MODEL_INSTRUCTION": "Deployed Model Instruction",
+                "PRODUCTION_URL": "Production URL",
+                "COMMENT": "Comment"
+            },
+            "VALIDATIONS": {
+                "MODEL_REVIEW_STATUS": "Review status is required",
+                "DEPLOYED_MODEL_URL": "Deployed model URL is required",
+                "DEPLOYED_MODEL_INSTRUCTION": "Deployed model instruction is required",
+                "PRODUCTION_URL": "'Production URL is required",
+                "COMMENT": "Comment is required"
+            },
+            "ALERT_MSG": {
+                "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
             }
         }
     }

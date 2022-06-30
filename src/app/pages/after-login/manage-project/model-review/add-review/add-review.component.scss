@@ -1,0 +1,55 @@
+.dialog-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+:host nb-tab {
+    padding: 1.25rem;
+}
+
+::ng-deep {
+    nb-card {
+        nb-card {
+            width: 100% !important;
+
+            nb-card-body {
+                display: block;
+            }
+        }
+    }
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+}
+
+.label {
+    color: #727272;
+}
+
+.rating {
+    font-size: 1.5rem;
+    color: #fa0;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffd684;
+    }
+}
+
+.default {
+    font-size: 1.5rem;
+    color: #b1b1b1;
+    cursor: pointer;
+
+    &:hover {
+        color: #fdc960;
+    }
+}
+
+.file-names {
+    margin-bottom: 1px;
+}

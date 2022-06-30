@@ -89,8 +89,14 @@
                         <section class="dialog-head">
                             <h4>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.ALL_REVIEWS' | translate }}</h4>
                         </section>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin">
-                            <button nbButton hero status="primary" size="small">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder">
+                            <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
+                                <nb-icon icon="plus-circle-outline"></nb-icon>
+                                {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
+                            </button>
+                        </div>
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete">
+                            <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
                             </button>
@@ -125,6 +131,31 @@
                                                 </a>
                                             </ng-container>
                                         </p>
+                                        <ng-container *ngIf="review.deployedModelURL">
+                                            <p>
+                                                <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED_MODEL_URL' | translate }}: </strong>
+                                                <a [href]="review.deployedModelURL" target="”_blank”">{{ review.deployedModelURL }}</a>
+                                            </p></ng-container
+                                        >
+
+                                        <ng-container *ngIf="review.deployedModelInstruction">
+                                            <p>
+                                                <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DEPLOYED_MODEL_INSTRUCTION' | translate }}: </strong>
+                                                {{ review.deployedModelInstruction }}
+                                            </p>
+
+                                            <p></p
+                                        ></ng-container>
+
+                                        <ng-container *ngIf="review.productionURL">
+                                            <p>
+                                                <strong> {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION_URL' | translate }}: </strong>
+                                                <a [href]="review.productionURL" target="”_blank”">{{ review.productionURL }}</a>
+                                            </p>
+
+                                            <p></p
+                                        ></ng-container>
+
                                         <p>
                                             <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATED_AT' | translate }}:</strong>
                                             {{ review.createdAt | date: 'yyyy-MM-dd, h:mm:ss' }}
@@ -136,6 +167,13 @@
                                             <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.STAFFING_NAME' | translate }}:</strong>
                                             {{ review.staffing }}
                                         </p>
+                                        <ng-container *ngIf="review.reviewModel">
+                                            <p>
+                                                <a (click)="openReviewDetails(review.reviewModel)" nbButton>
+                                                    {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_MODEL_DETAILS' | translate }}
+                                                </a>
+                                            </p>
+                                        </ng-container>
                                     </nb-card-body>
                                 </nb-card>
                             </ng-container>

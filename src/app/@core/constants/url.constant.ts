@@ -70,5 +70,6 @@ export const URLConstant = {
     getVersionAllExpURL: '/ai-model/all',
     getExperimentDetailsURL: '/ai-model/expDetails',
     getExperimentInfoURL: '/ai-model/expInfo',
-    modelReviewURL: '/model-reviews'
+    modelReviewURL: '/model-reviews',
+    addNewModelReviewURL: '/model-reviews/add-model'
 };

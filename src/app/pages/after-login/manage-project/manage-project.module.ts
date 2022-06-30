@@ -20,8 +20,27 @@ import { NewMonitoringReportComponent } from './monitoring-report/new-monitoring
 import { AiModelComponent } from './ai-model/ai-model.component';
 import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/view-ai-model-details.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
+import { AddModelReviewComponent } from './model-review/add-review/add-review.component';
 
-const PAGE_COMPONENT = [ManageProjectComponent, ChannelSetUpComponent, NewChannelComponent, EditChannelComponent, ProjectComponent, AddProjectComponent, EditProjectComponent, ViewProjectComponent, ProjectVersionComponent, AddVersionComponent, ViewProjectVersionComponent, MonitoringReportComponent, NewMonitoringReportComponent, AiModelComponent, ViewAiModelDetailsComponent, ModelReviewComponent];
+const PAGE_COMPONENT = [
+    ManageProjectComponent,
+    ChannelSetUpComponent,
+    NewChannelComponent,
+    EditChannelComponent,
+    ProjectComponent,
+    AddProjectComponent,
+    EditProjectComponent,
+    ViewProjectComponent,
+    ProjectVersionComponent,
+    AddVersionComponent,
+    ViewProjectVersionComponent,
+    MonitoringReportComponent,
+    NewMonitoringReportComponent,
+    AiModelComponent,
+    ViewAiModelDetailsComponent,
+    ModelReviewComponent,
+    AddModelReviewComponent
+];
 
 @NgModule({
     imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

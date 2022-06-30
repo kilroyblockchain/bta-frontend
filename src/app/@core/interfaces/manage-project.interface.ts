@@ -119,7 +119,7 @@ export interface IModelReview {
     rating: number;
     version: IProjectVersion;
     documents: Array<IDocuments>;
-    reviewModel: IProjectVersion;
+    reviewModel: string;
     deployedModelURL: string;
     deployedModelInstruction: string;
     productionURL: string;
