@@ -4,6 +4,7 @@ import { AiModelComponent } from './ai-model/ai-model.component';
 import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/view-ai-model-details.component';
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
+import { ModelReviewComponent } from './model-review/model-review.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 import { ProjectComponent } from './project/project.component';
 
@@ -36,6 +37,11 @@ const routes: Routes = [
                 path: 'logs-experiment-detail/:id',
                 component: ViewAiModelDetailsComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.EXPERIMENT_DETAILS' }
+            },
+            {
+                path: 'model-reviews/:id',
+                component: ModelReviewComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.MODEL_REVIEWS' }
             }
         ]
     }

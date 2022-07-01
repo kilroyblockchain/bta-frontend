@@ -175,4 +175,9 @@ export class AiModelComponent implements OnInit {
         const URL = '/u/manage-project/logs-experiment-detail';
         this.navigateTo(URL, rowId);
     }
+
+    viewModelReviews(modelId: string): void {
+        const URL = 'u/manage-project/model-reviews';
+        this.navigateTo(URL, modelId);
+    }
 }

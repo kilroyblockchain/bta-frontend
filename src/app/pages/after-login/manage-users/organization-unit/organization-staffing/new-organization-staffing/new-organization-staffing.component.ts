@@ -74,10 +74,11 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     buildEditOrganizationStaffingForm(data: IChildrenRow): void {
-        const splitStaffingName = data.unitName.split('-');
-        this.updateStaffingName = splitStaffingName[1];
+        const [unitName, ...restName] = data.unitName.split('-');
+        this.updateStaffingName = restName.join('-');
+
         this.newOrganizationStaffingForm.patchValue({
-            staffingName: splitStaffingName[0]
+            staffingName: unitName
         });
         this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
             featureId: access.featureId as string,

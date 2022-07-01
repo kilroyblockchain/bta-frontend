@@ -3,7 +3,7 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canViewReview">
+        <div class="actions" *ngIf="canViewReview && versionData" (click)="viewModelReviews(versionData._id)">
             <button nbButton hero status="primary" size="small">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
             </button>
@@ -16,14 +16,14 @@
                     <nb-icon icon="chevron-right-outline"></nb-icon>
                     {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
                 </strong>
-                {{ versionData?.project?.name }}
+                {{ versionData?.project?.name || 'N/A' }}
             </p>
             <p class="card-paragraph">
                 <strong>
                     <nb-icon icon="chevron-right-outline"></nb-icon>
                     {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
                 </strong>
-                {{ versionData?.versionName }}
+                {{ versionData?.versionName || 'N/A' }}
             </p>
         </nb-card-body>
         <nb-card>
