@@ -245,7 +245,8 @@
         "REJECTED_COMPANY_LIST": "Rejected Organization List",
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
-        "APPLICATION_LOGS": "Application Logs"
+        "APPLICATION_LOGS": "Application Logs",
+        "BC_NODE_INFO": "BC Node Info"
     },
     "FOOTER": {
         "TITLE": {
@@ -550,7 +551,8 @@
             "REJECTED_ORGANIZATION": "Rejected Organization",
             "NON_ADMIN_USERS": "Non Admin Users",
             "BLOCKED_USERS": "Blocked Users",
-            "APPLICATION_LOGS": "Application Logs"
+            "APPLICATION_LOGS": "Application Logs",
+            "BC_NODE_INFO": "BC Node Info"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -820,6 +822,25 @@
             },
             "ALERT_MSG": {
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
+            }
+        }
+    },
+    "BLOCKCHAIN": {
+        "BC_NODE_INFO": {
+            "TITLE": {
+                "ALL_BC_NODE": "All Bc Nodes"
+            },
+            "BUTTON": {
+                "ADD_BC_NODE": "Add BC Node"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_NODE": "Show Active Node"
+            },
+            "COLUMN_NAME": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
             }
         }
     }
