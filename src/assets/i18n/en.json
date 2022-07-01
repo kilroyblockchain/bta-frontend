@@ -652,7 +652,7 @@
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
                 "PROJECT_DOMAIN": "Project domain",
-                "SELECT_MEMBERS": "Select member(s)",
+                "NODE_URL": "Select member(s)",
                 "PROJECT_DETAILS": "Project details"
             },
             "COLUMN_NAME": {
@@ -828,19 +828,40 @@
     "BLOCKCHAIN": {
         "BC_NODE_INFO": {
             "TITLE": {
-                "ALL_BC_NODE": "All Bc Nodes"
+                "ALL_BC_NODE": "All Bc Nodes",
+                "ADD_NEW_BC_NODE_INFO": "New Bc Node Info"
             },
             "BUTTON": {
                 "ADD_BC_NODE": "Add BC Node"
             },
             "LABEL": {
-                "SHOW_ACTIVE_NODE": "Show Active Node"
+                "SHOW_ACTIVE_NODE": "Show Active Node",
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
             },
             "COLUMN_NAME": {
                 "ORGANIZATION_NAME": "Organization Name",
                 "LABEL": "Label",
                 "NODE_URL": "Node URL",
                 "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "PLACEHOLDER": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node Url",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "VALIDATIONS": {
+                "ORGANIZATION_NAME": "Organization name is required",
+                "ORGANIZATION_NAME_MIN_LENGTH": "Organization name must be at least {{ minLength }} characters",
+                "LABEL": "Label is required",
+                "LABEL_MIN_LENGTH": "Label must be at least {{ minLength }} characters",
+                "NODE_URL": "Node Url is required",
+                "NODE_URL_MIN_LENGTH": "Node Url must be at least {{ minLength }} characters",
+                "AUTHORIZATION_TOKEN": "Authorization Token is required",
+                "AUTHORIZATION_TOKEN_MIN_LENGTH": "Authorization Token must be at least {{ minLength }} characters"
             }
         }
     }

@@ -1,11 +1,12 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { AuthService, BlockChainService, UtilsService } from 'src/app/@core/services';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { NewBcNodeComponent } from './new-bc-node/new-bc-node.component';
 
 interface TreeNode<T> {
     data: T;
@@ -28,7 +29,7 @@ interface FSEntry {
     selector: 'app-bc-node-info',
     templateUrl: './bc-node-info.component.html'
 })
-export class BcNodeComponent implements OnInit {
+export class BcNodeComponent implements OnInit, OnDestroy {
     private data: TreeNode<FSEntry>[] = [];
     dataSource!: NbTreeGridDataSource<FSEntry>;
 
@@ -48,7 +49,9 @@ export class BcNodeComponent implements OnInit {
     tableData!: Array<IBcNodeInfo>;
     loadingTable!: boolean;
 
-    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private titleCasePipe: TitleCasePipe, private translate: TranslateService, private blockchainService: BlockChainService, public utilsService: UtilsService, private authService: AuthService) {
+    newBcNodeDialogClose!: Subscription;
+
+    constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private titleCasePipe: TitleCasePipe, private translate: TranslateService, private blockchainService: BlockChainService, public utilsService: UtilsService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -61,6 +64,10 @@ export class BcNodeComponent implements OnInit {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, status: this.toggleStatusFilter, subscriptionType: this.authService.getDefaultSubscriptionType() };
         this.getBcNodeData();
+    }
+
+    ngOnDestroy(): void {
+        this.newBcNodeDialogClose ? this.newBcNodeDialogClose.unsubscribe() : null;
     }
 
     setTranslatedTableColumns(): void {
@@ -143,5 +150,14 @@ export class BcNodeComponent implements OnInit {
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);
         }
+    }
+
+    addNewBcNodeModal(): void {
+        const newBcNodeDialogOpen = this.dialogService.open(NewBcNodeComponent, { context: {}, hasBackdrop: true, closeOnBackdropClick: false });
+        this.newBcNodeDialogClose = newBcNodeDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close') {
+                this.pageChange(1);
+            }
+        });
     }
 }

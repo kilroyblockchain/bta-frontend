@@ -72,5 +72,6 @@ export const URLConstant = {
     getExperimentInfoURL: '/ai-model/expInfo',
     modelReviewURL: '/model-reviews',
     addNewModelReviewURL: '/model-reviews/add-model',
-    getAllBcNodeInfo: '/bc-node-info/all'
+    getAllBcNodeInfoURL: '/bc-node-info/all',
+    addBcNodeInfoURL: '/bc-node-info'
 };

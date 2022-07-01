@@ -10,6 +10,10 @@ export class BlockChainService {
     constructor(private readonly http: HttpService) {}
 
     getAllBcInfo(query: { [key: string]: unknown }): Observable<IAppResponse<IPaginateResult<IBcNodeInfo>>> {
-        return this.http.get(URLConstant.getAllBcNodeInfo, query);
+        return this.http.get(URLConstant.getAllBcNodeInfoURL, query);
+    }
+
+    addBcNodeInfo(data: IBcNodeInfo): Observable<IAppResponse<IBcNodeInfo>> {
+        return this.http.post(URLConstant.addBcNodeInfoURL, data);
     }
 }

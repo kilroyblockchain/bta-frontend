@@ -5,7 +5,10 @@
             <div class="actions"></div>
         </div>
         <div class="actions">
-            <button nbButton hero status="primary" size="small"><nb-icon icon="plus-circle-outline"></nb-icon>{{ 'BLOCKCHAIN.BC_NODE_INFO.BUTTON.ADD_BC_NODE' | translate }}</button>
+            <button nbButton hero status="primary" size="small" (click)="addNewBcNodeModal()">
+                <nb-icon icon="plus-circle-outline"></nb-icon>
+                {{ 'BLOCKCHAIN.BC_NODE_INFO.BUTTON.ADD_BC_NODE' | translate }}
+            </button>
         </div>
     </div>
 
