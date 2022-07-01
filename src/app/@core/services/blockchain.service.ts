@@ -20,4 +20,8 @@ export class BlockChainService {
     updateBcNodeInfo(data: IBcNodeInfo, bcNodeId: string): Observable<IAppResponse<IBcNodeInfo>> {
         return this.http.put(URLConstant.updateBcNodeInfoURL + `/${bcNodeId}`, data);
     }
+
+    deleteBcNodeInfo(bcNodeId: string): Observable<IAppResponse<IBcNodeInfo>> {
+        return this.http.delete(URLConstant.deleteBcNodeInfoURL + `/${bcNodeId}`);
+    }
 }

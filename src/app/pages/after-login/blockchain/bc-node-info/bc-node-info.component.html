@@ -55,12 +55,8 @@
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
 
-                                <button nbSuffix nbButton ghost *ngIf="!row.data['status'] && !row.data['subrow']">
-                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-left-outline" pack="eva"> </nb-icon>
-                                </button>
-
-                                <button *ngIf="row.data.status" nbSuffix nbButton ghost>
-                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="lock-outline" pack="eva"> </nb-icon>
+                                <button *ngIf="row.data.status" nbSuffix nbButton ghost (click)="onDeleteBcNode(row.data[column])">
+                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DISABLE' | translate" icon="trash-outline" pack="eva"> </nb-icon>
                                 </button>
                             </div>
                             <div class="table-col" *ngSwitchCase="'status'">

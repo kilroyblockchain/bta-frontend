@@ -863,6 +863,9 @@
                 "NODE_URL_MIN_LENGTH": "Node Url must be at least {{ minLength }} characters",
                 "AUTHORIZATION_TOKEN": "Authorization Token is required",
                 "AUTHORIZATION_TOKEN_MIN_LENGTH": "Authorization Token must be at least {{ minLength }} characters"
+            },
+            "ALERT_MSG": {
+                "DISABLE_BC_NODE_INFO": "Do you want to disable organization unit"
             }
         }
     }
