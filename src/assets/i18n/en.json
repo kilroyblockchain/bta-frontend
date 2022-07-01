@@ -732,7 +732,9 @@
                 "REPORT_DESCRIPTION": "Description",
                 "REPORT_DOCUMENTS": "Documents",
                 "MONITORING_SUBJECT": "Monitoring Subject",
-                "MONITORING_DOCUMENTS": "Monitoring Documents"
+                "MONITORING_DOCUMENTS": "Monitoring Documents",
+                "MONITORING_STATUS": "Monitoring Status",
+                "OTHER_STATUS": "Other Status"
             },
             "TITLE": {
                 "ALL_REPORTS": "All Reports",
@@ -740,11 +742,15 @@
             },
             "PLACEHOLDER": {
                 "MONITORING_SUBJECT": "Monitoring subject",
-                "MONITORING_DESCRIPTION": "Monitoring description"
+                "MONITORING_DESCRIPTION": "Monitoring description",
+                "MONITORING_STATUS": "Select status",
+                "OTHER_STATUS": "Other status"
             },
             "VALIDATIONS": {
                 "MONITORING_SUBJECT": "Monitoring subject is required",
-                "MONITORING_DESCRIPTION": "Monitoring description is required"
+                "MONITORING_DESCRIPTION": "Monitoring description is required",
+                "MONITORING_STATUS": "Monitoring status is required",
+                "OTHER_STATUS": "Other status is required"
             },
             "BUTTON": {
                 "ADD_MONITORING_REPORT": "Add Monitoring Report"

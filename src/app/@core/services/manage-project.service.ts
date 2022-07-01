@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
-import { IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
+import { IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IMonitoringStatus, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -38,11 +38,15 @@ export class ManageProjectService {
     }
 
     getVersionReports(versionId: string): Observable<IAppResponse<IPaginateResult<IMonitoringReport>>> {
-        return this.http.get(URLConstant.versionReportsURL + `/${versionId}`);
+        return this.http.get(URLConstant.getVersionReportsURL + `/${versionId}`);
     }
 
     addVersionReports(versionId: string, data: FormData, hasFormData = true): Observable<IAppResponse<IMonitoringReport>> {
         return this.http.post(URLConstant.versionReportsURL + `/${versionId}`, data, hasFormData);
+    }
+
+    getVersionReportStatus(): Observable<IAppResponse<IMonitoringStatus[]>> {
+        return this.http.get(URLConstant.getVersionReportStatusURL);
     }
 
     getAllVersionExp(query: { [key: string]: unknown }, versionId: string): Observable<IAppResponse<IPaginateResult<IAiModel>>> {

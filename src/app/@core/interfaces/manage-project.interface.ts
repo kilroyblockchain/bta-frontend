@@ -67,6 +67,13 @@ interface IDocuments {
     docName: string;
 }
 
+export interface IMonitoringStatus {
+    _id: string;
+    name: string;
+    updatedAt: Date;
+    createdAt: Date;
+}
+
 export interface IAiModel {
     _id: string;
     expNo: string;
