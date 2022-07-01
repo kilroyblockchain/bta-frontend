@@ -41,7 +41,7 @@
                         </ng-container>
                     </ng-container>
                     <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                        <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'projectName' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
+                        <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'orgName' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
                         <div [ngSwitch]="column">
                             <div class="table-col" *ngSwitchCase="'createdAt'">
                                 {{ row.data[column] | date: 'yyyy-MM-dd' }}
@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="table-col" *ngSwitchCase="'action'">
-                                <button *ngIf="!row.data['subrow']" nbSuffix nbButton ghost>
+                                <button *ngIf="!row.data['subrow']" nbSuffix nbButton ghost (click)="openEditBcNodeModal(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
 

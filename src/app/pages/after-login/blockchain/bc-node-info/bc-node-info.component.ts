@@ -6,6 +6,7 @@ import { finalize, Subscription } from 'rxjs';
 import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { AuthService, BlockChainService, UtilsService } from 'src/app/@core/services';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
+import { EditBcNodeInfoComponent } from './edit-bc-node/edit-bc-node.component';
 import { NewBcNodeComponent } from './new-bc-node/new-bc-node.component';
 
 interface TreeNode<T> {
@@ -50,6 +51,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
     loadingTable!: boolean;
 
     newBcNodeDialogClose!: Subscription;
+    editBcNodeDialogClose!: Subscription;
 
     constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private titleCasePipe: TitleCasePipe, private translate: TranslateService, private blockchainService: BlockChainService, public utilsService: UtilsService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -68,6 +70,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.newBcNodeDialogClose ? this.newBcNodeDialogClose.unsubscribe() : null;
+        this.editBcNodeDialogClose ? this.editBcNodeDialogClose.unsubscribe() : null;
     }
 
     setTranslatedTableColumns(): void {
@@ -156,6 +159,15 @@ export class BcNodeComponent implements OnInit, OnDestroy {
         const newBcNodeDialogOpen = this.dialogService.open(NewBcNodeComponent, { context: {}, hasBackdrop: true, closeOnBackdropClick: false });
         this.newBcNodeDialogClose = newBcNodeDialogOpen.onClose.subscribe((res) => {
             if (res && res !== 'close') {
+                this.pageChange(1);
+            }
+        });
+    }
+
+    openEditBcNodeModal(rowData: IBcNodeInfo): void {
+        const editBcNodeDialogOpen = this.dialogService.open(EditBcNodeInfoComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editBcNodeDialogClose = editBcNodeDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
                 this.pageChange(1);
             }
         });

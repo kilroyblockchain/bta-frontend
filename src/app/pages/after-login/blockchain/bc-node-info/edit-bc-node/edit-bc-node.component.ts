@@ -2,39 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs';
+import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { BlockChainService, UtilsService } from 'src/app/@core/services';
 
 @Component({
-    selector: 'app-new-bc-node',
-    templateUrl: './new-bc-node.component.html'
+    selector: 'app-edit-bc-node-info',
+    templateUrl: './edit-bc-node.component.html'
 })
-export class NewBcNodeComponent implements OnInit {
-    submitted!: boolean;
+export class EditBcNodeInfoComponent implements OnInit {
+    rowData!: IBcNodeInfo;
+
+    editBcNodeForm!: FormGroup;
     loading!: boolean;
+    submitted!: boolean;
 
-    addBcNodeForm!: FormGroup;
-
-    constructor(private ref: NbDialogRef<NewBcNodeComponent>, private fb: FormBuilder, private blockchainService: BlockChainService, private readonly utilsService: UtilsService) {}
+    constructor(private ref: NbDialogRef<EditBcNodeInfoComponent>, private fb: FormBuilder, private blockchainService: BlockChainService, private readonly utilsService: UtilsService) {}
 
     ngOnInit(): void {
-        this.buildNewBcNodeForm();
+        this.buildEditBcNodeForm(this.rowData);
     }
 
-    buildNewBcNodeForm(): void {
-        this.addBcNodeForm = this.fb.group({
-            orgName: ['', [Validators.required, Validators.minLength(2)]],
-            nodeUrl: ['', [Validators.required, Validators.minLength(2)]],
-            authorizationToken: ['', [Validators.required, Validators.minLength(2)]],
-            label: ['', [Validators.required, Validators.minLength(2)]]
+    buildEditBcNodeForm(data: IBcNodeInfo): void {
+        this.editBcNodeForm = this.fb.group({
+            orgName: [data.orgName, [Validators.required, Validators.minLength(2)]],
+            nodeUrl: [data.nodeUrl, [Validators.required, Validators.minLength(2)]],
+            authorizationToken: [data.authorizationToken, [Validators.required, Validators.minLength(2)]],
+            label: [data.label, [Validators.required, Validators.minLength(2)]]
         });
     }
 
     get UF(): IFormControls {
-        return this.addBcNodeForm.controls;
+        return this.editBcNodeForm.controls;
     }
 
-    saveNewProject({ value, valid }: FormGroup): void {
+    saveEditBcNode({ valid, value }: FormGroup): void {
         this.submitted = true;
         if (!valid) {
             return;
@@ -42,7 +44,7 @@ export class NewBcNodeComponent implements OnInit {
         this.loading = true;
 
         this.blockchainService
-            .addBcNodeInfo(value)
+            .updateBcNodeInfo(value, this.rowData?._id)
             .pipe(
                 finalize(() => {
                     this.loading = false;

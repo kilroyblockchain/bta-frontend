@@ -73,5 +73,6 @@ export const URLConstant = {
     modelReviewURL: '/model-reviews',
     addNewModelReviewURL: '/model-reviews/add-model',
     getAllBcNodeInfoURL: '/bc-node-info/all',
-    addBcNodeInfoURL: '/bc-node-info'
+    addBcNodeInfoURL: '/bc-node-info',
+    updateBcNodeInfoURL: '/bc-node-info/update'
 };

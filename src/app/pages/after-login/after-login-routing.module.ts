@@ -29,6 +29,7 @@ const ROUTES: Routes = [
             },
             {
                 path: 'manage-project',
+                canActivate: [UserGuard],
                 loadChildren: async () => (await import('./manage-project/manage-project.module')).ManageProjectModule
             },
             {

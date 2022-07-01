@@ -6,8 +6,9 @@ import { InternationalizationModule } from 'src/app/@core/internationalization/i
 import { NewBcNodeComponent } from './bc-node-info/new-bc-node/new-bc-node.component';
 import { BlockChianRoutingModule } from './blockchain-routing.module';
 import { BlockChainComponent } from './blockchain.component';
+import { EditBcNodeInfoComponent } from './bc-node-info/edit-bc-node/edit-bc-node.component';
 
-const PAGE_COMPONENT = [BlockChainComponent, NewBcNodeComponent];
+const PAGE_COMPONENT = [BlockChainComponent, NewBcNodeComponent, EditBcNodeInfoComponent];
 
 @NgModule({
     imports: [BlockChianRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

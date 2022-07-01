@@ -652,7 +652,7 @@
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
                 "PROJECT_DOMAIN": "Project domain",
-                "NODE_URL": "Select member(s)",
+                "SELECT_MEMBERS": "Select member(s)",
                 "PROJECT_DETAILS": "Project details"
             },
             "COLUMN_NAME": {
@@ -829,7 +829,8 @@
         "BC_NODE_INFO": {
             "TITLE": {
                 "ALL_BC_NODE": "All Bc Nodes",
-                "ADD_NEW_BC_NODE_INFO": "New Bc Node Info"
+                "ADD_NEW_BC_NODE_INFO": "New Bc Node Info",
+                "EDIT_BC_NODE_INFO": "Edit Bc Node Info"
             },
             "BUTTON": {
                 "ADD_BC_NODE": "Add BC Node"

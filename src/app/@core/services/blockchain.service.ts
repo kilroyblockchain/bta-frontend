@@ -16,4 +16,8 @@ export class BlockChainService {
     addBcNodeInfo(data: IBcNodeInfo): Observable<IAppResponse<IBcNodeInfo>> {
         return this.http.post(URLConstant.addBcNodeInfoURL, data);
     }
+
+    updateBcNodeInfo(data: IBcNodeInfo, bcNodeId: string): Observable<IAppResponse<IBcNodeInfo>> {
+        return this.http.put(URLConstant.updateBcNodeInfoURL + `/${bcNodeId}`, data);
+    }
 }
