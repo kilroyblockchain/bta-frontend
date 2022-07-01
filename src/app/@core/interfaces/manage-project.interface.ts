@@ -59,6 +59,9 @@ export interface IMonitoringReport {
     createdAt: Date;
     version: IProjectVersion;
     createdBy: IUserRes;
+    staffing: string;
+    status: IMonitoringStatus;
+    otherStatus: string;
 }
 
 interface IDocuments {

@@ -53,6 +53,14 @@
                                     {{ reports.subject }}
                                 </p>
                                 <p>
+                                    <strong> {{ 'COMMON.COLUMN_NAME.STATUS' | translate }}:</strong>
+                                    {{ reports.status.name }}
+                                </p>
+                                <p *ngIf="reports.otherStatus">
+                                    <strong> {{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.OTHER_STATUS' | translate }}:</strong>
+                                    {{ reports.otherStatus }}
+                                </p>
+                                <p>
                                     <strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' | translate }}:</strong>
                                     {{ reports.description }}
                                 </p>
@@ -64,6 +72,10 @@
                                         <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"> </nb-tag>
                                     </a>
                                 </ng-container>
+                                <p>
+                                    <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.STAFFING_NAME' | translate }}:</strong>
+                                    {{ reports.staffing }}
+                                </p>
                                 <p>
                                     <strong>{{ 'COMMON.LABEL.CREATED_BY' | translate }}:</strong>
                                     {{ reports?.createdBy?.firstName }}&nbsp;{{ reports?.createdBy?.lastName }}
