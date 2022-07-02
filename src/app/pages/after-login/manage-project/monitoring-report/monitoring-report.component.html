@@ -52,14 +52,17 @@
                                     <strong> {{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_TITLE' | translate }}:</strong>
                                     {{ reports.subject }}
                                 </p>
-                                <p>
+
+                                <p *ngIf="reports.otherStatus; else status">
                                     <strong> {{ 'COMMON.COLUMN_NAME.STATUS' | translate }}:</strong>
-                                    {{ reports.status.name }}
-                                </p>
-                                <p *ngIf="reports.otherStatus">
-                                    <strong> {{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.OTHER_STATUS' | translate }}:</strong>
                                     {{ reports.otherStatus }}
                                 </p>
+                                <ng-template #status>
+                                    <p>
+                                        <strong> {{ 'COMMON.COLUMN_NAME.STATUS' | translate }}:</strong>
+                                        {{ reports.status.name }}
+                                    </p>
+                                </ng-template>
                                 <p>
                                     <strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' | translate }}:</strong>
                                     {{ reports.description }}
