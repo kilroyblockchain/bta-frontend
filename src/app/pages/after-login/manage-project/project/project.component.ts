@@ -9,7 +9,6 @@ import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-proje
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
-// import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';

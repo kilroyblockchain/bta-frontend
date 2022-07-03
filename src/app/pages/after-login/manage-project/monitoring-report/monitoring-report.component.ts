@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IMonitoringReport, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, FileService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { NewMonitoringReportComponent } from './new-monitoring-report/new-monitoring-report.component';
 
@@ -33,6 +34,8 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
     newMonitoringReportDialogClose!: Subscription;
 
     canAddMonitoringReports!: boolean;
+    user!: IUserRes;
+    isCompanyAdmin!: boolean;
 
     constructor(private activeRoute: ActivatedRoute, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService, private readonly fileService: FileService, private dialogService: NbDialogService) {}
 
@@ -52,6 +55,9 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
     }
 
     async checkAccess(): Promise<void> {
+        this.user = this.authService.getUserDataSync();
+        this.isCompanyAdmin = !!this.user.company.find((f) => f.companyId._id === this.user.companyId && f.isAdmin === true);
+
         this.canAddMonitoringReports = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.WRITE]);
     }
     getVersionData(): void {
