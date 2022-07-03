@@ -47,7 +47,7 @@
                                 {{ row.data[column] | date: 'yyyy-MM-dd' }}
                             </div>
                             <div class="table-col" *ngSwitchCase="'purpose'">
-                                <ng-container *ngIf="!row.data['subrow'] && row.data['purpose']; else default">
+                                <ng-container *ngIf="!row.data['subrow'] && row.data['purpose'] && (row.data['purpose'].text || row.data['purpose'].docName); else default">
                                     <span>
                                         {{ row.data[column].text }}
                                     </span>
