@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
-import { AuthService } from 'src/app/@core/services';
+import { FileService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-project-detail',
@@ -10,12 +10,10 @@ import { AuthService } from 'src/app/@core/services';
 })
 export class ViewProjectComponent implements OnInit {
     projectDetails!: Partial<IProject>;
-    defaultSubscriptionType!: string;
     projectData!: IProject;
 
-    constructor(private ref: NbDialogRef<ViewProjectComponent>, private authService: AuthService) {}
+    constructor(private ref: NbDialogRef<ViewProjectComponent>, private readonly fileService: FileService) {}
     ngOnInit(): void {
-        this.defaultSubscriptionType = this.authService.getDefaultSubscriptionType();
         this.buildProjectDetails(this.projectData);
     }
 
@@ -35,5 +33,14 @@ export class ViewProjectComponent implements OnInit {
 
     closeModel(): void {
         this.ref.close();
+    }
+
+    openDocs(filename: string): void {
+        this.fileService.getFileFromFolder(filename).subscribe((file: Blob) => {
+            const urlCreator = window.URL || window.webkitURL;
+            const url = urlCreator.createObjectURL(file);
+            window.open(url);
+            urlCreator.revokeObjectURL(url);
+        });
     }
 }

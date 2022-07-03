@@ -6,13 +6,19 @@ export interface IProject {
     details: string;
     members: Array<IUserRes>;
     domain: string;
-    purpose: string;
+    purpose: IPurposeDoc;
     status: boolean;
     updatedAt: Date;
     createdAt: Date;
     createdBy: IUserRes;
     companyId: ICompany;
     projectVersions: Array<IProjectVersion>;
+}
+
+export interface IPurposeDoc {
+    text: string;
+    docName: string;
+    docURL: string;
 }
 
 export interface IProjectVersion {

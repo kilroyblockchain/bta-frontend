@@ -10,7 +10,7 @@
     <nb-card-body>
         <nb-card class="medium-card-width" accent="info">
             <nb-card-header>
-                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DETAILS' | translate }}</h6>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_INFO' | translate }}</h6>
             </nb-card-header>
             <nb-card-body>
                 <table>
@@ -30,7 +30,17 @@
                             <td>{{ projectDetails.name }}</td>
                             <td>{{ projectDetails.details }}</td>
                             <td>{{ projectDetails.domain }}</td>
-                            <td>{{ projectDetails.purpose || 'N/A' }}</td>
+                            <td>
+                                <ng-container *ngIf="projectDetails.purpose; else noPurpose">
+                                    <p>{{ projectDetails.purpose?.text || 'N/A' }}</p>
+                                    <p [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DOC' | translate">
+                                        <a class="docs" (click)="openDocs(projectDetails.purpose.docURL)">
+                                            {{ projectDetails.purpose?.docName }}
+                                        </a>
+                                    </p>
+                                </ng-container>
+                                <ng-template #noPurpose> - </ng-template>
+                            </td>
                             <td>{{ projectDetails.createdAt | date: 'yyyy-MM-dd' }}</td>
                             <td>{{ projectDetails.status ? ('COMMON.DESCRIPTION.ENABLED' | translate) : ('COMMON.DESCRIPTION.DISABLED' | translate) }}</td>
                             <td>{{ projectDetails.updatedAt | date: 'yyyy-MM-dd' }}</td>
@@ -40,10 +50,43 @@
             </nb-card-body>
         </nb-card>
     </nb-card-body>
+
     <nb-card-body>
         <nb-card class="medium-card-width" accent="info">
             <nb-card-header>
-                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_VERSION_DETAILS' | translate }}</h6>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_MEMBERS' | translate }}</h6>
+            </nb-card-header>
+            <nb-card-body *ngIf="projectDetails.members?.length; else noMembers">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.NAME' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.EMAIL' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.ADDRESS' | translate }}</th>
+                            <th scope="col">{{ 'COMMON.COLUMN_NAME.PHONE' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let members of projectDetails.members">
+                        <tr>
+                            <td>{{ members.firstName }} {{ members.lastName }}</td>
+                            <td>{{ members.email }}</td>
+                            <td>{{ members.address }}</td>
+                            <td>{{ members.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+    <ng-template #noMembers>
+        <nb-card-body>
+            <h6>{{ 'MANAGE_PROJECTS.PROJECT.MESSAGE.NO_MEMBERS_ARE_ADDED' | translate }}</h6>
+        </nb-card-body>
+    </ng-template>
+    <nb-card-body>
+        <nb-card class="medium-card-width" accent="info">
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.MODEL_DETAILS' | translate }}</h6>
             </nb-card-header>
             <nb-card-body *ngIf="projectDetails.projectVersions?.length; else elseBlock">
                 <table>
@@ -85,37 +128,9 @@
             </nb-card-body>
             <ng-template #elseBlock>
                 <nb-card-body>
-                    <h6>No Versions are added</h6>
+                    <h6>{{ 'MANAGE_PROJECTS.PROJECT.MESSAGE.NO_MODELS_ARE_ADDED' | translate }}</h6>
                 </nb-card-body>
             </ng-template>
-        </nb-card>
-    </nb-card-body>
-
-    <nb-card-body>
-        <nb-card class="medium-card-width" accent="info">
-            <nb-card-header>
-                <h6>{{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_MEMBERS_DETAILS' | translate }}</h6>
-            </nb-card-header>
-            <nb-card-body *ngIf="projectDetails.members?.length">
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">{{ 'COMMON.COLUMN_NAME.NAME' | translate }}</th>
-                            <th scope="col">{{ 'COMMON.COLUMN_NAME.EMAIL' | translate }}</th>
-                            <th scope="col">{{ 'COMMON.COLUMN_NAME.ADDRESS' | translate }}</th>
-                            <th scope="col">{{ 'COMMON.COLUMN_NAME.PHONE' | translate }}</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let members of projectDetails.members">
-                        <tr>
-                            <td>{{ members.firstName }} {{ members.lastName }}</td>
-                            <td>{{ members.email }}</td>
-                            <td>{{ members.address }}</td>
-                            <td>{{ members.phone }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </nb-card-body>
         </nb-card>
     </nb-card-body>
 </nb-card>

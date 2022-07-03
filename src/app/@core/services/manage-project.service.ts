@@ -68,4 +68,8 @@ export class ManageProjectService {
     addNewModelReview(versionData: IProjectVersion, projectId: string): Observable<IAppResponse<IProjectVersion>> {
         return this.http.post(URLConstant.addNewModelReviewURL + `/${projectId}`, versionData);
     }
+
+    addPurpose(projectId: string, data: FormData, hasFormData: boolean): Observable<IAppResponse<IProject>> {
+        return this.http.post(URLConstant.addProjectPurposeURL + `/${projectId}`, data, hasFormData);
+    }
 }

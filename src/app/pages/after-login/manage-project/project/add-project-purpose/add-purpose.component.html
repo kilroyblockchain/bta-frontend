@@ -1,0 +1,37 @@
+<nb-card class="medium-card-width">
+    <nb-card-header>
+        <section class="dialog-head" *ngIf="!rowData.purpose">
+            <h6>{{ 'MANAGE_PROJECTS.PROJECT.TITLE.ADD_PROJECT_PURPOSE' | translate }}</h6>
+        </section>
+        <section class="dialog-head" *ngIf="rowData.purpose">
+            <h6>{{ 'MANAGE_PROJECTS.PROJECT.TITLE.EDIT_PROJECT_PURPOSE' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="projectPurposeForm">
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="purpose" nbInput fullWidth [placeholder]="'MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_PURPOSE' | translate" formControlName="purpose" />
+                    <label for="purpose" [attr.data-content]="'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_PURPOSE' | translate"></label>
+                </div>
+            </div>
+            <div class="form-inner-container">
+                <div class="form-holder floating file-names">
+                    <input name="purposeDoc" nbInput type="file" #fileInput fullWidth (change)="onFilesChange($event)" />
+                    <label for="purposeDoc" [attr.data-content]="'MANAGE_PROJECTS.PROJECT.LABEL.PURPOSE_DOCUMENT' | translate"></label>
+                </div>
+                <nb-tag-list *ngIf="this.UF['purposeDoc'].value" (tagRemove)="onTagRemove($event)">
+                    <nb-tag [text]="fileName" removable> </nb-tag>
+                </nb-tag-list>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type="submit" (click)="saveEditProject(projectPurposeForm)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

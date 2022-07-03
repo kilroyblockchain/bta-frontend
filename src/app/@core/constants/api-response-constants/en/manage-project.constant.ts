@@ -16,5 +16,7 @@ export const API_RES_MSG_MANAGE_PROJECT = {
     REVIEW_MODEL_ADDED_SUCCESS: 'Review Model Added Successfully',
     UNABLE_TO_ADD_REVIEW_MODEL: 'Unable To add Review Model',
     UNABLE_TO_ADD_MODEL_REVIEW: 'Unable To add Model Review Status',
-    NEW_REVIEW_ADD_SUCCESS: 'Model Review Status Added Successfully'
+    NEW_REVIEW_ADD_SUCCESS: 'Model Review Status Added Successfully',
+    PROJECT_PROJECT_ADDED_SUCCESS: 'Project Purpose Added Successfully',
+    UNABLE_TO_ADD_PROJECT_PROJECT: 'Unable To Add Project Purpose'
 };

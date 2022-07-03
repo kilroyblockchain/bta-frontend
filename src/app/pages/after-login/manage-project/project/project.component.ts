@@ -5,14 +5,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
-import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IProject, IProjectVersion, IPurposeDoc } from 'src/app/@core/interfaces/manage-project.interface';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
-// import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
+import { AuthService, FileService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
+import { AddProjectPurposeComponent } from './add-project-purpose/add-purpose.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
@@ -28,7 +28,7 @@ interface FSEntry {
     name?: string;
     details: string;
     domain?: string;
-    purpose: string;
+    purpose: string | IPurposeDoc;
     status?: string;
     latestVersion?: string;
     action: unknown;
@@ -38,7 +38,16 @@ interface FSEntry {
 
 @Component({
     selector: 'app-project',
-    templateUrl: './project.component.html'
+    templateUrl: './project.component.html',
+    styles: [
+        `
+            .docs {
+                cursor: pointer;
+                margin: 2px;
+                text-decoration: none;
+            }
+        `
+    ]
 })
 export class ProjectComponent implements OnInit, OnDestroy {
     dataSource!: NbTreeGridDataSource<FSEntry>;
@@ -56,7 +65,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     columnNameKeys!: Array<string>;
     columnsName: Array<string> = [];
 
-    getAllProject!: Subscription;
     newProjectDialogClose!: Subscription;
     editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
@@ -75,9 +83,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canViewVersionDetails!: boolean;
     canViewModelReview!: boolean;
     canViewMonitoringReport!: boolean;
+    canAddProjectPurpose!: boolean;
 
     menuItems: Array<MenuItem> = [];
     rowVersion!: IProjectVersion;
+    rowProject!: IProject;
     destroy$: Subject<void> = new Subject<void>();
 
     user!: IUserRes;
@@ -95,7 +105,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         public utilsService: UtilsService,
         private readonly authService: AuthService,
         private translate: TranslateService,
-        private langTranslateService: LangTranslateService
+        private langTranslateService: LangTranslateService,
+        private readonly fileService: FileService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.initMenu();
@@ -168,6 +179,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.canViewMonitoringReport = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.READ]);
         if (this.canViewMonitoringReport) {
             this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
+        }
+
+        this.canAddProjectPurpose = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT_PURPOSE, [ACCESS_TYPE.WRITE]);
+        if (this.canAddProjectPurpose && !this.isCompanyAdmin) {
+            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE') });
         }
     }
 
@@ -242,7 +258,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         data: {
                             details: version.versionName,
                             purpose: version.versionStatus,
-                            action: version,
+                            action: { project: item, version },
                             subrow: true,
                             _id: version._id
                         }
@@ -272,7 +288,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
                             purpose: version.versionName,
                             status: version.versionStatus,
-                            action: version,
+                            action: { project: item, version },
                             subrow: false,
                             versionId: version._id
                         }
@@ -320,8 +336,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
     }
 
-    openMenu(rowData: IProjectVersion) {
-        this.rowVersion = rowData;
+    openMenu(rowData: { project: IProject; version: IProjectVersion }) {
+        this.rowVersion = rowData.version;
+        this.rowProject = rowData.project;
     }
 
     initMenu(): void {
@@ -339,6 +356,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
                             this.viewModelReviews(this.rowVersion);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE':
+                            this.addProjectPurpose(this.rowProject);
                             break;
                         default:
                             break;
@@ -369,5 +389,23 @@ export class ProjectComponent implements OnInit, OnDestroy {
     viewModelReviews(versionData: IProjectVersion): void {
         const URL = 'u/manage-project/model-reviews';
         this.navigateTo(URL, versionData._id);
+    }
+
+    addProjectPurpose(rowData: IProject): void {
+        const editProjectDialogOpen = this.dialogService.open(AddProjectPurposeComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editProjectDialogClose = editProjectDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
+            }
+        });
+    }
+
+    openDocs(filename: string): void {
+        this.fileService.getFileFromFolder(filename).subscribe((file: Blob) => {
+            const urlCreator = window.URL || window.webkitURL;
+            const url = urlCreator.createObjectURL(file);
+            window.open(url);
+            urlCreator.revokeObjectURL(url);
+        });
     }
 }
