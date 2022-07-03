@@ -670,7 +670,8 @@
             },
             "ALERT_MSG": {
                 "DISABLE_PROJECT": "Do you want to disable project",
-                "ENABLE_PROJECT": "Do you want to enable project"
+                "ENABLE_PROJECT": "Do you want to enable project",
+                "CAN_ADD_PROJECT": "Required team members to start the project are not added, please consult with Org. admin for this."
             }
         },
         "VERSION": {
