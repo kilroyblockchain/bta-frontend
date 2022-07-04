@@ -59,12 +59,22 @@ export interface IMonitoringReport {
     createdAt: Date;
     version: IProjectVersion;
     createdBy: IUserRes;
+    staffing: string;
+    status: IMonitoringStatus;
+    otherStatus: string;
 }
 
 interface IDocuments {
     _id?: string;
     docURL: string;
     docName: string;
+}
+
+export interface IMonitoringStatus {
+    _id: string;
+    name: string;
+    updatedAt: Date;
+    createdAt: Date;
 }
 
 export interface IAiModel {
