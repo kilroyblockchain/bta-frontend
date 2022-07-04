@@ -25,7 +25,7 @@
                     <input name="purposeDoc" nbInput type="file" #fileInput fullWidth (change)="onFilesChange($event)" />
                     <label for="purposeDoc" [attr.data-content]="'MANAGE_PROJECTS.PROJECT.LABEL.PURPOSE_DOCUMENT' | translate"></label>
                 </div>
-                <nb-tag-list *ngIf="this.UF['purposeDoc'].value" (tagRemove)="onTagRemove($event)">
+                <nb-tag-list *ngIf="fileName" (tagRemove)="onTagRemove($event)">
                     <nb-tag [text]="fileName" removable> </nb-tag>
                 </nb-tag-list>
             </div>

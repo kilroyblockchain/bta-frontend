@@ -48,10 +48,10 @@
                             </div>
                             <div class="table-col" *ngSwitchCase="'purpose'">
                                 <ng-container *ngIf="!row.data['subrow'] && row.data['purpose'] && (row.data['purpose'].text || row.data['purpose'].docName); else default">
-                                    <span>
+                                    <span *ngIf="row.data['purpose'].text">
                                         {{ row.data[column].text }}
                                     </span>
-                                    <span [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DOC' | translate">
+                                    <span [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DOC' | translate" *ngIf="row.data['purpose'].docName">
                                         <a class="docs" (click)="openDocs(row.data[column]?.docURL)">
                                             {{ row.data[column]?.docName }}
                                         </a>
