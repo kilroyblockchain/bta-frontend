@@ -32,6 +32,10 @@ const ROUTES: Routes = [
                 loadChildren: async () => (await import('./manage-project/manage-project.module')).ManageProjectModule
             },
             {
+                path: 'blockchain',
+                loadChildren: async () => (await import('./blockchain/blockchain.module')).BlockChainModule
+            },
+            {
                 path: 'admin',
                 loadChildren: async () => (await import('./super-admin/super-admin.module')).SuperAdminModule,
                 canActivate: [SuperAdminGuard],

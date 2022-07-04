@@ -1,0 +1,66 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'BLOCKCHAIN.BC_NODE_INFO.TITLE.ADD_NEW_BC_NODE_INFO' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="addBcNodeForm">
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="orgName" nbInput fullWidth [placeholder]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.PLACEHOLDER.ORGANIZATION_NAME' | translate)" formControlName="orgName" [ngClass]="{ 'status-danger': submitted && UF['orgName'].errors }" />
+                    <label for="name" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.LABEL.ORGANIZATION_NAME' | translate)"></label>
+                    <div *ngIf="submitted && UF['orgName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">
+                            {{ 'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.ORGANIZATION_NAME' | translate }}
+                        </span>
+                        <span *ngIf="err['minlength']" [translate]="'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.ORGANIZATION_NAME_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"> </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="nodeUrl" nbInput fullWidth [placeholder]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.PLACEHOLDER.NODE_URL' | translate)" formControlName="nodeUrl" [ngClass]="{ 'status-danger': submitted && UF['nodeUrl'].errors }" />
+                    <label for="nodeUrl" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.LABEL.NODE_URL' | translate)"></label>
+                    <div *ngIf="submitted && UF['nodeUrl'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.NODE_URL' | translate }}</span>
+                        <span *ngIf="err['minlength']" [translate]="'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.NODE_URL_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"> </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="authorizationToken" nbInput fullWidth [placeholder]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.PLACEHOLDER.AUTHORIZATION_TOKEN' | translate)" formControlName="authorizationToken" [ngClass]="{ 'status-danger': submitted && UF['authorizationToken'].errors }" />
+                    <label for="authorizationToken" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.LABEL.AUTHORIZATION_TOKEN' | translate)"></label>
+                    <div *ngIf="submitted && UF['authorizationToken'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">
+                            {{ 'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.AUTHORIZATION_TOKEN' | translate }}
+                        </span>
+                        <span *ngIf="err['minlength']" [translate]="'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.AUTHORIZATION_TOKEN_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"> </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="label" nbInput fullWidth [placeholder]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.PLACEHOLDER.LABEL' | translate)" formControlName="label" [ngClass]="{ 'status-danger': submitted && UF['label'].errors }" />
+                    <label for="label" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_NODE_INFO.LABEL.LABEL' | translate)"></label>
+                    <div *ngIf="submitted && UF['label'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.LABEL' | translate }}</span>
+                        <span *ngIf="err['minlength']" [translate]="'BLOCKCHAIN.BC_NODE_INFO.VALIDATIONS.LABEL_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"> </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type="submit" (click)="saveNewProject(addBcNodeForm)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>
