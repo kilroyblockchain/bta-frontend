@@ -392,14 +392,25 @@
                 "UPDATE_ORGANIZATION_STAFFING": "Update Organization Staffing for {{unitName}}"
             },
             "LABEL": {
-                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}"
+                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}",
+                "STAFFING_TYPE": "Staffing Type",
+                "BC_NODE_INFO": "Bc Node Info",
+                "CHANNEL_DETAILS": "Channel Details",
+                "ORACLE_BUCKET_URL": "Oracle Bucket URL"
             },
             "VALIDATIONS": {
                 "STAFFING_NAME_IS_REQUIRED": "Staffing name is required",
-                "ACCESS_LIST_IS_REQUIRED": "Access List is required"
+                "ACCESS_LIST_IS_REQUIRED": "Access List is required",
+                "BC_NODE_INFO_IS_REQUIRED": "Bc node info is required",
+                "CHANNEL_DETAILS_IS_REQUIRED": "Channel details is required",
+                "ORACLE_BUCKET_URL_IS_REQUIRED": "Oracle bucket url is required"
             },
             "PLACEHOLDER": {
-                "STAFFING_NAME": "Staffing Name"
+                "STAFFING_NAME": "Staffing Name",
+                "SELECT_STAFFING_TYPE": "Select staffing type",
+                "SELECT_BC_NODE_INFO": "Select Bc node info",
+                "SELECT_CHANNEL_DETAILS": "Select Channel details",
+                "ORACLE_BUCKET_URL": "Enter bucket url"
             },
             "DESCRIPTION": {
                 "FEATURE_ACCESS_LEVEL": "Feature access Level"
