@@ -302,7 +302,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
         });
     }
 
-    onChange(event: Event) {
+    onChange(event: Event): void {
         if (event) {
             this.newOrganizationStaffingForm.patchValue({
                 channels: [event]
