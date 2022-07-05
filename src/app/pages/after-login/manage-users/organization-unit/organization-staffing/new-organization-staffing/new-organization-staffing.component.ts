@@ -244,6 +244,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
             }
 
+            value['channels'] = [this.defaultChannel[0]._id, ...value['channels']];
             this.staffingService.updateStaffingById(this.childRowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
         }
     }
