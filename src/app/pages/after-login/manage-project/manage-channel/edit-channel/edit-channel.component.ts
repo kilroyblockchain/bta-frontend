@@ -28,8 +28,7 @@ export class EditChannelComponent implements OnInit {
     buildEditChannelDetailsForm(data: IChannelDetails): void {
         this.editChannelForm = this.fb.group({
             channelName: [data.channelName, [Validators.required]],
-            connectionProfileName: [data.connectionProfileName, [Validators.required]],
-            isDefault: [data.isDefault, []]
+            connectionProfileName: [data.connectionProfileName, [Validators.required]]
         });
     }
 
