@@ -245,7 +245,8 @@
         "REJECTED_COMPANY_LIST": "Rejected Organization List",
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
-        "APPLICATION_LOGS": "Application Logs"
+        "APPLICATION_LOGS": "Application Logs",
+        "BC_NODE_INFO": "BC Node Info"
     },
     "FOOTER": {
         "TITLE": {
@@ -391,14 +392,25 @@
                 "UPDATE_ORGANIZATION_STAFFING": "Update Organization Staffing for {{unitName}}"
             },
             "LABEL": {
-                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}"
+                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}",
+                "STAFFING_TYPE": "Staffing Type",
+                "BC_NODE_INFO": "Bc Node Info",
+                "CHANNEL_DETAILS": "Channel Details",
+                "ORACLE_BUCKET_URL": "Oracle Bucket URL"
             },
             "VALIDATIONS": {
                 "STAFFING_NAME_IS_REQUIRED": "Staffing name is required",
-                "ACCESS_LIST_IS_REQUIRED": "Access List is required"
+                "ACCESS_LIST_IS_REQUIRED": "Access List is required",
+                "BC_NODE_INFO_IS_REQUIRED": "Bc node info is required",
+                "CHANNEL_DETAILS_IS_REQUIRED": "Channel details is required",
+                "ORACLE_BUCKET_URL_IS_REQUIRED": "Oracle bucket url is required"
             },
             "PLACEHOLDER": {
-                "STAFFING_NAME": "Staffing Name"
+                "STAFFING_NAME": "Staffing Name",
+                "SELECT_STAFFING_TYPE": "Select staffing type",
+                "SELECT_BC_NODE_INFO": "Select Bc node info",
+                "SELECT_CHANNEL_DETAILS": "Select Channel details",
+                "ORACLE_BUCKET_URL": "Enter bucket url"
             },
             "DESCRIPTION": {
                 "FEATURE_ACCESS_LEVEL": "Feature access Level"
@@ -550,7 +562,8 @@
             "REJECTED_ORGANIZATION": "Rejected Organization",
             "NON_ADMIN_USERS": "Non Admin Users",
             "BLOCKED_USERS": "Blocked Users",
-            "APPLICATION_LOGS": "Application Logs"
+            "APPLICATION_LOGS": "Application Logs",
+            "BC_NODE_INFO": "BC Node Info"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -733,7 +746,9 @@
                 "REPORT_DESCRIPTION": "Description",
                 "REPORT_DOCUMENTS": "Documents",
                 "MONITORING_SUBJECT": "Monitoring Subject",
-                "MONITORING_DOCUMENTS": "Monitoring Documents"
+                "MONITORING_DOCUMENTS": "Monitoring Documents",
+                "MONITORING_STATUS": "Monitoring Status",
+                "OTHER_STATUS": "Other Status"
             },
             "TITLE": {
                 "ALL_REPORTS": "All Reports",
@@ -741,11 +756,15 @@
             },
             "PLACEHOLDER": {
                 "MONITORING_SUBJECT": "Monitoring subject",
-                "MONITORING_DESCRIPTION": "Monitoring description"
+                "MONITORING_DESCRIPTION": "Monitoring description",
+                "MONITORING_STATUS": "Select status",
+                "OTHER_STATUS": "Other status"
             },
             "VALIDATIONS": {
                 "MONITORING_SUBJECT": "Monitoring subject is required",
-                "MONITORING_DESCRIPTION": "Monitoring description is required"
+                "MONITORING_DESCRIPTION": "Monitoring description is required",
+                "MONITORING_STATUS": "Monitoring status is required",
+                "OTHER_STATUS": "Other status is required"
             },
             "BUTTON": {
                 "ADD_MONITORING_REPORT": "Add Monitoring Report"
@@ -821,6 +840,50 @@
             },
             "ALERT_MSG": {
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
+            }
+        }
+    },
+    "BLOCKCHAIN": {
+        "BC_NODE_INFO": {
+            "TITLE": {
+                "ALL_BC_NODE": "All Bc Nodes",
+                "ADD_NEW_BC_NODE_INFO": "New Bc Node Info",
+                "EDIT_BC_NODE_INFO": "Edit Bc Node Info"
+            },
+            "BUTTON": {
+                "ADD_BC_NODE": "Add BC Node"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_NODE": "Show Active Node",
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "COLUMN_NAME": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "PLACEHOLDER": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node Url",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "VALIDATIONS": {
+                "ORGANIZATION_NAME": "Organization name is required",
+                "ORGANIZATION_NAME_MIN_LENGTH": "Organization name must be at least {{ minLength }} characters",
+                "LABEL": "Label is required",
+                "LABEL_MIN_LENGTH": "Label must be at least {{ minLength }} characters",
+                "NODE_URL": "Node Url is required",
+                "NODE_URL_MIN_LENGTH": "Node Url must be at least {{ minLength }} characters",
+                "AUTHORIZATION_TOKEN": "Authorization Token is required",
+                "AUTHORIZATION_TOKEN_MIN_LENGTH": "Authorization Token must be at least {{ minLength }} characters"
+            },
+            "ALERT_MSG": {
+                "DISABLE_BC_NODE_INFO": "Do you want to disable organization unit"
             }
         }
     }

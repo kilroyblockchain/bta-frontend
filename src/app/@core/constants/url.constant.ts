@@ -68,9 +68,15 @@ export const URLConstant = {
     getLogFilesURL: '/files/logs',
     getFileFromFolderURL: '/files/file',
     versionReportsURL: '/version-reports',
+    getVersionReportsURL: '/version-reports/get',
+    getVersionReportStatusURL: '/version-reports/status',
     getVersionAllExpURL: '/ai-model/all',
     getExperimentDetailsURL: '/ai-model/expDetails',
     getExperimentInfoURL: '/ai-model/expInfo',
     modelReviewURL: '/model-reviews',
-    addNewModelReviewURL: '/model-reviews/add-model'
+    addNewModelReviewURL: '/model-reviews/add-model',
+    getAllBcNodeInfoURL: '/bc-node-info/all',
+    addBcNodeInfoURL: '/bc-node-info',
+    updateBcNodeInfoURL: '/bc-node-info/update',
+    deleteBcNodeInfoURL: '/bc-node-info/delete'
 };

@@ -3,30 +3,44 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbTagComponent } from '@nebular/theme';
 import { finalize } from 'rxjs';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
+import { IMonitoringStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-new-monitoring-report',
-    templateUrl: './new-monitoring-report.component.html'
+    templateUrl: './new-monitoring-report.component.html',
+    styles: [
+        `
+            .file-names {
+                margin-bottom: 1px;
+            }
+        `
+    ]
 })
 export class NewMonitoringReportComponent implements OnInit {
     constructor(private ref: NbDialogRef<NewMonitoringReportComponent>, private readonly utilsService: UtilsService, private fb: FormBuilder, private readonly manageProjectService: ManageProjectService) {}
+
     monitoringInfoForm!: FormGroup;
     submitted!: boolean;
     loading!: boolean;
     myFiles: File[] = [];
     versionId!: string;
+    versionReportStatus!: Array<IMonitoringStatus>;
+    otherStatusId!: string;
 
     @ViewChild('fileInput') fileInput!: ElementRef;
 
     ngOnInit(): void {
         this.buildMonitoringInfoForm();
+        this.getVersionReportStatus();
     }
 
     buildMonitoringInfoForm(): void {
         this.monitoringInfoForm = this.fb.group({
             subject: ['', [Validators.required]],
-            description: ['', [Validators.required]]
+            status: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            otherStatus: ['']
         });
     }
 
@@ -53,6 +67,15 @@ export class NewMonitoringReportComponent implements OnInit {
         }
     }
 
+    getVersionReportStatus(): void {
+        this.manageProjectService.getVersionReportStatus().subscribe((res) => {
+            if (res && res.success) {
+                this.versionReportStatus = res.data;
+                this.otherStatusId = this.versionReportStatus[this.versionReportStatus.length - 1]._id;
+            }
+        });
+    }
+
     saveVersionReports({ value, valid }: FormGroup): void {
         this.submitted = true;
         if (!valid) {
@@ -68,6 +91,10 @@ export class NewMonitoringReportComponent implements OnInit {
 
         formData.append('subject', value.subject);
         formData.append('description', value.description);
+        formData.append('status', value.status);
+        if (this.UF['otherStatus'].value) {
+            formData.append('otherStatus', value.otherStatus);
+        }
 
         this.manageProjectService
             .addVersionReports(this.versionId, formData)

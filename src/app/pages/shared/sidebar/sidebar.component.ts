@@ -208,7 +208,13 @@ export class SidebarComponent {
             key: 'SUPER_ADMIN.SIDEBAR_MENU.APPLICATION_LOGS',
             hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.APPLICATION_LOGS, [ACCESS_TYPE.READ]))
         });
-
+        this.superAdminMenuItems.push({
+            title: 'BC Node Info',
+            link: '/u/admin/bc-node-info',
+            pathMatch: 'full',
+            key: 'SUPER_ADMIN.SIDEBAR_MENU.BC_NODE_INFO',
+            hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.BC_NODE_INFO, [ACCESS_TYPE.READ]))
+        });
         if (!this.superAdminMenuItems.length) {
             this.sidebarService.collapse();
         }
