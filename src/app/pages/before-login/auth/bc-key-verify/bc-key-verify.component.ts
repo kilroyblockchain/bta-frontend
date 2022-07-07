@@ -33,9 +33,6 @@ export class BcKeyVerifyComponent implements OnInit {
     }
 
     verifyBcKey({ valid, value }: FormGroup) {
-        this.authService.getUser().subscribe((res) => {
-            console.log(res);
-        });
         this.submitted = true;
         if (!valid) {
             return;

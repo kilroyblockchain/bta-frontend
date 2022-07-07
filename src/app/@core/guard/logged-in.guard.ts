@@ -13,7 +13,7 @@ export class LoggedInGuard implements CanActivate {
         if (this.authService.isLoggedIn === true) {
             return true;
         } else if (this.authService.getAccessToken()) {
-            this.router.navigate(['/auth/bcKey-verify']);
+            this.router.navigate(['/auth/bc-key-verify']);
         } else {
             this.router.navigate(['/auth/login'], { queryParams: { returnUrl: encodeURIComponent(state.url) } });
         }

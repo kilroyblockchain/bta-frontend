@@ -21,7 +21,7 @@ const routes: Routes = [
                 data: { pageTitle: 'PAGE_TITLE.LOGIN' }
             },
             {
-                path: 'bcKey-verify',
+                path: 'bc-key-verify',
                 component: BcKeyVerifyComponent,
                 canActivate: [BcKeyVerifyGuard],
                 data: { pageTitle: 'PAGE_TITLE.BC_KEY_VERIFY' }

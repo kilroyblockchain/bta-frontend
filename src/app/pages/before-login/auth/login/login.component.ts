@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     };
 
                     this.authService.setUserData(user);
-                    this.router.navigate(['/auth/bcKey-verify']);
+                    this.router.navigate(['/auth/bc-key-verify']);
                 }
             },
             error: (err) => {
