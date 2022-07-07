@@ -6,4 +6,8 @@ export interface IUserActionRow {
     companyId: string;
     channelId: string;
     staffingId?: string[];
+    bcNodeInfo?: string;
+    channels?: string[];
+    bucketUrl?: string;
+    organizationName: string;
 }
