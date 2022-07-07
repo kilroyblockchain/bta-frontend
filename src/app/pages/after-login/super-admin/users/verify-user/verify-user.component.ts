@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService, NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { finalize } from 'rxjs/operators';
+import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
+import { IChannelDetails } from 'src/app/@core/interfaces/channel-details.interface';
+import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, LangTranslateService, ManageUserService, UtilsService } from 'src/app/@core/services';
+import { AuthService, BlockChainService, LangTranslateService, ManageChannelDetailsService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
 import { BCChannelService, IBCChannelDetail } from 'src/app/@core/services/bc-channel.service';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { IUserActionRow } from '../user.interface';
@@ -42,15 +46,42 @@ export class VerifyUserComponent implements OnInit {
     enabled!: boolean;
     defaultChannel!: IBCChannelDetail;
 
+    submitted!: boolean;
+    createStaffingForm!: FormGroup;
+    options!: { [key: string]: unknown };
+
+    channelDetails!: Array<IChannelDetails>;
+    defaultChannels!: Array<IChannelDetails>;
+    nonDefaultChannels!: Array<IChannelDetails>;
+
+    bcNodeInfo!: Array<IBcNodeInfo>;
+
     private data: TreeNode<FSEntry>[] = [];
 
-    constructor(public utilsService: UtilsService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private authService: AuthService, private dialogService: NbDialogService, protected ref: NbDialogRef<VerifyUserComponent>, private manageUserService: ManageUserService, private bcChannelService: BCChannelService, private langTranslateService: LangTranslateService) {
+    constructor(
+        public utilsService: UtilsService,
+        private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+        private authService: AuthService,
+        private fb: FormBuilder,
+        private dialogService: NbDialogService,
+        protected ref: NbDialogRef<VerifyUserComponent>,
+        private manageUserService: ManageUserService,
+        private bcChannelService: BCChannelService,
+        private langTranslateService: LangTranslateService,
+        private readonly manageChannelService: ManageChannelDetailsService,
+        private readonly blockChainService: BlockChainService,
+        private readonly staffingService: StaffingService
+    ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
+        this.buildCreateStaffingForm();
     }
 
     ngOnInit(): void {
         this.createTableData(this.rowData.company.filter((element: IUserCompany) => element.isDeleted === !this.enabled));
-        this.patchChannel();
+
+        this.options = { limit: Number.MAX_SAFE_INTEGER };
+        this.getAllChannelDetails();
+        this.getBcNodeInfo();
     }
 
     patchChannel(): void {
@@ -83,7 +114,13 @@ export class VerifyUserComponent implements OnInit {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
-    verifyUser(data: FSEntry): void {
+    verifyUser(data: FSEntry, { value, valid }: FormGroup): void {
+        this.submitted = true;
+        if (!valid) {
+            return;
+        }
+        value['channels'] = [this.defaultChannels[0]._id, ...value['channels']];
+
         this.loading = true;
         const user: IUserActionRow = {
             userId: this.rowData.id ?? this.rowData._id,
@@ -91,7 +128,11 @@ export class VerifyUserComponent implements OnInit {
             companyId: data.companyId,
             isRegisteredUser: true,
             subscriptionType: data.assignedSubscription,
-            channelId: this.defaultChannel?._id ?? ''
+            channelId: this.defaultChannel?._id ?? '',
+            bcNodeInfo: value.bcNodeInfo,
+            bucketUrl: value.bucketUrl,
+            channels: value.channels,
+            organizationName: data.companyName
         };
         this.authService
             .verifyUser(user)
@@ -180,5 +221,31 @@ export class VerifyUserComponent implements OnInit {
 
     closeModal(): void {
         this.ref.close('close');
+    }
+
+    buildCreateStaffingForm(): void {
+        this.createStaffingForm = this.fb.group({
+            bcNodeInfo: ['', [Validators.required]],
+            bucketUrl: ['', [Validators.required]],
+            channels: [[], [Validators.required]]
+        });
+    }
+
+    get UF(): IFormControls {
+        return this.createStaffingForm.controls;
+    }
+
+    getAllChannelDetails(): void {
+        this.manageChannelService.getAllChannel(this.options).subscribe((res) => {
+            this.channelDetails = res.data.docs;
+            this.defaultChannels = this.channelDetails.filter((d) => d.isDefault === true);
+            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true);
+        });
+    }
+
+    getBcNodeInfo(): void {
+        this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
+            this.bcNodeInfo = res.data.docs;
+        });
     }
 }
