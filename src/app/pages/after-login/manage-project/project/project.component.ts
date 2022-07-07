@@ -9,6 +9,7 @@ import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-proje
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
@@ -85,6 +86,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     isMLOpsEng!: boolean;
     isStakeHolder!: boolean;
 
+    canAddProjectAndVersion!: boolean;
+
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
         private router: Router,
@@ -105,6 +108,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.setTranslatedTableColumns();
         this.pageChange(1);
         this.checkAccess();
+        const options = { page: this.page, limit: Number.MAX_SAFE_INTEGER, status: this.toggleStatusFilter ? 'verified' : 'notverified', subscriptionType: this.authService.getDefaultSubscriptionType() };
+
+        this.manageProjectService.canAddProject(options).subscribe((res) => {
+            if (res && res.success) {
+                this.canAddProjectAndVersion = res.data;
+            }
+        });
     }
 
     ngOnDestroy(): void {
@@ -284,12 +294,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     addNewProjectModal(): void {
-        const newProjectDialogOpen = this.dialogService.open(AddProjectComponent, { context: {}, hasBackdrop: true, closeOnBackdropClick: false });
-        this.newProjectDialogClose = newProjectDialogOpen.onClose.subscribe((res) => {
-            if (res && res !== 'close') {
-                this.pageChange(1);
-            }
-        });
+        if (this.canAddProjectAndVersion) {
+            const newProjectDialogOpen = this.dialogService.open(AddProjectComponent, { context: {}, hasBackdrop: true, closeOnBackdropClick: false });
+            this.newProjectDialogClose = newProjectDialogOpen.onClose.subscribe((res) => {
+                if (res && res !== 'close') {
+                    this.pageChange(1);
+                }
+            });
+        } else {
+            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
+        }
     }
 
     openProjectEditModal(rowData: IProject): void {
@@ -311,12 +325,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     addNewProjectVersion(rowData: IProject): void {
-        const addVersionOpen = this.dialogService.open(AddVersionComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
-        this.addVersionDialogClose = addVersionOpen.onClose.subscribe((res) => {
-            if (res && res !== 'close' && res.success) {
-                this.pageChange(1);
-            }
-        });
+        if (this.canAddProjectAndVersion) {
+            const addVersionOpen = this.dialogService.open(AddVersionComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+            this.addVersionDialogClose = addVersionOpen.onClose.subscribe((res) => {
+                if (res && res !== 'close' && res.success) {
+                    this.pageChange(1);
+                }
+            });
+        } else {
+            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
+        }
     }
 
     openMenu(rowData: IProjectVersion) {
