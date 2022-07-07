@@ -46,7 +46,6 @@ export class BcKeyVerifyComponent implements OnInit {
 
                     this.loading = true;
                     this.authService.getUserData().then((userData) => {
-                        console.log(userData);
                         this.userData = { ...userData };
                         const roles = this.userData?.roles;
                         if (roles) {
