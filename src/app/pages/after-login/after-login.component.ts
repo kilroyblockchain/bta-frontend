@@ -21,6 +21,7 @@ export class AfterLoginComponent {
     userData!: IUserRes;
     autoPassword!: boolean;
     staffingData: Array<StaffingData> = [];
+    bcKey!: boolean;
 
     constructor(private authService: AuthService, private router: Router, private dialogService: NbDialogService) {
         this.isLoggedIn = this.authService.isLoggedIn;
@@ -33,6 +34,8 @@ export class AfterLoginComponent {
             }
         });
         this.listenLogoutStatus();
+
+        this.bcKey = !!this.authService.getBcKey();
     }
 
     listenLogoutStatus(): void {

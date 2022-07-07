@@ -24,4 +24,8 @@ export class BlockChainService {
     deleteBcNodeInfo(bcNodeId: string): Observable<IAppResponse<IBcNodeInfo>> {
         return this.http.delete(URLConstant.deleteBcNodeInfoURL + `/${bcNodeId}`);
     }
+
+    verifyBcKey(bcKey: string): Observable<IAppResponse<{ bcKey: string }>> {
+        return this.http.post(URLConstant.verifyBcKeyURL, bcKey);
+    }
 }

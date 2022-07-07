@@ -8,5 +8,6 @@ export const API_RES_MSG_BLOCKCHAIN = {
     BC_NODE_INFO_UPDATE_FAILED: 'Unable To Updated BC Node Info',
     BC_NODE_INFO_UPDATED: 'BC Node Info Updated Successfully',
     BC_NODE_INFO_DELETE_FAILED: 'Unable To Delete BC Node Info',
-    BC_NODE_INFO_DELETED: ' BC Node Info Deleted Successfully'
+    BC_NODE_INFO_DELETED: ' BC Node Info Deleted Successfully',
+    INVALID_BC_KEY: 'Invalid Bc Key'
 };

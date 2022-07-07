@@ -12,8 +12,11 @@ export class LoggedInGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         if (this.authService.isLoggedIn === true) {
             return true;
+        } else if (this.authService.getAccessToken()) {
+            this.router.navigate(['/auth/bcKey-verify']);
+        } else {
+            this.router.navigate(['/auth/login'], { queryParams: { returnUrl: encodeURIComponent(state.url) } });
         }
-        this.router.navigate(['/auth/login'], { queryParams: { returnUrl: encodeURIComponent(state.url) } });
         return false;
     }
 }
