@@ -5,7 +5,7 @@ import { finalize } from 'rxjs';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IProject } from 'src/app/@core/interfaces/manage-project.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { ManageProjectService, ManageUserService, UtilsService } from 'src/app/@core/services';
+import { ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-project-purpose',
@@ -37,7 +37,7 @@ export class AddProjectPurposeComponent implements OnInit {
 
     fileName!: string;
 
-    constructor(private readonly ref: NbDialogRef<AddProjectPurposeComponent>, private readonly fb: FormBuilder, private readonly manageProjectService: ManageProjectService, private readonly utilsService: UtilsService, private readonly manageUserService: ManageUserService) {}
+    constructor(private readonly ref: NbDialogRef<AddProjectPurposeComponent>, private readonly fb: FormBuilder, private readonly manageProjectService: ManageProjectService, private readonly utilsService: UtilsService) {}
 
     ngOnInit(): void {
         this.buildProjectPurposeForm();
@@ -53,7 +53,7 @@ export class AddProjectPurposeComponent implements OnInit {
 
         this.projectPurposeForm = this.fb.group({
             purpose: [purpose && purpose.text ? purpose.text : ''],
-            purposeDoc: ['']
+            purposeDoc: [null]
         });
     }
 
@@ -88,13 +88,11 @@ export class AddProjectPurposeComponent implements OnInit {
         if (!valid) {
             return;
         }
-        console.log(this.UF['purposeDoc'].value);
 
         let formData;
         let hasFormData: boolean;
 
         if (this.UF['purposeDoc'].value && this.rowData.purpose.docName !== this.UF['purposeDoc'].value) {
-            console.log('Im is formdata');
             hasFormData = true;
             formData = new FormData();
 
@@ -103,7 +101,6 @@ export class AddProjectPurposeComponent implements OnInit {
             }
         } else {
             hasFormData = false;
-            console.log(value);
             formData = { ...value };
         }
 
