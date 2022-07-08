@@ -1,23 +1,19 @@
-<nb-card class="form-container" size="medium">
-    <nb-card-header>
-        {{ 'BLOCKCHAIN.BC_KEY.LABEL.FORM_HEADER_MESSAGE' | translate }}
-    </nb-card-header>
-    <nb-card-body>
-        <form [formGroup]="bcKeyVerifyForm">
-            <div class="form-inner-container">
-                <div class="form-holder floating">
-                    <input id="bcKey" nbInput fullWidth type="text" [placeholder]="'*' + ('BLOCKCHAIN.BC_KEY.PLACEHOLDER.BLOCKCHAIN_KEY' | translate)" formControlName="bcKey" [ngClass]="{ 'status-danger': submitted && UF['bcKey'].errors }" />
-                    <label for="bcKey" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_KEY.LABEL.BLOCKCHAIN_KEY' | translate)"></label>
-                    <div *ngIf="submitted && UF['bcKey'].errors as err" class="invalid-feedback">
-                        <span *ngIf="err['required']">{{ 'BLOCKCHAIN.BC_KEY.VALIDATIONS.BLOCKCHAIN_KEY' | translate }}</span>
-                    </div>
-                </div>
-                <div class="action-btn">
-                    <button nbButton hero status="primary" (click)="verifyBcKey(bcKeyVerifyForm)">
-                        {{ 'BLOCKCHAIN.BC_KEY.BUTTON.VERIFY' | translate }}
-                    </button>
-                </div>
+<form [formGroup]="bcKeyVerifyForm">
+    <h4 class="title">{{ 'BLOCKCHAIN.TITLE.BLOCKCHAIN_KEY_VERIFICATION' | translate }}</h4>
+    <p class="sub-title">{{ 'BLOCKCHAIN.BC_KEY.LABEL.FORM_HEADER_MESSAGE' | translate }}</p>
+
+    <div class="form-inner-container">
+        <div class="form-holder floating">
+            <input id="bcKey" nbInput fullWidth type="text" [placeholder]="'*' + ('BLOCKCHAIN.BC_KEY.PLACEHOLDER.BLOCKCHAIN_KEY' | translate)" formControlName="bcKey" [ngClass]="{ 'status-danger': submitted && UF['bcKey'].errors }" />
+            <label for="bcKey" [attr.data-content]="'*' + ('BLOCKCHAIN.BC_KEY.LABEL.BLOCKCHAIN_KEY' | translate)"></label>
+            <div *ngIf="submitted && UF['bcKey'].errors as err" class="invalid-feedback">
+                <span *ngIf="err['required']">{{ 'BLOCKCHAIN.BC_KEY.VALIDATIONS.BLOCKCHAIN_KEY' | translate }}</span>
             </div>
-        </form>
-    </nb-card-body>
-</nb-card>
+        </div>
+    </div>
+    <div class="action-holder">
+        <button nbButton hero status="primary" (click)="verifyBcKey(bcKeyVerifyForm)">
+            {{ 'BLOCKCHAIN.BC_KEY.BUTTON.VERIFY' | translate }}
+        </button>
+    </div>
+</form>

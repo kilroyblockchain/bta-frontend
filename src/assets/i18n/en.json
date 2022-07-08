@@ -845,6 +845,9 @@
         }
     },
     "BLOCKCHAIN": {
+        "TITLE": {
+            "BLOCKCHAIN_KEY_VERIFICATION": "Blockchain Key Verification"
+        },
         "BC_NODE_INFO": {
             "TITLE": {
                 "ALL_BC_NODE": "All Bc Nodes",

@@ -1,10 +1,9 @@
 .form-container {
-    margin-top: -10%;
-    margin-left: 30%;
-    z-index: 2;
-    width: 85vh;
+    padding-right: 100px;
 }
 
-.action-btn {
-    text-align: center;
+.form-inner-container {
+    .form-holder {
+        width: 50% !important;
+    }
 }

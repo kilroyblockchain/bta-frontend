@@ -64,6 +64,7 @@ export class BcKeyVerifyComponent implements OnInit {
                 }
             },
             error: (err) => {
+                this.loading = false;
                 this.utilsService.showToast('warning', err?.message);
             }
         });
