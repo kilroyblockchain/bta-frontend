@@ -21,6 +21,9 @@ export class AuthInterceptor implements HttpInterceptor {
         if (this.authService.getAccessToken()) {
             req = this.addToken(req, this.authService.getAccessToken());
         }
+        if (this.authService.getBcKey()) {
+            req = this.addBcKey(req, this.authService.getBcKey());
+        }
 
         return next.handle(req).pipe(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +31,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     if (req.url.includes('refresh-access-token')) {
                         this.authService.logoutByTokenExpiry();
+                    } else if (req.url.includes('verify-bc-key')) {
+                        return throwError(() => error);
                     } else {
                         return this.handle401Error(req, next);
                     }
@@ -42,6 +47,15 @@ export class AuthInterceptor implements HttpInterceptor {
         return request.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`
+            }
+        });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private addBcKey(request: HttpRequest<any>, bcKey: string): HttpRequest<any> {
+        return request.clone({
+            setHeaders: {
+                'bc-key': bcKey
             }
         });
     }

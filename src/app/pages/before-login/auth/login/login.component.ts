@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         value.reCaptchaToken = this.disableCaptcha ? '123456' : this.recaptchaStr;
         this.loading = true;
+
         this.authService.userLogin(value).subscribe({
             next: (res) => {
                 const { data } = res;
@@ -95,23 +96,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                         autoPassword: data?.autoPassword,
                         staffingId: data?.staffingId
                     };
+
                     this.authService.setUserData(user);
-                    this.authService.getUserData().then((userData) => {
-                        this.userData = { ...userData };
-                        const roles = this.userData?.roles;
-                        if (roles) {
-                            const returnURL = this.activatedRoute.snapshot.queryParams['returnUrl'];
-                            if (returnURL) {
-                                this.router.navigateByUrl(decodeURIComponent(returnURL)).then(() => {
-                                    window.location.reload();
-                                });
-                            } else {
-                                window.location.reload();
-                            }
-                        } else {
-                            this.loading = false;
-                        }
-                    });
+                    this.router.navigate(['/auth/bc-key-verify']);
                 }
             },
             error: (err) => {

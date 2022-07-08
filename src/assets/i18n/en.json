@@ -246,7 +246,8 @@
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
         "APPLICATION_LOGS": "Application Logs",
-        "BC_NODE_INFO": "BC Node Info"
+        "BC_NODE_INFO": "BC Node Info",
+        "BC_KEY_VERIFY": "Bc Key Verify"
     },
     "FOOTER": {
         "TITLE": {
@@ -844,6 +845,9 @@
         }
     },
     "BLOCKCHAIN": {
+        "TITLE": {
+            "BLOCKCHAIN_KEY_VERIFICATION": "Blockchain Key Verification"
+        },
         "BC_NODE_INFO": {
             "TITLE": {
                 "ALL_BC_NODE": "All Bc Nodes",
@@ -884,6 +888,21 @@
             },
             "ALERT_MSG": {
                 "DISABLE_BC_NODE_INFO": "Do you want to disable organization unit"
+            }
+        },
+        "BC_KEY": {
+            "LABEL": {
+                "FORM_HEADER_MESSAGE": "Please enter Blockchain Key, this key gets verified with you credentials wallet stored in Hyperledger fabric.",
+                "BLOCKCHAIN_KEY": "Blockchain Key"
+            },
+            "BUTTON": {
+                "VERIFY": "Verify"
+            },
+            "PLACEHOLDER": {
+                "BLOCKCHAIN_KEY": "Blockchain key"
+            },
+            "VALIDATIONS": {
+                "BLOCKCHAIN_KEY": "Blockchain key is required"
             }
         }
     }
