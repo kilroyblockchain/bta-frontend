@@ -626,12 +626,17 @@
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
             "EXPERIMENT_DETAILS": "Experiment Details",
-            "MODEL_REVIEWS": "Model Reviews"
+            "MODEL_REVIEWS": "Model Reviews",
+            "PROJECT_BC_HISTORY": "Project Bc History"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
-            "MODEL_REVIEWS": "Reviews"
+            "MODEL_REVIEWS": "Reviews",
+            "VIEW_PROJECT": "View Project",
+            "ADD_VERSION": "Add Version",
+            "EDIT_PROJECT": "Edit Project",
+            "PROJECT_BC_HISTORY": "Project Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -640,14 +645,18 @@
                 "VERSION_DETAILS": "Version Details",
                 "CREATED_BY": "Created By",
                 "CREATED_AT": "Created At",
-                "STAFFING_NAME": "Staffing"
+                "STAFFING_NAME": "Staffing",
+                "RECORDS_FOUND": "Records Found",
+                "FALSE": "False"
             }
         },
         "PROJECT": {
             "TITLE": {
                 "ALL_PROJECTS": "All Projects",
                 "ADD_NEW_PROJECT": "Add New Project",
-                "EDIT_PROJECT": "Edit Project"
+                "EDIT_PROJECT": "Edit Project",
+                "BLOCKCHAIN_DETAILS": "Blockchain Details",
+                "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
             "BUTTON": {
                 "ADD_PROJECT": "Add Project"
@@ -674,7 +683,11 @@
                 "PROJECT_PURPOSE": "Project Purpose",
                 "LATEST_VERSION": "Latest Version",
                 "AI_ENGINEER": "AI Engineer",
-                "VERSION": "Version"
+                "VERSION": "Version",
+                "PARTICIPANT_NAME": "Participant Name",
+                "TX_ID": "Tx Id",
+                "TX_DATE_TIME": "Tx DateTime",
+                "IS_DELETED": "Is Deleted"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",

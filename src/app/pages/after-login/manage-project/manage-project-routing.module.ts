@@ -6,6 +6,7 @@ import { ChannelSetUpComponent } from './manage-channel/manage-channel.component
 import { ManageProjectComponent } from './manage-project.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
+import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
 import { ProjectComponent } from './project/project.component';
 
 const routes: Routes = [
@@ -42,6 +43,11 @@ const routes: Routes = [
                 path: 'model-reviews/:id',
                 component: ModelReviewComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.MODEL_REVIEWS' }
+            },
+            {
+                path: 'project-bc-history/:id',
+                component: ProjectBcHistoryComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.PROJECT_BC_HISTORY' }
             }
         ]
     }

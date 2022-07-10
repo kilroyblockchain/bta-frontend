@@ -1,0 +1,92 @@
+<div>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'MANAGE_PROJECTS.PROJECT.TITLE.BLOCKCHAIN_DETAILS' | translate }}</h4>
+        </div>
+    </div>
+    <nb-card class="medium-card-width">
+        <nb-card-header>
+            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DETAILS' | translate }}
+        </nb-card-header>
+        <nb-card-body>
+            <nb-card class="medium-card-width info-card">
+                <nb-card-body>
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.name">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"></nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
+                        </strong>
+                        {{ projectBcDetails?.name }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.domain">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DOMAIN' | translate }}:
+                        </strong>
+                        {{ projectBcDetails?.domain }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.members?.length">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"></nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS' | translate }}:
+                        </strong>
+                        <span *ngFor="let member of projectBcDetails?.members; let i = index"> {{ member }}{{ i <= projectBcDetails.members.length - 2 ? ',' : '' }}</span>
+                    </p>
+                    <div *ngIf="!dataFound && loading && !loadingTable">
+                        <app-loader></app-loader>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <nb-card>
+                <nb-card-header>
+                    {{ 'MANAGE_PROJECTS.PROJECT.TITLE.BLOCKCHAIN_HISTORY' | translate }}
+                    <div class="action">
+                        <p>{{ totalRecords }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.RECORDS_FOUND' | translate }}</p>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+                        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+                        <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+                        <ng-container *ngFor="let column of columns; let index = index" [nbTreeGridColumnDef]="column" [showOn]="utilsService.getShowOn(index)">
+                            <ng-container [ngSwitch]="column">
+                                <ng-container *ngSwitchDefault>
+                                    <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                        {{ columnsName[index] }}
+                                    </th>
+                                </ng-container>
+                            </ng-container>
+                            <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                                <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'name' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
+                                <div [ngSwitch]="column">
+                                    <div class="table-col" *ngSwitchCase="'isDeleted'">
+                                        {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
+                                    </div>
+                                    <div class="table-col" *ngSwitchCase="'members'">
+                                        <div *ngFor="let member of projectBcDetails?.members">
+                                            <span>-&nbsp;{{ member }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-col" *ngSwitchCase="'txId'">
+                                        <span [nbTooltip]="row.data[column]" nbTooltipClass="tooltip">
+                                            {{ formatTxId(row.data[column]) }}
+                                        </span>
+                                    </div>
+                                    <div *ngSwitchDefault>
+                                        <ng-container>{{ row.data[column] || '-' }}</ng-container>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </table>
+                    <div *ngIf="!dataFound && loading && !loadingTable">
+                        <app-loader></app-loader>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <div *ngIf="!dataFound && !loading">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>
