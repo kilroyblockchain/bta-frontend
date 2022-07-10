@@ -17,12 +17,12 @@ interface FSEntry {
     name: string;
     domain: string;
     members: string[];
+    entryUser: string;
 }
 
 @Component({
     selector: 'app-project-bc-history',
-    templateUrl: './project-bc-history.component.html',
-    styleUrls: ['./project-bc-history.component.scss']
+    templateUrl: './project-bc-history.component.html'
 })
 export class ProjectBcHistoryComponent implements OnInit {
     dataSource!: NbTreeGridDataSource<FSEntry>;
@@ -53,8 +53,8 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'name', 'domain', 'members'];
-        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'members'];
+        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.ENTRY_USER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
             this.columnsName = Object.values(data);
@@ -103,8 +103,8 @@ export class ProjectBcHistoryComponent implements OnInit {
                     this.totalRecords = 0;
                 }
             },
-            error: (err) => {
-                console.log(err);
+            error: () => {
+                this.dataFound = false;
             }
         });
     }
@@ -120,7 +120,8 @@ export class ProjectBcHistoryComponent implements OnInit {
                     isDeleted: item.isDeleted,
                     name: item.project.name,
                     domain: item.project.domain,
-                    members: item.project.members
+                    members: item.project.members,
+                    entryUser: item.project.entryUser
                 }
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);

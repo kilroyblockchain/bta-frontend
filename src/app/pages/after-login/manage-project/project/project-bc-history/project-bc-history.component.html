@@ -25,6 +25,13 @@
                         </strong>
                         {{ projectBcDetails?.domain }}
                     </p>
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.entryUser">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.ENTRY_USER' | translate }}:
+                        </strong>
+                        {{ projectBcDetails?.entryUser }}
+                    </p>
                     <p class="card-paragraph" *ngIf="projectBcDetails?.members?.length">
                         <strong>
                             <nb-icon icon="chevron-right-outline"></nb-icon>
@@ -63,12 +70,12 @@
                                         {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
                                     </div>
                                     <div class="table-col" *ngSwitchCase="'members'">
-                                        <div *ngFor="let member of projectBcDetails?.members">
+                                        <div *ngFor="let member of row.data[column]">
                                             <span>-&nbsp;{{ member }}</span>
                                         </div>
                                     </div>
                                     <div class="table-col" *ngSwitchCase="'txId'">
-                                        <span [nbTooltip]="row.data[column]" nbTooltipClass="tooltip">
+                                        <span [nbPopover]="row.data[column]" nbPopoverTrigger="hover" nbPopoverPlacement="top">
                                             {{ formatTxId(row.data[column]) }}
                                         </span>
                                     </div>

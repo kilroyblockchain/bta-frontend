@@ -668,7 +668,8 @@
                 "MEMBERS": "Member(s)",
                 "PROJECT_DETAILS": "Project Details",
                 "PROJECT_VERSION_DETAILS": "Project Version Details",
-                "PROJECT_MEMBERS_DETAILS": "Project members Details"
+                "PROJECT_MEMBERS_DETAILS": "Project members Details",
+                "ENTRY_USER": "Entry User"
             },
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
@@ -687,7 +688,8 @@
                 "PARTICIPANT_NAME": "Participant Name",
                 "TX_ID": "Tx Id",
                 "TX_DATE_TIME": "Tx DateTime",
-                "IS_DELETED": "Is Deleted"
+                "IS_DELETED": "Is Deleted",
+                "ENTRY_USER": "Entry User"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",
