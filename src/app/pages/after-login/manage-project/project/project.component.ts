@@ -190,6 +190,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         }
 
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
+        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
     }
 
     navigateTo(URL: string, id: string): void {
@@ -370,6 +371,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
                             this.viewModelReviews(this.rowVersion);
                             break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
+                            this.viewProjectVersionHistory(this.rowVersion);
+                            break;
                         default:
                             break;
                     }
@@ -430,5 +434,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     viewProjectBcHistory(projectData: IProject): void {
         const URL = '/u/manage-project/project-bc-history';
         this.navigateTo(URL, projectData._id);
+    }
+
+    viewProjectVersionHistory(versionData: IProjectVersion): void {
+        const URL = 'u/manage-project/version-bc-history';
+        this.navigateTo(URL, versionData._id);
     }
 }
