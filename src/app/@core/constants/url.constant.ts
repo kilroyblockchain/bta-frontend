@@ -79,5 +79,7 @@ export const URLConstant = {
     addBcNodeInfoURL: '/bc-node-info',
     updateBcNodeInfoURL: '/bc-node-info/update',
     deleteBcNodeInfoURL: '/bc-node-info/delete',
-    verifyBcKeyURL: '/user/verify-bc-key'
+    verifyBcKeyURL: '/user/verify-bc-key',
+    getProjectBcDetailsURL: '/project/bc-details',
+    getProjectBcHistoryURL: '/project/bc-history'
 };

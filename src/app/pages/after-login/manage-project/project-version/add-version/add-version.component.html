@@ -85,7 +85,7 @@
 
             <div class="form-inner-container two-col">
                 <div class="form-holder floating">
-                    <input name="codeRepo" nbInput fullWidth p [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_REPO' | translate)" formControlName="codeRepo" [ngClass]="{ 'status-danger': submitted && UF['codeRepo'].errors }" />
+                    <input name="codeRepo" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_REPO' | translate)" formControlName="codeRepo" [ngClass]="{ 'status-danger': submitted && UF['codeRepo'].errors }" />
                     <label for="codeRepo" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate)"></label>
                     <div *ngIf="submitted && UF['codeRepo'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_REPO' | translate }}</span>
@@ -94,7 +94,7 @@
             </div>
 
             <div class="form-holder floating">
-                <input name="codeVersion" nbInput [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
+                <input name="codeVersion" fullWidth nbInput [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
                 <label for="codeVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate)"></label>
                 <div *ngIf="submitted && UF['codeVersion'].errors as err" class="invalid-feedback">
                     <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_VERSION' | translate }}</span>

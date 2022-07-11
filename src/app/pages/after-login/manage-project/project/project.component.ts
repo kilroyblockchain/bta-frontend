@@ -24,6 +24,7 @@ interface TreeNode<T> {
 }
 
 interface FSEntry {
+    participantName?: string;
     _id: string;
     name?: string;
     details: string;
@@ -56,7 +57,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     columnNameKeys!: Array<string>;
     columnsName: Array<string> = [];
 
-    getAllProject!: Subscription;
     newProjectDialogClose!: Subscription;
     editProjectDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
@@ -76,8 +76,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canViewModelReview!: boolean;
     canViewMonitoringReport!: boolean;
 
-    menuItems: Array<MenuItem> = [];
+    childrenMenuItems: Array<MenuItem> = [];
+    parentMenuItems: Array<MenuItem> = [];
+
     rowVersion!: IProjectVersion;
+    rowProject!: IProject;
     destroy$: Subject<void> = new Subject<void>();
 
     user!: IUserRes;
@@ -87,7 +90,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     isStakeHolder!: boolean;
 
     canAddProjectAndVersion!: boolean;
-
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
         private router: Router,
@@ -100,7 +102,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private langTranslateService: LangTranslateService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
-        this.initMenu();
+        this.initChildrenMenu();
+        this.initParentMenu();
         this.getProjectUser();
     }
 
@@ -137,12 +140,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['name', ...(this.isCompanyAdmin ? ['details', 'purpose', 'domain', 'latestVersion', 'status'] : []), ...(this.isAIEng ? ['details', 'purpose', 'domain'] : []), ...(this.isMLOpsEng || this.isStakeHolder ? ['details', 'purpose', 'status'] : []), 'action'];
+        this.columns = [...(this.isCompanyAdmin ? ['participantName', 'name', 'details', 'purpose', 'domain', 'latestVersion', 'status'] : []), ...(this.isAIEng ? ['name', 'details', 'purpose', 'domain'] : []), ...(this.isMLOpsEng || this.isStakeHolder ? ['name', 'details', 'purpose', 'status'] : []), 'action'];
         this.columnNameKeys = [
-            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
-            ...(this.isCompanyAdmin ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.LATEST_VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
-            ...(this.isAIEng ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN'] : []),
-            ...(this.isMLOpsEng || this.isStakeHolder ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.AI_ENGINEER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            ...(this.isCompanyAdmin ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PARTICIPANT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.LATEST_VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
+            ...(this.isAIEng ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN'] : []),
+            ...(this.isMLOpsEng || this.isStakeHolder ? ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.AI_ENGINEER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.VERSION', 'COMMON.COLUMN_NAME.STATUS'] : []),
             'COMMON.COLUMN_NAME.ACTION'
         ];
 
@@ -162,22 +164,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     async checkAccess(): Promise<void> {
         this.canAddProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.WRITE]);
-        this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);
         this.canDeleteProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.DELETE]);
-        this.canViewProjectDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT_DETAILS, [ACCESS_TYPE.READ]);
+        if (this.isAIEng || this.isCompanyAdmin) {
+            this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT') });
+        }
         this.canAddVersion = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.WRITE]);
+        if (this.canAddVersion) {
+            this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION') });
+        }
+        this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);
+        if (this.canUpdateProject) {
+            this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT') });
+        }
         this.canViewVersionDetails = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.READ]);
         if (this.canViewVersionDetails) {
-            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
+            this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
         }
         this.canViewModelReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
         if (this.canViewModelReview) {
-            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') });
+            this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') });
         }
         this.canViewMonitoringReport = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_MONITORING, [ACCESS_TYPE.READ]);
         if (this.canViewMonitoringReport) {
-            this.menuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
+            this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
         }
+
+        this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
     }
 
     navigateTo(URL: string, id: string): void {
@@ -251,7 +263,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         data: {
                             details: version.versionName,
                             purpose: version.versionStatus,
-                            action: version,
+                            action: { project: item, version },
                             subrow: true,
                             _id: version._id
                         }
@@ -260,13 +272,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.data.push({
                     data: {
                         _id: item._id,
+                        participantName: item?.createdBy?.firstName + ' ' + item?.createdBy?.lastName,
                         name: item.name,
                         domain: item.domain,
                         details: item.details,
                         purpose: item.purpose,
                         latestVersion: item.projectVersions[item.projectVersions.length - 1]?.versionName,
                         status: item.projectVersions[item.projectVersions.length - 1]?.versionStatus,
-                        action: item,
+                        action: { project: item },
                         subrow: false
                     },
                     children
@@ -281,7 +294,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
                             purpose: version.versionName,
                             status: version.versionStatus,
-                            action: version,
+                            action: { project: item, version },
                             subrow: false,
                             versionId: version._id
                         }
@@ -323,7 +336,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     addNewProjectVersion(rowData: IProject): void {
         if (this.canAddProjectAndVersion) {
             const addVersionOpen = this.dialogService.open(AddVersionComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
@@ -337,11 +349,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    openMenu(rowData: IProjectVersion) {
-        this.rowVersion = rowData;
+    openMenu(rowData: { project: IProject; version: IProjectVersion }) {
+        this.rowVersion = rowData.version;
+        this.rowProject = rowData.project;
     }
 
-    initMenu(): void {
+    initChildrenMenu(): void {
         this.menuService
             .onItemClick()
             .pipe(takeUntil(this.destroy$))
@@ -356,6 +369,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
                             this.viewModelReviews(this.rowVersion);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+    }
+
+    initParentMenu(): void {
+        this.menuService
+            .onItemClick()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(({ item, tag }: NbMenuBag) => {
+                if (tag === 'projectMenu') {
+                    switch ((item as MenuItem).key) {
+                        case 'MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT':
+                            this.viewProjectDetails(this.rowProject);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT':
+                            this.openProjectEditModal(this.rowProject);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION':
+                            this.addNewProjectVersion(this.rowProject);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY':
+                            this.viewProjectBcHistory(this.rowProject);
                             break;
                         default:
                             break;
@@ -386,5 +425,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     viewModelReviews(versionData: IProjectVersion): void {
         const URL = 'u/manage-project/model-reviews';
         this.navigateTo(URL, versionData._id);
+    }
+
+    viewProjectBcHistory(projectData: IProject): void {
+        const URL = '/u/manage-project/project-bc-history';
+        this.navigateTo(URL, projectData._id);
     }
 }

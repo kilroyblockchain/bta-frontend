@@ -12,5 +12,6 @@ import { ManageChannelDetailsService } from './channel-details.service';
 import { LogPageService } from './log-page.service';
 import { FileService } from './file.service';
 import { BlockChainService } from './blockchain.service';
+import { BcManageProjectService } from './bc-manage-project.service';
 
-export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageChannelDetailsService, ManageProjectService, LogPageService, FileService, BlockChainService };
+export { HttpService, AuthService, LocalStorageService, UtilsService, SubscriptionService, AppFeatureService, StaffingService, ManageUserService, LangTranslateService, ManageChannelDetailsService, ManageProjectService, LogPageService, FileService, BlockChainService, BcManageProjectService };
