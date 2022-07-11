@@ -39,6 +39,13 @@
                         </strong>
                         <span *ngFor="let member of projectBcDetails?.members; let i = index"> {{ member }}{{ i <= projectBcDetails.members.length - 2 ? ',' : '' }}</span>
                     </p>
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.detail">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DETAILS' | translate }}:
+                        </strong>
+                        {{ projectBcDetails?.detail }}
+                    </p>
                     <div *ngIf="!dataFound && loading && !loadingTable">
                         <app-loader></app-loader>
                     </div>

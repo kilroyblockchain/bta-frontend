@@ -16,6 +16,7 @@ interface FSEntry {
     isDeleted: boolean;
     name: string;
     domain: string;
+    details: string;
     members: string[];
     entryUser: string;
 }
@@ -53,8 +54,17 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'members'];
-        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.ENTRY_USER', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN', 'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'members', 'details'];
+        this.columnNameKeys = [
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.ENTRY_USER',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN',
+            'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS'
+        ];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
             this.columnsName = Object.values(data);
@@ -120,6 +130,7 @@ export class ProjectBcHistoryComponent implements OnInit {
                     isDeleted: item.isDeleted,
                     name: item.project.name,
                     domain: item.project.domain,
+                    details: item.project.detail,
                     members: item.project.members,
                     entryUser: item.project.entryUser
                 }
