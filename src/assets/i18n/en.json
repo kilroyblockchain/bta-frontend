@@ -637,6 +637,7 @@
             "VIEW_PROJECT": "View Project",
             "ADD_VERSION": "Add Version",
             "EDIT_PROJECT": "Edit Project",
+            "EDIT_PROJECT_VERSION": "Edit Version",
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Version Bc History"
         },
