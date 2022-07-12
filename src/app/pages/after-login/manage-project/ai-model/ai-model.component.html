@@ -3,9 +3,14 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canViewReview && versionData" (click)="viewModelReviews(versionData._id)">
+        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft" (click)="viewModelReviews(versionData._id)">
             <button nbButton hero status="primary" size="small">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
+            </button>
+        </div>
+        <div class="actions" *ngIf="isUserCanSubmitVersion && versionData && isModelStatusDraft" (click)="submitModelVersion(versionData._id)">
+            <button nbButton hero status="primary" size="small">
+                {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.SUBMIT_MODEL' | translate }}
             </button>
         </div>
     </div>

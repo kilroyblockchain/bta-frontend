@@ -180,6 +180,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         if (this.canViewVersionDetails) {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
         }
+
         this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION') });
 
         this.canViewModelReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
@@ -355,26 +356,37 @@ export class ProjectComponent implements OnInit, OnDestroy {
     openMenu(rowData: { project: IProject; version: IProjectVersion }) {
         this.rowVersion = rowData.version;
         this.rowProject = rowData.project;
+        if (this.rowVersion) {
+            this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+                if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION') {
+                    return {
+                        ...menu,
+                        hidden: this.rowVersion?.versionStatus !== VersionStatus.DRAFT
+                    };
+                }
+                return menu;
+            });
 
-        this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
-            if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION') {
-                return {
-                    ...menu,
-                    hidden: this.rowVersion.versionStatus !== VersionStatus.DRAFT
-                };
-            }
-            return menu;
-        });
+            this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+                if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') {
+                    return {
+                        ...menu,
+                        hidden: this.rowVersion.versionStatus !== VersionStatus.MONITORING
+                    };
+                }
+                return menu;
+            });
 
-        this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
-            if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') {
-                return {
-                    ...menu,
-                    hidden: this.rowVersion.versionStatus !== VersionStatus.MONITORING
-                };
-            }
-            return menu;
-        });
+            this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+                if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') {
+                    return {
+                        ...menu,
+                        hidden: this.rowVersion.versionStatus !== VersionStatus.DRAFT
+                    };
+                }
+                return menu;
+            });
+        }
     }
 
     initChildrenMenu(): void {
@@ -394,6 +406,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.viewModelReviews(this.rowVersion);
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
+                            this.viewProjectVersionHistory(this.rowVersion);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION':
                             this.viewProjectVersionHistory(this.rowVersion);
                             break;
                         default:
@@ -462,4 +477,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         const URL = 'u/manage-project/version-bc-history';
         this.navigateTo(URL, versionData._id);
     }
+
+    /* editModelVersion(versionData: IProjectVersion): void {
+        const editModelVersionOpen = this.dialogService.open();
+    } */
 }

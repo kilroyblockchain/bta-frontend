@@ -804,7 +804,8 @@
         },
         "AI_MODEL": {
             "BUTTON": {
-                "REVIEW_MODEL": "Review Model"
+                "REVIEW_MODEL": "Review Model",
+                "SUBMIT_MODEL": "Submit Model"
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",
