@@ -721,7 +721,7 @@
                 "TEST_DATA_SETS": "test data sets",
                 "TRAIN_DATA_SETS": "train data sets",
                 "NOTE_BOOK_VERSION": "notebook version",
-                "ARTIFACTS": "artifacts",
+                "AI_MODEL": "ai model",
                 "CODE_REPO": "code repo",
                 "CODE_VERSION": "code version",
                 "COMMENT": "Comment"
@@ -749,7 +749,7 @@
                 "TRAIN_DATA_SETS": "Train Data Sets",
                 "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
-                "ARTIFACTS": "Artifacts",
+                "AI_MODEL": "AI Model",
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
                 "VERSION_STATUS": "Version Status",
@@ -766,7 +766,7 @@
                 "TEST_DATA_SETS": "Test data sets is required",
                 "TRAIN_DATA_SETS": "Train data sets is required",
                 "NOTE_BOOK_VERSION": "Notebook version is required",
-                "ARTIFACTS": "Artifacts is required",
+                "AI_MODEL": "AI Model is required",
                 "CODE_REPO": "Code repo is required",
                 "CODE_VERSION": "Code version is required",
                 "COMMENT": "Comment is required"
