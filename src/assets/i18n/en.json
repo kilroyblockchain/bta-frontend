@@ -627,7 +627,8 @@
             "VERSION_DETAILS": "Version Details",
             "EXPERIMENT_DETAILS": "Experiment Details",
             "MODEL_REVIEWS": "Model Reviews",
-            "PROJECT_BC_HISTORY": "Project Bc History"
+            "PROJECT_BC_HISTORY": "Project Bc History",
+            "VERSION_BC_HISTORY": "Version Bc History"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
@@ -636,7 +637,9 @@
             "VIEW_PROJECT": "View Project",
             "ADD_VERSION": "Add Version",
             "EDIT_PROJECT": "Edit Project",
-            "PROJECT_BC_HISTORY": "Project Bc History"
+            "EDIT_PROJECT_VERSION": "Edit Version",
+            "PROJECT_BC_HISTORY": "Project Bc History",
+            "VERSION_BC_HISTORY": "Version Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -647,7 +650,8 @@
                 "CREATED_AT": "Created At",
                 "STAFFING_NAME": "Staffing",
                 "RECORDS_FOUND": "Records Found",
-                "FALSE": "False"
+                "FALSE": "False",
+                "BLOCKCHAIN_DETAILS": "Blockchain Details"
             }
         },
         "PROJECT": {
@@ -706,7 +710,8 @@
                 "ADD_NEW_VERSION": "Add New Version",
                 "VERSION_DETAILS": "Version Details",
                 "PROJECT_INFO": "Project Information",
-                "CREATED_BY_INFO": "Creator Information"
+                "CREATED_BY_INFO": "Creator Information",
+                "BLOCKCHAIN_HISTORY": "Model Version Blockchain History"
             },
             "PLACEHOLDER": {
                 "VERSION_NAME": "version name",
@@ -720,6 +725,18 @@
                 "CODE_REPO": "code repo",
                 "CODE_VERSION": "code version",
                 "COMMENT": "Comment"
+            },
+            "COLUMN_NAME": {
+                "VERSION_NAME": "Version Name",
+                "VERSION_MODEL": "Version Model",
+                "COMMENT": "Comment",
+                "NOTEBOOK_VERSION": "NoteBook Version",
+                "AI_ENGINEER": "AI Engineer",
+                "VERSION": "Version",
+                "PARTICIPANT_NAME": "Participant Name",
+                "TX_ID": "Tx Id",
+                "TX_DATE_TIME": "Tx DateTime",
+                "IS_DELETED": "Is Deleted"
             },
             "LABEL": {
                 "VERSION_NAME": "Version Name",
@@ -738,7 +755,8 @@
                 "VERSION_STATUS": "Version Status",
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
-                "FRAMEWORK_VERSION": "Framework Version"
+                "FRAMEWORK_VERSION": "Framework Version",
+                "MODEL_VERSION_DETAILS": "Model Version Details"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",

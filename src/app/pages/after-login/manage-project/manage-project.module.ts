@@ -22,6 +22,7 @@ import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/vi
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { AddModelReviewComponent } from './model-review/add-review/add-review.component';
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
+import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
@@ -41,7 +42,8 @@ const PAGE_COMPONENT = [
     ViewAiModelDetailsComponent,
     ModelReviewComponent,
     AddModelReviewComponent,
-    ProjectBcHistoryComponent
+    ProjectBcHistoryComponent,
+    ProjectVersionBcHistoryComponent
 ];
 
 @NgModule({

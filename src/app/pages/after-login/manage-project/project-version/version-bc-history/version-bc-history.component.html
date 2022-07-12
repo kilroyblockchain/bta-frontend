@@ -1,0 +1,108 @@
+<div>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.BLOCKCHAIN_DETAILS' | translate }}</h4>
+        </div>
+    </div>
+    <nb-card class="medium-card-width">
+        <nb-card-header>
+            {{ 'MANAGE_PROJECTS.VERSION.LABEL.MODEL_VERSION_DETAILS' | translate }}
+        </nb-card-header>
+        <nb-card-body>
+            <nb-card class="medium-card-width info-card">
+                <nb-card-body>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.project">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"></nb-icon>
+                            {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.project }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.versionName">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.versionName }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.logFileBCHash">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.logFileBCHash }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.codeRepo">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.codeRepo }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.codeVersion">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.codeVersion }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.entryUser">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.entryUser }}
+                    </p>
+                    <div *ngIf="!dataFound && loading && !loadingTable">
+                        <app-loader></app-loader>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <nb-card>
+                <nb-card-header>
+                    {{ 'MANAGE_PROJECTS.VERSION.TITLE.BLOCKCHAIN_HISTORY' | translate }}
+                    <div class="action">
+                        <p>{{ totalRecords }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.RECORDS_FOUND' | translate }}</p>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+                        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+                        <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+                        <ng-container *ngFor="let column of columns; let index = index" [nbTreeGridColumnDef]="column" [showOn]="utilsService.getShowOn(index)">
+                            <ng-container [ngSwitch]="column">
+                                <ng-container *ngSwitchDefault>
+                                    <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                                        {{ columnsName[index] }}
+                                    </th>
+                                </ng-container>
+                            </ng-container>
+                            <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                                <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'name' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
+                                <div [ngSwitch]="column">
+                                    <div class="table-col" *ngSwitchCase="'isDeleted'">
+                                        {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
+                                    </div>
+                                    <div class="table-col" *ngSwitchCase="'txId'">
+                                        <span [nbPopover]="row.data[column]" nbPopoverTrigger="hover" nbPopoverPlacement="top">
+                                            {{ formatTxId(row.data[column]) }}
+                                        </span>
+                                    </div>
+                                    <div *ngSwitchDefault>
+                                        <ng-container>{{ row.data[column] || '-' }}</ng-container>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </table>
+                    <div *ngIf="!dataFound && loading && !loadingTable">
+                        <app-loader></app-loader>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <div *ngIf="!dataFound && !loading">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
-import { IProject, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IProject, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
@@ -180,6 +180,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         if (this.canViewVersionDetails) {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_DETAILS') });
         }
+        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION') });
+
         this.canViewModelReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
         if (this.canViewModelReview) {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') });
@@ -190,6 +192,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         }
 
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
+        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
     }
 
     navigateTo(URL: string, id: string): void {
@@ -352,6 +355,26 @@ export class ProjectComponent implements OnInit, OnDestroy {
     openMenu(rowData: { project: IProject; version: IProjectVersion }) {
         this.rowVersion = rowData.version;
         this.rowProject = rowData.project;
+
+        this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+            if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION') {
+                return {
+                    ...menu,
+                    hidden: this.rowVersion.versionStatus !== VersionStatus.DRAFT
+                };
+            }
+            return menu;
+        });
+
+        this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+            if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') {
+                return {
+                    ...menu,
+                    hidden: this.rowVersion.versionStatus !== VersionStatus.MONITORING
+                };
+            }
+            return menu;
+        });
     }
 
     initChildrenMenu(): void {
@@ -369,6 +392,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
                             this.viewModelReviews(this.rowVersion);
+                            break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
+                            this.viewProjectVersionHistory(this.rowVersion);
                             break;
                         default:
                             break;
@@ -430,5 +456,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     viewProjectBcHistory(projectData: IProject): void {
         const URL = '/u/manage-project/project-bc-history';
         this.navigateTo(URL, projectData._id);
+    }
+
+    viewProjectVersionHistory(versionData: IProjectVersion): void {
+        const URL = 'u/manage-project/version-bc-history';
+        this.navigateTo(URL, versionData._id);
     }
 }

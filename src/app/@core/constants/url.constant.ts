@@ -81,5 +81,7 @@ export const URLConstant = {
     deleteBcNodeInfoURL: '/bc-node-info/delete',
     verifyBcKeyURL: '/user/verify-bc-key',
     getProjectBcDetailsURL: '/project/bc-details',
-    getProjectBcHistoryURL: '/project/bc-history'
+    getProjectBcHistoryURL: '/project/bc-history',
+    getProjectVersionBcDetailsURL: '/project-version/bc-details',
+    getProjectVersionBcHistoryURL: '/project-version/bc-history'
 };
