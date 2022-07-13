@@ -32,7 +32,7 @@ export class EditVersionComponent implements OnInit {
             noteBookVersion: [data?.noteBookVersion, [Validators.required]],
             trainDataSets: [data?.trainDataSets, [Validators.required]],
             testDataSets: [data?.testDataSets, [Validators.required]],
-            artifacts: [data?.artifacts, [Validators.required]],
+            aiModel: [data?.aiModel, [Validators.required]],
             codeRepo: [data?.codeRepo, [Validators.required]],
             codeVersion: [data?.codeVersion, [Validators.required]],
             comment: [data?.comment, [Validators.required]]

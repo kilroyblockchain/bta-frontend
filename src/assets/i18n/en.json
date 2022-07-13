@@ -751,13 +751,17 @@
                 "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
                 "AI_MODEL": "AI Model",
+                "AI_MODEL_BC_HASH": "AI Model BC Hash",
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
                 "VERSION_STATUS": "Version Status",
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
                 "FRAMEWORK_VERSION": "Framework Version",
-                "MODEL_VERSION_DETAILS": "Model Version Details"
+                "MODEL_VERSION_DETAILS": "Model Version Details",
+                "SUBMITTED_DATE": "Submitted Date",
+                "REVIEWED_DATE": "Reviewed Date",
+                "PRODUCTION_DATE": "Production Date"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",

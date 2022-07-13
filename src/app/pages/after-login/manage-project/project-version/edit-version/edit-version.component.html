@@ -76,9 +76,9 @@
             </div>
 
             <div class="form-holder floating">
-                <input name="artifacts" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.AI_MODEL' | translate)" formControlName="artifacts" [ngClass]="{ 'status-danger': submitted && UF['artifacts'].errors }" />
-                <label for="artifacts" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate)"></label>
-                <div *ngIf="submitted && UF['artifacts'].errors as err" class="invalid-feedback">
+                <input name="aiModel" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.AI_MODEL' | translate)" formControlName="aiModel" [ngClass]="{ 'status-danger': submitted && UF['aiModel'].errors }" />
+                <label for="aiModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate)"></label>
+                <div *ngIf="submitted && UF['aiModel'].errors as err" class="invalid-feedback">
                     <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.AI_MODEL' | translate }}</span>
                 </div>
             </div>
