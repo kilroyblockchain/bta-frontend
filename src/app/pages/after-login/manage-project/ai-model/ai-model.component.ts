@@ -198,18 +198,26 @@ export class AiModelComponent implements OnInit {
     }
 
     submitModelVersion(versionId: string): void {
-        this.manageProjectService.submitModelVersion(versionId).subscribe({
-            next: (res) => {
-                if (res && res.success) {
-                    this.utilsService.showToast('success', res.message);
-                    this.pageChange(1);
-                } else {
-                    this.utilsService.showToast('warning', res.message);
+        this.loading = true;
+        this.manageProjectService
+            .submitModelVersion(versionId)
+            .pipe(
+                finalize(() => {
+                    this.loading = false;
+                })
+            )
+            .subscribe({
+                next: (res) => {
+                    if (res && res.success) {
+                        this.utilsService.showToast('success', res.message);
+                        this.pageChange(1);
+                    } else {
+                        this.utilsService.showToast('warning', res.message);
+                    }
+                },
+                error: (err) => {
+                    this.utilsService.showToast('warning', err.error?.message || err?.message);
                 }
-            },
-            error: (err) => {
-                this.utilsService.showToast('warning', err.error?.message || err?.message);
-            }
-        });
+            });
     }
 }

@@ -12,6 +12,7 @@ import { AuthService, LangTranslateService, ManageProjectService, UtilsService }
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
+import { EditVersionComponent } from '../project-version/edit-version/edit-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
@@ -63,6 +64,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     viewProjectDetailsClose!: Subscription;
     addVersionDialogClose!: Subscription;
     viewVersionDetailsClose!: Subscription;
+    editModelVersionClose!: Subscription;
 
     tableData!: Array<IProject>;
     loadingTable!: boolean;
@@ -130,6 +132,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.viewProjectDetailsClose ? this.viewProjectDetailsClose.unsubscribe() : null;
         this.addVersionDialogClose ? this.addVersionDialogClose.unsubscribe() : null;
         this.viewVersionDetailsClose ? this.viewVersionDetailsClose.unsubscribe() : null;
+        this.editModelVersionClose ? this.editModelVersionClose.unsubscribe() : null;
     }
 
     languageChange(): void {
@@ -340,6 +343,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     addNewProjectVersion(rowData: IProject): void {
         if (this.canAddProjectAndVersion) {
             const addVersionOpen = this.dialogService.open(AddVersionComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
@@ -381,7 +385,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS') {
                     return {
                         ...menu,
-                        hidden: this.rowVersion.versionStatus !== VersionStatus.DRAFT
+                        hidden: this.rowVersion.versionStatus === VersionStatus.DRAFT
                     };
                 }
                 return menu;
@@ -409,7 +413,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.viewProjectVersionHistory(this.rowVersion);
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION':
-                            this.viewProjectVersionHistory(this.rowVersion);
+                            this.editModelVersion(this.rowVersion);
                             break;
                         default:
                             break;
@@ -478,7 +482,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.navigateTo(URL, versionData._id);
     }
 
-    /* editModelVersion(versionData: IProjectVersion): void {
-        const editModelVersionOpen = this.dialogService.open();
-    } */
+    editModelVersion(versionData: IProjectVersion): void {
+        const editModelVersionOpen = this.dialogService.open(EditVersionComponent, { context: { versionData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editModelVersionClose = editModelVersionOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
+            }
+        });
+    }
 }

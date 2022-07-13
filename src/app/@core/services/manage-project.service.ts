@@ -80,4 +80,8 @@ export class ManageProjectService {
     submitModelVersion(versionId: string): Observable<IAppResponse<IProjectVersion>> {
         return this.http.patch(URLConstant.submitModelVersionURL + `/${versionId}`);
     }
+
+    updateVersion(versionData: IProjectVersion, versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.put(URLConstant.updateModelVersionURL + `/${versionId}`, versionData);
+    }
 }

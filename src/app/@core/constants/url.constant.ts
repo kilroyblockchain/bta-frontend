@@ -84,5 +84,6 @@ export const URLConstant = {
     getProjectBcHistoryURL: '/project/bc-history',
     getProjectVersionBcDetailsURL: '/project-version/bc-details',
     getProjectVersionBcHistoryURL: '/project-version/bc-history',
-    submitModelVersionURL: '/project-version/submit'
+    submitModelVersionURL: '/project-version/submit',
+    updateModelVersionURL: '/project-version/update'
 };

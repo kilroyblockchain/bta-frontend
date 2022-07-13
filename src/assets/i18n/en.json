@@ -708,6 +708,7 @@
         "VERSION": {
             "TITLE": {
                 "ADD_NEW_VERSION": "Add New Version",
+                "EDIT_MODEL_VERSION": "Edit Model Version",
                 "VERSION_DETAILS": "Version Details",
                 "PROJECT_INFO": "Project Information",
                 "CREATED_BY_INFO": "Creator Information",
