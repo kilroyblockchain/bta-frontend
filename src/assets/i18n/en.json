@@ -691,7 +691,8 @@
                 "PARTICIPANT_NAME": "Participant Name",
                 "TX_ID": "Tx Id",
                 "TX_DATE_TIME": "Tx DateTime",
-                "IS_DELETED": "Is Deleted"
+                "IS_DELETED": "Is Deleted",
+                "MODEL_VERSION_NAME": "Model Version Name"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",
@@ -708,6 +709,7 @@
         "VERSION": {
             "TITLE": {
                 "ADD_NEW_VERSION": "Add New Version",
+                "EDIT_MODEL_VERSION": "Edit Model Version",
                 "VERSION_DETAILS": "Version Details",
                 "PROJECT_INFO": "Project Information",
                 "CREATED_BY_INFO": "Creator Information",
@@ -721,7 +723,7 @@
                 "TEST_DATA_SETS": "test data sets",
                 "TRAIN_DATA_SETS": "train data sets",
                 "NOTE_BOOK_VERSION": "notebook version",
-                "ARTIFACTS": "artifacts",
+                "AI_MODEL": "ai model",
                 "CODE_REPO": "code repo",
                 "CODE_VERSION": "code version",
                 "COMMENT": "Comment"
@@ -749,14 +751,18 @@
                 "TRAIN_DATA_SETS": "Train Data Sets",
                 "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
-                "ARTIFACTS": "Artifacts",
+                "AI_MODEL": "AI Model",
+                "AI_MODEL_BC_HASH": "AI Model BC Hash",
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
                 "VERSION_STATUS": "Version Status",
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
                 "FRAMEWORK_VERSION": "Framework Version",
-                "MODEL_VERSION_DETAILS": "Model Version Details"
+                "MODEL_VERSION_DETAILS": "Model Version Details",
+                "SUBMITTED_DATE": "Submitted Date",
+                "REVIEWED_DATE": "Reviewed Date",
+                "PRODUCTION_DATE": "Production Date"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",
@@ -766,7 +772,7 @@
                 "TEST_DATA_SETS": "Test data sets is required",
                 "TRAIN_DATA_SETS": "Train data sets is required",
                 "NOTE_BOOK_VERSION": "Notebook version is required",
-                "ARTIFACTS": "Artifacts is required",
+                "AI_MODEL": "AI Model is required",
                 "CODE_REPO": "Code repo is required",
                 "CODE_VERSION": "Code version is required",
                 "COMMENT": "Comment is required"
@@ -804,7 +810,8 @@
         },
         "AI_MODEL": {
             "BUTTON": {
-                "REVIEW_MODEL": "Review Model"
+                "REVIEW_MODEL": "Review Model",
+                "SUBMIT_MODEL": "Submit Model"
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",

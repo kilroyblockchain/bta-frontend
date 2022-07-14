@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
-import { IAiModel, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IAiModel, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 interface TreeNode<T> {
@@ -47,8 +48,12 @@ export class AiModelComponent implements OnInit {
     loadingTable!: boolean;
 
     canViewReview!: boolean;
+    isModelStatusDraft!: boolean;
+    isUserCanSubmitVersion!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private dialogService: NbDialogService, private manageProjectService: ManageProjectService, private authService: AuthService) {
+    user!: IUserRes;
+
+    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -68,8 +73,17 @@ export class AiModelComponent implements OnInit {
         this.canViewReview = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_REVIEWS, [ACCESS_TYPE.READ]);
     }
 
+    getVersionUser(user: IUserRes): void {
+        this.user = this.authService.getUserDataSync();
+        this.isUserCanSubmitVersion = user._id === this.user.id;
+    }
+
     navigateTo(URL: string, id: string): void {
         this.router.navigate([URL, id]);
+    }
+
+    checkModelStatus(versionStatus: string): void {
+        this.isModelStatusDraft = versionStatus === VersionStatus.DRAFT;
     }
 
     setTranslatedTableColumns(): void {
@@ -106,6 +120,8 @@ export class AiModelComponent implements OnInit {
                             this.dataFound = false;
                         } else {
                             this.versionData = data;
+                            this.checkModelStatus(this.versionData.versionStatus);
+                            this.getVersionUser(this.versionData.createdBy);
                             this.dataFound = true;
                         }
                     } else {
@@ -179,5 +195,29 @@ export class AiModelComponent implements OnInit {
     viewModelReviews(modelId: string): void {
         const URL = 'u/manage-project/model-reviews';
         this.navigateTo(URL, modelId);
+    }
+
+    submitModelVersion(versionId: string): void {
+        this.loading = true;
+        this.manageProjectService
+            .submitModelVersion(versionId)
+            .pipe(
+                finalize(() => {
+                    this.loading = false;
+                })
+            )
+            .subscribe({
+                next: (res) => {
+                    if (res && res.success) {
+                        this.utilsService.showToast('success', res.message);
+                        this.pageChange(1);
+                    } else {
+                        this.utilsService.showToast('warning', res.message);
+                    }
+                },
+                error: (err) => {
+                    this.utilsService.showToast('warning', err.error?.message || err?.message);
+                }
+            });
     }
 }

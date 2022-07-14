@@ -14,6 +14,11 @@ export interface IBcProject {
     members: string[];
     entryUser: string;
     recordDate: Date;
+    projectVersions: IBcProjectVersion[];
+}
+export interface IBcProjectVersion {
+    id: string;
+    versionName: string;
 }
 
 export interface IProjectBcHistory {
@@ -48,6 +53,7 @@ export interface IBcProjectVersion {
     trainDataSets: string;
     trainDatasetBCHash: string;
     artifacts: string;
+    aiModelBcHash?: string;
     codeVersion: string;
     codeRepo: string;
     comment: string;

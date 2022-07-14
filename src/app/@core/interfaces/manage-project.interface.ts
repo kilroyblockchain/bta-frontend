@@ -27,7 +27,8 @@ export interface IProjectVersion {
     trainDatasetBCHash?: string;
     testDataSets: string;
     testDatasetBCHash?: string;
-    artifacts: string;
+    aiModel: string;
+    aiModelBcHash?: string;
     codeVersion: string;
     codeRepo: string;
     comment: string;
@@ -35,6 +36,9 @@ export interface IProjectVersion {
     versionStatus: VersionStatus;
     updatedAt: Date;
     createdAt: Date;
+    submittedDate: Date;
+    reviewedDate: Date;
+    productionDate: Date;
     createdBy: IUserRes;
     project: IProject;
 }

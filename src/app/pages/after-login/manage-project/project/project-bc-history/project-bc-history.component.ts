@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
-import { IBcProject, IProjectBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
+import { IBcProject, IBcProjectVersion, IProjectBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { BcManageProjectService, UtilsService } from 'src/app/@core/services';
 
 interface TreeNode<T> {
@@ -19,11 +19,20 @@ interface FSEntry {
     details: string;
     members: string[];
     entryUser: string;
+    projectVersions: IBcProjectVersion[];
 }
 
 @Component({
     selector: 'app-project-bc-history',
-    templateUrl: './project-bc-history.component.html'
+    templateUrl: './project-bc-history.component.html',
+    styles: [
+        `
+            .version-bc-history {
+                text-decoration: none;
+                cursor: pointer;
+            }
+        `
+    ]
 })
 export class ProjectBcHistoryComponent implements OnInit {
     dataSource!: NbTreeGridDataSource<FSEntry>;
@@ -42,7 +51,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     tableData!: Array<IProjectBcHistory>;
     loadingTable!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, public utilsService: UtilsService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
+    constructor(private activeRoute: ActivatedRoute, private router: Router, public utilsService: UtilsService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -54,7 +63,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'members', 'details'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'projectVersions', 'details', 'members'];
         this.columnNameKeys = [
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME',
@@ -62,8 +71,9 @@ export class ProjectBcHistoryComponent implements OnInit {
             'COMMON.COLUMN_NAME.CREATED_BY',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN',
-            'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS',
-            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS'
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.MODEL_VERSION_NAME',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS',
+            'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'
         ];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
@@ -133,7 +143,8 @@ export class ProjectBcHistoryComponent implements OnInit {
                     domain: item.project.domain,
                     details: item.project.detail,
                     members: item.project.members,
-                    entryUser: item.project.entryUser
+                    entryUser: item.project.entryUser,
+                    projectVersions: item.project.projectVersions
                 }
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -142,5 +153,10 @@ export class ProjectBcHistoryComponent implements OnInit {
 
     formatTxId(txId: string): string {
         return txId.substring(0, 7) + '...' + txId.substring(txId.length - 7);
+    }
+
+    vewVersionBChistory(versionId: string): void {
+        const URL = 'u/manage-project/version-bc-history';
+        this.router.navigate([URL, versionId]);
     }
 }

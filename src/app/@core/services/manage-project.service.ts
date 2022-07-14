@@ -76,4 +76,12 @@ export class ManageProjectService {
     canAddProject(query: { [key: string]: unknown }): Observable<IAppResponse<boolean>> {
         return this.http.get(URLConstant.canAddProjectURL, query);
     }
+
+    submitModelVersion(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.patch(URLConstant.submitModelVersionURL + `/${versionId}`);
+    }
+
+    updateVersion(versionData: IProjectVersion, versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.put(URLConstant.updateModelVersionURL + `/${versionId}`, versionData);
+    }
 }
