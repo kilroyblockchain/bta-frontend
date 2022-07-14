@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
@@ -24,7 +24,15 @@ interface FSEntry {
 
 @Component({
     selector: 'app-project-bc-history',
-    templateUrl: './project-bc-history.component.html'
+    templateUrl: './project-bc-history.component.html',
+    styles: [
+        `
+            .version-bc-history {
+                text-decoration: none;
+                cursor: pointer;
+            }
+        `
+    ]
 })
 export class ProjectBcHistoryComponent implements OnInit {
     dataSource!: NbTreeGridDataSource<FSEntry>;
@@ -43,7 +51,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     tableData!: Array<IProjectBcHistory>;
     loadingTable!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, public utilsService: UtilsService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
+    constructor(private activeRoute: ActivatedRoute, private router: Router, public utilsService: UtilsService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -145,5 +153,10 @@ export class ProjectBcHistoryComponent implements OnInit {
 
     formatTxId(txId: string): string {
         return txId.substring(0, 7) + '...' + txId.substring(txId.length - 7);
+    }
+
+    vewVersionBChistory(versionId: string): void {
+        const URL = 'u/manage-project/version-bc-history';
+        this.router.navigate([URL, versionId]);
     }
 }

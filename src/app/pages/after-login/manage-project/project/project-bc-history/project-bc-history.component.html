@@ -79,7 +79,12 @@
                                     <div class="table-col" *ngSwitchCase="'projectVersions'">
                                         <ng-container *ngIf="row.data[column].length; else defaultCase">
                                             <div *ngFor="let version of row.data[column]">
-                                                <span>-&nbsp;{{ version.versionName }}</span>
+                                                <span
+                                                    >{{ '-' }}
+                                                    <a class="version-bc-history" (click)="vewVersionBChistory(version.id)">
+                                                        {{ version.versionName }}
+                                                    </a>
+                                                </span>
                                             </div>
                                         </ng-container>
                                         <ng-template #defaultCase>
