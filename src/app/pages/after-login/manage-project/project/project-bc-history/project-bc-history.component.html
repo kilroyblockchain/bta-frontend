@@ -76,6 +76,16 @@
                                     <div class="table-col" *ngSwitchCase="'isDeleted'">
                                         {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
                                     </div>
+                                    <div class="table-col" *ngSwitchCase="'projectVersions'">
+                                        <ng-container *ngIf="row.data[column].length; else defaultCase">
+                                            <div *ngFor="let version of row.data[column]">
+                                                <span>-&nbsp;{{ version.versionName }}</span>
+                                            </div>
+                                        </ng-container>
+                                        <ng-template #defaultCase>
+                                            {{ '-' }}
+                                        </ng-template>
+                                    </div>
                                     <div class="table-col" *ngSwitchCase="'members'">
                                         <div *ngFor="let member of row.data[column]">
                                             <span>-&nbsp;{{ member }}</span>

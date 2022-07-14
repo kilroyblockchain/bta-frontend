@@ -691,7 +691,8 @@
                 "PARTICIPANT_NAME": "Participant Name",
                 "TX_ID": "Tx Id",
                 "TX_DATE_TIME": "Tx DateTime",
-                "IS_DELETED": "Is Deleted"
+                "IS_DELETED": "Is Deleted",
+                "MODEL_VERSION_NAME": "Model Version Name"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",

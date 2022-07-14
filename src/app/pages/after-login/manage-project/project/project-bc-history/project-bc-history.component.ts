@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
-import { IBcProject, IProjectBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
+import { IBcProject, IBcProjectVersion, IProjectBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { BcManageProjectService, UtilsService } from 'src/app/@core/services';
 
 interface TreeNode<T> {
@@ -19,6 +19,7 @@ interface FSEntry {
     details: string;
     members: string[];
     entryUser: string;
+    projectVersions: IBcProjectVersion[];
 }
 
 @Component({
@@ -54,7 +55,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'members', 'details'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'projectVersions', 'details', 'members'];
         this.columnNameKeys = [
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME',
@@ -62,8 +63,9 @@ export class ProjectBcHistoryComponent implements OnInit {
             'COMMON.COLUMN_NAME.CREATED_BY',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN',
-            'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS',
-            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS'
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.MODEL_VERSION_NAME',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS',
+            'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'
         ];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
@@ -133,7 +135,8 @@ export class ProjectBcHistoryComponent implements OnInit {
                     domain: item.project.domain,
                     details: item.project.detail,
                     members: item.project.members,
-                    entryUser: item.project.entryUser
+                    entryUser: item.project.entryUser,
+                    projectVersions: item.project.projectVersions
                 }
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);
