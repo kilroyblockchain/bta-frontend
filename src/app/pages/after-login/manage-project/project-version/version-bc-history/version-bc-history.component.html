@@ -32,6 +32,20 @@
                         </strong>
                         {{ projectVersionBcDetails?.logFileBCHash }}
                     </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.testDatasetBCHash">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'Test Data Sets Bc Hash' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.testDatasetBCHash }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.trainDatasetBCHash">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'Train Data Sets Bc Hash' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.trainDatasetBCHash }}
+                    </p>
                     <p class="card-paragraph" *ngIf="projectVersionBcDetails?.codeRepo">
                         <strong>
                             <nb-icon icon="chevron-right-outline"> </nb-icon>
