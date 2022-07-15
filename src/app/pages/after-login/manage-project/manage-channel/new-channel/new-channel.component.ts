@@ -27,8 +27,7 @@ export class NewChannelComponent implements OnInit {
     buildNewChannelForm(): void {
         this.newChannelForm = this.fb.group({
             channelName: ['', [Validators.required]],
-            connectionProfileName: ['', [Validators.required]],
-            isDefault: [false]
+            connectionProfileName: ['', [Validators.required]]
         });
     }
 

@@ -92,7 +92,7 @@ export class AddProjectPurposeComponent implements OnInit {
         let formData;
         let hasFormData: boolean;
 
-        if (this.UF['purposeDoc'].value && this.rowData.purpose.docName !== this.UF['purposeDoc'].value) {
+        if (this.UF['purposeDoc'].value && this.rowData.purpose?.docName !== this.UF['purposeDoc'].value['name']) {
             hasFormData = true;
             formData = new FormData();
 

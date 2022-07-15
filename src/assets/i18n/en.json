@@ -245,7 +245,9 @@
         "REJECTED_COMPANY_LIST": "Rejected Organization List",
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
-        "APPLICATION_LOGS": "Application Logs"
+        "APPLICATION_LOGS": "Application Logs",
+        "BC_NODE_INFO": "BC Node Info",
+        "BC_KEY_VERIFY": "Bc Key Verify"
     },
     "FOOTER": {
         "TITLE": {
@@ -391,14 +393,25 @@
                 "UPDATE_ORGANIZATION_STAFFING": "Update Organization Staffing for {{unitName}}"
             },
             "LABEL": {
-                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}"
+                "MANAGE_FEATURE_ACCESS": "Manage {{Feature}}",
+                "STAFFING_TYPE": "Staffing Type",
+                "BC_NODE_INFO": "Bc Node Info",
+                "CHANNEL_DETAILS": "Channel Details",
+                "ORACLE_BUCKET_URL": "Oracle Bucket URL"
             },
             "VALIDATIONS": {
                 "STAFFING_NAME_IS_REQUIRED": "Staffing name is required",
-                "ACCESS_LIST_IS_REQUIRED": "Access List is required"
+                "ACCESS_LIST_IS_REQUIRED": "Access List is required",
+                "BC_NODE_INFO_IS_REQUIRED": "Bc node info is required",
+                "CHANNEL_DETAILS_IS_REQUIRED": "Channel details is required",
+                "ORACLE_BUCKET_URL_IS_REQUIRED": "Oracle bucket url is required"
             },
             "PLACEHOLDER": {
-                "STAFFING_NAME": "Staffing Name"
+                "STAFFING_NAME": "Staffing Name",
+                "SELECT_STAFFING_TYPE": "Select staffing type",
+                "SELECT_BC_NODE_INFO": "Select Bc node info",
+                "SELECT_CHANNEL_DETAILS": "Select Channel details",
+                "ORACLE_BUCKET_URL": "Enter bucket url"
             },
             "DESCRIPTION": {
                 "FEATURE_ACCESS_LEVEL": "Feature access Level"
@@ -550,7 +563,8 @@
             "REJECTED_ORGANIZATION": "Rejected Organization",
             "NON_ADMIN_USERS": "Non Admin Users",
             "BLOCKED_USERS": "Blocked Users",
-            "APPLICATION_LOGS": "Application Logs"
+            "APPLICATION_LOGS": "Application Logs",
+            "BC_NODE_INFO": "BC Node Info"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -613,13 +627,21 @@
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
             "EXPERIMENT_DETAILS": "Experiment Details",
-            "MODEL_REVIEWS": "Model Reviews"
+            "MODEL_REVIEWS": "Model Reviews",
+            "PROJECT_BC_HISTORY": "Project Bc History",
+            "VERSION_BC_HISTORY": "Version Bc History"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
             "MODEL_REVIEWS": "Reviews",
-            "PROJECT_PURPOSE": "Project Purpose"
+            "PROJECT_PURPOSE": "Project Purpose",
+            "VIEW_PROJECT": "View Project",
+            "ADD_VERSION": "Add Version",
+            "EDIT_PROJECT": "Edit Project",
+            "EDIT_PROJECT_VERSION": "Edit Version",
+            "PROJECT_BC_HISTORY": "Project Bc History",
+            "VERSION_BC_HISTORY": "Version Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -628,7 +650,10 @@
                 "VERSION_DETAILS": "Version Details",
                 "CREATED_BY": "Created By",
                 "CREATED_AT": "Created At",
-                "STAFFING_NAME": "Staffing"
+                "STAFFING_NAME": "Staffing",
+                "RECORDS_FOUND": "Records Found",
+                "FALSE": "False",
+                "BLOCKCHAIN_DETAILS": "Blockchain Details"
             }
         },
         "PROJECT": {
@@ -637,7 +662,9 @@
                 "ADD_NEW_PROJECT": "Add New Project",
                 "EDIT_PROJECT": "Edit Project",
                 "ADD_PROJECT_PURPOSE": "Add Project Purpose",
-                "EDIT_PROJECT_PURPOSE": "Edit Project Purpose"
+                "EDIT_PROJECT_PURPOSE": "Edit Project Purpose",
+                "BLOCKCHAIN_DETAILS": "Blockchain Details",
+                "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
             "BUTTON": {
                 "ADD_PROJECT": "Add Project"
@@ -667,7 +694,12 @@
                 "PROJECT_PURPOSE": "Project Purpose",
                 "LATEST_VERSION": "Latest Version",
                 "AI_ENGINEER": "AI Engineer",
-                "VERSION": "Version"
+                "VERSION": "Version",
+                "PARTICIPANT_NAME": "Participant Name",
+                "TX_ID": "Tx Id",
+                "TX_DATE_TIME": "Tx DateTime",
+                "IS_DELETED": "Is Deleted",
+                "MODEL_VERSION_NAME": "Model Version Name"
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",
@@ -681,15 +713,19 @@
             },
             "MESSAGE": {
                 "NO_MEMBERS_ARE_ADDED": "No members are added !!",
-                "NO_MODELS_ARE_ADDED": "No models are added !!"
+                "NO_MODELS_ARE_ADDED": "No models are added !!",
+                "ENABLE_PROJECT": "Do you want to enable project",
+                "CAN_ADD_PROJECT": "Required team members to start the project are not added, please consult with Org. admin for this."
             }
         },
         "VERSION": {
             "TITLE": {
                 "ADD_NEW_VERSION": "Add New Version",
+                "EDIT_MODEL_VERSION": "Edit Model Version",
                 "VERSION_DETAILS": "Version Details",
                 "PROJECT_INFO": "Project Information",
-                "CREATED_BY_INFO": "Creator Information"
+                "CREATED_BY_INFO": "Creator Information",
+                "BLOCKCHAIN_HISTORY": "Model Version Blockchain History"
             },
             "PLACEHOLDER": {
                 "VERSION_NAME": "version name",
@@ -699,10 +735,22 @@
                 "TEST_DATA_SETS": "test data sets",
                 "TRAIN_DATA_SETS": "train data sets",
                 "NOTE_BOOK_VERSION": "notebook version",
-                "ARTIFACTS": "artifacts",
+                "AI_MODEL": "ai model",
                 "CODE_REPO": "code repo",
                 "CODE_VERSION": "code version",
                 "COMMENT": "Comment"
+            },
+            "COLUMN_NAME": {
+                "VERSION_NAME": "Version Name",
+                "VERSION_MODEL": "Version Model",
+                "COMMENT": "Comment",
+                "NOTEBOOK_VERSION": "NoteBook Version",
+                "AI_ENGINEER": "AI Engineer",
+                "VERSION": "Version",
+                "PARTICIPANT_NAME": "Participant Name",
+                "TX_ID": "Tx Id",
+                "TX_DATE_TIME": "Tx DateTime",
+                "IS_DELETED": "Is Deleted"
             },
             "LABEL": {
                 "VERSION_NAME": "Version Name",
@@ -715,13 +763,18 @@
                 "TRAIN_DATA_SETS": "Train Data Sets",
                 "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
                 "NOTE_BOOK_VERSION": "NoteBook Version",
-                "ARTIFACTS": "Artifacts",
+                "AI_MODEL": "AI Model",
+                "AI_MODEL_BC_HASH": "AI Model BC Hash",
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
                 "VERSION_STATUS": "Version Status",
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
-                "FRAMEWORK_VERSION": "Framework Version"
+                "FRAMEWORK_VERSION": "Framework Version",
+                "MODEL_VERSION_DETAILS": "Model Version Details",
+                "SUBMITTED_DATE": "Submitted Date",
+                "REVIEWED_DATE": "Reviewed Date",
+                "PRODUCTION_DATE": "Production Date"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",
@@ -731,7 +784,7 @@
                 "TEST_DATA_SETS": "Test data sets is required",
                 "TRAIN_DATA_SETS": "Train data sets is required",
                 "NOTE_BOOK_VERSION": "Notebook version is required",
-                "ARTIFACTS": "Artifacts is required",
+                "AI_MODEL": "AI Model is required",
                 "CODE_REPO": "Code repo is required",
                 "CODE_VERSION": "Code version is required",
                 "COMMENT": "Comment is required"
@@ -743,7 +796,9 @@
                 "REPORT_DESCRIPTION": "Description",
                 "REPORT_DOCUMENTS": "Documents",
                 "MONITORING_SUBJECT": "Monitoring Subject",
-                "MONITORING_DOCUMENTS": "Monitoring Documents"
+                "MONITORING_DOCUMENTS": "Monitoring Documents",
+                "MONITORING_STATUS": "Monitoring Status",
+                "OTHER_STATUS": "Other Status"
             },
             "TITLE": {
                 "ALL_REPORTS": "All Reports",
@@ -751,11 +806,15 @@
             },
             "PLACEHOLDER": {
                 "MONITORING_SUBJECT": "Monitoring subject",
-                "MONITORING_DESCRIPTION": "Monitoring description"
+                "MONITORING_DESCRIPTION": "Monitoring description",
+                "MONITORING_STATUS": "Select status",
+                "OTHER_STATUS": "Other status"
             },
             "VALIDATIONS": {
                 "MONITORING_SUBJECT": "Monitoring subject is required",
-                "MONITORING_DESCRIPTION": "Monitoring description is required"
+                "MONITORING_DESCRIPTION": "Monitoring description is required",
+                "MONITORING_STATUS": "Monitoring status is required",
+                "OTHER_STATUS": "Other status is required"
             },
             "BUTTON": {
                 "ADD_MONITORING_REPORT": "Add Monitoring Report"
@@ -763,7 +822,8 @@
         },
         "AI_MODEL": {
             "BUTTON": {
-                "REVIEW_MODEL": "Review Model"
+                "REVIEW_MODEL": "Review Model",
+                "SUBMIT_MODEL": "Submit Model"
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",
@@ -831,6 +891,68 @@
             },
             "ALERT_MSG": {
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
+            }
+        }
+    },
+    "BLOCKCHAIN": {
+        "TITLE": {
+            "BLOCKCHAIN_KEY_VERIFICATION": "Blockchain Key Verification"
+        },
+        "BC_NODE_INFO": {
+            "TITLE": {
+                "ALL_BC_NODE": "All Bc Nodes",
+                "ADD_NEW_BC_NODE_INFO": "New Bc Node Info",
+                "EDIT_BC_NODE_INFO": "Edit Bc Node Info"
+            },
+            "BUTTON": {
+                "ADD_BC_NODE": "Add BC Node"
+            },
+            "LABEL": {
+                "SHOW_ACTIVE_NODE": "Show Active Node",
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "COLUMN_NAME": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node URL",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "PLACEHOLDER": {
+                "ORGANIZATION_NAME": "Organization Name",
+                "LABEL": "Label",
+                "NODE_URL": "Node Url",
+                "AUTHORIZATION_TOKEN": "Authorization Token"
+            },
+            "VALIDATIONS": {
+                "ORGANIZATION_NAME": "Organization name is required",
+                "ORGANIZATION_NAME_MIN_LENGTH": "Organization name must be at least {{ minLength }} characters",
+                "LABEL": "Label is required",
+                "LABEL_MIN_LENGTH": "Label must be at least {{ minLength }} characters",
+                "NODE_URL": "Node Url is required",
+                "NODE_URL_MIN_LENGTH": "Node Url must be at least {{ minLength }} characters",
+                "AUTHORIZATION_TOKEN": "Authorization Token is required",
+                "AUTHORIZATION_TOKEN_MIN_LENGTH": "Authorization Token must be at least {{ minLength }} characters"
+            },
+            "ALERT_MSG": {
+                "DISABLE_BC_NODE_INFO": "Do you want to disable organization unit"
+            }
+        },
+        "BC_KEY": {
+            "LABEL": {
+                "FORM_HEADER_MESSAGE": "Please enter Blockchain Key, this key gets verified with you credentials wallet stored in Hyperledger fabric.",
+                "BLOCKCHAIN_KEY": "Blockchain Key"
+            },
+            "BUTTON": {
+                "VERIFY": "Verify"
+            },
+            "PLACEHOLDER": {
+                "BLOCKCHAIN_KEY": "Blockchain key"
+            },
+            "VALIDATIONS": {
+                "BLOCKCHAIN_KEY": "Blockchain key is required"
             }
         }
     }

@@ -31,7 +31,7 @@ export class AddVersionComponent implements OnInit {
             noteBookVersion: ['', [Validators.required]],
             trainDataSets: ['', [Validators.required]],
             testDataSets: ['', [Validators.required]],
-            artifacts: ['', [Validators.required]],
+            aiModel: ['', [Validators.required]],
             codeRepo: ['', [Validators.required]],
             codeVersion: ['', [Validators.required]],
             comment: ['', [Validators.required]]

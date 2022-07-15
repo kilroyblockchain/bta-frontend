@@ -3,7 +3,7 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.PAGE_TITLE.MONITORING_REPORT' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canAddMonitoringReports">
+        <div class="actions" *ngIf="canAddMonitoringReports && !isCompanyAdmin">
             <button nbButton hero status="primary" size="small" (click)="addNewMonitoringReportModal(versionData._id)">
                 <nb-icon icon="plus-circle-outline"></nb-icon>
                 {{ 'MANAGE_PROJECTS.MONITORING_REPORT.BUTTON.ADD_MONITORING_REPORT' | translate }}
@@ -52,6 +52,17 @@
                                     <strong> {{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_TITLE' | translate }}:</strong>
                                     {{ reports.subject }}
                                 </p>
+
+                                <p *ngIf="reports.otherStatus; else status">
+                                    <strong> {{ 'COMMON.COLUMN_NAME.STATUS' | translate }}:</strong>
+                                    {{ reports.otherStatus }}
+                                </p>
+                                <ng-template #status>
+                                    <p>
+                                        <strong> {{ 'COMMON.COLUMN_NAME.STATUS' | translate }}:</strong>
+                                        {{ reports.status.name }}
+                                    </p>
+                                </ng-template>
                                 <p>
                                     <strong>{{ 'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.REPORT_DESCRIPTION' | translate }}:</strong>
                                     {{ reports.description }}
@@ -64,6 +75,10 @@
                                         <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"> </nb-tag>
                                     </a>
                                 </ng-container>
+                                <p>
+                                    <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.STAFFING_NAME' | translate }}:</strong>
+                                    {{ reports.staffing }}
+                                </p>
                                 <p>
                                     <strong>{{ 'COMMON.LABEL.CREATED_BY' | translate }}:</strong>
                                     {{ reports?.createdBy?.firstName }}&nbsp;{{ reports?.createdBy?.lastName }}

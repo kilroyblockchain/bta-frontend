@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { IOrganizationUnit } from 'src/app/@core/interfaces/manage-user.interface';
+import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 
 interface IChildrenRow {
     unitName: string;
@@ -19,6 +20,9 @@ interface IChildrenRow {
     status: boolean;
     createdDate: string;
     updatedDate: string;
+    bcNodeInfo: IBcNodeInfo;
+    channels: string[];
+    bucketUrl: string;
     action: unknown;
     subrow: boolean;
     _id: string;
@@ -41,6 +45,9 @@ interface FSEntry {
     subrow: boolean;
     _id?: string;
     staffingId?: string;
+    bcNodeInfo?: IBcNodeInfo;
+    channels?: string[];
+    bucketUrl?: string;
 }
 @Component({
     selector: 'app-organization-unit',
@@ -163,6 +170,9 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
                         status: staff.status,
                         createdDate: staff.createdAt,
                         updatedDate: staff.updatedAt,
+                        bcNodeInfo: staff.bcNodeInfo,
+                        channels: staff.channels,
+                        bucketUrl: staff.bucketUrl,
                         action: staff,
                         subrow: true,
                         _id: item._id,

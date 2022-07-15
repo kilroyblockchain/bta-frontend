@@ -18,5 +18,9 @@ export const API_RES_MSG_MANAGE_PROJECT = {
     UNABLE_TO_ADD_MODEL_REVIEW: 'Unable To add Model Review Status',
     NEW_REVIEW_ADD_SUCCESS: 'Model Review Status Added Successfully',
     PROJECT_PROJECT_ADDED_SUCCESS: 'Project Purpose Added Successfully',
-    UNABLE_TO_ADD_PROJECT_PROJECT: 'Unable To Add Project Purpose'
+    UNABLE_TO_ADD_PROJECT_PROJECT: 'Unable To Add Project Purpose',
+    MODEL_VERSION_SUBMITTED_SUCCESS: 'Model Version Submitted Successfully',
+    UNABLE_TO_SUBMIT_MODEL_VERSION: 'Unable To Submit Model Version',
+    UPDATE_VERSION_SUCCESS: 'Model Version Updated Successfully',
+    UNABLE_TO_UPDATE_VERSION: 'Unable To Update Model Version'
 };

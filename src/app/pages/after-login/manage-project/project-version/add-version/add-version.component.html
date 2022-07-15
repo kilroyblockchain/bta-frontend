@@ -76,10 +76,10 @@
             </div>
 
             <div class="form-holder floating">
-                <input name="artifacts" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.ARTIFACTS' | translate)" formControlName="artifacts" [ngClass]="{ 'status-danger': submitted && UF['artifacts'].errors }" />
-                <label for="artifacts" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.ARTIFACTS' | translate)"></label>
-                <div *ngIf="submitted && UF['artifacts'].errors as err" class="invalid-feedback">
-                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.ARTIFACTS' | translate }}</span>
+                <input name="aiModel" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.AI_MODEL' | translate)" formControlName="aiModel" [ngClass]="{ 'status-danger': submitted && UF['aiModel'].errors }" />
+                <label for="aiModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate)"></label>
+                <div *ngIf="submitted && UF['aiModel'].errors as err" class="invalid-feedback">
+                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.AI_MODEL' | translate }}</span>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
             </div>
 
             <div class="form-holder floating">
-                <input name="codeVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
+                <input name="codeVersion" fullWidth nbInput [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
                 <label for="codeVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate)"></label>
                 <div *ngIf="submitted && UF['codeVersion'].errors as err" class="invalid-feedback">
                     <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_VERSION' | translate }}</span>

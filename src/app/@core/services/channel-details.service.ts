@@ -15,7 +15,6 @@ export class ManageChannelDetailsService {
     }
 
     createChannelDetails(data: ICreateUnit): Observable<IAppResponse<IChannelDetails>> {
-        console.log(data);
         return this.http.post(URLConstant.createChannelDetails, data);
     }
 

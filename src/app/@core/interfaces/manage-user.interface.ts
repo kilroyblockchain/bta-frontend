@@ -1,3 +1,4 @@
+import { IBcNodeInfo } from './bc-node-info.interface';
 import { IUserData } from './user-data.interface';
 
 export interface IFeature {
@@ -34,6 +35,9 @@ export interface IStaffing {
     staffingName: string;
     staffDescription: string;
     status: boolean;
+    bcNodeInfo: IBcNodeInfo;
+    channels: string[];
+    bucketUrl: string;
     createdAt: Date;
     updatedAt: Date;
 }

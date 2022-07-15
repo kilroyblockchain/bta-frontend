@@ -3,27 +3,174 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canViewReview && versionData" (click)="viewModelReviews(versionData._id)">
+        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft" (click)="viewModelReviews(versionData._id)">
             <button nbButton hero status="primary" size="small">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
             </button>
         </div>
+        <div class="actions" *ngIf="isUserCanSubmitVersion && versionData && isModelStatusDraft" (click)="submitModelVersion(versionData._id)">
+            <button nbButton hero status="primary" size="small">
+                {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.SUBMIT_MODEL' | translate }}
+            </button>
+        </div>
     </div>
-    <nb-card class="medium-card-width">
+    <nb-card class="medium-card-width" *ngIf="versionData" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
         <nb-card-body>
             <p class="card-paragraph">
                 <strong>
                     <nb-icon icon="chevron-right-outline"></nb-icon>
                     {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
                 </strong>
-                {{ versionData?.project?.name || 'N/A' }}
+                {{ versionData.project?.name || 'N/A' }}
             </p>
             <p class="card-paragraph">
                 <strong>
                     <nb-icon icon="chevron-right-outline"></nb-icon>
                     {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
                 </strong>
-                {{ versionData?.versionName || 'N/A' }}
+                {{ versionData.versionName || 'N/A' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}:
+                </strong>
+                {{ versionData.versionModel }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}:
+                </strong>
+                {{ versionData.logFileVersion }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}:
+                </strong>
+                {{ versionData.logFilePath }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}:
+                </strong>
+                {{ versionData.logFileBCHash || 'N/a' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}:
+                </strong>
+                {{ versionData.noteBookVersion }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}:
+                </strong>
+                {{ versionData.trainDataSets }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}:
+                </strong>
+                {{ versionData.trainDatasetBCHash || 'N/a' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}:
+                </strong>
+                {{ versionData.testDataSets || 'N/a' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}:
+                </strong>
+                {{ versionData.testDatasetBCHash || 'N/a' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate }}:
+                </strong>
+                {{ versionData.aiModel }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}:
+                </strong>
+                {{ versionData.aiModelBcHash || 'N/a' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}:
+                </strong>
+                {{ versionData.codeRepo }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}:
+                </strong>
+                {{ versionData.codeVersion }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}:
+                </strong>
+                {{ versionData.versionStatus }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}:
+                </strong>
+                {{ versionData.comment }}
+            </p>
+            <p class="card-paragraph" *ngIf="versionData.submittedDate; else createdDateBlock">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.SUBMITTED_DATE' | translate }}:
+                </strong>
+                {{ versionData.submittedDate | date: 'fullDate' }}
+            </p>
+            <ng-template #createdDateBlock>
+                <p class="card-paragraph">
+                    <strong>
+                        <nb-icon icon="chevron-right-outline"></nb-icon>
+                        {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}:
+                    </strong>
+                    {{ versionData.createdAt | date: 'fullDate' }}
+                </p>
+            </ng-template>
+            <p class="card-paragraph" *ngIf="versionData.reviewedDate">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.REVIEWED_DATE' | translate }}:
+                </strong>
+                {{ versionData.reviewedDate | date: 'fullDate' }}
+            </p>
+            <p class="card-paragraph" *ngIf="versionData.productionDate">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.PRODUCTION_DATE' | translate }}:
+                </strong>
+                {{ versionData.productionDate | date: 'fullDate' }}
+            </p>
+            <p class="card-paragraph">
+                <strong>
+                    <nb-icon icon="chevron-right-outline"></nb-icon>
+                    {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:
+                </strong>
+                {{ versionData.createdBy?.firstName }}&nbsp;{{ versionData.createdBy?.lastName }}
             </p>
         </nb-card-body>
         <nb-card>

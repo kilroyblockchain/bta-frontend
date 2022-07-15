@@ -12,10 +12,11 @@ import { COMMON_SHARED_MODULE } from 'src/app/@core/constants/common-shared-modu
 import { InternationalizationModule } from 'src/app/@core/internationalization/internationalization.module';
 import { RecaptchaModule, RecaptchaSettings, RECAPTCHA_SETTINGS } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
+import { BcKeyVerifyComponent } from './bc-key-verify/bc-key-verify.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: environment.recaptchaSiteKey };
 const CUSTOM_MODULE = [AuthRoutingModule, SharedModule, InternationalizationModule];
-const PAGE_COMPONENT = [AuthComponent, LoginComponent, RequestPasswordComponent, ResetPasswordComponent, ThankYouComponent, BillingComponent];
+const PAGE_COMPONENT = [AuthComponent, LoginComponent, RequestPasswordComponent, ResetPasswordComponent, ThankYouComponent, BillingComponent, BcKeyVerifyComponent];
 const PAGE_MODULE = [RegisterModule];
 @NgModule({
     imports: [RecaptchaModule, ...COMMON_SHARED_MODULE, ...CUSTOM_MODULE, ...PAGE_MODULE],

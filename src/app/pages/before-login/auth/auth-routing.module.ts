@@ -7,6 +7,8 @@ import { RequestPasswordComponent } from './request-password/request-password.co
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { BillingComponent } from './billing/billing.component';
+import { BcKeyVerifyComponent } from './bc-key-verify/bc-key-verify.component';
+import { BcKeyVerifyGuard } from 'src/app/@core/guard';
 
 const routes: Routes = [
     {
@@ -17,6 +19,12 @@ const routes: Routes = [
                 path: 'login',
                 component: LoginComponent,
                 data: { pageTitle: 'PAGE_TITLE.LOGIN' }
+            },
+            {
+                path: 'bc-key-verify',
+                component: BcKeyVerifyComponent,
+                canActivate: [BcKeyVerifyGuard],
+                data: { pageTitle: 'PAGE_TITLE.BC_KEY_VERIFY' }
             },
             {
                 path: 'register',

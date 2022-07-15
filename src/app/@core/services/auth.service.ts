@@ -109,7 +109,11 @@ export class AuthService {
         if (!authToken) {
             this.localStorageService.clearAllLocalStorageData();
         }
-        return authToken ? true : false;
+        return authToken && this.bcKey ? true : false;
+    }
+
+    get bcKey(): string {
+        return this.localStorageService.getLocalStorageData(LocalStorageConstant.bcKey);
     }
 
     setUserData(user: Partial<IUserRes>): void {
@@ -138,8 +142,16 @@ export class AuthService {
         this.localStorageService.setLocalStorageData(LocalStorageConstant.token, token);
     }
 
+    setBcKey(key: string): void {
+        this.localStorageService.setLocalStorageData(LocalStorageConstant.bcKey, key);
+    }
+
     getAccessToken(): string {
         return this.localStorageService.getLocalStorageData(LocalStorageConstant.token);
+    }
+
+    getBcKey(): string {
+        return this.localStorageService.getLocalStorageData(LocalStorageConstant.bcKey);
     }
 
     async logout(): Promise<void> {

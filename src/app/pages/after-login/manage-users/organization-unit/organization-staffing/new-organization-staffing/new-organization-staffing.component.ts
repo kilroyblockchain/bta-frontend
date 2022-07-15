@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbCheckboxComponent, NbDialogRef } from '@nebular/theme';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
 import { IAppResponse } from 'src/app/@core/interfaces/app-response.interface';
+import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
+import { IChannelDetails } from 'src/app/@core/interfaces/channel-details.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IFeature, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
-import { ManageUserService, UtilsService, StaffingService } from 'src/app/@core/services';
+import { ManageUserService, UtilsService, StaffingService, ManageChannelDetailsService, BlockChainService } from 'src/app/@core/services';
 
 interface IChildrenRow {
     unitName: string;
@@ -13,6 +15,9 @@ interface IChildrenRow {
     status: boolean;
     createdDate: string;
     updatedDate: string;
+    bcNodeInfo: IBcNodeInfo;
+    channels: string[];
+    bucketUrl: string;
     action: unknown;
     subrow: boolean;
     _id: string;
@@ -45,13 +50,22 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
     @ViewChild('staffingName')
     staffingName!: ElementRef;
+
     updateStaffingName!: string;
 
     totalFeaturesCount = 0;
 
     defaultStaffingName = [PROJECT_USER.AI_ENGINEER, PROJECT_USER.MLOps_ENGINEER, PROJECT_USER.STAKEHOLDER];
+    options!: { [key: string]: unknown };
 
-    constructor(private ref: NbDialogRef<NewOrganizationStaffingComponent>, private fb: FormBuilder, private readonly staffingService: StaffingService, private readonly manageUserService: ManageUserService, private readonly utilsService: UtilsService) {
+    channelDetails!: Array<IChannelDetails>;
+    defaultChannel!: Array<IChannelDetails>;
+    nonDefaultChannels!: Array<IChannelDetails>;
+
+    bcNodeInfo!: Array<IBcNodeInfo>;
+    channelId: string[] = [];
+
+    constructor(private ref: NbDialogRef<NewOrganizationStaffingComponent>, private fb: FormBuilder, private readonly staffingService: StaffingService, private readonly manageUserService: ManageUserService, private readonly utilsService: UtilsService, private readonly manageChannelService: ManageChannelDetailsService, private readonly blockChainService: BlockChainService) {
         that = this;
         this.masterSelected = false;
     }
@@ -65,11 +79,18 @@ export class NewOrganizationStaffingComponent implements OnInit {
         if (this.mode === 'EDIT') {
             this.buildEditOrganizationStaffingForm(this.childRowData);
         }
+        this.options = { limit: Number.MAX_SAFE_INTEGER };
+        this.getAllChannelDetails();
+        this.getBcNodeInfo();
     }
 
     buildNewOrganizationStaffingForm(): void {
         this.newOrganizationStaffingForm = this.fb.group({
-            staffingName: ['', [Validators.required]]
+            staffingName: ['', [Validators.required]],
+            bcNodeInfo: ['', [Validators.required]],
+            bucketUrl: ['', [Validators.required]],
+            channels: [[], [Validators.required]],
+            aiEngChannel: ['']
         });
     }
 
@@ -77,9 +98,30 @@ export class NewOrganizationStaffingComponent implements OnInit {
         const [unitName, ...restName] = data.unitName.split('-');
         this.updateStaffingName = restName.join('-');
 
+        if (data.channels.length) {
+            for (const channel of data.channels) {
+                this.channelId.push(channel);
+            }
+
+            this.channelId.length > 1 ? this.channelId.shift() : this.channelId;
+        }
+
         this.newOrganizationStaffingForm.patchValue({
-            staffingName: unitName
+            staffingName: unitName,
+            bcNodeInfo: data.bcNodeInfo,
+            bucketUrl: data.bucketUrl
         });
+
+        if (this.UF['staffingName'].value === this.defaultStaffingName[0]) {
+            this.newOrganizationStaffingForm.patchValue({
+                aiEngChannel: this.channelId.join()
+            });
+        } else {
+            this.newOrganizationStaffingForm.patchValue({
+                channels: [...this.channelId]
+            });
+        }
+
         this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
             featureId: access.featureId as string,
             accessType: access.accessType
@@ -164,6 +206,11 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     saveNewOrganizationStaffing({ value, valid }: FormGroup): void {
+        if (this.UF['aiEngChannel'].value) {
+            this.newOrganizationStaffingForm.patchValue({
+                channels: [this.UF['aiEngChannel'].value]
+            });
+        }
         this.submitted = true;
         if (!valid) {
             return;
@@ -185,6 +232,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
             }
 
+            value['channels'] = [this.defaultChannel[0]._id, ...value['channels']];
             this.staffingService.createNewStaffing(value).subscribe({ next: this.successRes, error: this.errorRes });
         }
 
@@ -195,6 +243,8 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 });
                 value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
             }
+
+            value['channels'] = [this.defaultChannel[0]._id, ...value['channels']];
             this.staffingService.updateStaffingById(this.childRowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
         }
     }
@@ -235,6 +285,28 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 accessList.accessChecked[j] = isSelected;
                 this.toggleFeatureList(accessList._id, accessList.accessType[j], true);
             }
+        }
+    }
+
+    getAllChannelDetails(): void {
+        this.manageChannelService.getAllChannel(this.options).subscribe((res) => {
+            this.channelDetails = res.data.docs;
+            this.defaultChannel = this.channelDetails.filter((d) => d.isDefault === true);
+            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true);
+        });
+    }
+
+    getBcNodeInfo(): void {
+        this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
+            this.bcNodeInfo = res.data.docs;
+        });
+    }
+
+    onChange(event: Event): void {
+        if (event) {
+            this.newOrganizationStaffingForm.patchValue({
+                channels: [event]
+            });
         }
     }
 }

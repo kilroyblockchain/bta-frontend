@@ -33,7 +33,8 @@ export interface IProjectVersion {
     trainDatasetBCHash?: string;
     testDataSets: string;
     testDatasetBCHash?: string;
-    artifacts: string;
+    aiModel: string;
+    aiModelBcHash?: string;
     codeVersion: string;
     codeRepo: string;
     comment: string;
@@ -41,6 +42,9 @@ export interface IProjectVersion {
     versionStatus: VersionStatus;
     updatedAt: Date;
     createdAt: Date;
+    submittedDate: Date;
+    reviewedDate: Date;
+    productionDate: Date;
     createdBy: IUserRes;
     project: IProject;
 }
@@ -53,7 +57,8 @@ export enum VersionStatus {
     PRODUCTION = 'Production',
     DEPLOYED = 'Deployed',
     MONITORING = 'Monitoring',
-    COMPLETE = 'Complete'
+    COMPLETE = 'Complete',
+    DRAFT = 'Draft'
 }
 
 export interface IMonitoringReport {
@@ -65,12 +70,22 @@ export interface IMonitoringReport {
     createdAt: Date;
     version: IProjectVersion;
     createdBy: IUserRes;
+    staffing: string;
+    status: IMonitoringStatus;
+    otherStatus: string;
 }
 
 interface IDocuments {
     _id?: string;
     docURL: string;
     docName: string;
+}
+
+export interface IMonitoringStatus {
+    _id: string;
+    name: string;
+    updatedAt: Date;
+    createdAt: Date;
 }
 
 export interface IAiModel {

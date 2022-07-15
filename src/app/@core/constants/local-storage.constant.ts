@@ -7,5 +7,6 @@ export const LocalStorageConstant = {
     companyId: 'selectedOrganization',
     defaultSubscriptionType: 'subscriptionType',
     defaultLanguage: 'defaultLanguage',
-    sidebarState: 'sidebarState'
+    sidebarState: 'sidebarState',
+    bcKey: 'bc-key'
 };
