@@ -618,7 +618,8 @@
     "MANAGE_PROJECTS": {
         "TOOLTIP": {
             "ADD_VERSION": "Add Version",
-            "VIEW_DETAILS": "View Details"
+            "VIEW_DETAILS": "View Details",
+            "VIEW_DOC": "View Doc"
         },
         "PAGE_TITLE": {
             "MANAGE_PROJECT": "Manage Project",
@@ -634,6 +635,7 @@
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
             "MODEL_REVIEWS": "Reviews",
+            "PROJECT_PURPOSE": "Project Purpose",
             "VIEW_PROJECT": "View Project",
             "ADD_VERSION": "Add Version",
             "EDIT_PROJECT": "Edit Project",
@@ -659,6 +661,8 @@
                 "ALL_PROJECTS": "All Projects",
                 "ADD_NEW_PROJECT": "Add New Project",
                 "EDIT_PROJECT": "Edit Project",
+                "ADD_PROJECT_PURPOSE": "Add Project Purpose",
+                "EDIT_PROJECT_PURPOSE": "Edit Project Purpose",
                 "BLOCKCHAIN_DETAILS": "Blockchain Details",
                 "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
@@ -670,15 +674,18 @@
                 "PROJECT_NAME": "Project Name",
                 "PROJECT_DOMAIN": "Project Domain",
                 "MEMBERS": "Member(s)",
-                "PROJECT_DETAILS": "Project Details",
-                "PROJECT_VERSION_DETAILS": "Project Version Details",
-                "PROJECT_MEMBERS_DETAILS": "Project members Details"
+                "PROJECT_INFO": "Project Info",
+                "MODEL_DETAILS": "Model Details",
+                "PROJECT_MEMBERS": "Project Members",
+                "PROJECT_PURPOSE": "Project Purpose",
+                "PURPOSE_DOCUMENT": "Purpose Document"
             },
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
                 "PROJECT_DOMAIN": "Project domain",
                 "SELECT_MEMBERS": "Select member(s)",
-                "PROJECT_DETAILS": "Project details"
+                "PROJECT_DETAILS": "Project details",
+                "PROJECT_PURPOSE": "Project purpose"
             },
             "COLUMN_NAME": {
                 "PROJECT_NAME": "Project Name",
@@ -702,6 +709,11 @@
             },
             "ALERT_MSG": {
                 "DISABLE_PROJECT": "Do you want to disable project",
+                "ENABLE_PROJECT": "Do you want to enable project"
+            },
+            "MESSAGE": {
+                "NO_MEMBERS_ARE_ADDED": "No members are added !!",
+                "NO_MODELS_ARE_ADDED": "No models are added !!",
                 "ENABLE_PROJECT": "Do you want to enable project",
                 "CAN_ADD_PROJECT": "Required team members to start the project are not added, please consult with Org. admin for this."
             }

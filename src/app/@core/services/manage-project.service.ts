@@ -73,6 +73,10 @@ export class ManageProjectService {
         return this.http.post(URLConstant.addNewModelReviewURL + `/${projectId}`, versionData);
     }
 
+    addPurpose(projectId: string, data: FormData, hasFormData: boolean): Observable<IAppResponse<IProject>> {
+        return this.http.post(URLConstant.addProjectPurposeURL + `/${projectId}`, data, hasFormData);
+    }
+
     canAddProject(query: { [key: string]: unknown }): Observable<IAppResponse<boolean>> {
         return this.http.get(URLConstant.canAddProjectURL, query);
     }

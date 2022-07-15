@@ -21,6 +21,7 @@ import { AiModelComponent } from './ai-model/ai-model.component';
 import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/view-ai-model-details.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { AddModelReviewComponent } from './model-review/add-review/add-review.component';
+import { AddProjectPurposeComponent } from './project/add-project-purpose/add-purpose.component';
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { EditVersionComponent } from './project-version/edit-version/edit-version.component';
@@ -43,6 +44,7 @@ const PAGE_COMPONENT = [
     ViewAiModelDetailsComponent,
     ModelReviewComponent,
     AddModelReviewComponent,
+    AddProjectPurposeComponent,
     ProjectBcHistoryComponent,
     ProjectVersionBcHistoryComponent,
     EditVersionComponent
