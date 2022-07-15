@@ -5,15 +5,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, Subscription, takeUntil } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
-import { IProject, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
+import { IProject, IProjectVersion, VersionStatus, IPurposeDoc } from 'src/app/@core/interfaces/manage-project.interface';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, LangTranslateService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { AuthService, LangTranslateService, ManageProjectService, UtilsService, FileService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
 import { AddVersionComponent } from '../project-version/add-version/add-version.component';
 import { EditVersionComponent } from '../project-version/edit-version/edit-version.component';
 import { ViewProjectVersionComponent } from '../project-version/view-version/view-project-version.component';
+import { AddProjectPurposeComponent } from './add-project-purpose/add-purpose.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
@@ -30,7 +31,7 @@ interface FSEntry {
     name?: string;
     details: string;
     domain?: string;
-    purpose: string;
+    purpose: string | IPurposeDoc;
     status?: string;
     latestVersion?: string;
     action: unknown;
@@ -40,7 +41,16 @@ interface FSEntry {
 
 @Component({
     selector: 'app-project',
-    templateUrl: './project.component.html'
+    templateUrl: './project.component.html',
+    styles: [
+        `
+            .docs {
+                cursor: pointer;
+                margin: 2px;
+                text-decoration: none;
+            }
+        `
+    ]
 })
 export class ProjectComponent implements OnInit, OnDestroy {
     dataSource!: NbTreeGridDataSource<FSEntry>;
@@ -77,6 +87,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     canViewVersionDetails!: boolean;
     canViewModelReview!: boolean;
     canViewMonitoringReport!: boolean;
+    canAddProjectPurpose!: boolean;
 
     childrenMenuItems: Array<MenuItem> = [];
     parentMenuItems: Array<MenuItem> = [];
@@ -101,7 +112,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         public utilsService: UtilsService,
         private readonly authService: AuthService,
         private translate: TranslateService,
-        private langTranslateService: LangTranslateService
+        private langTranslateService: LangTranslateService,
+        private readonly fileService: FileService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.initChildrenMenu();
@@ -195,6 +207,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MONITORING_REPORT') });
         }
 
+        this.canAddProjectPurpose = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT_PURPOSE, [ACCESS_TYPE.WRITE]);
+        if (this.canAddProjectPurpose && !this.isCompanyAdmin) {
+            this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE') });
+        }
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
         this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
     }
@@ -409,6 +425,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEWS':
                             this.viewModelReviews(this.rowVersion);
                             break;
+                        case 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE':
+                            this.addProjectPurpose(this.rowProject);
+                            break;
+
                         case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
                             this.viewProjectVersionHistory(this.rowVersion);
                             break;
@@ -472,6 +492,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.navigateTo(URL, versionData._id);
     }
 
+    addProjectPurpose(rowData: IProject): void {
+        const editProjectDialogOpen = this.dialogService.open(AddProjectPurposeComponent, { context: { rowData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editProjectDialogClose = editProjectDialogOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.pageChange(1);
+            }
+        });
+    }
+
     viewProjectBcHistory(projectData: IProject): void {
         const URL = '/u/manage-project/project-bc-history';
         this.navigateTo(URL, projectData._id);
@@ -488,6 +517,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
             if (res && res !== 'close' && res.success) {
                 this.pageChange(1);
             }
+        });
+    }
+
+    openDocs(filename: string): void {
+        this.fileService.getFileFromFolder(filename).subscribe((file: Blob) => {
+            const urlCreator = window.URL || window.webkitURL;
+            const url = urlCreator.createObjectURL(file);
+            window.open(url);
+            urlCreator.revokeObjectURL(url);
         });
     }
 }
