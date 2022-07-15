@@ -106,7 +106,7 @@ export class AddProjectPurposeComponent implements OnInit {
 
         this.loading = true;
         this.manageProjectService
-            .addPurpose(this.rowData?._id, formData, hasFormData)
+            .addPurpose(this.rowData._id, formData, hasFormData)
             .pipe(
                 finalize(() => {
                     this.loading = false;

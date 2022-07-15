@@ -500,6 +500,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     viewProjectBcHistory(projectData: IProject): void {
         const URL = '/u/manage-project/project-bc-history';
         this.navigateTo(URL, projectData._id);
