@@ -25,7 +25,7 @@ export class EditVersionComponent implements OnInit {
 
     buildEditVersionForm(data: IProjectVersion): void {
         this.editVersionForm = this.fb.group({
-            versionName: [data?.versionName, [Validators.required]],
+            versionName: [data?.versionName.substring(1), [Validators.required]],
             logFilePath: [data?.logFilePath, [Validators.required]],
             logFileVersion: [data?.logFileVersion, [Validators.required]],
             versionModel: [data?.versionModel, [Validators.required]],
@@ -35,7 +35,8 @@ export class EditVersionComponent implements OnInit {
             aiModel: [data?.aiModel, [Validators.required]],
             codeRepo: [data?.codeRepo, [Validators.required]],
             codeVersion: [data?.codeVersion, [Validators.required]],
-            comment: [data?.comment, [Validators.required]]
+            comment: [data?.comment, [Validators.required]],
+            defaultName: ['v']
         });
     }
 
@@ -49,6 +50,7 @@ export class EditVersionComponent implements OnInit {
             return;
         }
 
+        value['versionName'] = this.UF['defaultName']?.value + value.versionName;
         this.loading = true;
         this.manageProjectService
             .updateVersion(value, this.versionData._id)

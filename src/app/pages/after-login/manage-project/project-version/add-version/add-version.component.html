@@ -13,8 +13,11 @@
         <form class="form-container" [formGroup]="addVersionForm">
             <div class="form-inner-container two-col">
                 <div class="form-holder floating">
-                    <input name="versionName" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NAME' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
-                    <label for="versionName" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                    <nb-form-field>
+                        <span nbPrefix>v</span>
+                        <input nbInput type="number" min="1" fullWidth shape="round" oninput="validity.valid||(value='');" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NAME' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
+                        <label for="versionModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                    </nb-form-field>
                     <div *ngIf="submitted && UF['versionName'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_NAME' | translate }}</span>
                     </div>

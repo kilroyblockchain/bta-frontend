@@ -34,7 +34,8 @@ export class AddVersionComponent implements OnInit {
             aiModel: ['', [Validators.required]],
             codeRepo: ['', [Validators.required]],
             codeVersion: ['', [Validators.required]],
-            comment: ['', [Validators.required]]
+            comment: ['', [Validators.required]],
+            defaultName: ['v']
         });
     }
 
@@ -47,6 +48,7 @@ export class AddVersionComponent implements OnInit {
         if (!valid) {
             return;
         }
+        value['versionName'] = this.UF['defaultName']?.value + value.versionName;
         this.loading = true;
         this.manageProjectService
             .addVersion(value, this.rowData._id)
