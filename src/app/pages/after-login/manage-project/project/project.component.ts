@@ -366,6 +366,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.addVersionDialogClose = addVersionOpen.onClose.subscribe((res) => {
                 if (res && res !== 'close' && res.success) {
                     this.pageChange(1);
+                    this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.SAVING_NEW_MODEL_VERSION') }, hasBackdrop: true, closeOnBackdropClick: false });
                 }
             });
         } else {

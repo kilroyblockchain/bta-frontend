@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
-import { IAiModel, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
+import { IAiModel, IProjectVersion, OracleBucketDataStatus, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 
 interface TreeNode<T> {
     data: T;
@@ -25,7 +26,8 @@ interface FSEntry {
 
 @Component({
     selector: 'app-ai-model',
-    templateUrl: './ai-model.component.html'
+    templateUrl: './ai-model.component.html',
+    styleUrls: ['./ai-model.component.scss']
 })
 export class AiModelComponent implements OnInit {
     private data: TreeNode<FSEntry>[] = [];
@@ -53,7 +55,10 @@ export class AiModelComponent implements OnInit {
 
     user!: IUserRes;
 
-    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService) {
+    oracleBucketDataStatus = OracleBucketDataStatus;
+    confirmSubmitModelDialogClose!: Subscription;
+
+    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private dialogService: NbDialogService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -198,26 +203,82 @@ export class AiModelComponent implements OnInit {
     }
 
     submitModelVersion(versionId: string): void {
-        this.loading = true;
-        this.manageProjectService
-            .submitModelVersion(versionId)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                })
-            )
-            .subscribe({
-                next: (res) => {
-                    if (res && res.success) {
-                        this.utilsService.showToast('success', res.message);
-                        this.pageChange(1);
-                    } else {
-                        this.utilsService.showToast('warning', res.message);
-                    }
-                },
-                error: (err) => {
-                    this.utilsService.showToast('warning', err.error?.message || err?.message);
-                }
-            });
+        const confirmSubmitModelDialogOpen = this.dialogService.open(AlertComponent, {
+            context: { alert: false, question: [this.translate.instant('MANAGE_PROJECTS.VERSION.ALERT_MSG.SURE_FOR_SUBMIT_MODEL'), this.translate.instant('MANAGE_PROJECTS.VERSION.ALERT_MSG.NOTE_FOR_SUBMITTING')] },
+            hasBackdrop: true,
+            closeOnBackdropClick: false
+        });
+        this.confirmSubmitModelDialogClose = confirmSubmitModelDialogOpen.onClose.subscribe((closeRes) => {
+            if (closeRes) {
+                this.loading = true;
+                this.manageProjectService
+                    .submitModelVersion(versionId)
+                    .pipe(
+                        finalize(() => {
+                            this.loading = false;
+                        })
+                    )
+                    .subscribe({
+                        next: (res) => {
+                            if (res && res.success) {
+                                this.utilsService.showToast('success', res.message);
+                                this.pageChange(1);
+                            } else {
+                                this.utilsService.showToast('warning', res.message);
+                            }
+                        },
+                        error: (err) => {
+                            this.utilsService.showToast('warning', err.error?.message || err?.message);
+                        }
+                    });
+            }
+        });
+    }
+
+    getLogFileBcHash(versionId: string): void {
+        this.logsData = false;
+        this.data = [];
+        this.versionData.logFileStatus.code = this.oracleBucketDataStatus.FETCHING;
+        this.dataSource = this.dataSourceBuilder.create(this.data);
+        this.manageProjectService.getLogFileBcHash(versionId).subscribe((res) => {
+            if (res) {
+                this.reLoad();
+            }
+        });
+    }
+
+    getTestDataBcHash(versionId: string): void {
+        this.versionData.testDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
+        this.manageProjectService.getTestDataBcHash(versionId).subscribe((res) => {
+            if (res) {
+                this.reLoad();
+            }
+        });
+    }
+
+    getTrainDataSetsBcHash(versionId: string): void {
+        this.versionData.trainDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
+        this.manageProjectService.getTrainDataSetsBcHash(versionId).subscribe((res) => {
+            if (res) {
+                this.reLoad();
+            }
+        });
+    }
+
+    getAiModelBcHash(versionId: string): void {
+        this.versionData.aiModelStatus.code = this.oracleBucketDataStatus.FETCHING;
+        this.manageProjectService.getAiModelBcHash(versionId).subscribe((res) => {
+            if (res) {
+                this.reLoad();
+            }
+        });
+    }
+
+    reLoad(): void {
+        window.location.reload();
+    }
+
+    formatOracleUrl(txId: string): string {
+        return txId.substring(0, 35) + '...' + txId.substring(txId.length - 35);
     }
 }

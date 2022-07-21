@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { finalize } from 'rxjs';
+import { MODEL_VERSION_ORACLE_URL } from 'src/app/@core/constants';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
 import { ManageProjectService, UtilsService } from 'src/app/@core/services';
@@ -14,6 +15,7 @@ export class EditVersionComponent implements OnInit {
     versionData!: IProjectVersion;
 
     editVersionForm!: FormGroup;
+    defaultBucketUrl!: string;
 
     loading!: boolean;
     submitted!: boolean;
@@ -27,8 +29,6 @@ export class EditVersionComponent implements OnInit {
         this.editVersionForm = this.fb.group({
             versionName: [data?.versionName.substring(1), [Validators.required]],
             logFilePath: [data?.logFilePath, [Validators.required]],
-            logFileVersion: [data?.logFileVersion, [Validators.required]],
-            versionModel: [data?.versionModel, [Validators.required]],
             noteBookVersion: [data?.noteBookVersion, [Validators.required]],
             trainDataSets: [data?.trainDataSets, [Validators.required]],
             testDataSets: [data?.testDataSets, [Validators.required]],
@@ -72,6 +72,30 @@ export class EditVersionComponent implements OnInit {
                     this.utilsService.showToast('warning', err.error?.message || err?.message);
                 }
             });
+    }
+
+    valueChange(versionNumber: number): void {
+        if (versionNumber) {
+            this.editVersionForm.patchValue({
+                logFilePath: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.LOG_FILE_URL,
+                testDataSets: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.TEST_DATA_SETS_URL,
+                trainDataSets: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.TRAIN_DATA_SETS_URL,
+                aiModel: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.AI_MODEL_URL
+            });
+        } else {
+            this.editVersionForm.patchValue({
+                logFilePath: '',
+                testDataSets: '',
+                trainDataSets: '',
+                aiModel: ''
+            });
+        }
+    }
+
+    getDefaultOracleBucket(): void {
+        this.manageProjectService.getDefaultBucketUrl(this.versionData._id).subscribe((res) => {
+            this.defaultBucketUrl = res.data;
+        });
     }
 
     closeModal(): void {

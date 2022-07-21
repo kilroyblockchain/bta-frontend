@@ -653,7 +653,8 @@
                 "STAFFING_NAME": "Staffing",
                 "RECORDS_FOUND": "Records Found",
                 "FALSE": "False",
-                "BLOCKCHAIN_DETAILS": "Blockchain Details"
+                "BLOCKCHAIN_DETAILS": "Blockchain Details",
+                "DATA": "Data..."
             }
         },
         "PROJECT": {
@@ -678,7 +679,8 @@
                 "MODEL_DETAILS": "Model Details",
                 "PROJECT_MEMBERS": "Project Members",
                 "PROJECT_PURPOSE": "Project Purpose",
-                "PURPOSE_DOCUMENT": "Purpose Document"
+                "PURPOSE_DOCUMENT": "Purpose Document",
+                "PROJECT_DETAILS": "Project details"
             },
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
@@ -709,7 +711,8 @@
             },
             "ALERT_MSG": {
                 "DISABLE_PROJECT": "Do you want to disable project",
-                "ENABLE_PROJECT": "Do you want to enable project"
+                "ENABLE_PROJECT": "Do you want to enable project",
+                "SAVING_NEW_MODEL_VERSION": "The new model version has been successfully saved. It takes, around 30 to 40 seconds to save the data completely."
             },
             "MESSAGE": {
                 "NO_MEMBERS_ARE_ADDED": "No members are added !!",
@@ -732,13 +735,14 @@
                 "VERSION_MODEL": "version model",
                 "LOG_FILE_PATH": "log file path",
                 "LOG_FILE_VERSION": "log file version",
-                "TEST_DATA_SETS": "test data sets",
-                "TRAIN_DATA_SETS": "train data sets",
+                "TEST_DATA_SETS": "test data sets url",
+                "TRAIN_DATA_SETS": "train data sets url",
                 "NOTE_BOOK_VERSION": "notebook version",
-                "AI_MODEL": "ai model",
+                "AI_MODEL": "ai model url",
                 "CODE_REPO": "code repo",
                 "CODE_VERSION": "code version",
-                "COMMENT": "Comment"
+                "COMMENT": "Comment",
+                "VERSION_NUMBER": "version number"
             },
             "COLUMN_NAME": {
                 "VERSION_NAME": "Version Name",
@@ -758,12 +762,12 @@
                 "LOG_FILE_PATH": "Log File Path",
                 "LOG_FILE_VERSION": "Log File Version",
                 "LOG_FILE_BC_HASH": "Log File BC Hash",
-                "TEST_DATA_SETS": "Test Data Sets",
+                "TEST_DATA_SETS": "Test Data Sets URL",
                 "TEST_DATA_SETS_BC_HASH": "Test DataSets BC Hash",
-                "TRAIN_DATA_SETS": "Train Data Sets",
-                "TRAIN_DATA_SETS_BC_HASH": "TrainDataSets BC Hash",
-                "NOTE_BOOK_VERSION": "NoteBook Version",
-                "AI_MODEL": "AI Model",
+                "TRAIN_DATA_SETS": "Train Data Sets URL",
+                "TRAIN_DATA_SETS_BC_HASH": "Train Data Sets BC Hash",
+                "NOTE_BOOK_VERSION": "Notebook Version",
+                "AI_MODEL": "AI Model URL",
                 "AI_MODEL_BC_HASH": "AI Model BC Hash",
                 "CODE_REPO": "Code Repo",
                 "CODE_VERSION": "Code Version",
@@ -774,20 +778,32 @@
                 "MODEL_VERSION_DETAILS": "Model Version Details",
                 "SUBMITTED_DATE": "Submitted Date",
                 "REVIEWED_DATE": "Reviewed Date",
-                "PRODUCTION_DATE": "Production Date"
+                "PRODUCTION_DATE": "Production Date",
+                "LOG_FILE_DATA": "Log File Data"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",
+                "VERSION_NUMBER": "Version number is required",
                 "VERSION_MODEL": "Version model is required",
                 "LOG_FILE_PATH": "Log file path is required",
                 "LOG_FILE_VERSION": "Log file version is required",
-                "TEST_DATA_SETS": "Test data sets is required",
-                "TRAIN_DATA_SETS": "Train data sets is required",
+                "TEST_DATA_SETS": "Test data sets is url required",
+                "TRAIN_DATA_SETS": "Train data sets url is required",
                 "NOTE_BOOK_VERSION": "Notebook version is required",
-                "AI_MODEL": "AI Model is required",
+                "AI_MODEL": "AI model url is required",
                 "CODE_REPO": "Code repo is required",
                 "CODE_VERSION": "Code version is required",
                 "COMMENT": "Comment is required"
+            },
+            "TOOLTIP": {
+                "TO_UPDATE_LOG_FILE_DATA": "Hit Refresh Button To Update The Log File Data",
+                "TO_UPDATE_TRAIN_DATA_SETS": "Hit Refresh Button To Update The Train Data Sets",
+                "TO_UPDATE_TEST_DATA_SETS": "Hit Refresh Button To Update The Test Data Sets",
+                "TO_UPDATE_AI_MODEL_DATA": "Hit Refresh Button To Update The AI Model Data"
+            },
+            "ALERT_MSG": {
+                "SURE_FOR_SUBMIT_MODEL": "Are you sure to submit this Model?",
+                "NOTE_FOR_SUBMITTING": "Note: Submitting the model means you will not. be able to edit it."
             }
         },
         "MONITORING_REPORT": {

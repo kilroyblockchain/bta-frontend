@@ -86,5 +86,10 @@ export const URLConstant = {
     getProjectVersionBcDetailsURL: '/project-version/bc-details',
     getProjectVersionBcHistoryURL: '/project-version/bc-history',
     submitModelVersionURL: '/project-version/submit',
-    updateModelVersionURL: '/project-version/update'
+    updateModelVersionURL: '/project-version/update',
+    getDefaultBucketURL: '/project-version/default-bucket-url',
+    getLogFileBcHashURL: '/ai-model/log-files-hash',
+    getTestDataSetsBcHashURL: '/ai-model/test-data-hash',
+    getTrainDataSetsBcHashURL: '/ai-model/train-data-hash',
+    getAiModelBcHashUrl: '/ai-model/ai-model-hash'
 };

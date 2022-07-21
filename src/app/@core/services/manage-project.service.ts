@@ -88,4 +88,24 @@ export class ManageProjectService {
     updateVersion(versionData: IProjectVersion, versionId: string): Observable<IAppResponse<IProjectVersion>> {
         return this.http.put(URLConstant.updateModelVersionURL + `/${versionId}`, versionData);
     }
+
+    getDefaultBucketUrl(projectId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getDefaultBucketURL + `/${projectId}`);
+    }
+
+    getLogFileBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.get(URLConstant.getLogFileBcHashURL + `/${versionId}`);
+    }
+
+    getTestDataBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.get(URLConstant.getTestDataSetsBcHashURL + `/${versionId}`);
+    }
+
+    getTrainDataSetsBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.get(URLConstant.getTrainDataSetsBcHashURL + `/${versionId}`);
+    }
+
+    getAiModelBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.get(URLConstant.getAiModelBcHashUrl + `/${versionId}`);
+    }
 }

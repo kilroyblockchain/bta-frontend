@@ -16,164 +16,177 @@
     </div>
     <nb-card class="medium-card-width" *ngIf="versionData" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
         <nb-card-body>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
-                </strong>
-                {{ versionData.project?.name || 'N/A' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
-                </strong>
-                {{ versionData.versionName || 'N/A' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}:
-                </strong>
-                {{ versionData.versionModel }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}:
-                </strong>
-                {{ versionData.logFileVersion }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}:
-                </strong>
-                {{ versionData.logFilePath }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}:
-                </strong>
-                {{ versionData.logFileBCHash || 'N/a' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}:
-                </strong>
-                {{ versionData.noteBookVersion }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}:
-                </strong>
-                {{ versionData.trainDataSets }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}:
-                </strong>
-                {{ versionData.trainDatasetBCHash || 'N/a' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}:
-                </strong>
-                {{ versionData.testDataSets || 'N/a' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}:
-                </strong>
-                {{ versionData.testDatasetBCHash || 'N/a' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate }}:
-                </strong>
-                {{ versionData.aiModel }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}:
-                </strong>
-                {{ versionData.aiModelBcHash || 'N/a' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}:
-                </strong>
-                {{ versionData.codeRepo }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}:
-                </strong>
-                {{ versionData.codeVersion }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}:
-                </strong>
-                {{ versionData.versionStatus }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}:
-                </strong>
-                {{ versionData.comment }}
-            </p>
-            <p class="card-paragraph" *ngIf="versionData.submittedDate; else createdDateBlock">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.SUBMITTED_DATE' | translate }}:
-                </strong>
-                {{ versionData.submittedDate | date: 'fullDate' }}
-            </p>
-            <ng-template #createdDateBlock>
-                <p class="card-paragraph">
-                    <strong>
-                        <nb-icon icon="chevron-right-outline"></nb-icon>
-                        {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}:
-                    </strong>
-                    {{ versionData.createdAt | date: 'fullDate' }}
-                </p>
-            </ng-template>
-            <p class="card-paragraph" *ngIf="versionData.reviewedDate">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.REVIEWED_DATE' | translate }}:
-                </strong>
-                {{ versionData.reviewedDate | date: 'fullDate' }}
-            </p>
-            <p class="card-paragraph" *ngIf="versionData.productionDate">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'MANAGE_PROJECTS.VERSION.LABEL.PRODUCTION_DATE' | translate }}:
-                </strong>
-                {{ versionData.productionDate | date: 'fullDate' }}
-            </p>
-            <p class="card-paragraph">
-                <strong>
-                    <nb-icon icon="chevron-right-outline"></nb-icon>
-                    {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:
-                </strong>
-                {{ versionData.createdBy?.firstName }}&nbsp;{{ versionData.createdBy?.lastName }}
-            </p>
+            <div class="version-details">
+                <div>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph" *ngIf="versionData.submittedDate; else createdDateBlockLabel">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.SUBMITTED_DATE' | translate }}: </strong>
+                    </p>
+                    <ng-template #createdDateBlockLabel>
+                        <p class="card-paragraph">
+                            <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong>
+                        </p>
+                    </ng-template>
+                    <p class="card-paragraph" *ngIf="versionData.reviewedDate">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.REVIEWED_DATE' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph" *ngIf="versionData.productionDate">
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.PRODUCTION_DATE' | translate }}: </strong>
+                    </p>
+                    <p class="card-paragraph">
+                        <strong> {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}: </strong>
+                    </p>
+                </div>
+                <div>
+                    <p class="card-paragraph">
+                        {{ versionData.project?.name }}
+                    </p>
+                    <p class="card-paragraph">
+                        {{ versionData.versionName }}
+                    </p>
+                    <p class="card-paragraph pop-over">
+                        <span [nbPopover]="versionData.logFilePath" nbPopoverTrigger="hover" nbPopoverPlacement="top">
+                            {{ formatOracleUrl(versionData.logFilePath) }}
+                        </span>
+                    </p>
+                    <p class="card-paragraph pop-over">
+                        <span [nbPopover]="versionData.trainDataSets" nbPopoverTrigger="hover" nbPopoverPlacement="top">
+                            {{ formatOracleUrl(versionData.trainDataSets) }}
+                        </span>
+                        <button nbSuffix nbButton ghost class="refresh-icon" (click)="getTrainDataSetsBcHash(versionData._id)" *ngIf="isModelStatusDraft">
+                            <nb-icon [nbTooltip]="'MANAGE_PROJECTS.VERSION.TOOLTIP.TO_UPDATE_TRAIN_DATA_SETS' | translate" icon="refresh-outline"> </nb-icon>
+                        </button>
+                    </p>
+                    <p class="card-paragraph error-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.ERROR">
+                        {{ versionData.trainDatasetStatus.message }}
+                    </p>
+                    <p class="card-paragraph bc-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.FETCHED">
+                        {{ versionData.trainDatasetBCHash }}
+                    </p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.trainDatasetStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph pop-over">
+                        <span [nbPopover]="versionData.testDataSets" nbPopoverTrigger="hover" nbPopoverPlacement="top">
+                            {{ formatOracleUrl(versionData.testDataSets) }}
+                        </span>
+                        <button nbSuffix nbButton ghost class="refresh-icon" (click)="getTestDataBcHash(versionData._id)" *ngIf="isModelStatusDraft">
+                            <nb-icon [nbTooltip]="'MANAGE_PROJECTS.VERSION.TOOLTIP.TO_UPDATE_TEST_DATA_SETS' | translate" icon="refresh-outline"> </nb-icon>
+                        </button>
+                    </p>
+                    <p class="card-paragraph error-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.ERROR">
+                        {{ versionData.testDatasetStatus.message }}
+                    </p>
+                    <p class="card-paragraph bc-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.FETCHED">
+                        {{ versionData.testDatasetBCHash }}
+                    </p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.testDatasetStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph pop-over">
+                        <span [nbPopover]="versionData.aiModel" nbPopoverTrigger="hover" nbPopoverPlacement="top">
+                            {{ formatOracleUrl(versionData.aiModel) }}
+                        </span>
+                        <button nbSuffix nbButton ghost class="refresh-icon" (click)="getAiModelBcHash(versionData._id)" *ngIf="isModelStatusDraft">
+                            <nb-icon [nbTooltip]="'MANAGE_PROJECTS.VERSION.TOOLTIP.TO_UPDATE_AI_MODEL_DATA' | translate" icon="refresh-outline"> </nb-icon>
+                        </button>
+                    </p>
+                    <p class="card-paragraph error-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.ERROR">
+                        {{ versionData.aiModelStatus.message }}
+                    </p>
+                    <p class="card-paragraph bc-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.FETCHED">
+                        {{ versionData.aiModelBcHash }}
+                    </p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.aiModelStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph">
+                        {{ versionData.noteBookVersion }}
+                    </p>
+                    <p class="card-paragraph">
+                        {{ versionData.codeRepo }}
+                    </p>
+                    <p class="card-paragraph">
+                        {{ versionData.codeVersion }}
+                    </p>
+                    <p class="card-paragraph">
+                        {{ versionData.versionStatus }}
+                    </p>
+                    <p class="card-paragraph">
+                        {{ versionData.comment }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="versionData.submittedDate; else createdDateBlockData">
+                        {{ versionData.submittedDate | date: 'fullDate' }}
+                    </p>
+                    <ng-template #createdDateBlockData>
+                        <p class="card-paragraph">
+                            {{ versionData.createdAt | date: 'fullDate' }}
+                        </p>
+                    </ng-template>
+                    <p class="card-paragraph" *ngIf="versionData.reviewedDate">
+                        {{ versionData.reviewedDate | date: 'fullDate' }}
+                    </p>
+                    <p class="card-paragraph" *ngIf="versionData.productionDate">
+                        {{ versionData.productionDate | date: 'fullDate' }}
+                    </p>
+                    <p class="card-paragraph">{{ versionData.createdBy?.firstName }}&nbsp;{{ versionData.createdBy?.lastName }}</p>
+                </div>
+            </div>
         </nb-card-body>
         <nb-card>
+            <nb-card-header>
+                <h6>{{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_DATA' | translate }}</h6>
+                <p class="card-paragraph">
+                    <strong>{{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}:</strong>
+                    <span class="card-paragraph error-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.ERROR">
+                        {{ versionData.logFileStatus.message }}
+                    </span>
+                    <span class="card-paragraph bc-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.FETCHED">
+                        {{ versionData.logFileBCHash }}
+                    </span>
+                    <span class="card-paragraph info-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.FETCHING"> {{ versionData.logFileStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }} </span>
+                </p>
+                <div class="action">
+                    <button nbSuffix ghost nbButton (click)="getLogFileBcHash(versionData._id)" *ngIf="isModelStatusDraft">
+                        <nb-icon [nbTooltip]="'MANAGE_PROJECTS.VERSION.TOOLTIP.TO_UPDATE_LOG_FILE_DATA' | translate" icon="refresh-outline"> </nb-icon>
+                    </button>
+                </div>
+            </nb-card-header>
             <nb-card-body>
                 <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
                     <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
@@ -207,7 +220,7 @@
                                     {{ row.data[column] | date: 'yyyy-MM-dd' }}
                                 </div>
                                 <div class="table-col" *ngSwitchCase="'action'">
-                                    <button nbSuffix nbButton ghost (click)="viewExperimentDetails(row.data['_id'])">
+                                    <button nbSuffix ghost nbButton (click)="viewExperimentDetails(row.data['_id'])">
                                         <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DETAILS' | translate" icon="eye-outline" pack="eva"> </nb-icon>
                                     </button>
                                 </div>

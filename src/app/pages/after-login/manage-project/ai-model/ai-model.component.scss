@@ -1,0 +1,24 @@
+.version-details {
+    display: grid;
+    grid-template-columns: 20% auto 1%;
+}
+
+.pop-over {
+    cursor: pointer;
+}
+
+.refresh-icon {
+    float: right;
+}
+
+.bc-hash {
+    color: #102fa9;
+}
+
+.error-hash {
+    color: #f00;
+}
+
+.info-hash {
+    color: #059505;
+}

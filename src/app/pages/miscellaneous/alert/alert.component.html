@@ -1,6 +1,13 @@
 <nb-card class="medium-card-width">
     <nb-card-header>
-        <div class="title" *ngIf="!alert"><nb-icon icon="alert-triangle-outline"></nb-icon> {{ question }} {{ name }}?</div>
+        <div class="title" *ngIf="!alert">
+            <nb-icon icon="alert-triangle-outline"></nb-icon>
+            <span *ngIf="isQuestionString; else arrayBlock"> {{ question }} {{ name }}? </span>
+            <ng-template #arrayBlock>
+                <span *ngFor="let question of arrayQuestion"> {{ question }} <br /> </span>
+                {{ name }}
+            </ng-template>
+        </div>
         <div class="title" *ngIf="alert"><nb-icon icon="alert-triangle-outline"></nb-icon> {{ info }}</div>
     </nb-card-header>
     <nb-card-body>
