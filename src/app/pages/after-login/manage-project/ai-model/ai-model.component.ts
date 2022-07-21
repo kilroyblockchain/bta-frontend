@@ -159,7 +159,9 @@ export class AiModelComponent implements OnInit {
                         if (!this.totalRecords) {
                             this.logsData = false;
                         } else {
-                            this.logsData = true;
+                            if (this.versionData.logFileStatus.code !== this.oracleBucketDataStatus.FETCHING) {
+                                this.logsData = true;
+                            }
                         }
                         this.tableData = data.docs;
                         this.createTableData(this.tableData);
