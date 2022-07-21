@@ -13,25 +13,20 @@
         <form class="form-container" [formGroup]="addVersionForm">
             <div class="form-inner-container two-col">
                 <div class="form-holder floating">
-                    <input name="versionName" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NAME' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
-                    <label for="versionName" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                    <nb-form-field>
+                        <span nbPrefix>v</span>
+                        <input nbInput type="number" min="1" fullWidth shape="round" (ngModelChange)="valueChange($event)" oninput="validity.valid||(value='');" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NUMBER' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
+                        <label for="versionModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                    </nb-form-field>
                     <div *ngIf="submitted && UF['versionName'].errors as err" class="invalid-feedback">
-                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_NAME' | translate }}</span>
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_NUMBER' | translate }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-holder floating">
-                <input name="versionModel" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_MODEL' | translate)" formControlName="versionModel" [ngClass]="{ 'status-danger': submitted && UF['versionModel'].errors }" />
-                <label for="versionModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate)"></label>
-                <div *ngIf="submitted && UF['versionModel'].errors as err" class="invalid-feedback">
-                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_MODEL' | translate }}</span>
-                </div>
-            </div>
-
-            <div class="form-inner-container two-col">
+            <div class="form-inner-container">
                 <div class="form-holder floating">
-                    <input name="logFilePath" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_PATH' | translate)" formControlName="logFilePath" [ngClass]="{ 'status-danger': submitted && UF['logFilePath'].errors }" />
+                    <input name="logFilePath" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_PATH' | translate)" formControlName="logFilePath" [ngClass]="{ 'status-danger': submitted && UF['logFilePath'].errors }" />
                     <label for="logFilePath" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate)"></label>
                     <div *ngIf="submitted && UF['logFilePath'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.LOG_FILE_PATH' | translate }}</span>
@@ -39,17 +34,9 @@
                 </div>
             </div>
 
-            <div class="form-holder floating">
-                <input name="logFileVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_VERSION' | translate)" formControlName="logFileVersion" [ngClass]="{ 'status-danger': submitted && UF['logFileVersion'].errors }" />
-                <label for="logFileVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate)"></label>
-                <div *ngIf="submitted && UF['logFileVersion'].errors as err" class="invalid-feedback">
-                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.LOG_FILE_VERSION' | translate }}</span>
-                </div>
-            </div>
-
             <div class="form-inner-container two-col">
                 <div class="form-holder floating">
-                    <input name="testDataSets" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TEST_DATA_SETS' | translate)" formControlName="testDataSets" [ngClass]="{ 'status-danger': submitted && UF['testDataSets'].errors, 'status-warning': !submitted }" />
+                    <input name="testDataSets" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TEST_DATA_SETS' | translate)" formControlName="testDataSets" [ngClass]="{ 'status-danger': submitted && UF['testDataSets'].errors, 'status-warning': !submitted }" />
                     <label for="testDataSets" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate)"></label>
                     <div *ngIf="submitted && UF['testDataSets'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.TEST_DATA_SETS' | translate }}</span>
@@ -58,7 +45,7 @@
             </div>
 
             <div class="form-holder floating">
-                <input name="trainDataSets" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TRAIN_DATA_SETS' | translate)" formControlName="trainDataSets" [ngClass]="{ 'status-danger': submitted && UF['trainDataSets'].errors }" />
+                <input name="trainDataSets" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TRAIN_DATA_SETS' | translate)" formControlName="trainDataSets" [ngClass]="{ 'status-danger': submitted && UF['trainDataSets'].errors }" />
                 <label for="trainDataSets" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate)"></label>
                 <div *ngIf="submitted && UF['trainDataSets'].errors as err" class="invalid-feedback">
                     <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.TRAIN_DATA_SETS' | translate }}</span>
@@ -67,19 +54,21 @@
 
             <div class="form-inner-container two-col">
                 <div class="form-holder floating">
-                    <input name="noteBookVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.NOTE_BOOK_VERSION' | translate)" formControlName="noteBookVersion" [ngClass]="[submitted && UF['noteBookVersion'].errors] ? 'status-danger' : 'status-warning'" />
-                    <label for="noteBookVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate)"></label>
-                    <div *ngIf="submitted && UF['noteBookVersion'].errors as err" class="invalid-feedback">
-                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.NOTE_BOOK_VERSION' | translate }}</span>
+                    <input name="aiModel" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.AI_MODEL' | translate)" formControlName="aiModel" [ngClass]="{ 'status-danger': submitted && UF['aiModel'].errors }" />
+                    <label for="aiModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate)"></label>
+                    <div *ngIf="submitted && UF['aiModel'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.AI_MODEL' | translate }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-holder floating">
-                <input name="aiModel" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.AI_MODEL' | translate)" formControlName="aiModel" [ngClass]="{ 'status-danger': submitted && UF['aiModel'].errors }" />
-                <label for="aiModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate)"></label>
-                <div *ngIf="submitted && UF['aiModel'].errors as err" class="invalid-feedback">
-                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.AI_MODEL' | translate }}</span>
+                <input name="noteBookVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.NOTE_BOOK_VERSION' | translate)" formControlName="noteBookVersion" [ngClass]="[submitted && UF['noteBookVersion'].errors] ? 'status-danger' : 'status-warning'" />
+                <label for="noteBookVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate)"></label>
+                <div *ngIf="submitted && UF['noteBookVersion'].errors as err" class="invalid-feedback">
+                    <span *ngIf="err['required']">
+                        {{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.NOTE_BOOK_VERSION' | translate }}
+                    </span>
                 </div>
             </div>
 

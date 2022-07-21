@@ -46,7 +46,6 @@ export class EditProjectComponent implements OnInit {
             name: [data?.name, [Validators.required]],
             details: [data?.details, [Validators.required]],
             domain: [data?.domain, [Validators.required]],
-            purpose: [data?.purpose],
             members: [membersId, [Validators.required]]
         });
     }

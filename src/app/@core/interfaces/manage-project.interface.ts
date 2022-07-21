@@ -25,16 +25,20 @@ export interface IProjectVersion {
     _id: string;
     versionName: string;
     logFilePath: string;
-    logFileVersion: string;
+    logFileVersion?: string;
     logFileBCHash?: string;
-    versionModel: string;
+    logFileStatus: IOracleBucketDataStatus;
+    versionModel?: string;
     noteBookVersion: string;
     trainDataSets: string;
     trainDatasetBCHash?: string;
+    trainDatasetStatus: IOracleBucketDataStatus;
     testDataSets: string;
     testDatasetBCHash?: string;
+    testDatasetStatus: IOracleBucketDataStatus;
     aiModel: string;
     aiModelBcHash?: string;
+    aiModelStatus: IOracleBucketDataStatus;
     codeVersion: string;
     codeRepo: string;
     comment: string;
@@ -59,6 +63,17 @@ export enum VersionStatus {
     MONITORING = 'Monitoring',
     COMPLETE = 'Complete',
     DRAFT = 'Draft'
+}
+
+interface IOracleBucketDataStatus {
+    message: string;
+    code: OracleBucketDataStatus;
+}
+
+export enum OracleBucketDataStatus {
+    FETCHING = 'Fetching',
+    FETCHED = 'Fetched',
+    ERROR = 'Error'
 }
 
 export interface IMonitoringReport {
