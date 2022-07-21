@@ -277,10 +277,14 @@ export class AiModelComponent implements OnInit {
     }
 
     reLoad(): void {
-        window.location.reload();
+        this.ngOnInit();
     }
 
     formatOracleUrl(txId: string): string {
         return txId.substring(0, 35) + '...' + txId.substring(txId.length - 35);
+    }
+
+    formatFetchingInfo(message: string): string {
+        return message.charAt(0).toUpperCase() + message.slice(1) + ' ' + this.translate.instant('MANAGE_PROJECTS.COMMON.LABEL.DATA');
     }
 }

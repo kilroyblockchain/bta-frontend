@@ -104,7 +104,9 @@
                     <p class="card-paragraph bc-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.FETCHED">
                         {{ versionData.trainDatasetBCHash }}
                     </p>
-                    <p class="card-paragraph info-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.trainDatasetStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.trainDatasetStatus.code === oracleBucketDataStatus.FETCHING">
+                        {{ formatFetchingInfo(versionData.trainDatasetStatus.code) }}
+                    </p>
                     <p class="card-paragraph pop-over">
                         <span [nbPopover]="versionData.testDataSets" nbPopoverTrigger="hover" nbPopoverPlacement="top">
                             {{ formatOracleUrl(versionData.testDataSets) }}
@@ -119,7 +121,9 @@
                     <p class="card-paragraph bc-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.FETCHED">
                         {{ versionData.testDatasetBCHash }}
                     </p>
-                    <p class="card-paragraph info-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.testDatasetStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.testDatasetStatus.code === oracleBucketDataStatus.FETCHING">
+                        {{ formatFetchingInfo(versionData.testDatasetStatus.code) }}
+                    </p>
                     <p class="card-paragraph pop-over">
                         <span [nbPopover]="versionData.aiModel" nbPopoverTrigger="hover" nbPopoverPlacement="top">
                             {{ formatOracleUrl(versionData.aiModel) }}
@@ -134,7 +138,9 @@
                     <p class="card-paragraph bc-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.FETCHED">
                         {{ versionData.aiModelBcHash }}
                     </p>
-                    <p class="card-paragraph info-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.FETCHING">{{ versionData.aiModelStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }}</p>
+                    <p class="card-paragraph info-hash" *ngIf="versionData.aiModelStatus.code === oracleBucketDataStatus.FETCHING">
+                        {{ formatFetchingInfo(versionData.aiModelStatus.code) }}
+                    </p>
                     <p class="card-paragraph">
                         {{ versionData.noteBookVersion }}
                     </p>
@@ -179,7 +185,9 @@
                     <span class="card-paragraph bc-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.FETCHED">
                         {{ versionData.logFileBCHash }}
                     </span>
-                    <span class="card-paragraph info-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.FETCHING"> {{ versionData.logFileStatus.code }}&nbsp;{{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA' | translate }} </span>
+                    <span class="card-paragraph info-hash" *ngIf="versionData.logFileStatus.code === oracleBucketDataStatus.FETCHING">
+                        {{ formatFetchingInfo(versionData.logFileStatus.code) }}
+                    </span>
                 </p>
                 <div class="action">
                     <button nbSuffix ghost nbButton (click)="getLogFileBcHash(versionData._id)" *ngIf="isModelStatusDraft">
