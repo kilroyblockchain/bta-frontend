@@ -71,9 +71,9 @@ interface IOracleBucketDataStatus {
 }
 
 export enum OracleBucketDataStatus {
-    FETCHING = 'Fetching',
-    FETCHED = 'Fetched',
-    ERROR = 'Error'
+    FETCHING = 'fetching',
+    FETCHED = 'fetched',
+    ERROR = 'error'
 }
 
 export interface IMonitoringReport {
