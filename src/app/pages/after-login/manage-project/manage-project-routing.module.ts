@@ -5,6 +5,7 @@ import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/vi
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
+import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
@@ -54,6 +55,11 @@ const routes: Routes = [
                 path: 'version-bc-history/:id',
                 component: ProjectVersionBcHistoryComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.VERSION_BC_HISTORY' }
+            },
+            {
+                path: 'model-review-bc-history/:id',
+                component: ModelReviewBcHistoryComponent,
+                data: { pageTitle: 'Model review bc history' }
             }
         ]
     }

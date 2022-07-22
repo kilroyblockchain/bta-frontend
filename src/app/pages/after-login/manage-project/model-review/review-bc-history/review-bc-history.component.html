@@ -1,0 +1,97 @@
+<div>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'Model Review Blockchain History' | translate }}</h4>
+        </div>
+    </div>
+    <nb-card class="medium-card-width">
+        <nb-card-header>
+            {{ 'Model Version Bc Details' | translate }}
+        </nb-card-header>
+        <nb-card-body>
+            <nb-card class="medium-card-width">
+                <nb-card-body>
+                    <div *ngIf="modelVersionBcDetails">
+                        <p>
+                            <strong>{{ 'Version Name' }}:</strong>
+                            {{ modelVersionBcDetails?.versionName }}
+                        </p>
+                        <p>
+                            <strong>{{ 'Log File Bc Hash' }}:</strong>
+                            {{ modelVersionBcDetails?.logFileBCHash }}
+                        </p>
+                        <p>
+                            <strong>{{ 'Test Data Bc Hash' }}:</strong>
+                            {{ modelVersionBcDetails?.testDatasetBCHash }}
+                        </p>
+                        <p>
+                            <strong>{{ 'Train Data Bc Hash' }}:</strong>
+                            {{ modelVersionBcDetails?.trainDatasetBCHash }}
+                        </p>
+                        <!--     <p>
+              <strong>{{'AI Model Bc Hash'}}:</strong>
+              {{ modelVersionBcDetails?.aiModelBcHash }}
+            </p> -->
+                    </div>
+                    <div *ngIf="!dataFound && loading">
+                        <app-loader></app-loader>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <nb-card>
+                <nb-card-header>
+                    {{ 'Model Review Block Chain History' | translate }}
+                </nb-card-header>
+                <!-- <nb-card-body> -->
+                <div>
+                    <ng-container *ngFor="let reviewHistory of modelReviewBcHistory">
+                        <nb-card>
+                            <nb-card-body>
+                                <p>
+                                    <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_STATUS' | translate }}:</strong>
+                                    {{ reviewHistory.modelReview.reviewStatus }}
+                                </p>
+                                <p *ngIf="reviewHistory.modelReview.deployedUrl">
+                                    <strong>{{ 'Deployed URL' | translate }}:</strong>
+                                    {{ reviewHistory.modelReview.deployedUrl }}
+                                </p>
+                                <p *ngIf="reviewHistory.modelReview.deploymentInstruction">
+                                    <strong>{{ 'Deployed Instruction' | translate }}:</strong>
+                                    {{ reviewHistory.modelReview.deploymentInstruction }}
+                                </p>
+                                <p *ngIf="reviewHistory.modelReview.productionURL">
+                                    <strong>{{ 'Production URl' | translate }}:</strong>
+                                    {{ reviewHistory.modelReview.productionURL }}
+                                </p>
+                                <div>
+                                    <strong>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.REVIEW_RATING' | translate }}:&nbsp;</strong>
+                                    <ng-container *ngFor="let total of totalRating(); let i = index">
+                                        <nb-icon [ngClass]="i < createRange(+reviewHistory.modelReview.ratings).length ? 'rating' : 'default'" icon="star" pack="eva"> </nb-icon>
+                                    </ng-container>
+                                </div>
+                                <p>
+                                    <strong>{{ 'Comment' }}:</strong> {{ reviewHistory.modelReview.comment }}
+                                </p>
+                                <p>
+                                    <strong>{{ 'Recorded Date' }}:</strong> {{ reviewHistory.modelReview.recordDate }}
+                                </p>
+                                <p><strong>TxId</strong>:&nbsp;{{ reviewHistory.txId }}</p>
+                                <p><strong>Creator MSP</strong>:&nbsp;{{ reviewHistory.modelReview.creatorMSP }}</p>
+                                <p><strong>Added By</strong>:&nbsp;{{ reviewHistory.modelReview.entryUserDetail.entryUser }}</p>
+                                <p><strong>Organization Unit</strong>:&nbsp;{{ reviewHistory.modelReview.entryUserDetail.organizationUnit }}</p>
+                                <p><strong>Staffing</strong>:&nbsp;{{ reviewHistory.modelReview.entryUserDetail.staffing }}</p>
+                            </nb-card-body>
+                        </nb-card>
+                    </ng-container>
+                </div>
+                <div *ngIf="!dataFound && loading">
+                    <app-loader></app-loader>
+                </div>
+                <!-- </nb-card-body> -->
+            </nb-card>
+            <div *ngIf="!dataFound && !loading">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

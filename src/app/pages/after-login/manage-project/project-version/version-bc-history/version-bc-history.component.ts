@@ -15,7 +15,6 @@ interface FSEntry {
     txDateTime: Date;
     isDeleted: boolean;
     name: string;
-    model: string;
     comment: string;
     status: string;
     entryUser: string;
@@ -55,8 +54,8 @@ export class ProjectVersionBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'model', 'status', 'comment', 'noteBook'];
-        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED', 'COMMON.COLUMN_NAME.CREATED_BY', 'MANAGE_PROJECTS.VERSION.COLUMN_NAME.VERSION_MODEL', 'COMMON.COLUMN_NAME.STATUS', 'MANAGE_PROJECTS.VERSION.COLUMN_NAME.COMMENT', 'MANAGE_PROJECTS.VERSION.COLUMN_NAME.NOTEBOOK_VERSION'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'status', 'comment', 'noteBook'];
+        this.columnNameKeys = ['MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME', 'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED', 'COMMON.COLUMN_NAME.CREATED_BY', 'COMMON.COLUMN_NAME.STATUS', 'MANAGE_PROJECTS.VERSION.COLUMN_NAME.COMMENT', 'MANAGE_PROJECTS.VERSION.COLUMN_NAME.NOTEBOOK_VERSION'];
 
         this.translate.get(this.columnNameKeys).subscribe((data: object) => {
             this.columnsName = Object.values(data);
@@ -120,14 +119,13 @@ export class ProjectVersionBcHistoryComponent implements OnInit {
             this.data.push({
                 data: {
                     txId: item.txId,
-                    txDateTime: item.projectVersion.recordDate,
+                    txDateTime: item.modelVersion.recordDate,
                     isDeleted: item.isDeleted,
-                    name: item.projectVersion.versionName,
-                    model: item.projectVersion.versionModel,
-                    status: item.projectVersion.versionStatus,
-                    comment: item.projectVersion.comment,
-                    entryUser: item.projectVersion.entryUser,
-                    noteBook: item.projectVersion.noteBookVersion
+                    name: item.modelVersion.versionName,
+                    status: item.modelVersion.versionStatus,
+                    comment: item.modelVersion.comment,
+                    entryUser: item.modelVersion.entryUser,
+                    noteBook: item.modelVersion.noteBookVersion
                 }
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);

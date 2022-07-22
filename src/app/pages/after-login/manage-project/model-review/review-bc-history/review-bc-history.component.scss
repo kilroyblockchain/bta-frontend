@@ -1,0 +1,19 @@
+.rating {
+    font-size: 1.1rem;
+    color: #fa0;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffd684;
+    }
+}
+
+.default {
+    font-size: 1.1rem;
+    color: #b1b1b1;
+    cursor: pointer;
+
+    &:hover {
+        color: #fdc960;
+    }
+}
