@@ -785,7 +785,8 @@
                 "SUBMITTED_DATE": "Submitted Date",
                 "REVIEWED_DATE": "Reviewed Date",
                 "PRODUCTION_DATE": "Production Date",
-                "LOG_FILE_DATA": "Log File Data"
+                "LOG_FILE_DATA": "Log File Data",
+                "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details"
             },
             "VALIDATIONS": {
                 "VERSION_NAME": "Version name is required",
