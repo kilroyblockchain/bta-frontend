@@ -8,7 +8,7 @@
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
             </button>
         </div>
-        <div class="actions" *ngIf="isUserCanSubmitVersion && versionData && isModelStatusDraft" (click)="submitModelVersion(versionData._id)">
+        <div class="actions" *ngIf="isUserCanSubmitVersion && versionData && isModelStatusDraft && versionData.logFileBCHash && versionData.trainDatasetBCHash && versionData.trainDatasetBCHash && versionData.aiModelBcHash" (click)="submitModelVersion(versionData._id)">
             <button nbButton hero status="primary" size="small">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.SUBMIT_MODEL' | translate }}
             </button>
