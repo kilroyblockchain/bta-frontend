@@ -213,7 +213,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         }
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
         this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
-        this.childrenMenuItems.push({ key: 'Model Review Bc history', title: this.langTranslateService.translateKey('Model Review Bc history') });
+        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY') });
     }
 
     navigateTo(URL: string, id: string): void {
@@ -339,7 +339,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
+            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.MESSAGE.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
         }
     }
 
@@ -371,7 +371,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
+            this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.MESSAGE.CAN_ADD_PROJECT') }, hasBackdrop: true, closeOnBackdropClick: false });
         }
     }
 
@@ -408,6 +408,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 }
                 return menu;
             });
+
+            this.childrenMenuItems = this.childrenMenuItems.map((menu) => {
+                if (menu.key === 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY') {
+                    return {
+                        ...menu,
+                        hidden: this.rowVersion.versionStatus === VersionStatus.DRAFT
+                    };
+                }
+                return menu;
+            });
         }
     }
 
@@ -437,7 +447,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION':
                             this.editModelVersion(this.rowVersion);
                             break;
-                        case 'Model Review Bc history':
+                        case 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY':
                             this.viewModelReviewBcHistory(this.rowVersion);
                             break;
                         default:

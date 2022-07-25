@@ -619,7 +619,9 @@
         "TOOLTIP": {
             "ADD_VERSION": "Add Version",
             "VIEW_DETAILS": "View Details",
-            "VIEW_DOC": "View Doc"
+            "VIEW_DOC": "View Doc",
+            "BC_TIME_STAMPS": "BC Timestamps",
+            "BC_TRANSACTION_ID": "Bc Transaction Id"
         },
         "PAGE_TITLE": {
             "MANAGE_PROJECT": "Manage Project",
@@ -641,7 +643,8 @@
             "EDIT_PROJECT": "Edit Project",
             "EDIT_PROJECT_VERSION": "Edit Version",
             "PROJECT_BC_HISTORY": "Project Bc History",
-            "VERSION_BC_HISTORY": "Version Bc History"
+            "VERSION_BC_HISTORY": "Model Version Bc History",
+            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -654,7 +657,10 @@
                 "RECORDS_FOUND": "Records Found",
                 "FALSE": "False",
                 "BLOCKCHAIN_DETAILS": "Blockchain Details",
-                "DATA": "Data..."
+                "DATA": "Data...",
+                "ADDED_BY": "Added By",
+                "CREATOR_MSP": "Creator MSP",
+                "ORGANIZATION_UNIT": "Organization Unit"
             }
         },
         "PROJECT": {
@@ -775,7 +781,7 @@
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
                 "FRAMEWORK_VERSION": "Framework Version",
-                "MODEL_VERSION_DETAILS": "Model Version Details",
+                "BC_": "Model Version Details",
                 "SUBMITTED_DATE": "Submitted Date",
                 "REVIEWED_DATE": "Reviewed Date",
                 "PRODUCTION_DATE": "Production Date",
@@ -873,7 +879,8 @@
             },
             "BUTTON": {
                 "ADD_REVIEW": "Add Review",
-                "NEW_REVIEW": "New Review"
+                "NEW_REVIEW": "New Review",
+                "ADD_REVIEW_MODEL": "Add Review Model"
             },
             "LABEL": {
                 "REVIEW_COMMENT": "Comment",
@@ -889,7 +896,9 @@
                 "MONITORING": "Monitoring",
                 "COMPLETE": "Complete",
                 "REVIEW_SUPPORTING_DOCUMENTS": "Review Supporting Documents",
-                "REVIEW_MODEL_DETAILS": "Review Model Details"
+                "REVIEW_MODEL_DETAILS": "Review Model Details",
+                "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
+                "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",

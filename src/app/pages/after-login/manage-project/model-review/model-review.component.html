@@ -93,13 +93,13 @@
                         <section class="dialog-head">
                             <h4>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.ALL_REVIEWS' | translate }}</h4>
                         </section>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder && !isReviewStatusFailed">
                             <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
                             </button>
                         </div>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete && !isReviewStatusFailed">
                             <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
@@ -177,14 +177,14 @@
                                     </nb-card-body>
                                 </nb-card>
                             </ng-container>
-                            <div *ngIf="!reviewData && loading">
-                                <app-loader></app-loader>
-                            </div>
-                            <div *ngIf="!reviewData && !loading">
-                                <app-data-not-found></app-data-not-found>
-                            </div>
                         </div>
                     </nb-card-body>
+                    <div *ngIf="!reviewData && loading">
+                        <app-loader></app-loader>
+                    </div>
+                    <div *ngIf="!reviewData && !loading">
+                        <app-data-not-found></app-data-not-found>
+                    </div>
                 </nb-card>
             </nb-tab>
         </nb-tabset>

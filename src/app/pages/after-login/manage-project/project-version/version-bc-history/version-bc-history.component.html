@@ -16,7 +16,7 @@
                             <nb-icon icon="chevron-right-outline"></nb-icon>
                             {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
                         </strong>
-                        {{ projectVersionBcDetails?.project }}
+                        {{ projectVersionBcDetails.project?.projectName }}
                     </p>
                     <p class="card-paragraph" *ngIf="projectVersionBcDetails?.versionName">
                         <strong>
@@ -35,16 +35,24 @@
                     <p class="card-paragraph" *ngIf="projectVersionBcDetails?.testDatasetBCHash">
                         <strong>
                             <nb-icon icon="chevron-right-outline"> </nb-icon>
-                            {{ 'Test Data Sets Bc Hash' | translate }}:
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}:
                         </strong>
                         {{ projectVersionBcDetails?.testDatasetBCHash }}
                     </p>
                     <p class="card-paragraph" *ngIf="projectVersionBcDetails?.trainDatasetBCHash">
                         <strong>
                             <nb-icon icon="chevron-right-outline"> </nb-icon>
-                            {{ 'Train Data Sets Bc Hash' | translate }}:
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}:
                         </strong>
                         {{ projectVersionBcDetails?.trainDatasetBCHash }}
+                    </p>
+
+                    <p class="card-paragraph" *ngIf="projectVersionBcDetails?.aiModelBcHash">
+                        <strong>
+                            <nb-icon icon="chevron-right-outline"> </nb-icon>
+                            {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}:
+                        </strong>
+                        {{ projectVersionBcDetails?.aiModelBcHash }}
                     </p>
                     <p class="card-paragraph" *ngIf="projectVersionBcDetails?.codeRepo">
                         <strong>

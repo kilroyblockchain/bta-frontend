@@ -19,7 +19,7 @@ interface FSEntry {
     details: string;
     members: string[];
     entryUser: string;
-    projectVersions: IBcProjectVersion[];
+    modelVersions: IBcProjectVersion[];
 }
 
 @Component({
@@ -63,7 +63,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'projectVersions', 'details', 'members'];
+        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'modelVersions', 'details', 'members'];
         this.columnNameKeys = [
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME',
@@ -144,7 +144,7 @@ export class ProjectBcHistoryComponent implements OnInit {
                     details: item.project.detail,
                     members: item.project.members,
                     entryUser: item.project.entryUser,
-                    projectVersions: item.project.projectVersions
+                    modelVersions: item.project.modelVersions
                 }
             });
             this.dataSource = this.dataSourceBuilder.create(this.data);

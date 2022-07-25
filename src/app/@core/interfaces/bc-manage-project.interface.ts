@@ -14,7 +14,7 @@ export interface IBcProject {
     members: string[];
     entryUser: string;
     recordDate: Date;
-    projectVersions: IBcProjectVersion[];
+    modelVersions: IBcProjectVersion[];
 }
 export interface IBcProjectVersion {
     id: string;
@@ -89,7 +89,7 @@ export interface IBcModelReview {
     deployedUrl: string;
     deploymentInstruction: string;
     productionURL: string;
-    reviewSupportingDocument: IReviewSupportingDocument[];
+    reviewDocuments: IReviewSupportingDocument[];
     entryUserDetail: IEntryUserBcDetail;
     recordDate: Date;
     creatorMSP: string;
@@ -102,6 +102,6 @@ interface IEntryUserBcDetail {
 }
 
 interface IReviewSupportingDocument {
-    docURL: string;
+    docUrl: string;
     docName: string;
 }

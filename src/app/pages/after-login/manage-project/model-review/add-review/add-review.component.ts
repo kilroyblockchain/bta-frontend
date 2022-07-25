@@ -44,16 +44,17 @@ export class AddModelReviewComponent implements OnInit {
 
     constructor(private ref: NbDialogRef<AddModelReviewComponent>, private readonly fb: FormBuilder, public utilsService: UtilsService, private authService: AuthService, private manageProjectService: ManageProjectService) {
         this.getProjectUser();
+        this.checkModelStatus();
     }
 
     ngOnInit(): void {
         this.ratings = Array(5)
             .fill(1)
             .map((x, i) => i + 1);
+        this.checkModelStatus();
 
         this.buildAddReviewForm();
         this.buildNewModelForm();
-        this.checkModelStatus();
     }
 
     getProjectUser(): void {
@@ -67,22 +68,21 @@ export class AddModelReviewComponent implements OnInit {
         const versionStatus = this.isStakeHolder && this.versionData.versionStatus !== this.versionStatus.MONITORING ? this.versionData.versionStatus : '';
         this.addReviewForm = this.fb.group({
             comment: ['', [Validators.required]],
-            status: [versionStatus, [Validators.required]],
+            status: [versionStatus, [...(this.isReviewStatusDeployed || this.isReviewStatusProduction ? [] : [Validators.required])]],
             rating: [0],
-            deployedModelURL: [''],
-            deployedModelInstruction: [''],
+            deployedModelURL: ['', ...(this.isReviewStatusPass ? [Validators.required] : [])],
+            deployedModelInstruction: ['', ...(this.isReviewStatusPass ? [Validators.required] : [])],
             productionURL: [''],
             reviewModel: [''],
-            reviewStatus: ['']
+            reviewStatus: [''],
+            reviewTempStatus: [this.versionData.versionStatus]
         });
     }
 
     buildNewModelForm(): void {
         this.addModelReviewForm = this.fb.group({
             versionName: ['', [Validators.required]],
-            versionModel: ['', [Validators.required]],
             logFilePath: ['', [Validators.required]],
-            logFileVersion: ['', [Validators.required]],
             testDataSets: ['', [Validators.required]],
             noteBookVersion: ['', [Validators.required]],
             codeRepo: ['', [Validators.required]],
@@ -131,12 +131,14 @@ export class AddModelReviewComponent implements OnInit {
     checkBoxValue(event: Event): void {
         if (event && event.target && (event.target as HTMLInputElement).checked) {
             this.addReviewForm.patchValue({
-                status: (event.target as HTMLInputElement).value
+                status: (event.target as HTMLInputElement).value,
+                reviewTempStatus: ''
             });
         }
         if (!(event.target as HTMLInputElement).checked) {
             this.addReviewForm.patchValue({
-                status: ''
+                status: '',
+                reviewTempStatus: this.versionData.versionStatus
             });
             this.showModelReview = false;
         }
@@ -144,7 +146,6 @@ export class AddModelReviewComponent implements OnInit {
 
     saveNewReview({ valid, value }: FormGroup, modelReviewId = ''): void {
         this.rSubmitted = true;
-
         if (!valid) {
             return;
         }
@@ -155,9 +156,13 @@ export class AddModelReviewComponent implements OnInit {
             formData.append('docs', this.myFiles[i]);
         }
         formData.append('comment', value.comment);
-        formData.append('status', value.status);
         formData.append('rating', value.rating);
 
+        if (this.RF['reviewTempStatus']?.value && (this.isReviewStatusDeployed || this.isReviewStatusProduction || this.isReviewStatusMonitoring)) {
+            formData.append('status', value.reviewTempStatus);
+        } else {
+            formData.append('status', value.status);
+        }
         if (this.RF['deployedModelURL']?.value) {
             formData.append('deployedModelURL', value.deployedModelURL);
         }
@@ -241,5 +246,11 @@ export class AddModelReviewComponent implements OnInit {
 
     closeModel(): void {
         this.ref.close('close');
+    }
+
+    checkVersionStatus(event: string) {
+        if (event === VersionStatus.REVIEW_FAILED) {
+            this.showModelReview = false;
+        }
     }
 }
