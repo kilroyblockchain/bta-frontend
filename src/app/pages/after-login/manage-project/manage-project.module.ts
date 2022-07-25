@@ -25,6 +25,7 @@ import { AddProjectPurposeComponent } from './project/add-project-purpose/add-pu
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { EditVersionComponent } from './project-version/edit-version/edit-version.component';
+import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
@@ -47,7 +48,8 @@ const PAGE_COMPONENT = [
     AddProjectPurposeComponent,
     ProjectBcHistoryComponent,
     ProjectVersionBcHistoryComponent,
-    EditVersionComponent
+    EditVersionComponent,
+    ModelReviewBcHistoryComponent
 ];
 
 @NgModule({

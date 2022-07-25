@@ -91,5 +91,6 @@ export const URLConstant = {
     getLogFileBcHashURL: '/ai-model/log-files-hash',
     getTestDataSetsBcHashURL: '/ai-model/test-data-hash',
     getTrainDataSetsBcHashURL: '/ai-model/train-data-hash',
-    getAiModelBcHashUrl: '/ai-model/ai-model-hash'
+    getAiModelBcHashUrl: '/ai-model/ai-model-hash',
+    getModelReviewBcHistoryURL: '/model-reviews/bc-history'
 };

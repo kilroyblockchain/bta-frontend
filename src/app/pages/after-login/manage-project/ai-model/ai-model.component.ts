@@ -283,4 +283,8 @@ export class AiModelComponent implements OnInit {
     formatOracleUrl(txId: string): string {
         return txId.substring(0, 35) + '...' + txId.substring(txId.length - 35);
     }
+
+    formatFetchingInfo(message: string): string {
+        return message.charAt(0).toUpperCase() + message.slice(1) + ' ' + this.translate.instant('MANAGE_PROJECTS.COMMON.LABEL.DATA');
+    }
 }

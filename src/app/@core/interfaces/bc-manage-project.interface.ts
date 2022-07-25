@@ -14,7 +14,7 @@ export interface IBcProject {
     members: string[];
     entryUser: string;
     recordDate: Date;
-    projectVersions: IBcProjectVersion[];
+    modelVersions: IBcProjectVersion[];
 }
 export interface IBcProjectVersion {
     id: string;
@@ -38,28 +38,70 @@ export interface IBcProjectVersionHistory {
 export interface IProjectVersionBcHistory {
     isDeleted: boolean;
     txId: string;
-    projectVersion: IBcProjectVersion;
+    modelVersion: IBcProjectVersion;
 }
 export interface IBcProjectVersion {
     id: string;
     versionName: string;
-    logFilePath: string;
     logFileVersion: string;
+    logFilePath: string;
     logFileBCHash: string;
-    versionModel: string;
     noteBookVersion: string;
-    testDataSets: string;
+    testDataSetsUrl: string;
     testDatasetBCHash: string;
-    trainDataSets: string;
+    trainDataSetsUrl: string;
     trainDatasetBCHash: string;
-    artifacts: string;
-    aiModelBcHash?: string;
+    aiModelUrl: string;
+    aiModelBcHash: string;
     codeVersion: string;
     codeRepo: string;
     comment: string;
     versionStatus: string;
     status: boolean;
-    project: string;
+    project: IBcProjectInfo;
     entryUser: string;
     recordDate: Date;
+}
+
+interface IBcProjectInfo {
+    id: string;
+    projectName: string;
+}
+
+export interface IBcModelReviewDetails {
+    data: IBcModelReview;
+}
+
+export interface IBcModelReviewHistory {
+    data: IModelReviewBcHistory[];
+}
+
+export interface IModelReviewBcHistory {
+    isDeleted: boolean;
+    txId: string;
+    modelReview: IBcModelReview;
+}
+export interface IBcModelReview {
+    id: string;
+    reviewStatus: string;
+    comment: string;
+    ratings: string;
+    deployedUrl: string;
+    deploymentInstruction: string;
+    productionURL: string;
+    reviewDocuments: IReviewSupportingDocument[];
+    entryUserDetail: IEntryUserBcDetail;
+    recordDate: Date;
+    creatorMSP: string;
+}
+
+interface IEntryUserBcDetail {
+    entryUser: string;
+    organizationUnit: string;
+    staffing: string;
+}
+
+interface IReviewSupportingDocument {
+    docUrl: string;
+    docName: string;
 }

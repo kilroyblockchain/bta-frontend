@@ -76,7 +76,7 @@
                                     <div class="table-col" *ngSwitchCase="'isDeleted'">
                                         {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
                                     </div>
-                                    <div class="table-col" *ngSwitchCase="'projectVersions'">
+                                    <div class="table-col" *ngSwitchCase="'modelVersions'">
                                         <ng-container *ngIf="row.data[column].length; else defaultCase">
                                             <div *ngFor="let version of row.data[column]">
                                                 <span
