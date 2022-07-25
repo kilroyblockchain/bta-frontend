@@ -277,7 +277,7 @@ export class AiModelComponent implements OnInit {
     }
 
     reLoad(): void {
-        this.ngOnInit();
+        window.location.reload();
     }
 
     formatOracleUrl(txId: string): string {

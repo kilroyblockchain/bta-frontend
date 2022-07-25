@@ -7,75 +7,75 @@
                         <div *ngIf="dataFound">
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
-                                <span> {{ versionData?.versionName }}</span>
+                                <span> {{ versionData.versionName }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
-                                <span> {{ versionData?.logFilePath }}</span>
+                                <span> {{ versionData.logFilePath }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}: </strong>
-                                <span>{{ versionData?.logFileVersion }}</span>
+                                <span>{{ versionData.logFileVersion }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}: </strong>
-                                <span> {{ versionData?.logFileBCHash || 'N/a' }}</span>
+                                <span> {{ versionData.logFileBCHash || 'N/a' }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}: </strong>
-                                <span>{{ versionData?.versionModel }}</span>
+                                <span>{{ versionData.versionModel }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
-                                <span>{{ versionData?.noteBookVersion }}</span>
+                                <span>{{ versionData.noteBookVersion }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
-                                <span>{{ versionData?.trainDataSets }}</span>
+                                <span>{{ versionData.trainDataSets }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}: </strong>
-                                <span>{{ versionData?.trainDatasetBCHash || 'N/a' }}</span>
+                                <span>{{ versionData.trainDatasetBCHash || 'N/a' }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
-                                <span>{{ versionData?.testDataSets || 'N/a' }}</span>
+                                <span>{{ versionData.testDataSets || 'N/a' }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}: </strong>
-                                <span>{{ versionData?.testDatasetBCHash || 'N/a' }}</span>
+                                <span>{{ versionData.testDatasetBCHash || 'N/a' }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate }}: </strong>
-                                <span>{{ versionData?.aiModel }}</span>
+                                <span>{{ versionData.aiModel }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}: </strong>
-                                <span>{{ versionData?.aiModelBcHash }}</span>
+                                <span>{{ versionData.aiModelBcHash }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
-                                <span>{{ versionData?.codeRepo }}</span>
+                                <span>{{ versionData.codeRepo }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
-                                <span>{{ versionData?.codeVersion }}</span>
+                                <span>{{ versionData.codeVersion }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}: </strong>
-                                <span>{{ versionData?.versionStatus }}</span>
+                                <span>{{ versionData.versionStatus }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong>
-                                <span>{{ versionData?.comment }}</span>
+                                <span>{{ versionData.comment }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong>
-                                <span>{{ versionData?.createdAt | date: 'fullDate' }}</span>
+                                <span>{{ versionData.createdAt | date: 'fullDate' }}</span>
                             </div>
                             <div class="detail-row">
                                 <strong> {{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}: </strong>
-                                <span>{{ versionData?.updatedAt | date: 'fullDate' }}</span>
+                                <span>{{ versionData.updatedAt | date: 'fullDate' }}</span>
                             </div>
                         </div>
                         <div *ngIf="!dataFound && loading">
