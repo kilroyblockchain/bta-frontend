@@ -631,7 +631,9 @@
             "EXPERIMENT_DETAILS": "Experiment Details",
             "MODEL_REVIEWS": "Model Reviews",
             "PROJECT_BC_HISTORY": "Project Bc History",
-            "VERSION_BC_HISTORY": "Version Bc History"
+            "VERSION_BC_HISTORY": "Version Bc History",
+            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History",
+            "COMPARE_LOG_FILES": "Compare Logs Files"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
@@ -660,7 +662,9 @@
                 "DATA": "Data...",
                 "ADDED_BY": "Added By",
                 "CREATOR_MSP": "Creator MSP",
-                "ORGANIZATION_UNIT": "Organization Unit"
+                "ORGANIZATION_UNIT": "Organization Unit",
+                "AI_ENGINEER": "AI Engineer",
+                "MLOPS_ENGINEER": "MLOPs Engineer"
             }
         },
         "PROJECT": {
@@ -899,7 +903,8 @@
                 "REVIEW_SUPPORTING_DOCUMENTS": "Review Supporting Documents",
                 "REVIEW_MODEL_DETAILS": "Review Model Details",
                 "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
-                "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details"
+                "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
+                "REVIEWED_MODEL_ID": "Reviewed Model ID"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",

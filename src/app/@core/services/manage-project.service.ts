@@ -108,4 +108,8 @@ export class ManageProjectService {
     getAiModelBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
         return this.http.get(URLConstant.getAiModelBcHashUrl + `/${versionId}`);
     }
+
+    getAllExperimentDetails(versionId: string): Observable<IAppResponse<Array<IAiModelExp[]>>> {
+        return this.http.get(URLConstant.getAllExperimentDetailsURL + `/${versionId}`);
+    }
 }
