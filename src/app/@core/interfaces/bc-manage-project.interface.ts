@@ -89,6 +89,7 @@ export interface IBcModelReview {
     deployedUrl: string;
     deploymentInstruction: string;
     productionURL: string;
+    reviewedModelVersionId: string;
     reviewDocuments: IReviewSupportingDocument[];
     entryUserDetail: IEntryUserBcDetail;
     recordDate: Date;

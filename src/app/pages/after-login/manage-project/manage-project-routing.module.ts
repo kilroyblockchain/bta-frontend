@@ -4,6 +4,7 @@ import { AiModelComponent } from './ai-model/ai-model.component';
 import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/view-ai-model-details.component';
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
+import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
@@ -59,7 +60,12 @@ const routes: Routes = [
             {
                 path: 'model-review-bc-history/:id',
                 component: ModelReviewBcHistoryComponent,
-                data: { pageTitle: 'Model review bc history' }
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.MODEL_REVIEW_BC_HISTORY' }
+            },
+            {
+                path: 'compare-log-files/:reviewId/:versionId',
+                component: CompareLogFilesComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.COMPARE_LOG_FILES' }
             }
         ]
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { IBcModelReview, IBcProjectVersion, IModelReviewBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
@@ -20,7 +20,7 @@ export class ModelReviewBcHistoryComponent implements OnInit {
     loading!: boolean;
     modelVersionStatus = VersionStatus;
 
-    constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, private readonly fileService: FileService) {}
+    constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, private readonly fileService: FileService, private router: Router) {}
 
     ngOnInit(): void {
         const versionId = this.activeRoute.snapshot.params['id'];
@@ -115,12 +115,24 @@ export class ModelReviewBcHistoryComponent implements OnInit {
         }
     }
 
-    openDocs(filename: string): void {
-        this.fileService.getFileFromFolder(filename).subscribe((file: Blob) => {
-            const urlCreator = window.URL || window.webkitURL;
-            const url = urlCreator.createObjectURL(file);
-            window.open(url);
-            urlCreator.revokeObjectURL(url);
+    openDocs(filePath: string, fileName: string): void {
+        this.fileService.getFileFromFolder(filePath).subscribe((file: Blob) => {
+            if (file['type'].split('/')[0] === 'image' || file['type'].split('/')[1] === 'pdf') {
+                const urlCreator = window.URL || window.webkitURL;
+                const url = urlCreator.createObjectURL(file);
+                window.open(url);
+                urlCreator.revokeObjectURL(url);
+            } else {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob([file], { type: file.type }));
+                a.download = fileName;
+                a.click();
+            }
         });
+    }
+
+    openCompareLogs(modelReviewId: string, versionId: string): void {
+        const URL = '/u/manage-project/compare-log-files';
+        this.router.navigate([URL, modelReviewId, versionId]);
     }
 }

@@ -26,6 +26,7 @@ import { ProjectBcHistoryComponent } from './project/project-bc-history/project-
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { EditVersionComponent } from './project-version/edit-version/edit-version.component';
 import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
+import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
@@ -49,7 +50,8 @@ const PAGE_COMPONENT = [
     ProjectBcHistoryComponent,
     ProjectVersionBcHistoryComponent,
     EditVersionComponent,
-    ModelReviewBcHistoryComponent
+    ModelReviewBcHistoryComponent,
+    CompareLogFilesComponent
 ];
 
 @NgModule({

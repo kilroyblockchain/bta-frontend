@@ -1,3 +1,8 @@
+.grid-row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
 table {
     width: 100%;
 }
@@ -14,20 +19,4 @@ tbody {
     overflow-y: auto;
     table-layout: fixed;
     max-height: 40vh;
-}
-
-:host {
-    max-height: 25rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.card-row {
-    display: flex;
-    margin: 0 -0.5rem;
-}
-
-.card-col {
-    flex: 1 0 calc(50% - 1rem);
-    margin: 0 0.5rem;
 }
