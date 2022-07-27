@@ -1,0 +1,122 @@
+<div>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'Verify Bc Hash' | translate }}</h4>
+        </div>
+    </div>
+    <nb-card>
+        <nb-card-body>
+            <ng-container *ngIf="modelVersionBcDetails">
+                <p>
+                    <strong>{{ 'Version Name' }}:</strong>
+                    {{ modelVersionBcDetails?.versionName }}
+                </p>
+                <p>
+                    <strong>{{ 'Created By' }}:</strong>
+                    {{ modelVersionBcDetails?.entryUser }}
+                </p>
+                <p>
+                    <strong>{{ 'Creator MSP' }}:</strong>
+                    {{ modelVersionBcDetails?.creatorMSP }}
+                </p>
+                <nb-card>
+                    <nb-card-body class="grid-row">
+                        <div>&nbsp;</div>
+                        <div class="col-2-2">
+                            <strong> {{ 'Submitted Data' | translate }}</strong>
+                        </div>
+                        <div class="col-3-3">
+                            <strong>{{ 'Oracle Data' | translate }}</strong>
+                        </div>
+                        <div class="col-4-4">
+                            <strong> {{ 'Status' | translate }}</strong>
+                        </div>
+                        <div class="col-1-1">
+                            <strong> {{ 'Log File Bc Hash' }}</strong>
+                        </div>
+                        <div class="col-2-2">
+                            <span> {{ modelVersionBcDetails?.logFileBCHash }}</span>
+                        </div>
+                        <div class="col-3-3" [nbSpinner]="logFileLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                            <span> {{ logFileOracleBCHash }}</span>
+                        </div>
+                        <div class="col-4-4" [nbSpinner]="logFileLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                            <span *ngIf="modelVersionBcDetails?.logFileBCHash === logFileOracleBCHash; else unVerifiedLogData" class="verified">
+                                <span *ngIf="logFileOracleBCHash"> {{ 'Verified' }}</span>
+                            </span>
+                            <ng-template #unVerifiedLogData>
+                                <ng-container *ngIf="logFileOracleBCHash">
+                                    <span class="un-verified">{{ 'UnVerified' }}</span>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+                        <div class="col-1-1">
+                            <strong> {{ 'Test Data Sets Bc Hash' }}</strong>
+                        </div>
+                        <div class="col-2-2">
+                            <span> {{ modelVersionBcDetails?.testDatasetBCHash }}</span>
+                        </div>
+                        <div class="col-3-3" [nbSpinner]="testDataLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                            <span> {{ testDataOracleBcHash }}</span>
+                        </div>
+
+                        <div class="col-4-4" [nbSpinner]="testDataLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                            <span *ngIf="modelVersionBcDetails?.testDatasetBCHash === testDataOracleBcHash; else unVerifiedTestData" class="verified">
+                                <span *ngIf="testDataOracleBcHash"> {{ 'Verified' }}</span>
+                            </span>
+                            <ng-template #unVerifiedTestData>
+                                <ng-container *ngIf="testDataOracleBcHash">
+                                    <span class="un-verified">{{ 'UnVerified' }}</span>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+
+                        <div class="col-1-1">
+                            <strong> {{ 'Train Data Sets Bc Hash' }}</strong>
+                        </div>
+                        <div class="col-2-2">
+                            <span> {{ modelVersionBcDetails?.trainDatasetBCHash }}</span>
+                        </div>
+                        <div class="col-3-3" [nbSpinner]="trainDataLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                            <span> {{ trainDataOracleBcHash }}</span>
+                        </div>
+
+                        <div class="col-4-4" [nbSpinner]="trainDataLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                            <span *ngIf="modelVersionBcDetails?.trainDatasetBCHash === trainDataOracleBcHash; else unVerifiedTrainData" class="verified">
+                                <span *ngIf="trainDataOracleBcHash"> {{ 'Verified' }}</span>
+                            </span>
+                            <ng-template #unVerifiedTrainData>
+                                <ng-container *ngIf="trainDataOracleBcHash">
+                                    <span class="un-verified">{{ 'UnVerified' }}</span>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+
+                        <div class="col-1-1">
+                            <strong> {{ 'AI Model Bc Hash' }}</strong>
+                        </div>
+                        <div class="col-2-2">
+                            <span> {{ modelVersionBcDetails?.aiModelBcHash }}</span>
+                        </div>
+                        <div class="col-3-3" [nbSpinner]="aiModelLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                            <span> {{ aiModelOracleBcHash }}</span>
+                        </div>
+                        <div class="col-4-4" [nbSpinner]="aiModelLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                            <span *ngIf="modelVersionBcDetails?.aiModelBcHash === aiModelOracleBcHash; else unVerifiedAIModel" class="verified">
+                                <span *ngIf="aiModelOracleBcHash"> {{ 'Verified' }}</span>
+                            </span>
+                            <ng-template #unVerifiedAIModel>
+                                <ng-container *ngIf="aiModelOracleBcHash">
+                                    <span class="un-verified">{{ 'UnVerified' }}</span>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </ng-container>
+            <div *ngIf="!dataFound && loading">
+                <app-loader></app-loader>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

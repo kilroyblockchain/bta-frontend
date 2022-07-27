@@ -1,0 +1,37 @@
+.grid-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+
+    .col-1-1 {
+        grid-column: 1 / span 1;
+    }
+
+    .col-2-2 {
+        grid-column: 2/2;
+
+        span {
+            color: blue;
+        }
+    }
+
+    .col-3-3 {
+        grid-column: 3/3;
+
+        span {
+            color: rgb(255 102 0);
+        }
+    }
+
+    .col-4-4 {
+        grid-column: 4/4;
+    }
+}
+
+.verified {
+    color: green;
+}
+
+.un-verified {
+    color: red;
+}

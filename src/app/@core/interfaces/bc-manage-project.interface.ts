@@ -61,6 +61,7 @@ export interface IBcProjectVersion {
     project: IBcProjectInfo;
     entryUser: string;
     recordDate: Date;
+    creatorMSP: string;
 }
 
 interface IBcProjectInfo {

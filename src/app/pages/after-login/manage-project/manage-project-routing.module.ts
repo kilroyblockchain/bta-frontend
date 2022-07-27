@@ -11,6 +11,7 @@ import { MonitoringReportComponent } from './monitoring-report/monitoring-report
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
 import { ProjectComponent } from './project/project.component';
+import { VerifyBcHashComponent } from './verify-bc-hash/verify-bc-hash.component';
 
 const routes: Routes = [
     {
@@ -66,6 +67,10 @@ const routes: Routes = [
                 path: 'compare-log-files/:reviewId/:versionId',
                 component: CompareLogFilesComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.COMPARE_LOG_FILES' }
+            },
+            {
+                path: 'verify-bc-hash/:id',
+                component: VerifyBcHashComponent
             }
         ]
     }

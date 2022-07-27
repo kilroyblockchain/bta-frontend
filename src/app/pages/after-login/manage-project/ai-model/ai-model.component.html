@@ -3,12 +3,15 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft" (click)="viewModelReviews(versionData._id)">
-            <button nbButton hero status="primary" size="small">
+        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft">
+            <button nbButton hero status="primary" size="small" (click)="viewModelReviews(versionData._id)">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
             </button>
+            <button nbButton hero status="success" size="small" (click)="openVerifyBcHashModel(versionData._id)">
+                {{ 'Verify BC Hash' | translate }}
+            </button>
         </div>
-        <div class="actions" *ngIf="isUserCanSubmitVersion && versionData && isModelStatusDraft && versionData.logFileBCHash && versionData.trainDatasetBCHash && versionData.trainDatasetBCHash && versionData.aiModelBcHash" (click)="submitModelVersion(versionData._id)">
+        <div class="actions" *ngIf="checkCanSubmitVersionModel()" (click)="submitModelVersion(versionData._id)">
             <button nbButton hero status="primary" size="small">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.SUBMIT_MODEL' | translate }}
             </button>

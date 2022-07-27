@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,7 +29,7 @@ interface FSEntry {
     templateUrl: './ai-model.component.html',
     styleUrls: ['./ai-model.component.scss']
 })
-export class AiModelComponent implements OnInit {
+export class AiModelComponent implements OnInit, OnDestroy {
     private data: TreeNode<FSEntry>[] = [];
     dataSource!: NbTreeGridDataSource<FSEntry>;
 
@@ -57,6 +57,7 @@ export class AiModelComponent implements OnInit {
 
     oracleBucketDataStatus = OracleBucketDataStatus;
     confirmSubmitModelDialogClose!: Subscription;
+    viewVerifyBcHashClose!: Subscription;
 
     constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private dialogService: NbDialogService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -67,7 +68,10 @@ export class AiModelComponent implements OnInit {
         this.setTranslatedTableColumns();
         this.checkAccess();
     }
-
+    ngOnDestroy(): void {
+        this.confirmSubmitModelDialogClose ? this.confirmSubmitModelDialogClose.unsubscribe() : null;
+        this.viewVerifyBcHashClose ? this.viewVerifyBcHashClose.unsubscribe() : null;
+    }
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
@@ -85,6 +89,14 @@ export class AiModelComponent implements OnInit {
 
     navigateTo(URL: string, id: string): void {
         this.router.navigate([URL, id]);
+    }
+
+    checkCanSubmitVersionModel(): boolean {
+        if (this.isUserCanSubmitVersion && this.versionData && this.isModelStatusDraft && this.versionData.logFileBCHash && this.versionData.trainDatasetBCHash && this.versionData.trainDatasetBCHash && this.versionData.aiModelBcHash) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     checkModelStatus(versionStatus: string): void {
@@ -286,5 +298,10 @@ export class AiModelComponent implements OnInit {
 
     formatFetchingInfo(message: string): string {
         return message.charAt(0).toUpperCase() + message.slice(1) + ' ' + this.translate.instant('MANAGE_PROJECTS.COMMON.LABEL.DATA');
+    }
+
+    openVerifyBcHashModel(versionId: string): void {
+        const URL = '/u/manage-project/verify-bc-hash';
+        this.router.navigate([URL, versionId]);
     }
 }
