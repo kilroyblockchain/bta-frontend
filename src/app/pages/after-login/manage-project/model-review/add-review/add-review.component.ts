@@ -263,7 +263,6 @@ export class AddModelReviewComponent implements OnInit {
 
     getDefaultOracleBucket(): void {
         this.manageProjectService.getDefaultBucketUrl(this.versionData.project._id).subscribe((res) => {
-            console.log(res.data);
             this.defaultBucketUrl = res.data;
         });
     }
