@@ -863,7 +863,8 @@
         "AI_MODEL": {
             "BUTTON": {
                 "REVIEW_MODEL": "Review Model",
-                "SUBMIT_MODEL": "Submit Model"
+                "SUBMIT_MODEL": "Submit Model",
+                "VERIFY_BC_HASH": "Verify Bc Hash"
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",
