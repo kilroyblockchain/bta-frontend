@@ -1,10 +1,9 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { IBcProjectVersion } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { IAiModel, IEpochs, IExp, IHyperParameters, ITestMetrics } from 'src/app/@core/interfaces/manage-project.interface';
-import { AuthService, BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-log-experiment-details',
@@ -28,7 +27,7 @@ export class ViewLogExperimentDetailsComponent implements OnInit {
 
     experimentOracleBCHash!: string;
 
-    constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, private location: Location, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService) {}
+    constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, public utilsService: UtilsService, private manageProjectService: ManageProjectService) {}
 
     ngOnInit(): void {
         this.getAiLogsData();

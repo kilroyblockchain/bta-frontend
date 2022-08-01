@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { IBcProjectVersion } from 'src/app/@core/interfaces/bc-manage-project.interface';
-import { BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
+import { BcManageProjectService, ManageProjectService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-verify-bc-hash',
@@ -24,7 +24,7 @@ export class VerifyBcHashComponent implements OnInit {
     trainDataLoading!: boolean;
     aiModelLoading!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, private readonly manageProjectService: ManageProjectService, private readonly utilsService: UtilsService, private bcManageProjectService: BcManageProjectService) {}
+    constructor(private activeRoute: ActivatedRoute, private readonly manageProjectService: ManageProjectService, private bcManageProjectService: BcManageProjectService) {}
 
     ngOnInit(): void {
         this.getVersionData();

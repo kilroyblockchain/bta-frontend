@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
@@ -44,7 +44,7 @@ export class CommonCompareLogFilesComponent implements OnInit {
     @Input()
     versionId!: string;
 
-    constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private bcManageProjectService: BcManageProjectService) {
+    constructor(private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private bcManageProjectService: BcManageProjectService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
