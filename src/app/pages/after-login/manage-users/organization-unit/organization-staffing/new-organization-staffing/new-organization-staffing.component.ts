@@ -18,6 +18,7 @@ interface IChildrenRow {
     bcNodeInfo: IBcNodeInfo;
     channels: string[];
     bucketUrl: string;
+    oracleGroupName: string;
     action: unknown;
     subrow: boolean;
     _id: string;
@@ -90,7 +91,8 @@ export class NewOrganizationStaffingComponent implements OnInit {
             bcNodeInfo: ['', [Validators.required]],
             bucketUrl: ['', [Validators.required]],
             channels: [[], [Validators.required]],
-            aiEngChannel: ['']
+            aiEngChannel: [''],
+            oracleGroupName: ['', [Validators.required]]
         });
     }
 
@@ -105,11 +107,11 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
             this.channelId.length > 1 ? this.channelId.shift() : this.channelId;
         }
-
         this.newOrganizationStaffingForm.patchValue({
             staffingName: unitName,
             bcNodeInfo: data.bcNodeInfo,
-            bucketUrl: data.bucketUrl
+            bucketUrl: data.bucketUrl,
+            oracleGroupName: data.oracleGroupName
         });
 
         if (this.UF['staffingName'].value === this.defaultStaffingName[0]) {
@@ -306,6 +308,15 @@ export class NewOrganizationStaffingComponent implements OnInit {
         if (event) {
             this.newOrganizationStaffingForm.patchValue({
                 channels: [event]
+            });
+        }
+    }
+
+    updateOracleGroupName(): void {
+        if (this.mode === 'CREATE') {
+            const oracleGroupName = (this.newOrganizationStaffingForm.get('staffingName')?.value + ' ' + this.staffingName.nativeElement.value).toLowerCase().replace(/\s+/g, ' ');
+            this.newOrganizationStaffingForm.patchValue({
+                oracleGroupName: oracleGroupName.split(' ').join('-')
             });
         }
     }

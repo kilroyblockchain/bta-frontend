@@ -28,6 +28,9 @@ import { EditVersionComponent } from './project-version/edit-version/edit-versio
 import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
 import { VerifyBcHashComponent } from './verify-bc-hash/verify-bc-hash.component';
+import { CommonVerifyBcHashComponent } from './verify-bc-hash/common-verify-bc-hash/common-verify-bc-hash.component';
+import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
+import { CommonCompareLogFilesComponent } from './model-review/compare-log-files/common-compare-log-file/common-compare-log-file.component';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
@@ -53,7 +56,10 @@ const PAGE_COMPONENT = [
     EditVersionComponent,
     ModelReviewBcHistoryComponent,
     CompareLogFilesComponent,
-    VerifyBcHashComponent
+    VerifyBcHashComponent,
+    CommonVerifyBcHashComponent,
+    ViewLogExperimentDetailsComponent,
+    CommonCompareLogFilesComponent
 ];
 
 @NgModule({

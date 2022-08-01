@@ -106,6 +106,7 @@ export interface IMonitoringStatus {
 export interface IAiModel {
     _id: string;
     expNo: string;
+    experimentBcHash: string;
     updatedAt: Date;
     createdAt: Date;
     project: IProject;

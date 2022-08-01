@@ -19,10 +19,16 @@
 }
 
 .staffing-name {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1rem;
 }
 
 .label {
     font-size: 14px;
     font-weight: 200;
+}
+
+.note {
+    color: #e01717;
 }

@@ -22,6 +22,7 @@ interface IChildrenRow {
     updatedDate: string;
     bcNodeInfo: IBcNodeInfo;
     channels: string[];
+    oracleGroupName: string;
     bucketUrl: string;
     action: unknown;
     subrow: boolean;
@@ -173,6 +174,7 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
                         bcNodeInfo: staff.bcNodeInfo,
                         channels: staff.channels,
                         bucketUrl: staff.bucketUrl,
+                        oracleGroupName: staff.oracleGroupName,
                         action: staff,
                         subrow: true,
                         _id: item._id,

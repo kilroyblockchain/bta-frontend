@@ -5,6 +5,7 @@ import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/vi
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
+import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
@@ -70,7 +71,13 @@ const routes: Routes = [
             },
             {
                 path: 'verify-bc-hash/:id',
-                component: VerifyBcHashComponent
+                component: VerifyBcHashComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.VERIFY_BC_HASH' }
+            },
+            {
+                path: 'log-file-experiment-details/:id',
+                component: ViewLogExperimentDetailsComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.LOG_FILE_EXPERIMENT_DETAILS' }
             }
         ]
     }

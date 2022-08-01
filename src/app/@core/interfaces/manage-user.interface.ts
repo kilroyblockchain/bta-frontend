@@ -34,6 +34,7 @@ export interface IStaffing {
     organizationUnitId: IOrganizationUnit;
     staffingName: string;
     staffDescription: string;
+    oracleGroupName: string;
     status: boolean;
     bcNodeInfo: IBcNodeInfo;
     channels: string[];

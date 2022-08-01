@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { IBcProjectVersion } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 @Component({
-    selector: 'app-verify-bc-hash',
-    templateUrl: './verify-bc-hash.component.html'
+    selector: 'app-common-verify-bc-hash',
+    templateUrl: './common-verify-bc-hash.html',
+    styleUrls: ['./common-verify-bc-hash.scss']
 })
-export class VerifyBcHashComponent implements OnInit {
+export class CommonVerifyBcHashComponent implements OnInit {
+    @Input()
     modelVersionBcDetails!: IBcProjectVersion;
 
     dataFound!: boolean;
@@ -32,38 +34,11 @@ export class VerifyBcHashComponent implements OnInit {
 
     getVersionData(): void {
         const versionId = this.activeRoute.snapshot.params['id'];
-        this.getVersionBcDetails(versionId);
 
         this.getLogFileOracleBcHash(versionId);
         this.getTestDataOracleBcHash(versionId);
         this.getTrainDataOracleBcHash(versionId);
         this.getAIModelOracleBcHash(versionId);
-    }
-
-    getVersionBcDetails(versionId: string): void {
-        this.loading = true;
-
-        this.bcManageProjectService
-            .getProjectVersionBcDetails(versionId)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                })
-            )
-            .subscribe({
-                next: (res) => {
-                    if (res && res.success) {
-                        const { data } = res.data;
-                        this.modelVersionBcDetails = data;
-                        this.dataFound = true;
-                    } else {
-                        this.dataFound = false;
-                    }
-                },
-                error: () => {
-                    this.dataFound = false;
-                }
-            });
     }
 
     getLogFileOracleBcHash(versionId: string): void {

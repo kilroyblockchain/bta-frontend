@@ -45,4 +45,12 @@ export class BcManageProjectService {
     getAIModelOracleBcHash(versionId: string): Observable<IAppResponse<string>> {
         return this.http.get(URLConstant.getAIModelOracleBcHashURL + `/${versionId}`);
     }
+
+    getExperimentOracleBcHash(experimentId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getExperimentOracleBcHashURL + `/${experimentId}`);
+    }
+
+    downloadExperimentLogFile(experimentId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.downloadExperimentOracleFile + `/${experimentId}`);
+    }
 }

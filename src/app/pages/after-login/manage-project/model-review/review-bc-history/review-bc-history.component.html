@@ -9,34 +9,32 @@
             {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.MODEL_VERSION_BC_DETAILS' | translate }}
         </nb-card-header>
         <nb-card-body>
-            <nb-card class="medium-card-width">
+            <ng-container *ngIf="modelVersionBcDetails">
+                <p>
+                    <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
+                    {{ modelVersionBcDetails?.project?.projectName }}
+                </p>
+                <p>
+                    <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+                    {{ modelVersionBcDetails?.versionName }}
+                </p>
+                <p>
+                    <strong>{{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:</strong>
+                    {{ modelVersionBcDetails?.entryUser }}
+                </p>
+                <p>
+                    <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATOR_MSP' | translate }}:</strong>
+                    {{ modelVersionBcDetails?.creatorMSP }}
+                </p>
+            </ng-container>
+            <nb-card>
+                <nb-card-header>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFY_BC_HASH' | translate }}</nb-card-header>
                 <nb-card-body>
-                    <div *ngIf="modelVersionBcDetails">
-                        <p>
-                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
-                            {{ modelVersionBcDetails.versionName }}
-                        </p>
-                        <p>
-                            <strong>{{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}:</strong>
-                            {{ modelVersionBcDetails.logFileBCHash }}
-                        </p>
-                        <p>
-                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}: </strong>
-                            {{ modelVersionBcDetails.testDatasetBCHash }}
-                        </p>
-                        <p>
-                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}: </strong>
-                            {{ modelVersionBcDetails.trainDatasetBCHash }}
-                        </p>
-                        <p>
-                            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}: </strong>
-                            {{ modelVersionBcDetails.aiModelBcHash }}
-                        </p>
-                    </div>
-                    <div *ngIf="!dataFound && loading">
-                        <app-loader></app-loader>
-                    </div>
+                    <app-common-verify-bc-hash [modelVersionBcDetails]="modelVersionBcDetails"></app-common-verify-bc-hash>
                 </nb-card-body>
+                <div *ngIf="!dataFound && loading">
+                    <app-loader></app-loader>
+                </div>
             </nb-card>
             <nb-card>
                 <nb-card-header>
@@ -120,7 +118,7 @@
                                     </div>
                                     <div class="col-3-3">
                                         <button nbSuffix nbButton hero status="primary" size="small" (click)="openCompareLogs(reviewHistory.modelReview.reviewedModelVersionId, modelVersionBcDetails.id)">
-                                            {{ 'Compare Logs' | translate }}
+                                            {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.COMPARES_LOGS' | translate }}
                                         </button>
                                     </div>
                                 </ng-container>
