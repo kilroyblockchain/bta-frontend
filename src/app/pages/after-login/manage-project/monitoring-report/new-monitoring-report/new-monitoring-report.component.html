@@ -55,6 +55,13 @@
 
             <div class="form-inner-container">
                 <div class="form-holder floating">
+                    <input name="monitoringToolLink" nbInput fullWidth [placeholder]="'MANAGE_PROJECTS.MONITORING_REPORT.PLACEHOLDER.MONITORING_TOOL_LINK' | translate" formControlName="monitoringToolLink" />
+                    <label for="name" [attr.data-content]="'MANAGE_PROJECTS.MONITORING_REPORT.LABEL.MONITORING_TOOL_LINK' | translate"> </label>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
                     <textarea name="description" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.MONITORING_REPORT.PLACEHOLDER.MONITORING_DESCRIPTION' | translate)" formControlName="description" [ngClass]="{ 'status-danger': submitted && UF['description'].errors }"></textarea>
                     <div *ngIf="submitted && UF['description'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']">

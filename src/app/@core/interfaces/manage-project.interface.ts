@@ -82,6 +82,7 @@ export interface IMonitoringReport {
     _id: string;
     subject: string;
     description: string;
+    monitoringToolLink: string;
     documents: Array<IDocuments>;
     updatedAt: Date;
     createdAt: Date;
