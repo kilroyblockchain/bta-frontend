@@ -110,6 +110,8 @@ export class ModelReviewBcHistoryComponent implements OnInit {
             return '#FF7F00';
         } else if (versionStatus === this.modelVersionStatus.COMPLETE) {
             return '#336666';
+        } else if (versionStatus === this.modelVersionStatus.QA_STATUS) {
+            return '#02a3b3';
         } else {
             return '#666';
         }

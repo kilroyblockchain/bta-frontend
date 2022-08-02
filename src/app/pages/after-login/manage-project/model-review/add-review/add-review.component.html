@@ -57,6 +57,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <ng-container *ngIf="addReviewForm.value.status === versionStatus.DEPLOYED && !isStakeHolder">
                                 <div class="form-inner-container">
                                     <div class="form-holder floating">
@@ -80,11 +81,16 @@
                                 </div>
                             </ng-container>
 
-                            <div class="form-inner-container" *ngIf="isReviewStatusDeployed && !isStakeHolder">
+                            <div class="form-inner-container" *ngIf="(isReviewStatusDeployed || versionData.isQAStatus) && !isStakeHolder">
                                 <div class="form-holder">
-                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.PRODUCTION" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
+                                    <input type="radio" id="reviewStatus" [value]="versionStatus.PRODUCTION" formControlName="status" (change)="checkRadioBtnValue()" />
                                     <label for="reviewStatus">
                                         {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION' | translate }}
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" id="QAStatus" [value]="versionStatus.QA_STATUS" formControlName="status" (change)="checkRadioBtnValue()" />
+                                    <label for="QAStatus">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.QA_STATUS' | translate }}
                                     </label>
                                     <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
                                         <span *ngIf="err['required']">
@@ -93,12 +99,13 @@
                                     </div>
                                 </div>
                             </div>
+
                             <ng-container *ngIf="addReviewForm.value.status === versionStatus.PRODUCTION && !isStakeHolder">
                                 <div class="form-holder floating">
-                                    <input nbInput fullWidth id="productionURL" formControlName="productionURL" [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.PRODUCTION_URL' | translate)" [ngClass]="{ 'status-danger': rSubmitted && !RF['productionURL']?.value }" />
+                                    <input nbInput fullWidth id="productionURL" formControlName="productionURL" [placeholder]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.PLACEHOLDER.PRODUCTION_URL' | translate)" [ngClass]="{ 'status-danger': submitted && RF['productionURL'].errors }" />
                                     <label for="productionURL" [attr.data-content]="'*' + ('MANAGE_PROJECTS.MODEL_REVIEW.LABEL.PRODUCTION_URL' | translate)"> </label>
-                                    <div *ngIf="rSubmitted && !RF['productionURL']?.value" class="invalid-feedback">
-                                        <span>
+                                    <div *ngIf="rSubmitted && RF['productionURL'].errors as err" class="invalid-feedback">
+                                        <span *ngIf="err['required']">
                                             {{ 'MANAGE_PROJECTS.MODEL_REVIEW.VALIDATIONS.PRODUCTION_URL' | translate }}
                                         </span>
                                     </div>
@@ -118,7 +125,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-inner-container" *ngIf="isReviewStatusMonitoring && isStakeHolder">
                                 <div class="form-holder">
                                     <input type="checkbox" id="reviewStatus" [value]="versionStatus.COMPLETE" formControlName="reviewStatus" (change)="checkBoxValue($event)" />

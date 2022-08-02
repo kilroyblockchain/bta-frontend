@@ -69,7 +69,15 @@ export class AddModelReviewComponent implements OnInit {
     }
 
     buildAddReviewForm(): void {
-        const versionStatus = this.isStakeHolder && this.versionData.versionStatus !== this.versionStatus.MONITORING ? this.versionData.versionStatus : '';
+        let versionStatus = '';
+        if (this.isStakeHolder && this.versionData.versionStatus !== this.versionStatus.MONITORING) {
+            if (this.versionData.versionStatus === this.versionStatus.DEPLOYED) {
+                versionStatus = this.versionStatus.QA_STATUS;
+            } else {
+                versionStatus = this.versionData.versionStatus;
+            }
+        }
+
         this.addReviewForm = this.fb.group({
             comment: ['', [Validators.required]],
             status: [versionStatus, [...(this.isReviewStatusDeployed || this.isReviewStatusProduction ? [] : [Validators.required])]],
@@ -151,6 +159,7 @@ export class AddModelReviewComponent implements OnInit {
 
     saveNewReview({ valid, value }: FormGroup, modelReviewId = ''): void {
         this.rSubmitted = true;
+        console.log(valid);
         if (!valid) {
             return;
         }
@@ -163,7 +172,7 @@ export class AddModelReviewComponent implements OnInit {
         formData.append('comment', value.comment);
         formData.append('rating', value.rating);
 
-        if (this.RF['reviewTempStatus']?.value && (this.isReviewStatusDeployed || this.isReviewStatusProduction || this.isReviewStatusMonitoring)) {
+        if (this.RF['reviewTempStatus']?.value && (this.isReviewStatusDeployed || this.isReviewStatusProduction || this.isReviewStatusMonitoring) && !this.versionData.isQAStatus) {
             formData.append('status', value.reviewTempStatus);
         } else {
             formData.append('status', value.status);
@@ -270,14 +279,24 @@ export class AddModelReviewComponent implements OnInit {
     valueChange(versionNumber: number): void {
         if (versionNumber) {
             this.addModelReviewForm.patchValue({
-                logFilePath: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.LOG_FILE_URL,
-                testDataSets: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.TEST_DATA_SETS_URL
+                logFilePath: this.defaultBucketUrl + '/' + this.UF['defaultName']?.value + versionNumber + MODEL_VERSION_ORACLE_URL.LOG_FILE_URL,
+                testDataSets: this.defaultBucketUrl + '/' + this.UF['defaultName']?.value + versionNumber + MODEL_VERSION_ORACLE_URL.TEST_DATA_SETS_URL
             });
         } else {
             this.addModelReviewForm.patchValue({
                 logFilePath: '',
                 testDataSets: ''
             });
+        }
+    }
+
+    checkRadioBtnValue(): void {
+        if (this.addReviewForm.get('status')?.value === this.versionStatus.PRODUCTION) {
+            this.addReviewForm.get('productionURL')?.addValidators(Validators.required);
+            this.addReviewForm.get('productionURL')?.updateValueAndValidity();
+        } else {
+            this.addReviewForm.get('productionURL')?.clearValidators();
+            this.addReviewForm.get('productionURL')?.updateValueAndValidity();
         }
     }
 }

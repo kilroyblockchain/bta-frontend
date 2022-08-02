@@ -4,79 +4,130 @@
             <nb-tab tabTitle="{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TAB_TITLE.MODEL_DETAILS' | translate }}">
                 <nb-card>
                     <nb-card-body>
-                        <div *ngIf="dataFound">
-                            <div class="detail-row">
+                        <div *ngIf="dataFound" class="model-details-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
-                                <span> {{ versionData.versionName }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-2-2">
+                                {{ versionData.versionName }}
+                            </div>
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span> {{ versionData.logFilePath }}</span>
                             </div>
-                            <div class="detail-row">
-                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_VERSION' | translate }}: </strong>
-                                <span>{{ versionData.logFileVersion }}</span>
-                            </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_BC_HASH' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span> {{ versionData.logFileBCHash || 'N/a' }}</span>
                             </div>
-                            <div class="detail-row">
-                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_MODEL' | translate }}: </strong>
-                                <span>{{ versionData.versionModel }}</span>
-                            </div>
-                            <div class="detail-row">
-                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
-                                <span>{{ versionData.noteBookVersion }}</span>
-                            </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.trainDataSets }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TRAIN_DATA_SETS_BC_HASH' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.trainDatasetBCHash || 'N/a' }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.testDataSets || 'N/a' }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS_BC_HASH' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.testDatasetBCHash || 'N/a' }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.aiModel }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.AI_MODEL_BC_HASH' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.aiModelBcHash }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
+                                <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
+                                <span>{{ versionData.noteBookVersion }}</span>
+                            </div>
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.codeRepo }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.codeVersion }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_STATUS' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.versionStatus }}</span>
                             </div>
-                            <div class="detail-row">
+                            <div class="col-1-1">
                                 <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.COMMENT' | translate }}: </strong>
+                            </div>
+                            <div class="col-2-2">
                                 <span>{{ versionData.comment }}</span>
                             </div>
-                            <div class="detail-row">
-                                <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong>
-                                <span>{{ versionData.createdAt | date: 'fullDate' }}</span>
+
+                            <ng-container *ngIf="versionData.submittedDate; else createdDateBlockLabel">
+                                <div class="col-1-1">
+                                    <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.SUBMITTED_DATE' | translate }}: </strong>
+                                </div>
+                                <div class="col-2-2">
+                                    {{ versionData.submittedDate | date: 'fullDate' }}
+                                </div>
+                            </ng-container>
+                            <ng-template #createdDateBlockLabel>
+                                <div class="col-1-1">
+                                    <strong> {{ 'COMMON.COLUMN_NAME.CREATED_DATE' | translate }}: </strong>
+                                </div>
+                                <div class="col-2-2">
+                                    {{ versionData.createdAt | date: 'fullDate' }}
+                                </div>
+                            </ng-template>
+
+                            <ng-container *ngIf="versionData.reviewedDate">
+                                <div class="col-1-1">
+                                    <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.REVIEWED_DATE' | translate }}: </strong>
+                                </div>
+                                <div class="col-2-2">
+                                    {{ versionData.reviewedDate | date: 'fullDate' }}
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="versionData.productionDate">
+                                <div class="col-1-1">
+                                    <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.PRODUCTION_DATE' | translate }}: </strong>
+                                </div>
+                                <div class="col-2-2">
+                                    {{ versionData.productionDate | date: 'fullDate' }}
+                                </div>
+                            </ng-container>
+                            <div class="col-1-1">
+                                <strong> {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}: </strong>
                             </div>
-                            <div class="detail-row">
-                                <strong> {{ 'COMMON.COLUMN_NAME.UPDATED_DATE' | translate }}: </strong>
-                                <span>{{ versionData.updatedAt | date: 'fullDate' }}</span>
-                            </div>
+                            <div class="col-2-2">{{ versionData.createdBy.firstName }}&nbsp;{{ versionData.createdBy.lastName }}</div>
                         </div>
                         <div *ngIf="!dataFound && loading">
                             <app-loader></app-loader>
@@ -178,13 +229,13 @@
                                 </nb-card>
                             </ng-container>
                         </div>
+                        <div *ngIf="!reviewData && reviewLoading">
+                            <app-loader></app-loader>
+                        </div>
+                        <div *ngIf="!reviewData && !reviewLoading">
+                            <app-data-not-found></app-data-not-found>
+                        </div>
                     </nb-card-body>
-                    <div *ngIf="!reviewData && loading">
-                        <app-loader></app-loader>
-                    </div>
-                    <div *ngIf="!reviewData && !loading">
-                        <app-data-not-found></app-data-not-found>
-                    </div>
                 </nb-card>
             </nb-tab>
         </nb-tabset>

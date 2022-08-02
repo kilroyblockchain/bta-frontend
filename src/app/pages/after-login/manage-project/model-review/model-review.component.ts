@@ -29,6 +29,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     page!: number;
     loading!: boolean;
     totalRecords = 0;
+    reviewLoading!: boolean;
 
     isCompanyAdmin!: boolean;
     isStakeHolder!: boolean;
@@ -122,13 +123,13 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
 
     getModelReviews(versionId: string): void {
         this.reviewData = false;
-        this.loading = true;
+        this.reviewLoading = true;
 
         this.manageProjectService
             .getModelReview(this.options, versionId)
             .pipe(
                 finalize(() => {
-                    this.loading = false;
+                    this.reviewLoading = false;
                 })
             )
             .subscribe({
@@ -141,8 +142,8 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
                             this.reviewData = false;
                         } else {
                             this.reviewData = true;
+                            this.modelReviews = data.docs;
                         }
-                        this.modelReviews = data.docs;
                     } else {
                         this.totalRecords = 0;
                     }

@@ -51,6 +51,7 @@ export interface IProjectVersion {
     productionDate: Date;
     createdBy: IUserRes;
     project: IProject;
+    isQAStatus: boolean;
 }
 
 export enum VersionStatus {
@@ -62,7 +63,8 @@ export enum VersionStatus {
     DEPLOYED = 'Deployed',
     MONITORING = 'Monitoring',
     COMPLETE = 'Complete',
-    DRAFT = 'Draft'
+    DRAFT = 'Draft',
+    QA_STATUS = 'Question Answer'
 }
 
 interface IOracleBucketDataStatus {

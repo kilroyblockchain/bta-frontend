@@ -922,7 +922,8 @@
                 "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
                 "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
                 "REVIEWED_MODEL_ID": "Reviewed Model ID",
-                "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments"
+                "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments",
+                "QA_STATUS": "'Q/A Status"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",
