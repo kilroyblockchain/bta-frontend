@@ -5,12 +5,14 @@ import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/vi
 import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
+import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
 import { ModelReviewComponent } from './model-review/model-review.component';
 import { ModelReviewBcHistoryComponent } from './model-review/review-bc-history/review-bc-history.component';
 import { MonitoringReportComponent } from './monitoring-report/monitoring-report.component';
 import { ProjectVersionBcHistoryComponent } from './project-version/version-bc-history/version-bc-history.component';
 import { ProjectBcHistoryComponent } from './project/project-bc-history/project-bc-history.component';
 import { ProjectComponent } from './project/project.component';
+import { VerifyBcHashComponent } from './verify-bc-hash/verify-bc-hash.component';
 
 const routes: Routes = [
     {
@@ -66,6 +68,16 @@ const routes: Routes = [
                 path: 'compare-log-files/:reviewId/:versionId',
                 component: CompareLogFilesComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.COMPARE_LOG_FILES' }
+            },
+            {
+                path: 'verify-bc-hash/:id',
+                component: VerifyBcHashComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.VERIFY_BC_HASH' }
+            },
+            {
+                path: 'log-file-experiment-details/:id',
+                component: ViewLogExperimentDetailsComponent,
+                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.LOG_FILE_EXPERIMENT_DETAILS' }
             }
         ]
     }

@@ -1,86 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NbRouteTab } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
-import { IAiModelExp } from 'src/app/@core/interfaces/manage-project.interface';
-import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 @Component({
     selector: 'app-compare-log-files',
-    templateUrl: './compare-log-files.component.html',
-    styleUrls: ['./compare-logs-files.component.scss']
+    template: `
+        <nb-card>
+            <nb-card-body>
+                <nb-route-tabset [tabs]="tabs" fullWidth></nb-route-tabset>
+            </nb-card-body>
+            <ng-container *ngIf="isAIEngineerTab === 'true'; else MLOPsBlock">
+                <nb-card-body>
+                    <app-common-compare-log-files [versionId]="versionId"> </app-common-compare-log-files>
+                </nb-card-body>
+            </ng-container>
+            <ng-template #MLOPsBlock>
+                <nb-card-body>
+                    <app-common-compare-log-files [versionId]="reviewedModelId"></app-common-compare-log-files>
+                </nb-card-body>
+            </ng-template>
+        </nb-card>
+    `
 })
 export class CompareLogFilesComponent implements OnInit {
-    loading!: boolean;
-    loadingReviewed!: boolean;
+    versionId!: string;
+    reviewedModelId!: string;
 
-    versionExpDataFound!: boolean;
-    reviewedExpDataFound!: boolean;
+    isAIEngineerTab!: string;
+    constructor(private activeRoute: ActivatedRoute, private translate: TranslateService) {
+        this.versionId = this.activeRoute.snapshot.params['versionId'];
+        this.reviewedModelId = this.activeRoute.snapshot.params['reviewId'];
+    }
 
-    versionExperimentData!: Array<IAiModelExp[]>;
-    reviewedModelExperimentData!: Array<IAiModelExp[]>;
-
-    constructor(private activeRoute: ActivatedRoute, private router: Router, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService) {}
+    tabs: NbRouteTab[] = [
+        {
+            title: this.translate.instant('MANAGE_PROJECTS.COMMON.LABEL.AI_ENGINEER'),
+            responsive: true,
+            route: ['./'],
+            queryParams: { aiEngineer: 'true' }
+        },
+        {
+            title: this.translate.instant('MANAGE_PROJECTS.COMMON.LABEL.MLOPS_ENGINEER'),
+            responsive: true,
+            route: ['./'],
+            queryParams: { aiEngineer: 'false' }
+        }
+    ];
 
     ngOnInit(): void {
-        const versionId = this.activeRoute.snapshot.params['versionId'];
-        const reviewedModelId = this.activeRoute.snapshot.params['reviewId'];
-
-        this.getAllExperimentDetails(versionId);
-        this.getReviewedModelAllExperimentDetails(reviewedModelId);
-    }
-
-    getAllExperimentDetails(versionId: string): void {
-        this.loading = true;
-        this.versionExpDataFound = false;
-
-        this.manageProjectService
-            .getAllExperimentDetails(versionId)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                })
-            )
-            .subscribe({
-                next: (res) => {
-                    const { data } = res;
-                    if (data.length) {
-                        this.versionExperimentData = data;
-                        this.versionExpDataFound = true;
-                    } else {
-                        this.versionExpDataFound = false;
-                    }
-                },
-                error: () => {
-                    this.versionExpDataFound = false;
-                }
-            });
-    }
-
-    getReviewedModelAllExperimentDetails(reviewModelId: string): void {
-        this.loadingReviewed = true;
-        this.reviewedExpDataFound = false;
-
-        this.manageProjectService
-            .getAllExperimentDetails(reviewModelId)
-            .pipe(
-                finalize(() => {
-                    this.loadingReviewed = false;
-                })
-            )
-            .subscribe({
-                next: (res) => {
-                    const { data } = res;
-                    if (!data.length) {
-                        this.reviewedExpDataFound = false;
-                    } else {
-                        this.reviewedModelExperimentData = data;
-                        this.reviewedExpDataFound = true;
-                    }
-                },
-                error: () => {
-                    this.reviewedExpDataFound = false;
-                }
-            });
+        this.activeRoute.queryParams.subscribe((params) => {
+            this.isAIEngineerTab = params['aiEngineer'];
+        });
     }
 }

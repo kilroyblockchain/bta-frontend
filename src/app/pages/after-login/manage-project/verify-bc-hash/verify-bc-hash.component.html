@@ -1,0 +1,44 @@
+<div>
+    <div class="page-title">
+        <div class="title-holder">
+            <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFY_BC_HASH' | translate }}</h4>
+        </div>
+    </div>
+    <nb-card>
+        <nb-card-body>
+            <nb-card>
+                <nb-card-header>
+                    {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.MODEL_VERSION_BC_DETAILS' | translate }}
+                </nb-card-header>
+                <nb-card-body *ngIf="modelVersionBcDetails">
+                    <p>
+                        <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
+                        {{ modelVersionBcDetails?.project?.projectName }}
+                    </p>
+                    <p>
+                        <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+                        {{ modelVersionBcDetails?.versionName }}
+                    </p>
+                    <p>
+                        <strong>{{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:</strong>
+                        {{ modelVersionBcDetails?.entryUser }}
+                    </p>
+                    <p>
+                        <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.CREATOR_MSP' | translate }}:</strong>
+                        {{ modelVersionBcDetails?.creatorMSP }}
+                    </p>
+                </nb-card-body>
+                <div *ngIf="!dataFound && loading">
+                    <app-loader></app-loader>
+                </div>
+            </nb-card>
+            <nb-card-body>
+                <nb-card-header>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFY_BC_HASH' | translate }}</nb-card-header>
+                <app-common-verify-bc-hash [modelVersionBcDetails]="modelVersionBcDetails"></app-common-verify-bc-hash>
+                <div *ngIf="!dataFound && loading">
+                    <app-loader></app-loader>
+                </div>
+            </nb-card-body>
+        </nb-card-body>
+    </nb-card>
+</div>

@@ -125,7 +125,8 @@
             "EMAIL": "Email",
             "VIEW_DETAIL": "View Detail",
             "CREATED_DATE": "Created Date",
-            "UPDATED_DATE": "Updated-Date"
+            "UPDATED_DATE": "Updated-Date",
+            "DOWNLOAD": "Download"
         },
         "LABEL": {
             "COUNTRY": "Country",
@@ -397,24 +398,28 @@
                 "STAFFING_TYPE": "Staffing Type",
                 "BC_NODE_INFO": "Bc Node Info",
                 "CHANNEL_DETAILS": "Channel Details",
-                "ORACLE_BUCKET_URL": "Oracle Bucket URL"
+                "ORACLE_BUCKET_URL": "Oracle Bucket URL",
+                "ORACLE_GROUP_NAME": "Oracle Group Name"
             },
             "VALIDATIONS": {
                 "STAFFING_NAME_IS_REQUIRED": "Staffing name is required",
                 "ACCESS_LIST_IS_REQUIRED": "Access List is required",
                 "BC_NODE_INFO_IS_REQUIRED": "Bc node info is required",
                 "CHANNEL_DETAILS_IS_REQUIRED": "Channel details is required",
-                "ORACLE_BUCKET_URL_IS_REQUIRED": "Oracle bucket url is required"
+                "ORACLE_BUCKET_URL_IS_REQUIRED": "Oracle bucket url is required",
+                "ORACLE_GROUP_NAME": "Oracle group name is required"
             },
             "PLACEHOLDER": {
                 "STAFFING_NAME": "Staffing Name",
                 "SELECT_STAFFING_TYPE": "Select staffing type",
                 "SELECT_BC_NODE_INFO": "Select Bc node info",
                 "SELECT_CHANNEL_DETAILS": "Select Channel details",
-                "ORACLE_BUCKET_URL": "Enter bucket url"
+                "ORACLE_BUCKET_URL": "Enter bucket url",
+                "ORACLE_GROUP_NAME": "Oracle group name"
             },
             "DESCRIPTION": {
-                "FEATURE_ACCESS_LEVEL": "Feature access Level"
+                "FEATURE_ACCESS_LEVEL": "Feature access Level",
+                "ORACLE_GROUP_NAME_NOTE": "Note: Use this oracle group name to create group on oracle cloud."
             }
         },
         "USERS": {
@@ -633,7 +638,9 @@
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Version Bc History",
             "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History",
-            "COMPARE_LOG_FILES": "Compare Logs Files"
+            "COMPARE_LOG_FILES": "Compare Logs Files",
+            "VERIFY_BC_HASH": "Verify Bc Hash",
+            "LOG_FILE_EXPERIMENT_DETAILS": "Log File Experiment Details"
         },
         "MENU_ITEM": {
             "MONITORING_REPORT": "Monitoring Report",
@@ -664,7 +671,13 @@
                 "CREATOR_MSP": "Creator MSP",
                 "ORGANIZATION_UNIT": "Organization Unit",
                 "AI_ENGINEER": "AI Engineer",
-                "MLOPS_ENGINEER": "MLOPs Engineer"
+                "MLOPS_ENGINEER": "MLOPs Engineer",
+                "STATUS": "Status",
+                "ORACLE_DATA": "Oracle Data",
+                "SUBMITTED_DATA": "Submitted Data",
+                "VERIFIED": "Verified",
+                "UNVERIFIED": "Unverified",
+                "VERIFY_BC_HASH": "Verify Bc Hash"
             }
         },
         "PROJECT": {
@@ -785,7 +798,7 @@
                 "COMMENT": "Comment",
                 "FRAMEWORK": "Framework",
                 "FRAMEWORK_VERSION": "Framework Version",
-                "BC_": "Model Version Details",
+                "MODEL_VERSION_DETAILS": "Model Version Details",
                 "SUBMITTED_DATE": "Submitted Date",
                 "REVIEWED_DATE": "Reviewed Date",
                 "PRODUCTION_DATE": "Production Date",
@@ -850,13 +863,16 @@
         "AI_MODEL": {
             "BUTTON": {
                 "REVIEW_MODEL": "Review Model",
-                "SUBMIT_MODEL": "Submit Model"
+                "SUBMIT_MODEL": "Submit Model",
+                "VERIFY_BC_HASH": "Verify Bc Hash"
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",
                 "HYPER_PARAMETERS": "Hyper Parameters",
                 "TEST_METRICS": "Test Metrics",
-                "EPOCHS": "Epochs"
+                "EPOCHS": "Epochs",
+                "VERIFY_EXPERIMENT_HASH": "Verify Experiment Hash",
+                "EXPERIMENT_BC_HASH": "Experiment Bc Hash"
             },
             "COLUMN_NAME": {
                 "EXP_ID": "Exp Id/No",
@@ -885,7 +901,8 @@
             "BUTTON": {
                 "ADD_REVIEW": "Add Review",
                 "NEW_REVIEW": "New Review",
-                "ADD_REVIEW_MODEL": "Add Review Model"
+                "ADD_REVIEW_MODEL": "Add Review Model",
+                "COMPARES_LOGS": "Compare Logs"
             },
             "LABEL": {
                 "REVIEW_COMMENT": "Comment",
@@ -904,7 +921,8 @@
                 "REVIEW_MODEL_DETAILS": "Review Model Details",
                 "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
                 "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
-                "REVIEWED_MODEL_ID": "Reviewed Model ID"
+                "REVIEWED_MODEL_ID": "Reviewed Model ID",
+                "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",

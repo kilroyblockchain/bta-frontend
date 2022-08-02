@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbTagComponent } from '@nebular/theme';
 import { finalize } from 'rxjs';
+import { MODEL_VERSION_ORACLE_URL } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
@@ -42,6 +43,8 @@ export class AddModelReviewComponent implements OnInit {
     versionStatus = VersionStatus;
     @ViewChild('fileInput') fileInput!: ElementRef;
 
+    defaultBucketUrl!: string;
+
     constructor(private ref: NbDialogRef<AddModelReviewComponent>, private readonly fb: FormBuilder, public utilsService: UtilsService, private authService: AuthService, private manageProjectService: ManageProjectService) {
         this.getProjectUser();
         this.checkModelStatus();
@@ -55,6 +58,7 @@ export class AddModelReviewComponent implements OnInit {
 
         this.buildAddReviewForm();
         this.buildNewModelForm();
+        this.getDefaultOracleBucket();
     }
 
     getProjectUser(): void {
@@ -87,7 +91,8 @@ export class AddModelReviewComponent implements OnInit {
             noteBookVersion: ['', [Validators.required]],
             codeRepo: ['', [Validators.required]],
             codeVersion: ['', [Validators.required]],
-            comment: ['', [Validators.required]]
+            comment: ['', [Validators.required]],
+            defaultName: ['v']
         });
     }
 
@@ -228,6 +233,8 @@ export class AddModelReviewComponent implements OnInit {
     }
 
     saveReviewVersion({ value }: FormGroup): void {
+        value['versionName'] = this.UF['defaultName']?.value + value.versionName;
+
         this.manageProjectService.addNewModelReview(value, this.versionData?.project?._id).subscribe({
             next: (res) => {
                 if (res && res.success) {
@@ -251,6 +258,26 @@ export class AddModelReviewComponent implements OnInit {
     checkVersionStatus(event: string) {
         if (event === VersionStatus.REVIEW_FAILED) {
             this.showModelReview = false;
+        }
+    }
+
+    getDefaultOracleBucket(): void {
+        this.manageProjectService.getDefaultBucketUrl(this.versionData.project._id).subscribe((res) => {
+            this.defaultBucketUrl = res.data;
+        });
+    }
+
+    valueChange(versionNumber: number): void {
+        if (versionNumber) {
+            this.addModelReviewForm.patchValue({
+                logFilePath: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.LOG_FILE_URL,
+                testDataSets: this.defaultBucketUrl + '/' + this.UF['defaultName'].value + versionNumber + MODEL_VERSION_ORACLE_URL.TEST_DATA_SETS_URL
+            });
+        } else {
+            this.addModelReviewForm.patchValue({
+                logFilePath: '',
+                testDataSets: ''
+            });
         }
     }
 }

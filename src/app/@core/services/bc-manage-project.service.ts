@@ -29,4 +29,28 @@ export class BcManageProjectService {
     getModelReviewBcHistory(versionId: string): Observable<IAppResponse<IBcModelReviewHistory>> {
         return this.http.get(URLConstant.getModelReviewBcHistoryURL + `/${versionId}`);
     }
+
+    getLogFileOracleBcHash(versionId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getLogFilesOracleBcHashURL + `/${versionId}`);
+    }
+
+    getTestDataOracleBcHash(versionId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getTestDataOracleBcHashURL + `/${versionId}`);
+    }
+
+    getTrainDataOracleBcHash(versionId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getTrainDataOracleBcHashURL + `/${versionId}`);
+    }
+
+    getAIModelOracleBcHash(versionId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getAIModelOracleBcHashURL + `/${versionId}`);
+    }
+
+    getExperimentOracleBcHash(experimentId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getExperimentOracleBcHashURL + `/${experimentId}`);
+    }
+
+    downloadExperimentLogFile(experimentId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.downloadExperimentOracleFile + `/${experimentId}`);
+    }
 }

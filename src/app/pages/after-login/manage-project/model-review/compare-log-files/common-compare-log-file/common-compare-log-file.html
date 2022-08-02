@@ -1,0 +1,64 @@
+<nb-card-header> {{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</nb-card-header>
+<nb-card>
+    <nb-card-body *ngIf="versionData">
+        <p>
+            <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
+            {{versionData?.project?.name}}
+        </p>
+        <p>
+            <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
+            {{versionData?.versionName}}
+        </p>
+    </nb-card-body>
+</nb-card>
+<nb-card-header>
+    <h6>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.ALL_LOGS_FILE_EXPERIMENTS' | translate }}</h6>
+</nb-card-header>
+<table *ngIf="logsData" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
+    <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
+    <ng-container
+        *ngFor="
+          let column of columns
+              | paginate
+                  : {
+                        id: 'table_paginate_id',
+                        itemsPerPage: resultperpage,
+                        currentPage: page,
+                        totalItems: totalRecords
+                    };
+          let index = index
+      "
+        [nbTreeGridColumnDef]="column"
+        [showOn]="utilsService.getShowOn(index)"
+    >
+        <ng-container [ngSwitch]="column">
+            <ng-container *ngSwitchDefault>
+                <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ columnsName[index] }}</th>
+            </ng-container>
+        </ng-container>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div [ngSwitch]="column">
+                <div class="table-col" *ngSwitchCase="'action'">
+                    <button nbSuffix ghost nbButton (click)="viewExperimentDetails(row.data['_id'])">
+                        <nb-icon [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DETAILS' | translate" icon="eye-outline" pack="eva"> </nb-icon>
+                    </button>
+
+                    <button nbSuffix ghost nbButton (click)="downloadExperimentLogFile(row.data['_id'])">
+                        <nb-icon [nbTooltip]="'COMMON.TOOLTIP.DOWNLOAD' | translate" icon="cloud-download-outline" pack="eva"> </nb-icon>
+                    </button>
+                </div>
+                <div *ngSwitchDefault>{{ row.data[column] || '-' }}</div>
+            </div>
+        </td>
+    </ng-container>
+</table>
+<div *ngIf="loading && loadingTable">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="loadingTable && !loading && !logsData">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!loadingTable && !loading && !logsData">
+    <app-data-not-found></app-data-not-found>
+</div>

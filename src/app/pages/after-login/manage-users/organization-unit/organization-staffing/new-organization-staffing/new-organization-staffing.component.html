@@ -19,7 +19,7 @@
             <div class="form-inner-container staffing-name">
                 <div class="form-holder floating">
                     <span class="label"> {{ '*' + ('MANAGE_USERS.ORG_STAFFING.LABEL.STAFFING_TYPE' | translate) }} </span>
-                    <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_STAFFING_TYPE' | translate)" name="staffingName" formControlName="staffingName" [ngClass]="{ 'status-danger': submitted && UF['staffingName'].errors }">
+                    <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_STAFFING_TYPE' | translate)" name="staffingName" formControlName="staffingName" (selectedChange)="updateOracleGroupName()" [ngClass]="{ 'status-danger': submitted && UF['staffingName'].errors }">
                         <nb-option *ngFor="let staffingName of defaultStaffingName" [value]="staffingName">{{ staffingName }} </nb-option>
                     </nb-select>
                     <div *ngIf="submitted && UF['staffingName'].errors as err" class="invalid-feedback">
@@ -28,10 +28,25 @@
                         </span>
                     </div>
                 </div>
-                &nbsp; &nbsp;
                 <div class="form-holder floating">
                     <span class="label"> {{ 'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate }} </span>
-                    <input name="staffingName" nbInput #staffingName [value]="updateStaffingName ? updateStaffingName : ''" [placeholder]="'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate" />
+                    <input name="staffingName" (input)="updateOracleGroupName()" nbInput #staffingName [value]="updateStaffingName ? updateStaffingName : ''" [placeholder]="'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.STAFFING_NAME' | translate" />
+                </div>
+            </div>
+            <div class="form-inner-container">
+                <div class="form-holder">
+                    <div class="label">{{ '*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.ORACLE_GROUP_NAME' | translate) }}</div>
+                    <input fullWidth shape="round" nbInput name="oracleGroupName" formControlName="oracleGroupName" [placeholder]="'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.ORACLE_GROUP_NAME' | translate" [attr.disabled]="true" [ngClass]="{ 'status-danger': submitted && UF['oracleGroupName'].errors }" />
+                    <div>
+                        <div *ngIf="submitted && UF['staffingName'].errors as err" class="invalid-feedback">
+                            <span *ngIf="err['required']">
+                                {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.ORACLE_GROUP_NAME' | translate }}
+                            </span>
+                        </div>
+                        <span class="note">
+                            {{ 'MANAGE_USERS.ORG_STAFFING.DESCRIPTION.ORACLE_GROUP_NAME_NOTE' | translate }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
