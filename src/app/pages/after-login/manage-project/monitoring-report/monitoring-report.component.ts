@@ -129,12 +129,19 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
             });
     }
 
-    openDocs(filename: string): void {
-        this.fileService.getFileFromFolder(filename).subscribe((file: Blob) => {
-            const urlCreator = window.URL || window.webkitURL;
-            const url = urlCreator.createObjectURL(file);
-            window.open(url);
-            urlCreator.revokeObjectURL(url);
+    openDocs(filePath: string, fileName: string): void {
+        this.fileService.getFileFromFolder(filePath).subscribe((file: Blob) => {
+            if (file['type'].split('/')[0] === 'image' || file['type'].split('/')[1] === 'pdf') {
+                const urlCreator = window.URL || window.webkitURL;
+                const url = urlCreator.createObjectURL(file);
+                window.open(url);
+                urlCreator.revokeObjectURL(url);
+            } else {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob([file], { type: file.type }));
+                a.download = fileName;
+                a.click();
+            }
         });
     }
 
