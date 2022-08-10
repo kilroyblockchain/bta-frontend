@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize, Subscription } from 'rxjs';
+import { finalize, interval, startWith, Subscription, switchMap } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { IAiModel, IProjectVersion, OracleBucketDataStatus, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
@@ -52,12 +52,17 @@ export class AiModelComponent implements OnInit, OnDestroy {
     canViewReview!: boolean;
     isModelStatusDraft!: boolean;
     isUserCanSubmitVersion!: boolean;
+    isModelStatusMlopsReview!: boolean;
 
     user!: IUserRes;
 
     oracleBucketDataStatus = OracleBucketDataStatus;
     confirmSubmitModelDialogClose!: Subscription;
     viewVerifyBcHashClose!: Subscription;
+
+    timeIntervalTestDataSets!: Subscription;
+    timeIntervalTrainDataSets!: Subscription;
+    timeIntervalAIModel!: Subscription;
 
     constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private dialogService: NbDialogService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -68,10 +73,16 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.setTranslatedTableColumns();
         this.checkAccess();
     }
+
     ngOnDestroy(): void {
         this.confirmSubmitModelDialogClose ? this.confirmSubmitModelDialogClose.unsubscribe() : null;
         this.viewVerifyBcHashClose ? this.viewVerifyBcHashClose.unsubscribe() : null;
+
+        this.timeIntervalTestDataSets ? this.timeIntervalTestDataSets.unsubscribe() : null;
+        this.timeIntervalTrainDataSets ? this.timeIntervalTrainDataSets.unsubscribe() : null;
+        this.timeIntervalAIModel ? this.timeIntervalAIModel.unsubscribe() : null;
     }
+
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
@@ -101,6 +112,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
 
     checkModelStatus(versionStatus: string): void {
         this.isModelStatusDraft = versionStatus === VersionStatus.DRAFT;
+        this.isModelStatusMlopsReview = versionStatus === VersionStatus.MLOPS_REVIEW;
     }
 
     setTranslatedTableColumns(): void {
@@ -265,7 +277,35 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.testDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getTestDataBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.reLoad();
+                this.timeIntervalTestDataSets = interval(2000)
+                    .pipe(
+                        startWith(0),
+                        switchMap(() => this.manageProjectService.getVersionInfo(versionId))
+                    )
+                    .subscribe({
+                        next: (res) => {
+                            if (res && res.success) {
+                                const { data } = res;
+                                if (!data) {
+                                    this.dataFound = false;
+                                } else {
+                                    this.versionData = data;
+                                    this.checkModelStatus(this.versionData.versionStatus);
+                                    this.getVersionUser(this.versionData.createdBy);
+                                    this.dataFound = true;
+
+                                    if (this.versionData.testDatasetStatus.code === this.oracleBucketDataStatus.FETCHED) {
+                                        this.timeIntervalTestDataSets.unsubscribe();
+                                    }
+                                }
+                            } else {
+                                this.dataFound = false;
+                            }
+                        },
+                        error: () => {
+                            this.dataFound = false;
+                        }
+                    });
             }
         });
     }
@@ -274,7 +314,34 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.trainDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getTrainDataSetsBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.reLoad();
+                this.timeIntervalTrainDataSets = interval(2000)
+                    .pipe(
+                        startWith(0),
+                        switchMap(() => this.manageProjectService.getVersionInfo(versionId))
+                    )
+                    .subscribe({
+                        next: (res) => {
+                            if (res && res.success) {
+                                const { data } = res;
+                                if (!data) {
+                                    this.dataFound = false;
+                                } else {
+                                    this.versionData = data;
+                                    this.checkModelStatus(this.versionData.versionStatus);
+                                    this.getVersionUser(this.versionData.createdBy);
+                                    this.dataFound = true;
+                                    if (this.versionData.trainDatasetStatus.code === this.oracleBucketDataStatus.FETCHED) {
+                                        this.timeIntervalTrainDataSets.unsubscribe();
+                                    }
+                                }
+                            } else {
+                                this.dataFound = false;
+                            }
+                        },
+                        error: () => {
+                            this.dataFound = false;
+                        }
+                    });
             }
         });
     }
@@ -283,7 +350,34 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.aiModelStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getAiModelBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.reLoad();
+                this.timeIntervalAIModel = interval(2000)
+                    .pipe(
+                        startWith(0),
+                        switchMap(() => this.manageProjectService.getVersionInfo(versionId))
+                    )
+                    .subscribe({
+                        next: (res) => {
+                            if (res && res.success) {
+                                const { data } = res;
+                                if (!data) {
+                                    this.dataFound = false;
+                                } else {
+                                    this.versionData = data;
+                                    this.checkModelStatus(this.versionData.versionStatus);
+                                    this.getVersionUser(this.versionData.createdBy);
+                                    this.dataFound = true;
+                                    if (this.versionData.aiModelStatus.code === this.oracleBucketDataStatus.FETCHED) {
+                                        this.timeIntervalAIModel.unsubscribe();
+                                    }
+                                }
+                            } else {
+                                this.dataFound = false;
+                            }
+                        },
+                        error: () => {
+                            this.dataFound = false;
+                        }
+                    });
             }
         });
     }

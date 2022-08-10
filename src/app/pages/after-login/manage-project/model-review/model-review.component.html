@@ -144,13 +144,13 @@
                         <section class="dialog-head">
                             <h4>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.ALL_REVIEWS' | translate }}</h4>
                         </section>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder && !isReviewStatusFailed">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder && !isReviewStatusFailed && !isReviewStatusDeclined">
                             <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
                             </button>
                         </div>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete && !isReviewStatusFailed">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete && !isReviewStatusFailed && !isReviewStatusDeclined">
                             <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}

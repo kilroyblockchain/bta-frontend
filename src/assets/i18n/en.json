@@ -925,7 +925,18 @@
                 "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
                 "REVIEWED_MODEL_ID": "Reviewed Model ID",
                 "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments",
-                "QA_STATUS": "'Q/A Status"
+                "QA_STATUS": "QA",
+                "DECLINED": "Declined",
+                "TEST_ACCURACY_COMPARISON": "Test Accuracy Comparison",
+                "TEST_ACCURACY_FROM_AI_ENGINEER": "Test Accuracy from AI Engineer",
+                "TEST_ACCURACY_FROM_MLOPS_ENGINEER": "Test Accuracy from MLOPs Engineer",
+                "COMPARISON": "Comparison",
+                "LAST_EXP_TEST_METRICS_AI_ENGINEER": "Test Metric Of AI Engineer Last Experiment",
+                "LAST_EXP_TEST_METRICS_MLOPS_ENGINEER": "Test Metric Of MLOPs Engineer Last Experiment",
+                "TEST_METRICS_OF_CURRENT_EXPERIMENT": "Test Metric Of Current Experiment",
+                "TEST_ACCURACY_OF_CURRENT_EXPERIMENT": "Test Accuracy of current experiment",
+                "TEST_ACCURACY_OF_LAST_AI_ENGINEER": "Test Accuracy of last experiment from AI Engineer",
+                "TEST_ACCURACY_OF_LAST_MLOPS_ENGINEER": "Test Accuracy of last experiment from MLOPs Engineer"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",
@@ -943,6 +954,11 @@
             },
             "ALERT_MSG": {
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
+            },
+            "MESSAGE": {
+                "AI_IS_GREATER_VALUE": "AI has greater by value {{ greaterValue }}",
+                "MLOPS_IS_GREATER_VALUE": "MLOPs has greater value by {{ greaterValue }}",
+                "BOTH_ARE_EQUAL": "Both has same value"
             }
         }
     },

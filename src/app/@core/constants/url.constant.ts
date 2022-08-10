@@ -99,5 +99,7 @@ export const URLConstant = {
     getTrainDataOracleBcHashURL: '/ai-model/train-data-oracle-bc-hash',
     getAIModelOracleBcHashURL: '/ai-model/ai-model-oracle-bc-hash',
     getExperimentOracleBcHashURL: '/ai-model/log-experiment-oracle-bc-hash',
-    downloadExperimentOracleFile: '/ai-model/download-experiment-log'
+    downloadExperimentOracleFileURL: '/ai-model/download-experiment-log',
+    getOracleDataHashURL: '/ai-model/get-oracle-data-hash',
+    deleteOracleDataHashURL: '/ai-model/delete-temp-oracle-data'
 };

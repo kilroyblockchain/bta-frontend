@@ -64,7 +64,9 @@ export enum VersionStatus {
     MONITORING = 'Monitoring',
     COMPLETE = 'Complete',
     DRAFT = 'Draft',
-    QA_STATUS = 'Question Answer'
+    QA_STATUS = 'Quality Assurance',
+    DECLINED = 'Declined',
+    MLOPS_REVIEW = 'MLOPs Review'
 }
 
 interface IOracleBucketDataStatus {

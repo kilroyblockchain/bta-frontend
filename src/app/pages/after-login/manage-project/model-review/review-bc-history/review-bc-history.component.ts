@@ -101,7 +101,7 @@ export class ModelReviewBcHistoryComponent implements OnInit {
         } else if (versionStatus === this.modelVersionStatus.REVIEW_PASSED) {
             return '#339933';
         } else if (versionStatus === this.modelVersionStatus.REVIEW_FAILED) {
-            return '#CC0033';
+            return '#ff0000';
         } else if (versionStatus === this.modelVersionStatus.DEPLOYED) {
             return '#304ea9';
         } else if (versionStatus === this.modelVersionStatus.PRODUCTION) {
@@ -112,6 +112,8 @@ export class ModelReviewBcHistoryComponent implements OnInit {
             return '#336666';
         } else if (versionStatus === this.modelVersionStatus.QA_STATUS) {
             return '#02a3b3';
+        } else if (versionStatus === this.modelVersionStatus.DECLINED) {
+            return '#b8060b';
         } else {
             return '#666';
         }
@@ -135,6 +137,6 @@ export class ModelReviewBcHistoryComponent implements OnInit {
 
     openCompareLogs(modelReviewId: string, versionId: string): void {
         const URL = '/u/manage-project/compare-log-files';
-        this.router.navigate([URL, modelReviewId, versionId]);
+        this.router.navigate([URL, modelReviewId, versionId], { queryParams: { aiEngineer: 'true' } });
     }
 }

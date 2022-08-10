@@ -75,7 +75,7 @@ const routes: Routes = [
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.VERIFY_BC_HASH' }
             },
             {
-                path: 'log-file-experiment-details/:id',
+                path: 'log-file-experiment-details/:id/:lastExperimentId',
                 component: ViewLogExperimentDetailsComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.LOG_FILE_EXPERIMENT_DETAILS' }
             }

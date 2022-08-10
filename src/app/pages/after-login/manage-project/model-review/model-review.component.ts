@@ -42,6 +42,8 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     isReviewStatusMonitoring!: boolean;
     isReviewStatusComplete!: boolean;
     isReviewStatusFailed!: boolean;
+    isReviewStatusDeclined!: boolean;
+
     newReviewDialogClose!: Subscription;
 
     constructor(private dialogService: NbDialogService, private router: Router, private activeRoute: ActivatedRoute, private translate: TranslateService, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
@@ -75,6 +77,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
         this.isReviewStatusFailed = versionStatus === VersionStatus.REVIEW_FAILED;
         this.isReviewStatusMonitoring = versionStatus === VersionStatus.MONITORING;
         this.isReviewStatusComplete = versionStatus === VersionStatus.COMPLETE;
+        this.isReviewStatusDeclined = versionStatus === VersionStatus.DECLINED;
     }
 
     pageChange(pageNumber: number): void {

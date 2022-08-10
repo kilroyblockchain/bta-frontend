@@ -159,7 +159,6 @@ export class AddModelReviewComponent implements OnInit {
 
     saveNewReview({ valid, value }: FormGroup, modelReviewId = ''): void {
         this.rSubmitted = true;
-        console.log(valid);
         if (!valid) {
             return;
         }
@@ -172,7 +171,7 @@ export class AddModelReviewComponent implements OnInit {
         formData.append('comment', value.comment);
         formData.append('rating', value.rating);
 
-        if (this.RF['reviewTempStatus']?.value && (this.isReviewStatusDeployed || this.isReviewStatusProduction || this.isReviewStatusMonitoring) && !this.versionData.isQAStatus) {
+        if (this.RF['reviewTempStatus']?.value && (this.isReviewStatusDeployed || this.isReviewStatusProduction || this.isReviewStatusMonitoring) && !this.versionData.isQAStatus && !this.isStakeHolder) {
             formData.append('status', value.reviewTempStatus);
         } else {
             formData.append('status', value.status);

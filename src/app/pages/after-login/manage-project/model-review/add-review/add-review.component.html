@@ -125,11 +125,17 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-inner-container" *ngIf="isReviewStatusMonitoring && isStakeHolder">
                                 <div class="form-holder">
-                                    <input type="checkbox" id="reviewStatus" [value]="versionStatus.COMPLETE" formControlName="reviewStatus" (change)="checkBoxValue($event)" />
-                                    <label for="reviewStatus">
+                                    <input type="radio" id="complete" [value]="versionStatus.COMPLETE" formControlName="status" />
+                                    <label for="complete">
                                         {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.COMPLETE' | translate }}
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" id="decline" [value]="versionStatus.DECLINED" formControlName="status" />
+                                    <label for="decline">
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.DECLINED' | translate }}
                                     </label>
                                     <div *ngIf="rSubmitted && RF['status'].errors as err" class="invalid-feedback">
                                         <span *ngIf="err['required']">
