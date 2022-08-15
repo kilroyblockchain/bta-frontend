@@ -956,8 +956,8 @@
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
             },
             "MESSAGE": {
-                "AI_IS_GREATER_VALUE": "AI has greater by value {{ greaterValue }}",
-                "MLOPS_IS_GREATER_VALUE": "MLOPs has greater value by {{ greaterValue }}",
+                "AI_IS_GREATER_VALUE": "AI Engineer's has accuracy is greater by {{ greaterValue }}",
+                "MLOPS_IS_GREATER_VALUE": "MLOPs Engineer's has accuracy is greater by {{ greaterValue }}",
                 "BOTH_ARE_EQUAL": "Both has same value"
             }
         }

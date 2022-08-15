@@ -1,4 +1,4 @@
-<h4>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:&nbsp;{{ experiment?.exp_no }}</h4>
+<h4>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:&nbsp;{{ experimentBcHistory?.modelExperiment?.experimentName }}</h4>
 <nb-card>
     <nb-card-body>
         <nb-card>
@@ -20,27 +20,23 @@
                     {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.VERIFY_EXPERIMENT_HASH' | translate }}
                 </nb-card-header>
                 <nb-card-body class="verify-grid-row">
-                    <div>&nbsp;</div>
-                    <div class="col-2-2">
+                    <div class="col-1-1">
                         <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.SUBMITTED_DATA' | translate }}</strong>
                     </div>
-                    <div class="col-3-3">
+                    <div class="col-2-2">
                         <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.ORACLE_DATA' | translate }}</strong>
                     </div>
-                    <div class="col-4-4">
+                    <div class="col-3-3">
                         <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.STATUS' | translate }}</strong>
                     </div>
                     <div class="col-1-1">
-                        <strong> {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_BC_HASH' | translate }}</strong>
+                        <span> {{ experimentBcHistory.modelExperiment.experimentBcHash }}</span>
                     </div>
-                    <div class="col-2-2">
-                        <span> {{ experimentInfo.experimentBcHash }}</span>
-                    </div>
-                    <div class="col-3-3" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                    <div class="col-2-2" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
                         <span> {{ experimentOracleBCHash }}</span>
                     </div>
-                    <div class="col-4-4" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
-                        <span *ngIf="experimentInfo?.experimentBcHash === experimentOracleBCHash; else unVerified" class="verified">
+                    <div class="col-3-3" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                        <span *ngIf="experimentBcHistory.modelExperiment.experimentBcHash === experimentOracleBCHash; else unVerified" class="verified">
                             <span *ngIf="experimentOracleBCHash">
                                 {{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFIED' | translate }}
                             </span>
@@ -93,6 +89,18 @@
             </div>
             <div class="col-3-3" [nbSpinner]="lastExperimentLogsLoading && loading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
                 <span>{{ testMetricsData | compareTestAccuracyDetail: lastExperimentTestMetricsData:isAIEngineer }}</span>
+            </div>
+            <div class="col-1-1" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.BC_TRANSACTION_ID' | translate" nbTooltipPlacement="start">
+                {{ experimentBcHistory?.txId }}
+            </div>
+            <div class="col-2-2" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.BC_TRANSACTION_ID' | translate" nbTooltipPlacement="start">
+                {{ lastExperimentBcHistory?.txId }}
+            </div>
+            <div class="col-1-1" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.BC_TIME_STAMPS' | translate" nbTooltipPlacement="start">
+                {{ experimentBcHistory?.modelExperiment?.recordDate }}
+            </div>
+            <div class="col-2-2" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.BC_TIME_STAMPS' | translate" nbTooltipPlacement="start">
+                {{ lastExperimentBcHistory?.modelExperiment?.recordDate }}
             </div>
         </nb-card-body>
         <div *ngIf="lastExperimentLogsLoading && loading">

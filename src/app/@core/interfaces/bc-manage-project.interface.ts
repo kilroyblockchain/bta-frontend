@@ -114,3 +114,35 @@ export interface IAIModelTempHash {
     updatedAt: Date;
     createdAt: Date;
 }
+
+export interface IBcExperimentData {
+    data: IBcExperimentDetail;
+}
+
+export interface IBcExperimentDetail {
+    data: IBcModelExperiment;
+}
+
+export interface IBcModelExperiment {
+    experimentName: string;
+    experimentBcHash: string;
+    modelVersion: IBcProjectVersion;
+    project: IBcProjectInfo;
+    recordDate: Date;
+    entryUser: string;
+    creatorMSP: string;
+}
+
+export interface IBcExperimentDataHistory {
+    data: IBcExperimentHistory;
+}
+
+export interface IBcExperimentHistory {
+    data: IBcExperimentHistoryData[];
+}
+
+export interface IBcExperimentHistoryData {
+    txId: string;
+    modelExperiment: IBcModelExperiment;
+    isDeleted: boolean;
+}

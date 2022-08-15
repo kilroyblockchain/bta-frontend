@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
-import { IBcProjectVersion } from 'src/app/@core/interfaces/bc-manage-project.interface';
+import { IBcProjectVersion, IBcExperimentDetail, IBcExperimentHistoryData } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { IAiModel, IEpochs, IExp, ITestMetrics } from 'src/app/@core/interfaces/manage-project.interface';
 import { BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
@@ -30,7 +29,13 @@ export class ViewLogExperimentDetailsComponent implements OnInit {
     experimentOracleBCHash!: string;
     isAIEngineer!: string;
 
-    constructor(private activeRoute: ActivatedRoute, private translate: TranslateService, private bcManageProjectService: BcManageProjectService, public utilsService: UtilsService, private manageProjectService: ManageProjectService) {}
+    experimentBcDetails!: IBcExperimentDetail;
+    lastExperimentBcDetails!: IBcExperimentDetail;
+
+    experimentBcHistory!: IBcExperimentHistoryData;
+    lastExperimentBcHistory!: IBcExperimentHistoryData;
+
+    constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, public utilsService: UtilsService, private manageProjectService: ManageProjectService) {}
 
     ngOnInit(): void {
         this.getAiLogsData();
@@ -48,6 +53,12 @@ export class ViewLogExperimentDetailsComponent implements OnInit {
         this.getExperimentDetails(experimentId);
         this.getExperimentOracleBcHash(experimentId);
         this.getLastExperimentDetails(lastExperimentId);
+
+        this.getExperimentBcDetails(experimentId);
+        this.getLastExperimentBcDetails(lastExperimentId);
+
+        this.getExperimentBcHistory(experimentId);
+        this.getLastExperimentBcHistory(lastExperimentId);
     }
 
     getExperimentInfo(experimentId: string): void {
@@ -174,5 +185,74 @@ export class ViewLogExperimentDetailsComponent implements OnInit {
                     this.dataFound = false;
                 }
             });
+    }
+
+    getExperimentBcDetails(expId: string): void {
+        this.dataFound = false;
+
+        this.bcManageProjectService.getExperimentBcDetails(expId).subscribe({
+            next: (res) => {
+                if (res && res.success) {
+                    const { data } = res.data;
+                    this.experimentBcDetails = data;
+                    this.dataFound = true;
+                    this.getVersionBcDetails(this.experimentBcDetails.data.modelVersion.id);
+                } else {
+                    this.dataFound = true;
+                }
+            },
+            error: () => {
+                this.dataFound = false;
+            }
+        });
+    }
+
+    getLastExperimentBcDetails(expId: string): void {
+        this.dataFound = false;
+
+        this.bcManageProjectService.getExperimentBcDetails(expId).subscribe({
+            next: (res) => {
+                if (res && res.success) {
+                    const { data } = res.data;
+                    this.lastExperimentBcDetails = data;
+                    this.dataFound = true;
+                } else {
+                    this.dataFound = true;
+                }
+            },
+            error: () => {
+                this.dataFound = false;
+            }
+        });
+    }
+
+    getExperimentBcHistory(expId: string): void {
+        this.bcManageProjectService.getExperimentBcHistory(expId).subscribe({
+            next: (res) => {
+                const { data } = res;
+
+                this.experimentBcHistory = data.data.data[0];
+                console.log('-------------', this.experimentBcHistory);
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+    }
+
+    getLastExperimentBcHistory(expId: string): void {
+        this.bcManageProjectService.getExperimentBcHistory(expId).subscribe({
+            next: (res) => {
+                const { data } = res;
+                this.lastExperimentBcHistory = data.data.data[0];
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+    }
+
+    formatTxId(txId: any): string {
+        return txId.substring(0, 7) + '...' + txId.substring(txId.length - 7);
     }
 }
