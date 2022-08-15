@@ -107,3 +107,10 @@ interface IReviewSupportingDocument {
     docUrl: string;
     docName: string;
 }
+
+export interface IAIModelTempHash {
+    _id: string;
+    hash: string;
+    updatedAt: Date;
+    createdAt: Date;
+}

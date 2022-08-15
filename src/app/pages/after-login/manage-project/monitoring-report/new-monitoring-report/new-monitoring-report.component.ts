@@ -40,7 +40,8 @@ export class NewMonitoringReportComponent implements OnInit {
             subject: ['', [Validators.required]],
             status: ['', [Validators.required]],
             description: ['', [Validators.required]],
-            otherStatus: ['']
+            otherStatus: [''],
+            monitoringToolLink: ['']
         });
     }
 
@@ -91,6 +92,7 @@ export class NewMonitoringReportComponent implements OnInit {
 
         formData.append('subject', value.subject);
         formData.append('description', value.description);
+        formData.append('monitoringToolLink', value.monitoringToolLink);
         formData.append('status', value.status);
         if (this.UF['otherStatus'].value) {
             formData.append('otherStatus', value.otherStatus);

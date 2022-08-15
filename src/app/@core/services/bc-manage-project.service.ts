@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse } from '../interfaces/app-response.interface';
-import { IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
+import { IAIModelTempHash, IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -51,6 +51,14 @@ export class BcManageProjectService {
     }
 
     downloadExperimentLogFile(experimentId: string): Observable<IAppResponse<string>> {
-        return this.http.get(URLConstant.downloadExperimentOracleFile + `/${experimentId}`);
+        return this.http.get(URLConstant.downloadExperimentOracleFileURL + `/${experimentId}`);
+    }
+
+    getOracleDataHash(hashId: string): Observable<IAppResponse<IAIModelTempHash>> {
+        return this.http.get(URLConstant.getOracleDataHashURL + `/${hashId}`);
+    }
+
+    deleteOracleDataHash(hashId: string): Observable<IAppResponse<IAIModelTempHash>> {
+        return this.http.delete(URLConstant.deleteOracleDataHashURL + `/${hashId}`);
     }
 }

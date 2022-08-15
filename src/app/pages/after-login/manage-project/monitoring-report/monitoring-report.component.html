@@ -13,29 +13,35 @@
     <nb-card class="medium-card-width">
         <nb-card-body>
             <nb-card class="medium-card-width info-card">
-                <nb-card-body>
+                <nb-card-body *ngIf="versionData">
                     <p class="card-paragraph">
                         <strong>
                             <nb-icon icon="chevron-right-outline"></nb-icon>
                             {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}:
                         </strong>
-                        {{ versionData?.project?.name }}
+                        {{ versionData.project.name }}
                     </p>
                     <p class="card-paragraph">
                         <strong>
                             <nb-icon icon="chevron-right-outline"></nb-icon>
                             {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}:
                         </strong>
-                        {{ versionData?.versionName }}
+                        {{ versionData.versionName }}
                     </p>
                     <p class="card-paragraph">
                         <strong>
                             <nb-icon icon="chevron-right-outline"></nb-icon>
                             {{ 'MANAGE_PROJECTS.COMMON.LABEL.DATA_SCIENTIST' | translate }}:
                         </strong>
-                        {{ versionData?.createdBy?.firstName }}&nbsp;{{ versionData?.createdBy?.lastName }}
+                        {{ versionData.createdBy.firstName }}&nbsp;{{ versionData.createdBy.lastName }}
                     </p>
                 </nb-card-body>
+                <div *ngIf="!dataFound && loading">
+                    <app-loader></app-loader>
+                </div>
+                <div *ngIf="!dataFound && !loading">
+                    <app-data-not-found></app-data-not-found>
+                </div>
             </nb-card>
 
             <nb-card accent="info">
@@ -75,6 +81,12 @@
                                         <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"> </nb-tag>
                                     </a>
                                 </ng-container>
+                                <ng-container *ngIf="reports.monitoringToolLink">
+                                    <p>
+                                        <strong> {{ 'MANAGE_PROJECTS.MONITORING_REPORT.PLACEHOLDER.MONITORING_TOOL_LINK' | translate }}: </strong>
+                                        <a [href]="reports.monitoringToolLink" target="”_blank”">{{ reports.monitoringToolLink }}</a>
+                                    </p>
+                                </ng-container>
                                 <p>
                                     <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.STAFFING_NAME' | translate }}:</strong>
                                     {{ reports.staffing }}
@@ -92,10 +104,10 @@
                     </ng-container>
                 </nb-card-body>
             </nb-card>
-            <div *ngIf="!dataFound && loading">
+            <div *ngIf="!reportsData && reportsLoading">
                 <app-loader></app-loader>
             </div>
-            <div *ngIf="!reportsData && !loading">
+            <div *ngIf="!reportsData && !reportsLoading">
                 <app-data-not-found></app-data-not-found>
             </div>
         </nb-card-body>

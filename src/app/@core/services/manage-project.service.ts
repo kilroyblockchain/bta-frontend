@@ -97,15 +97,15 @@ export class ManageProjectService {
         return this.http.get(URLConstant.getLogFileBcHashURL + `/${versionId}`);
     }
 
-    getTestDataBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+    getTestDataBcHash(versionId: string): Observable<IAppResponse<void>> {
         return this.http.get(URLConstant.getTestDataSetsBcHashURL + `/${versionId}`);
     }
 
-    getTrainDataSetsBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+    getTrainDataSetsBcHash(versionId: string): Observable<IAppResponse<void>> {
         return this.http.get(URLConstant.getTrainDataSetsBcHashURL + `/${versionId}`);
     }
 
-    getAiModelBcHash(versionId: string): Observable<IAppResponse<IProjectVersion>> {
+    getAiModelBcHash(versionId: string): Observable<IAppResponse<void>> {
         return this.http.get(URLConstant.getAiModelBcHashUrl + `/${versionId}`);
     }
 
