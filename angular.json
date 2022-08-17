@@ -7,7 +7,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "base-proj": {
+    "bta": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/base-proj",
+            "outputPath": "dist/bta",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -119,10 +119,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "base-proj:build:production"
+              "browserTarget": "bta:build:production"
             },
             "development": {
-              "browserTarget": "base-proj:build:development"
+              "browserTarget": "bta:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -130,7 +130,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "base-proj:build"
+            "browserTarget": "bta:build"
           }
         },
         "test": {
@@ -163,5 +163,5 @@
       }
     }
   },
-  "defaultProject": "base-proj"
+  "defaultProject": "bta"
 }
