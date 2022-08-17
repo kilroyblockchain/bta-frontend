@@ -103,5 +103,9 @@ export const URLConstant = {
     getOracleDataHashURL: '/ai-model/get-oracle-data-hash',
     deleteOracleDataHashURL: '/ai-model/delete-temp-oracle-data',
     getModelExperimentBcDetailsURL: '/ai-model/experiment-bc-details',
-    getModelExperimentBcHistoryURL: '/ai-model/experiment-bc-history'
+    getModelExperimentBcHistoryURL: '/ai-model/experiment-bc-history',
+    getArtifactModelBcHistoryURL: '/ai-model/artifact-model-bc-history',
+    getAllArtifactsModelURL: '/ai-model/all-artifacts-model',
+    getArtifactModelOracleHashURL: '/ai-model/artifact-model-oracle-hash',
+    getArtifactModelDetailsURL: '/ai-model/artifact-model-details'
 };

@@ -1,69 +1,105 @@
-<h4>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:&nbsp;{{ experimentBcHistory?.modelExperiment?.experimentName }}</h4>
+<h4>
+    {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EXPERIMENT_NAME' | translate }}:
+    {{ experimentBcHistory?.modelExperiment?.experimentName }}
+</h4>
 <nb-card>
-    <nb-card-body>
-        <nb-card>
+    <nb-card>
+        <nb-card-body>
             <nb-card-header>
                 {{ 'MANAGE_PROJECTS.VERSION.LABEL.MODEL_VERSION_BC_DETAILS' | translate }}
             </nb-card-header>
-            <nb-card-body *ngIf="modelVersionBcDetails">
+            <nb-card-body *ngIf="experimentBcHistory">
                 <p>
                     <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
-                    {{ modelVersionBcDetails.project.projectName }}
+                    {{ experimentBcHistory.modelExperiment.project.projectName }}
                 </p>
                 <p>
                     <strong> {{ 'MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate }}: </strong>
-                    {{ modelVersionBcDetails.versionName }}
+                    {{ experimentBcHistory.modelExperiment.modelVersion.versionName }}
                 </p>
             </nb-card-body>
-            <nb-card *ngIf="modelVersionBcDetails">
+            <div *ngIf="experimentBcHistoryLoading && !experimentBcHistoryData">
+                <app-loader></app-loader>
+            </div>
+            <div *ngIf="!experimentBcHistoryLoading && !experimentBcHistoryData">
+                <app-data-not-found></app-data-not-found>
+            </div>
+        </nb-card-body>
+        <nb-card>
+            <nb-card-body>
                 <nb-card-header>
                     {{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.VERIFY_EXPERIMENT_HASH' | translate }}
                 </nb-card-header>
-                <nb-card-body class="verify-grid-row">
+            </nb-card-body>
+            <nb-card-body class="verify-grid-row">
+                <div class="col-1-1">
+                    <strong> {{ 'Hash Key' | translate }}</strong>
+                </div>
+                <div class="col-2-2">
+                    <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.SUBMITTED_DATA' | translate }}</strong>
+                </div>
+                <div class="col-3-3">
+                    <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.ORACLE_DATA' | translate }}</strong>
+                </div>
+                <div class="col-4-4">
+                    <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.STATUS' | translate }}</strong>
+                </div>
+                <div class="col-1-1">
+                    <strong> {{ 'Log Hash' | translate }}</strong>
+                </div>
+                <div class="col-2-2" [nbSpinner]="experimentBcHistoryLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                    <span> {{ experimentBcHistory?.modelExperiment?.experimentBcHash }}</span>
+                </div>
+                <div class="col-3-3" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                    <span> {{ experimentOracleBCHash }}</span>
+                </div>
+                <div class="col-4-4" [nbSpinner]="experimentLogsLoading || experimentBcHistoryLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                    <span *ngIf="experimentBcHistory?.modelExperiment?.experimentBcHash === experimentOracleBCHash; else unVerified" class="verified">
+                        <span *ngIf="experimentOracleBCHash && experimentBcHistory">
+                            {{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFIED' | translate }}
+                        </span>
+                    </span>
+                    <ng-template #unVerified>
+                        <ng-container *ngIf="experimentOracleBCHash && experimentBcHistory">
+                            <span class="un-verified">
+                                {{ 'MANAGE_PROJECTS.COMMON.LABEL.UNVERIFIED' | translate }}
+                            </span>
+                        </ng-container>
+                    </ng-template>
+                </div>
+                <ng-container *ngIf="isAIEngineer === 'true'">
                     <div class="col-1-1">
-                        <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.SUBMITTED_DATA' | translate }}</strong>
+                        <strong> {{ 'Model Hash' | translate }}</strong>
                     </div>
-                    <div class="col-2-2">
-                        <strong>{{ 'MANAGE_PROJECTS.COMMON.LABEL.ORACLE_DATA' | translate }}</strong>
+                    <div class="col-2-2" [nbSpinner]="artifactModelBcHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                        <span> {{ artifactModelBcHistory?.modelArtifact?.modelArtifactBcHash }}</span>
                     </div>
-                    <div class="col-3-3">
-                        <strong> {{ 'MANAGE_PROJECTS.COMMON.LABEL.STATUS' | translate }}</strong>
+                    <div class="col-3-3" [nbSpinner]="artifactModelOracleHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+                        <span> {{ artifactModelOracleHash }}</span>
                     </div>
-                    <div class="col-1-1">
-                        <span> {{ experimentBcHistory.modelExperiment.experimentBcHash }}</span>
-                    </div>
-                    <div class="col-2-2" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
-                        <span> {{ experimentOracleBCHash }}</span>
-                    </div>
-                    <div class="col-3-3" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
-                        <span *ngIf="experimentBcHistory.modelExperiment.experimentBcHash === experimentOracleBCHash; else unVerified" class="verified">
-                            <span *ngIf="experimentOracleBCHash">
+                    <div class="col-4-4" [nbSpinner]="artifactModelOracleHashLoading || artifactModelBcHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
+                        <span *ngIf="artifactModelBcHistory?.modelArtifact?.modelArtifactBcHash === artifactModelOracleHash; else unVerified" class="verified">
+                            <span *ngIf="artifactModelOracleHash && artifactModelBcHistory">
                                 {{ 'MANAGE_PROJECTS.COMMON.LABEL.VERIFIED' | translate }}
                             </span>
                         </span>
                         <ng-template #unVerified>
-                            <ng-container *ngIf="experimentOracleBCHash">
+                            <ng-container *ngIf="artifactModelOracleHash && artifactModelBcHistory">
                                 <span class="un-verified">
                                     {{ 'MANAGE_PROJECTS.COMMON.LABEL.UNVERIFIED' | translate }}
                                 </span>
                             </ng-container>
                         </ng-template>
                     </div>
-                </nb-card-body>
-                <div *ngIf="!versionBcHashFound && !versionBcLoading">
-                    <app-data-not-found></app-data-not-found>
-                </div>
-            </nb-card>
-            <div *ngIf="versionBcLoading">
-                <app-loader></app-loader>
-            </div>
+                </ng-container>
+            </nb-card-body>
+            <!-- <app-data-not-found></app-data-not-found> -->
         </nb-card>
-    </nb-card-body>
+    </nb-card>
     <nb-card>
         <nb-card-header>
             <h6>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.TEST_ACCURACY_COMPARISON' | translate }}</h6>
         </nb-card-header>
-
         <nb-card-body class="accuracy-compare">
             <ng-container *ngIf="isAIEngineer === 'true'">
                 <div class="col-1-1">
@@ -103,10 +139,11 @@
                 {{ lastExperimentBcHistory?.modelExperiment?.recordDate }}
             </div>
         </nb-card-body>
-        <div *ngIf="lastExperimentLogsLoading && loading">
+        <div *ngIf="lastExperimentLogsLoading || experimentBcHistoryLoading">
             <app-loader></app-loader>
         </div>
     </nb-card>
+
     <div class="grid-row">
         <nb-card>
             <nb-card-header>
@@ -129,6 +166,7 @@
                 <div *ngIf="!dataFound && !loading">Sorry, data not found !!!</div>
             </nb-card-body>
         </nb-card>
+
         <nb-card>
             <nb-card-header>
                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.LABEL.TEST_METRICS_OF_CURRENT_EXPERIMENT' | translate }}
@@ -146,6 +184,7 @@
             </nb-card-body>
         </nb-card>
     </div>
+
     <nb-card accent="info" *ngIf="isAIEngineer === 'true'">
         <nb-card-header>
             <h6>{{ 'MANAGE_PROJECTS.AI_MODEL.LABEL.EPOCHS' | translate }}</h6>

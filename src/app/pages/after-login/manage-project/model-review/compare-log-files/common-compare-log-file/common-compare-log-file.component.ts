@@ -200,7 +200,6 @@ export class CommonCompareLogFilesComponent implements OnInit {
                     const { data } = res;
                     for (const expData of data) {
                         this.aiTestMetricsData = expData.exp.test_metrics;
-                        // console.log(this.aiTestMetricsData);
                     }
                     this.dataFound = true;
                 } else {
@@ -225,7 +224,6 @@ export class CommonCompareLogFilesComponent implements OnInit {
                     const { data } = res;
                     for (const expData of data) {
                         this.mlopsTestMetricsData = expData.exp.test_metrics;
-                        // console.log(this.mlopsTestMetricsData);
                     }
 
                     this.dataFound = true;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse } from '../interfaces/app-response.interface';
-import { IAIModelTempHash, IBcExperimentData, IBcExperimentDataHistory, IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
+import { IAIModelTempHash, IBcArtifactModelDataHistory, IBcExperimentData, IBcExperimentDataHistory, IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -67,5 +67,9 @@ export class BcManageProjectService {
 
     getExperimentBcHistory(experimentId: string): Observable<IAppResponse<IBcExperimentDataHistory>> {
         return this.http.get(URLConstant.getModelExperimentBcHistoryURL + `/${experimentId}`);
+    }
+
+    getArtifactModelBcHistory(modelId: string): Observable<IAppResponse<IBcArtifactModelDataHistory>> {
+        return this.http.get(URLConstant.getArtifactModelBcHistoryURL + `/${modelId}`);
     }
 }
