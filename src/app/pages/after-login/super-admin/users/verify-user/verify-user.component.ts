@@ -6,7 +6,7 @@ import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { IChannelDetails } from 'src/app/@core/interfaces/channel-details.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, BlockChainService, LangTranslateService, ManageChannelDetailsService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
+import { AuthService, BlockChainService, LangTranslateService, ManageChannelDetailsService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { BCChannelService, IBCChannelDetail } from 'src/app/@core/services/bc-channel.service';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { IUserActionRow } from '../user.interface';
@@ -69,8 +69,7 @@ export class VerifyUserComponent implements OnInit {
         private bcChannelService: BCChannelService,
         private langTranslateService: LangTranslateService,
         private readonly manageChannelService: ManageChannelDetailsService,
-        private readonly blockChainService: BlockChainService,
-        private readonly staffingService: StaffingService
+        private readonly blockChainService: BlockChainService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.buildCreateStaffingForm();
