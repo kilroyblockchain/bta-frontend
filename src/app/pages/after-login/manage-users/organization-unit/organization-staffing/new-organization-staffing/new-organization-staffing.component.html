@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="form-inner-container two-col">
+            <div class="form-inner-container" #bcNodeInfoDiv>
                 <div class="form-holder floating">
                     <span class="label"> *{{ 'MANAGE_USERS.ORG_STAFFING.LABEL.BC_NODE_INFO' | translate }} </span>
                     <nb-select fullWidth [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_BC_NODE_INFO' | translate)" name="bcNodeInfo" formControlName="bcNodeInfo" [ngClass]="{ 'status-danger': submitted && UF['bcNodeInfo'].errors }">
@@ -61,29 +61,33 @@
                     </div>
                 </div>
             </div>
-            <div class="form-holder floating">
-                <span class="label"> *{{ 'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate }} </span>
 
-                <ng-container *ngIf="UF['staffingName'].value !== defaultStaffingName[0]; else elseBlock">
-                    <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" formControlName="aiEngChannel" fullWidth [ngClass]="{ 'status-danger': submitted && UF['aiEngChannel'].errors }">
-                        <nb-option *ngFor="let channel of nonDefaultChannels" [value]="channel._id">
-                            {{ channel.channelName }}
-                        </nb-option>
-                    </nb-select>
-                </ng-container>
-                <ng-template #elseBlock>
-                    <nb-select multiple [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" fullWidth formControlName="channels" [ngClass]="{ 'status-danger': submitted && UF['channels'].errors }">
-                        <nb-option *ngFor="let channel of nonDefaultChannels" [value]="channel._id">
-                            {{ channel.channelName }}
-                        </nb-option>
-                    </nb-select>
-                </ng-template>
-                <div *ngIf="submitted && UF['channels'].errors as err" class="invalid-feedback">
-                    <span *ngIf="err['required']">
-                        {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.CHANNEL_DETAILS_IS_REQUIRED' | translate }}
-                    </span>
+            <ng-container *ngIf="UF['staffingName'].value === defaultStaffingName[0] || UF['staffingName'].value === ''">
+                <div class="form-holder floating">
+                    <span class="label"> *{{ 'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate }} </span>
+
+                    <ng-container *ngIf="UF['staffingName'].value !== defaultStaffingName[0]; else elseBlock">
+                        <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" formControlName="aiEngChannel" fullWidth (selectedChange)="addChannel($event)" [ngClass]="{ 'status-danger': submitted && UF['channels'].errors }">
+                            <nb-option *ngFor="let channel of nonDefaultChannels" [value]="channel._id">
+                                {{ channel.channelName }}
+                            </nb-option>
+                        </nb-select>
+                    </ng-container>
+                    <ng-template #elseBlock>
+                        <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" fullWidth formControlName="aiEngChannel" (selectedChange)="addChannel($event)" [ngClass]="{ 'status-danger': submitted && UF['channels'].errors }">
+                            <nb-option *ngFor="let channel of nonDefaultChannels" [value]="channel._id">
+                                {{ channel.channelName }}
+                            </nb-option>
+                        </nb-select>
+                    </ng-template>
+                    <div *ngIf="submitted && UF['channels'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">
+                            {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.CHANNEL_DETAILS_IS_REQUIRED' | translate }}
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
+
             <ng-container *ngIf="UF['staffingName'].value !== defaultStaffingName[2]">
                 <div class="form-inner-container">
                     <div class="form-holder">

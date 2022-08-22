@@ -155,7 +155,7 @@ export class SidebarComponent {
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.READ])) {
             bcConfigurationMenuItem.push({
                 title: 'Channel Details',
-                link: '/u/manage-project/channel-setup',
+                link: '/u/blockchain/channel-setup',
                 pathMatch: 'full',
                 key: 'Channel Details'
             });

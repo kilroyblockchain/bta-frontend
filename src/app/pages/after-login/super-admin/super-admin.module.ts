@@ -16,10 +16,9 @@ import { RejectInformationsComponent } from './users/reject-informations/reject-
 import { BlockedUsersComponent } from './blocked-users/blocked-users.component';
 import { AfterLoginSharedModule } from '../after-login-shared/after-login-shared.module';
 import { LogPageComponent } from './log-page/log-page.component';
-import { BcNodeComponent } from 'src/app/pages/after-login/blockchain/bc-node-info/bc-node-info.component';
 
 const CUSTOM_MODULE = [SharedModule];
-const PAGE_COMPONENT = [SuperAdminComponent, UsersComponent, CompanyUsersComponent, VerifyUserComponent, AddSubscriptionTypeComponent, UnverifiedUsersComponent, RejectedCompaniesComponent, RejectCompanyFormComponent, RejectInformationsComponent, BlockedUsersComponent, LogPageComponent, BcNodeComponent];
+const PAGE_COMPONENT = [SuperAdminComponent, UsersComponent, CompanyUsersComponent, VerifyUserComponent, AddSubscriptionTypeComponent, UnverifiedUsersComponent, RejectedCompaniesComponent, RejectCompanyFormComponent, RejectInformationsComponent, BlockedUsersComponent, LogPageComponent];
 @NgModule({
     declarations: [...PAGE_COMPONENT],
     imports: [SuperAdminRoutingModule, ...CUSTOM_MODULE, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],

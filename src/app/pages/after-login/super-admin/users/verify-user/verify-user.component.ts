@@ -55,6 +55,7 @@ export class VerifyUserComponent implements OnInit {
     nonDefaultChannels!: Array<IChannelDetails>;
 
     bcNodeInfo!: Array<IBcNodeInfo>;
+    user!: IUserRes;
 
     private data: TreeNode<FSEntry>[] = [];
 
@@ -76,6 +77,8 @@ export class VerifyUserComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.user = this.authService.getUserDataSync();
+
         this.createTableData(this.rowData.company.filter((element: IUserCompany) => element.isDeleted === !this.enabled));
 
         this.options = { limit: Number.MAX_SAFE_INTEGER };
@@ -226,7 +229,8 @@ export class VerifyUserComponent implements OnInit {
         this.createStaffingForm = this.fb.group({
             bcNodeInfo: ['', [Validators.required]],
             bucketUrl: ['', [Validators.required]],
-            channels: [[], [Validators.required]]
+            channels: [[], [Validators.required]],
+            tempChannel: ['', [Validators.required]]
         });
     }
 
@@ -238,13 +242,19 @@ export class VerifyUserComponent implements OnInit {
         this.manageChannelService.getAllChannel(this.options).subscribe((res) => {
             this.channelDetails = res.data.docs;
             this.defaultChannels = this.channelDetails.filter((d) => d.isDefault === true);
-            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true);
+            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true && d.createdBy === this.user.id);
         });
     }
 
     getBcNodeInfo(): void {
         this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
-            this.bcNodeInfo = res.data.docs;
+            this.bcNodeInfo = res.data.docs.filter((f) => f.addedBy._id === this.user.id);
+        });
+    }
+
+    onChannelSelection(event: string): void {
+        this.createStaffingForm.patchValue({
+            channels: [event]
         });
     }
 }
