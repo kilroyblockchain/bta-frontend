@@ -25,9 +25,12 @@ export class NewChannelComponent implements OnInit {
     }
 
     buildNewChannelForm(): void {
+        const subscriptionType = this.authService.getDefaultSubscriptionType();
+
         this.newChannelForm = this.fb.group({
             channelName: ['', [Validators.required]],
-            connectionProfileName: ['', [Validators.required]]
+            connectionProfileName: ['', [Validators.required]],
+            isCompanyChannel: [subscriptionType === 'super-admin' ? true : false]
         });
     }
 
@@ -36,6 +39,7 @@ export class NewChannelComponent implements OnInit {
         if (!valid) {
             return;
         }
+
         this.loading = true;
         this.manageChannelService
             .createChannelDetails(value)

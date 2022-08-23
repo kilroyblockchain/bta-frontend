@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiModelComponent } from './ai-model/ai-model.component';
 import { ViewAiModelDetailsComponent } from './ai-model/view-ai-model-details/view-ai-model-details.component';
-import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
 import { ManageProjectComponent } from './manage-project.component';
 import { CompareLogFilesComponent } from './model-review/compare-log-files/compare-log-file.component';
 import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
@@ -23,11 +22,6 @@ const routes: Routes = [
                 path: 'all',
                 component: ProjectComponent,
                 data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.MANAGE_PROJECT' }
-            },
-            {
-                path: 'channel-setup',
-                component: ChannelSetUpComponent,
-                data: { pageTitle: 'MANAGE_PROJECTS.PAGE_TITLE.CHANNEL_DETAIL' }
             },
             {
                 path: 'version-reports/:id',

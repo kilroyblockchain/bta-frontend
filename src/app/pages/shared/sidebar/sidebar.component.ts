@@ -106,6 +106,7 @@ export class SidebarComponent {
      */
     async buildDefaultMenu(): Promise<void> {
         const manageUserMenuItem = [];
+        const bcConfigurationMenuItem = [];
 
         if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.ORGANIZATION_UNIT, [ACCESS_TYPE.READ])) {
             manageUserMenuItem.push({
@@ -139,6 +140,32 @@ export class SidebarComponent {
                 title: 'Users',
                 children: <MenuItem[]>manageUserMenuItem,
                 key: 'HEADER.MENU_ITEM.MANAGE_USERS'
+            });
+        }
+
+        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.BC_NODE_INFO, [ACCESS_TYPE.READ])) {
+            bcConfigurationMenuItem.push({
+                title: 'Bc Node Info',
+                link: '/u/blockchain/bc-node-info',
+                pathMatch: 'full',
+                key: 'SUPER_ADMIN.SIDEBAR_MENU.BC_NODE_INFO'
+            });
+        }
+
+        if (await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.READ])) {
+            bcConfigurationMenuItem.push({
+                title: 'Channel Details',
+                link: '/u/blockchain/channel-setup',
+                pathMatch: 'full',
+                key: 'Channel Details'
+            });
+        }
+
+        if (bcConfigurationMenuItem.length && (this.utilsService.checkIsUserSuperAdmin() || (await this.utilsService.checkIsUserOrgAdmin()))) {
+            this.companyUsersMenuItems.push({
+                title: 'Bc Configuration',
+                children: <MenuItem[]>bcConfigurationMenuItem,
+                key: 'Bc Configuration'
             });
         }
     }
@@ -183,13 +210,6 @@ export class SidebarComponent {
                 pathMatch: 'full',
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.BLOCKED_USERS'
             });
-
-            usersMenuItems.push({
-                title: 'Channel SetUp',
-                link: '/u/manage-project/channel-setup',
-                pathMatch: 'full',
-                key: 'Channel Setup'
-            });
         }
         if (usersMenuItems.length) {
             this.superAdminMenuItems.push({
@@ -207,13 +227,6 @@ export class SidebarComponent {
             pathMatch: 'full',
             key: 'SUPER_ADMIN.SIDEBAR_MENU.APPLICATION_LOGS',
             hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.APPLICATION_LOGS, [ACCESS_TYPE.READ]))
-        });
-        this.superAdminMenuItems.push({
-            title: 'BC Node Info',
-            link: '/u/admin/bc-node-info',
-            pathMatch: 'full',
-            key: 'SUPER_ADMIN.SIDEBAR_MENU.BC_NODE_INFO',
-            hidden: !(await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.BC_NODE_INFO, [ACCESS_TYPE.READ]))
         });
         if (!this.superAdminMenuItems.length) {
             this.sidebarService.collapse();

@@ -6,7 +6,7 @@ import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { IChannelDetails } from 'src/app/@core/interfaces/channel-details.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IUserCompany, IUserRes } from 'src/app/@core/interfaces/user-data.interface';
-import { AuthService, BlockChainService, LangTranslateService, ManageChannelDetailsService, ManageUserService, StaffingService, UtilsService } from 'src/app/@core/services';
+import { AuthService, BlockChainService, LangTranslateService, ManageChannelDetailsService, ManageUserService, UtilsService } from 'src/app/@core/services';
 import { BCChannelService, IBCChannelDetail } from 'src/app/@core/services/bc-channel.service';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { IUserActionRow } from '../user.interface';
@@ -55,6 +55,7 @@ export class VerifyUserComponent implements OnInit {
     nonDefaultChannels!: Array<IChannelDetails>;
 
     bcNodeInfo!: Array<IBcNodeInfo>;
+    user!: IUserRes;
 
     private data: TreeNode<FSEntry>[] = [];
 
@@ -69,14 +70,15 @@ export class VerifyUserComponent implements OnInit {
         private bcChannelService: BCChannelService,
         private langTranslateService: LangTranslateService,
         private readonly manageChannelService: ManageChannelDetailsService,
-        private readonly blockChainService: BlockChainService,
-        private readonly staffingService: StaffingService
+        private readonly blockChainService: BlockChainService
     ) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
         this.buildCreateStaffingForm();
     }
 
     ngOnInit(): void {
+        this.user = this.authService.getUserDataSync();
+
         this.createTableData(this.rowData.company.filter((element: IUserCompany) => element.isDeleted === !this.enabled));
 
         this.options = { limit: Number.MAX_SAFE_INTEGER };
@@ -227,7 +229,8 @@ export class VerifyUserComponent implements OnInit {
         this.createStaffingForm = this.fb.group({
             bcNodeInfo: ['', [Validators.required]],
             bucketUrl: ['', [Validators.required]],
-            channels: [[], [Validators.required]]
+            channels: [[], [Validators.required]],
+            tempChannel: ['', [Validators.required]]
         });
     }
 
@@ -239,13 +242,19 @@ export class VerifyUserComponent implements OnInit {
         this.manageChannelService.getAllChannel(this.options).subscribe((res) => {
             this.channelDetails = res.data.docs;
             this.defaultChannels = this.channelDetails.filter((d) => d.isDefault === true);
-            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true);
+            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true && d.createdBy === this.user.id);
         });
     }
 
     getBcNodeInfo(): void {
         this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
-            this.bcNodeInfo = res.data.docs;
+            this.bcNodeInfo = res.data.docs.filter((f) => f.addedBy._id === this.user.id);
+        });
+    }
+
+    onChannelSelection(event: string): void {
+        this.createStaffingForm.patchValue({
+            channels: [event]
         });
     }
 }
