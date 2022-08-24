@@ -1,4 +1,4 @@
-import { NotFoundComponent } from './../../miscellaneous/not-found/not-found.component';
+import { NotFoundComponent } from 'src/app/pages/miscellaneous/not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, Routes } from '@angular/router';
 import { Injectable, NgModule } from '@angular/core';
@@ -12,7 +12,6 @@ import { RejectedCompaniesComponent } from './rejected-companies/rejected-compan
 import { BlockedUsersComponent } from './blocked-users/blocked-users.component';
 import { AppDashboardComponent } from '../dashboard/dashboard.component';
 import { LogPageComponent } from './log-page/log-page.component';
-import { BcNodeComponent } from 'src/app/pages/after-login/blockchain/bc-node-info/bc-node-info.component';
 
 @Injectable()
 export class SuperAdminAccessGuard implements CanActivate {
@@ -85,12 +84,6 @@ const ROUTES: Routes = [
                 canActivate: [SuperAdminAccessGuard],
                 component: LogPageComponent,
                 data: { featureIdentifier: FEATURE_IDENTIFIER.APPLICATION_LOGS, pageTitle: 'PAGE_TITLE.APPLICATION_LOGS' }
-            },
-            {
-                path: 'bc-node-info',
-                canActivate: [SuperAdminAccessGuard],
-                component: BcNodeComponent,
-                data: { featureIdentifier: FEATURE_IDENTIFIER.BC_NODE_INFO, pageTitle: 'PAGE_TITLE.BC_NODE_INFO' }
             },
             {
                 path: '**',
