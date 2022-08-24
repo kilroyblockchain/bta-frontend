@@ -215,7 +215,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE') });
         }
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
-        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
         this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY') });
     }
 
@@ -449,10 +448,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE':
                             this.addProjectPurpose(this.rowProject);
-                            break;
-
-                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
-                            this.viewProjectVersionHistory(this.rowVersion);
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION':
                             this.editModelVersion(this.rowVersion);

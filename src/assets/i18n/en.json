@@ -626,7 +626,8 @@
             "VIEW_DETAILS": "View Details",
             "VIEW_DOC": "View Doc",
             "BC_TIME_STAMPS": "BC Timestamps",
-            "BC_TRANSACTION_ID": "Bc Transaction Id"
+            "BC_TRANSACTION_ID": "Bc Transaction Id",
+            "FILE_NAME": "Filename"
         },
         "PAGE_TITLE": {
             "MANAGE_PROJECT": "Manage Project",
@@ -637,7 +638,7 @@
             "MODEL_REVIEWS": "Model Reviews",
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Version Bc History",
-            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History",
+            "MODEL_REVIEW_BC_HISTORY": "Model Bc History",
             "COMPARE_LOG_FILES": "Compare Logs Files",
             "VERIFY_BC_HASH": "Verify Bc Hash",
             "LOG_FILE_EXPERIMENT_DETAILS": "Log File Experiment Details"
@@ -653,7 +654,7 @@
             "EDIT_PROJECT_VERSION": "Edit Version",
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Model Version Bc History",
-            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History"
+            "MODEL_REVIEW_BC_HISTORY": "Model Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -874,7 +875,10 @@
                 "TEST_METRICS": "Test Metrics",
                 "EPOCHS": "Epochs",
                 "VERIFY_EXPERIMENT_HASH": "Verify Experiment Hash",
-                "EXPERIMENT_BC_HASH": "Experiment Bc Hash"
+                "EXPERIMENT_BC_HASH": "Experiment Bc Hash",
+                "LOG_HASH": "Log Hash",
+                "HASH_KEY": "Hash Key",
+                "MODEL_HASH": "Model Hash"
             },
             "COLUMN_NAME": {
                 "EXP_ID": "Exp Id/No",
@@ -921,7 +925,7 @@
                 "COMPLETE": "Complete",
                 "REVIEW_SUPPORTING_DOCUMENTS": "Review Supporting Documents",
                 "REVIEW_MODEL_DETAILS": "Review Model Details",
-                "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
+                "MODEL_REVIEW_BC_HISTORY": "Model Blockchain History",
                 "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
                 "REVIEWED_MODEL_ID": "Reviewed Model ID",
                 "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments",

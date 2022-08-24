@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, interval, startWith, Subscription, switchMap } from 'rxjs';
-import { IBcExperimentHistoryData, IBcArtifactModelHistoryData } from 'src/app/@core/interfaces/bc-manage-project.interface';
+import { IBcExperimentHistoryData, IBcArtifactModelDetails } from 'src/app/@core/interfaces/bc-manage-project.interface';
 import { IAiModel, IEpochs, IExp, ITestMetrics } from 'src/app/@core/interfaces/manage-project.interface';
 import { BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
@@ -31,7 +31,7 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
 
     timeIntervalArtifactModelSets!: Subscription;
     artifactModelOracleHash!: string;
-    artifactModelBcHistory!: IBcArtifactModelHistoryData;
+    artifactModelBcDetails!: IBcArtifactModelDetails;
 
     artifactModelOracleHashLoading!: boolean;
     artifactModelBcHashLoading!: boolean;
@@ -41,6 +41,8 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
 
     lastExperimentBcHistoryData!: boolean;
     lastExperimentBcHistoryLoading!: boolean;
+
+    isDataAvailable!: boolean;
 
     constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, public utilsService: UtilsService, private manageProjectService: ManageProjectService) {}
 
@@ -76,6 +78,7 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
     getExperimentDetails(experimentId: string): void {
         this.loading = true;
         this.dataFound = false;
+        this.isDataAvailable = true;
 
         this.manageProjectService
             .getExperimentDetails(experimentId)
@@ -96,10 +99,12 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                         this.dataFound = true;
                     } else {
                         this.dataFound = false;
+                        this.isDataAvailable = false;
                     }
                 },
                 error: () => {
                     this.dataFound = false;
+                    this.isDataAvailable = false;
                 }
             });
     }
@@ -117,6 +122,8 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
             .subscribe((res) => {
                 if (res) {
                     this.experimentOracleBCHash = res.data;
+                } else {
+                    this.isDataAvailable = false;
                 }
             });
     }
@@ -142,10 +149,12 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                         this.dataFound = true;
                     } else {
                         this.dataFound = false;
+                        this.isDataAvailable = false;
                     }
                 },
                 error: () => {
                     this.dataFound = false;
+                    this.isDataAvailable = false;
                 }
             });
     }
@@ -169,10 +178,12 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                         this.experimentBcHistoryData = true;
                     } else {
                         this.experimentBcHistoryData = false;
+                        this.isDataAvailable = false;
                     }
                 },
                 error: () => {
                     this.experimentBcHistoryData = false;
+                    this.isDataAvailable = false;
                 }
             });
     }
@@ -189,10 +200,12 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                     this.lastExperimentBcHistoryData = true;
                 } else {
                     this.lastExperimentBcHistoryData = false;
+                    this.isDataAvailable = false;
                 }
             },
             error: () => {
                 this.lastExperimentBcHistoryData = false;
+                this.isDataAvailable = false;
             }
         });
     }
@@ -205,7 +218,9 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
             if (res && res.success) {
                 const { data } = res;
                 this.getArtifactModelOracleBcHash(data);
-                this.getArtifactModelBcHash(data);
+                this.getArtifactModelBcDetails(data);
+            } else {
+                this.isDataAvailable = false;
             }
         });
     }
@@ -230,14 +245,16 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                         this.artifactModelOracleHash = data.hash;
                         this.timeIntervalArtifactModelSets.unsubscribe();
                         this.bcManageProjectService.deleteOracleDataHash(artifactModelHashId).subscribe();
+                    } else {
+                        this.isDataAvailable = false;
                     }
                 });
         });
     }
 
-    getArtifactModelBcHash(modelId: string): void {
+    getArtifactModelBcDetails(modelId: string): void {
         this.bcManageProjectService
-            .getArtifactModelBcHistory(modelId)
+            .getArtifactModelBcDetails(modelId)
             .pipe(
                 finalize(() => {
                     this.artifactModelBcHashLoading = false;
@@ -246,7 +263,9 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
             .subscribe((res) => {
                 if (res && res.success) {
                     const { data } = res;
-                    this.artifactModelBcHistory = data.data.data[0];
+                    this.artifactModelBcDetails = data.data;
+                } else {
+                    this.isDataAvailable = false;
                 }
             });
     }

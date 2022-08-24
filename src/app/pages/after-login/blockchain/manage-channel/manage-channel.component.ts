@@ -124,7 +124,7 @@ export class ChannelSetUpComponent implements OnInit, OnDestroy {
                         } else {
                             this.dataFound = true;
                         }
-                        this.tableData = data.docs;
+                        this.tableData = data.docs.filter((d) => d.createdBy === this.user.id);
                         this.createTableData(this.tableData);
                     } else {
                         this.totalRecords = 0;

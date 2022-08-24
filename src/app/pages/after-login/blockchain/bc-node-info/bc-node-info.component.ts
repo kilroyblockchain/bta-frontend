@@ -4,6 +4,7 @@ import { NbDialogService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } fr
 import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subscription } from 'rxjs';
 import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, BlockChainService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
 import { ISearchQuery } from 'src/app/pages/miscellaneous/search-input/search-query.interface';
@@ -55,6 +56,8 @@ export class BcNodeComponent implements OnInit, OnDestroy {
     editBcNodeDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
 
+    user!: IUserRes;
+
     constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService, private titleCasePipe: TitleCasePipe, private translate: TranslateService, private blockchainService: BlockChainService, public utilsService: UtilsService, private authService: AuthService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
@@ -62,6 +65,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.pageChange(1);
         this.setTranslatedTableColumns();
+        this.user = this.authService.getUserDataSync();
     }
 
     pageChange(pageNumber: number): void {
@@ -123,7 +127,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
                         } else {
                             this.dataFound = true;
                         }
-                        this.tableData = res.data.docs;
+                        this.tableData = res.data.docs.filter((d) => d.addedBy._id === this.user.id);
                         this.createTableData(this.tableData);
                     } else {
                         this.totalRecords = 0;

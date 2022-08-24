@@ -170,3 +170,11 @@ export interface IBcArtifactModel {
     project: IBcProjectInfo;
     recordDate: Date;
 }
+
+export interface IBcArtifactModelDetailsData {
+    data: IBcArtifactModelDetails;
+}
+
+export interface IBcArtifactModelDetails {
+    data: IBcArtifactModel;
+}
