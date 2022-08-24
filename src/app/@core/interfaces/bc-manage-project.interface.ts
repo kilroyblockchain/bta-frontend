@@ -170,21 +170,3 @@ export interface IBcArtifactModel {
     project: IBcProjectInfo;
     recordDate: Date;
 }
-
-/*
-modelArtifact: {
-creatorMSP: "PeerDs1MainnetBtaKilroyMSP"
-entryUser: "cavakoh@mailinator.com"
-modelArtifactBcHash: "7553df91b58fd8da2b6656abbb2b1b8307ea4434dbc0fd6df594b5d6d7938496"
-modelArtifactName: "tsd_model_1"
-modelVersion: {id: "62fbc3fbea9022d993f050ba", versionName: "v1"}
-project: {id: "62efd37ef24e4b26ff79c760", projectName: "TSD"}
-recordDate: "2022-08-16T16:23:09Z"
-}
-*/
-/*
-isDeleted: false
-
-txId: "b7c6d472eeb2b280e4248a370d9ecdd8a7de0a5b0c6b7228dc5fa907aaa716b6"
-
-*/
