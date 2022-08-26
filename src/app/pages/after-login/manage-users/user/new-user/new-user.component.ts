@@ -75,28 +75,23 @@ export class NewUserComponent implements OnInit {
             const staffingIdList = this.accumulateStaffingIdFromStaffingFormArrayValues(staffing);
             this.newUserForm.get('staffingId')?.setValue(staffingIdList);
         });
-        this.existingUserForm.get('staffing')?.valueChanges.subscribe((staffing: { staffingUnit: string[] }[]) => {
+        this.existingUserForm.get('staffing')?.valueChanges.subscribe((staffing: { staffingUnit: string }[]) => {
             const staffingIdList = this.accumulateStaffingIdFromStaffingFormArrayValues(staffing);
             this.existingUserForm.get('staffingId')?.setValue(staffingIdList);
         });
     }
 
-    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string[] }[]): string[] {
-        const staffingIdList = staffing.reduce((acc: string[], staff: { staffingUnit: string[] }) => {
-            staff.staffingUnit.forEach((staffId) => {
-                if (!acc.includes(staffId)) {
-                    acc.push(staffId);
-                }
-            });
-            return acc;
-        }, []);
+    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string }[]): string[] {
+        const staffingIdList = staffing.map((staff: { staffingUnit: string }) => {
+            return staff.staffingUnit;
+        });
         return staffingIdList;
     }
 
     createStaffingFormArray(): FormGroup {
         const staffingFormGroup = this.fb.group({
             orgUnit: ['', [Validators.required]],
-            staffingUnit: [[], [Validators.required]],
+            staffingUnit: ['', [Validators.required]],
             staffingList: [[]]
         });
         return staffingFormGroup;
@@ -217,7 +212,8 @@ export class NewUserComponent implements OnInit {
         this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
             if (res && res.success) {
                 this.StaffingFormGroupArray.at(index).patchValue({
-                    staffingList: res.data
+                    staffingList: res.data,
+                    staffingUnit: ''
                 });
             }
         });
@@ -227,7 +223,8 @@ export class NewUserComponent implements OnInit {
         this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
             if (res && res.success) {
                 this.StaffingFormGroupArrayForExistingUser.at(index).patchValue({
-                    staffingList: res.data
+                    staffingList: res.data,
+                    staffingUnit: ''
                 });
             }
         });

@@ -1,5 +1,5 @@
 <form [formGroup]="loginFormGroup" (ngSubmit)="executeCaptcha(loginFormGroup, captchaRef)" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
-    <h4 class="title">{{ 'LOGIN.TITLE.WELCOME_TO_APP' | translate: { appTitle: appTitle | titlecase } }}</h4>
+    <h4 class="title">{{ 'LOGIN.TITLE.WELCOME_TO_APP' | translate: { appTitle: appTitle } }}</h4>
     <p class="sub-title">{{ 'LOGIN.TITLE.SIGN_IN_BY_ENTERING_THE_INFORMATION_BELOW' | translate }}</p>
     <div class="form-inner-container">
         <div class="form-holder floating">

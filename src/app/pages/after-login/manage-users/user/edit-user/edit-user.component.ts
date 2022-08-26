@@ -74,7 +74,7 @@ export class EditUserComponent implements OnInit {
     }
 
     patchStaffing(staffing: IStaffing[]): void {
-        const mergeCommonOrgUnit = (acc: { orgUnit: string; staffingUnit: string[] }[], staff: IStaffing) => {
+        /*  const mergeCommonOrgUnit = (acc: { orgUnit: string; staffingUnit: string[] }[], staff: IStaffing) => {
             const index = acc.findIndex((detail) => detail.orgUnit === staff?.organizationUnitId?._id);
             if (index < 0) {
                 acc.push({
@@ -100,7 +100,15 @@ export class EditUserComponent implements OnInit {
                 this.StaffingFormGroupArray.push(this.createStaffingFormGroup(staff));
                 this.populateStaffing(staff.orgUnit, index);
             }
-        });
+        }); */
+
+        if (staffing && staffing.length) {
+            this.StaffingFormGroupArray.at(0).patchValue({
+                orgUnit: staffing[0]?.organizationUnitId?._id,
+                staffingUnit: staffing[0]?._id ?? ''
+            });
+            this.populateStaffing(staffing[0]?.organizationUnitId?._id, 0);
+        }
     }
 
     patchRuntimeStaffing(): void {
@@ -110,22 +118,17 @@ export class EditUserComponent implements OnInit {
         });
     }
 
-    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string[] }[]): string[] {
-        const staffingIdList = staffing.reduce((acc: string[], staff: { staffingUnit: string[] }) => {
-            staff.staffingUnit.forEach((staffId) => {
-                if (!acc.includes(staffId)) {
-                    acc.push(staffId);
-                }
-            });
-            return acc;
-        }, []);
+    accumulateStaffingIdFromStaffingFormArrayValues(staffing: { staffingUnit: string }[]): string[] {
+        const staffingIdList = staffing.map((staff: { staffingUnit: string }) => {
+            return staff.staffingUnit;
+        });
         return staffingIdList;
     }
 
-    createStaffingFormGroup(staff?: { orgUnit: string; staffingUnit: string[] }): FormGroup {
+    createStaffingFormGroup(staff?: { orgUnit: string; staffingUnit: string }): FormGroup {
         const staffingFormGroup = this.fb.group({
             orgUnit: [staff?.orgUnit ?? '', [Validators.required]],
-            staffingUnit: [staff?.staffingUnit ?? [], [Validators.required]],
+            staffingUnit: [staff?.staffingUnit ?? '', [Validators.required]],
             staffingList: [[]]
         });
         return staffingFormGroup;
@@ -180,7 +183,8 @@ export class EditUserComponent implements OnInit {
         this.staffingService.getOrganizationUnitStaffing(unitId).subscribe((res) => {
             if (res && res.success) {
                 this.StaffingFormGroupArray.at(index).patchValue({
-                    staffingList: res.data
+                    staffingList: res.data,
+                    staffingUnit: ''
                 });
             }
         });

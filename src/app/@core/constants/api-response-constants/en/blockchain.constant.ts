@@ -9,5 +9,11 @@ export const API_RES_MSG_BLOCKCHAIN = {
     BC_NODE_INFO_UPDATED: 'BC Node Info Updated Successfully',
     BC_NODE_INFO_DELETE_FAILED: 'Unable To Delete BC Node Info',
     BC_NODE_INFO_DELETED: ' BC Node Info Deleted Successfully',
+    SUCCESSFULLY_ADDED_CHANNEL_DETAIL: 'New Channel Details Added Successfully',
+    SUCCESSFULLY_UPDATED_CHANNEL_DETAIL: 'Channel Details Updated Successfully',
+    SUCCESSFULLY_DELETED_CHANNEL_DETAIL: 'Channel Deleted Successfully',
+    FETCHED_ALL_CHANNEL_DETAIL: 'All Channel Fetched',
+    CHANNEL_DETAIL_ALREADY_EXISTS: 'This Channel details already Exists',
+    CHANNEL_ID_NOT_FOUND: 'Channel Id Not Found',
     INVALID_BC_KEY: 'Invalid Bc Key'
 };

@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-holder">
                             <label for="Staffing" class="label">{{ '*' + ('MANAGE_USERS.USERS.LABEL.STAFFING' | translate) }}</label>
-                            <nb-select multiple [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors }">
+                            <nb-select [placeholder]="'MANAGE_USERS.USERS.PLACEHOLDER.SELECT_STAFFING' | translate" fullWidth formControlName="staffingUnit" [ngClass]="{ 'status-danger': submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors }">
                                 <nb-option *ngFor="let staffing of staffingFormGroup.get('staffingList')?.value" [value]="staffing._id">{{ staffing.staffingName }}</nb-option>
                             </nb-select>
                             <div *ngIf="submitted && getFormControl(staffingFormGroup, 'staffingUnit').errors as err" class="invalid-feedback">
@@ -51,7 +51,7 @@
                     </div>
                     <button nbButton hero status="primary" *ngIf="StaffingFormGroupArray.controls.length > 1" size="small" type="button" (click)="removeStaff(i)">{{ 'COMMON.BUTTON.DELETE' | translate }}</button>
                 </nb-card-body>
-                <nb-card-footer *ngIf="organizationUnits && organizationUnits.length > 1">
+                <nb-card-footer *ngIf="organizationUnits && organizationUnits.length > 1 && false">
                     <button nbButton hero status="primary" size="small" type="button" (click)="addStaff()">{{ 'MANAGE_USERS.USERS.BUTTON.ADD_ANOTHER_UNIT_STAFF' | translate }}</button>
                 </nb-card-footer>
             </nb-card>
