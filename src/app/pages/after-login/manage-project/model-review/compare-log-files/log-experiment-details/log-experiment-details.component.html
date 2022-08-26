@@ -51,12 +51,12 @@
                 </div>
                 <div class="col-2-2" [nbSpinner]="experimentBcHistoryLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
                     <span> {{ experimentBcHistory?.modelExperiment?.experimentBcHash }}</span>
-                    <p *ngIf="experimentBcHistory?.modelExperiment" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME'" nbTooltipPlacement="start">- {{ 'log_' + experimentBcHistory?.modelExperiment?.experimentName + '.json' }}</p>
+                    <p *ngIf="experimentBcHistory?.modelExperiment" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME' | translate" nbTooltipPlacement="start">- {{ 'log_' + experimentBcHistory?.modelExperiment?.experimentName + '.json' }}</p>
                 </div>
                 <div class="col-3-3" [nbSpinner]="experimentLogsLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
                     <span> {{ experimentOracleBCHash }}</span>
                     <ng-container *ngIf="experimentOracleBCHash && experimentBcHistory">
-                        <p [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME'" nbTooltipPlacement="start">- {{ 'log_' + experimentBcHistory?.modelExperiment?.experimentName + '.json' }}</p>
+                        <p [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME' | translate" nbTooltipPlacement="start">- {{ 'log_' + experimentBcHistory?.modelExperiment?.experimentName + '.json' }}</p>
                     </ng-container>
                 </div>
                 <div class="col-4-4" [nbSpinner]="experimentLogsLoading || experimentBcHistoryLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
@@ -79,11 +79,11 @@
                     </div>
                     <div class="col-2-2" [nbSpinner]="artifactModelBcHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
                         <span> {{ artifactModelBcDetails?.data?.modelArtifactBcHash }}</span>
-                        <p *ngIf="artifactModelBcDetails" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME'" nbTooltipPlacement="start">- {{ artifactModelBcDetails?.data?.modelArtifactName }}{{ '.' + 'pkl' }}</p>
+                        <p *ngIf="artifactModelBcDetails" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME' | translate" nbTooltipPlacement="start">- {{ artifactModelBcDetails?.data?.modelArtifactName }}{{ '.' + 'pkl' }}</p>
                     </div>
                     <div class="col-3-3" [nbSpinner]="artifactModelOracleHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
                         <span> {{ artifactModelOracleHash }}</span>
-                        <p *ngIf="artifactModelOracleHash" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME'" nbTooltipPlacement="start">- {{ artifactModelBcDetails?.data?.modelArtifactName }}{{ '.' + 'pkl' }}</p>
+                        <p *ngIf="artifactModelOracleHash" [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.FILE_NAME' | translate" nbTooltipPlacement="start">- {{ artifactModelBcDetails?.data?.modelArtifactName }}{{ '.' + 'pkl' }}</p>
                     </div>
                     <div class="col-4-4" [nbSpinner]="artifactModelOracleHashLoading || artifactModelBcHashLoading" nbSpinnerSize="tiny" nbSpinnerStatus="success">
                         <span *ngIf="artifactModelBcDetails?.data?.modelArtifactBcHash === artifactModelOracleHash; else unVerified" class="verified">
