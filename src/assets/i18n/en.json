@@ -688,7 +688,7 @@
                 "EDIT_PROJECT": "Edit Project",
                 "ADD_PROJECT_PURPOSE": "Add Project Purpose",
                 "EDIT_PROJECT_PURPOSE": "Edit Project Purpose",
-                "BLOCKCHAIN_DETAILS": "Blockchain Details",
+                "PROJECT_BLOCKCHAIN_DETAILS": "Project Blockchain Details",
                 "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
             "BUTTON": {

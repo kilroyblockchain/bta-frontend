@@ -121,14 +121,15 @@ export class BcNodeComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (res) => {
                     if (res && res.success) {
-                        this.totalRecords = res.data.total;
+                        const { data } = res;
+                        this.tableData = data.docs.filter((d) => d.addedBy._id === this.user.id);
+                        this.createTableData(this.tableData);
+                        this.totalRecords = this.tableData.length;
                         if (!this.totalRecords) {
                             this.dataFound = false;
                         } else {
                             this.dataFound = true;
                         }
-                        this.tableData = res.data.docs.filter((d) => d.addedBy._id === this.user.id);
-                        this.createTableData(this.tableData);
                     } else {
                         this.totalRecords = 0;
                     }

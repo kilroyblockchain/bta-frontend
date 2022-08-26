@@ -187,7 +187,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT') });
         }
         this.canAddVersion = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.WRITE]);
-        if (this.canAddVersion) {
+        if (this.isAIEng && this.canAddVersion) {
             this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION') });
         }
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);

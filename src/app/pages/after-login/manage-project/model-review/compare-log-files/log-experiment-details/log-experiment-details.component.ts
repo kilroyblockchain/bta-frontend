@@ -47,6 +47,8 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
     constructor(private activeRoute: ActivatedRoute, private bcManageProjectService: BcManageProjectService, public utilsService: UtilsService, private manageProjectService: ManageProjectService) {}
 
     ngOnInit(): void {
+        this.isDataAvailable = true;
+
         this.getAiLogsData();
     }
 
@@ -78,7 +80,6 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
     getExperimentDetails(experimentId: string): void {
         this.loading = true;
         this.dataFound = false;
-        this.isDataAvailable = true;
 
         this.manageProjectService
             .getExperimentDetails(experimentId)
@@ -120,7 +121,7 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                 })
             )
             .subscribe((res) => {
-                if (res) {
+                if (res && res.success) {
                     this.experimentOracleBCHash = res.data;
                 } else {
                     this.isDataAvailable = false;
@@ -245,8 +246,6 @@ export class ViewLogExperimentDetailsComponent implements OnInit, OnDestroy {
                         this.artifactModelOracleHash = data.hash;
                         this.timeIntervalArtifactModelSets.unsubscribe();
                         this.bcManageProjectService.deleteOracleDataHash(artifactModelHashId).subscribe();
-                    } else {
-                        this.isDataAvailable = false;
                     }
                 });
         });
