@@ -156,7 +156,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     vewVersionBChistory(versionId: string): void {
-        const URL = 'u/manage-project/version-bc-history';
+        const URL = 'u/manage-project/model-review-bc-history';
         this.router.navigate([URL, versionId]);
     }
 }
