@@ -342,7 +342,6 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     addChannel(event: string): void {
-        console.log(event);
         this.newOrganizationStaffingForm.patchValue({
             channels: [event]
         });
