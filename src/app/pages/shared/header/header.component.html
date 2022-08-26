@@ -2,11 +2,11 @@
     <div class="left-section">
         <nb-actions size="small" *ngIf="!isLoggedIn">
             <nb-action>
-                <!--  <div class="nopad logo-holder" (click)="navigateTo('/')">
+                <div class="nopad logo-holder" (click)="navigateTo('/')">
                     <a [href]="BASE_URL">
                         <img src="/assets/images/logo/base-logo.png" [alt]="(appTitle | titlecase) + ' Logo'" [title]="(appTitle | titlecase) + ' Logo'" />
                     </a>
-                </div> -->
+                </div>
             </nb-action>
         </nb-actions>
         <nb-actions size="small" *ngIf="isLoggedIn">
@@ -14,11 +14,11 @@
                 <nb-icon icon="menu-outline"></nb-icon>
             </nb-action>
             <nb-action>
-                <!--  <div class="logo-holder" (click)="navigateTo('/u/')">
+                <div class="logo-holder" (click)="navigateTo('/u/')">
                     <a [href]="BASE_URL + 'u'">
                         <img src="/assets/images/logo/base-logo.png" [alt]="(appTitle | titlecase) + ' Logo'" [title]="(appTitle | titlecase) + ' Logo'" />
                     </a>
-                </div> -->
+                </div>
             </nb-action>
         </nb-actions>
     </div>
