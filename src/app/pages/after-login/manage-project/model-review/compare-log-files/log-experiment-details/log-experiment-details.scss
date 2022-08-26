@@ -48,16 +48,16 @@ table {
     }
 
     .col-4-4 {
-        grid-column: 4/4;
+        grid-column: 4/-1;
+
+        .verified {
+            color: green;
+        }
+
+        .un-verified {
+            color: red;
+        }
     }
-}
-
-.verified {
-    color: green;
-}
-
-.un-verified {
-    color: red;
 }
 
 .accuracy-compare {

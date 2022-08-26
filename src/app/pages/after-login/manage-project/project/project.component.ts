@@ -125,13 +125,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.setTranslatedTableColumns();
         this.pageChange(1);
         this.checkAccess();
-        const options = { page: this.page, limit: Number.MAX_SAFE_INTEGER, status: this.toggleStatusFilter ? 'verified' : 'notverified', subscriptionType: this.authService.getDefaultSubscriptionType() };
-
-        this.manageProjectService.canAddProject(options).subscribe((res) => {
-            if (res && res.success) {
-                this.canAddProjectAndVersion = res.data;
-            }
-        });
     }
 
     ngOnDestroy(): void {
@@ -175,6 +168,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.isAIEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.AI_ENGINEER.toLowerCase())));
         this.isMLOpsEng = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.MLOps_ENGINEER.toLowerCase())));
         this.isStakeHolder = !!this.user.company.find((f) => f.staffingId.find((s) => s.staffingName.toLowerCase().includes(PROJECT_USER.STAKEHOLDER.toLowerCase())));
+
+        if (this.isCompanyAdmin || this.isAIEng) {
+            const options = { page: this.page, limit: Number.MAX_SAFE_INTEGER, status: this.toggleStatusFilter ? 'verified' : 'notverified', subscriptionType: this.authService.getDefaultSubscriptionType() };
+
+            this.manageProjectService.canAddProject(options).subscribe((res) => {
+                if (res && res.success) {
+                    this.canAddProjectAndVersion = res.data;
+                }
+            });
+        }
     }
 
     async checkAccess(): Promise<void> {
@@ -184,7 +187,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VIEW_PROJECT') });
         }
         this.canAddVersion = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.MODEL_VERSION, [ACCESS_TYPE.WRITE]);
-        if (this.canAddVersion) {
+        if (this.isAIEng && this.canAddVersion) {
             this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.ADD_VERSION') });
         }
         this.canUpdateProject = await this.utilsService.canAccessFeature(FEATURE_IDENTIFIER.PROJECT, [ACCESS_TYPE.UPDATE]);
@@ -212,7 +215,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE') });
         }
         this.parentMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.PROJECT_BC_HISTORY') });
-        this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY') });
         this.childrenMenuItems.push({ key: 'MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY', title: this.langTranslateService.translateKey('MANAGE_PROJECTS.MENU_ITEM.MODEL_REVIEW_BC_HISTORY') });
     }
 
@@ -310,21 +312,26 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 });
                 this.dataSource = this.dataSourceBuilder.create(this.data);
             } else {
-                for (const version of item.projectVersions) {
-                    this.data.push({
-                        data: {
-                            _id: item._id,
-                            name: item.name,
-                            details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
-                            purpose: version.versionName,
-                            status: version.versionStatus,
-                            action: { project: item, version },
-                            subrow: false,
-                            versionId: version._id
-                        }
-                    });
-                    this.dataSource = this.dataSourceBuilder.create(this.data);
-                    this.totalRecords = this.data.length;
+                if (item.projectVersions.length) {
+                    for (const version of item.projectVersions) {
+                        this.data.push({
+                            data: {
+                                _id: item._id,
+                                name: item.name,
+                                details: version?.createdBy?.firstName + ' ' + version?.createdBy?.lastName,
+                                purpose: version.versionName,
+                                status: version.versionStatus,
+                                action: { project: item, version },
+                                subrow: false,
+                                versionId: version._id
+                            }
+                        });
+                        this.dataSource = this.dataSourceBuilder.create(this.data);
+                        this.totalRecords = this.data.length;
+                    }
+                } else {
+                    this.dataFound = false;
+                    this.totalRecords = 0;
                 }
             }
         }
@@ -367,7 +374,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.addVersionDialogClose = addVersionOpen.onClose.subscribe((res) => {
                 if (res && res !== 'close' && res.success) {
                     this.pageChange(1);
-                    this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.SAVING_NEW_MODEL_VERSION') }, hasBackdrop: true, closeOnBackdropClick: false });
+                    setTimeout(() => {
+                        this.dialogService.open(AlertComponent, { context: { alert: true, info: this.translate.instant('MANAGE_PROJECTS.PROJECT.ALERT_MSG.SAVING_NEW_MODEL_VERSION') }, hasBackdrop: true, closeOnBackdropClick: false });
+                    }, 1000);
                 }
             });
         } else {
@@ -439,10 +448,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.PROJECT_PURPOSE':
                             this.addProjectPurpose(this.rowProject);
-                            break;
-
-                        case 'MANAGE_PROJECTS.MENU_ITEM.VERSION_BC_HISTORY':
-                            this.viewProjectVersionHistory(this.rowVersion);
                             break;
                         case 'MANAGE_PROJECTS.MENU_ITEM.EDIT_PROJECT_VERSION':
                             this.editModelVersion(this.rowVersion);

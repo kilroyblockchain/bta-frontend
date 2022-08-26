@@ -170,3 +170,13 @@ export interface IModelReview {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface IAiArtifactsModel {
+    _id: string;
+    modelNo: string;
+    modelBcHash: string;
+    version: IProjectVersion;
+    project: IProject;
+    updatedAt: Date;
+    createdAt: Date;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
-import { IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IMonitoringStatus, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
+import { IAiArtifactsModel, IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IMonitoringStatus, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -111,5 +111,17 @@ export class ManageProjectService {
 
     getAllExperimentDetails(versionId: string): Observable<IAppResponse<Array<IAiModelExp[]>>> {
         return this.http.get(URLConstant.getAllExperimentDetailsURL + `/${versionId}`);
+    }
+
+    getAllArtifactsModel(query: { [key: string]: unknown }, versionId: string): Observable<IAppResponse<IPaginateResult<IAiArtifactsModel>>> {
+        return this.http.get(URLConstant.getAllArtifactsModelURL + `/${versionId}`, query);
+    }
+
+    getArtifactModelOracleBcHash(expId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getArtifactModelOracleHashURL + `/${expId}`);
+    }
+
+    getArtifactModelDetails(expId: string): Observable<IAppResponse<string>> {
+        return this.http.get(URLConstant.getArtifactModelDetailsURL + `/${expId}`);
     }
 }
