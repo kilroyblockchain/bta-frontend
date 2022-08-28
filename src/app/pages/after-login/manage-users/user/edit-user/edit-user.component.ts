@@ -74,34 +74,6 @@ export class EditUserComponent implements OnInit {
     }
 
     patchStaffing(staffing: IStaffing[]): void {
-        /*  const mergeCommonOrgUnit = (acc: { orgUnit: string; staffingUnit: string[] }[], staff: IStaffing) => {
-            const index = acc.findIndex((detail) => detail.orgUnit === staff?.organizationUnitId?._id);
-            if (index < 0) {
-                acc.push({
-                    orgUnit: staff?.organizationUnitId?._id,
-                    staffingUnit: [staff?._id]
-                });
-            } else {
-                acc[index] = {
-                    orgUnit: staff?.organizationUnitId?._id,
-                    staffingUnit: [...acc[index].staffingUnit, staff?._id]
-                };
-            }
-            return acc;
-        };
-        staffing.reduce(mergeCommonOrgUnit, []).forEach((staff, index) => {
-            if (index === 0) {
-                this.StaffingFormGroupArray.at(index).patchValue({
-                    orgUnit: staff.orgUnit,
-                    staffingUnit: staff.staffingUnit
-                });
-                this.populateStaffing(staff.orgUnit, index);
-            } else {
-                this.StaffingFormGroupArray.push(this.createStaffingFormGroup(staff));
-                this.populateStaffing(staff.orgUnit, index);
-            }
-        }); */
-
         if (staffing && staffing.length) {
             this.StaffingFormGroupArray.at(0).patchValue({
                 orgUnit: staffing[0]?.organizationUnitId?._id,
