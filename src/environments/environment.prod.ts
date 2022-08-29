@@ -1,5 +1,5 @@
 export const environment = {
-    project: 'bta',
+    project: 'BTA',
     production: true,
     apiURL: 'https://api.runbta.net/api/v1',
     hostURL: 'https://runbta.net/#/',

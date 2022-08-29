@@ -140,6 +140,11 @@ export class NewOrganizationStaffingComponent implements OnInit {
             });
         }
 
+        if (this.newOrganizationStaffingForm.get('staffingName')?.value === this.defaultStaffingName[2]) {
+            this.newOrganizationStaffingForm.get('bucketUrl')?.clearValidators();
+            this.newOrganizationStaffingForm.get('bucketUrl')?.updateValueAndValidity();
+        }
+
         this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
             featureId: access.featureId as string,
             accessType: access.accessType
