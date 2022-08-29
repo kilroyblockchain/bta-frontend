@@ -5,13 +5,11 @@ import { FEATURE_IDENTIFIER } from 'src/app/@core/constants/featureIdentifier.en
 import { AuthService, LangTranslateService, UtilsService } from 'src/app/@core/services';
 import { MenuItem } from 'src/app/@core/interfaces/menu-item.interface';
 import { environment } from 'src/environments/environment';
-import { TitleCasePipe } from '@angular/common';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 
 @Component({
     selector: 'app-sidebar',
-    templateUrl: './sidebar.component.html',
-    providers: [TitleCasePipe]
+    templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
     isLoggedIn = false;
@@ -22,7 +20,7 @@ export class SidebarComponent {
     userData!: IUserRes;
     appTitle = environment.project;
 
-    constructor(private utilsService: UtilsService, private authService: AuthService, private sidebarService: NbSidebarService, private langTranslateService: LangTranslateService, private titleCasePipe: TitleCasePipe) {
+    constructor(private utilsService: UtilsService, private authService: AuthService, private sidebarService: NbSidebarService, private langTranslateService: LangTranslateService) {
         this.isLoggedIn = this.authService.isLoggedIn;
         this.buildMenu();
     }
@@ -217,7 +215,7 @@ export class SidebarComponent {
                 children: <MenuItem[]>usersMenuItems,
                 key: 'SUPER_ADMIN.SIDEBAR_MENU.APP_USERS',
                 context: {
-                    appTitle: this.titleCasePipe.transform(this.appTitle)
+                    appTitle: this.appTitle
                 }
             });
         }
