@@ -280,9 +280,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     createTableData(data: IProject[]): void {
         this.data = [];
+        let dataFound = 0;
 
         for (const item of data) {
             if (this.isCompanyAdmin || this.isAIEng) {
+                dataFound++;
                 const children = [];
                 for (const version of item.projectVersions) {
                     children.push({
@@ -313,6 +315,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.dataSource = this.dataSourceBuilder.create(this.data);
             } else {
                 if (item.projectVersions.length) {
+                    dataFound++;
                     for (const version of item.projectVersions) {
                         this.data.push({
                             data: {
@@ -329,11 +332,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         this.dataSource = this.dataSourceBuilder.create(this.data);
                         this.totalRecords = this.data.length;
                     }
-                } else {
-                    this.dataFound = false;
-                    this.totalRecords = 0;
                 }
             }
+        }
+        if (!dataFound) {
+            this.dataFound = false;
+            this.totalRecords = 0;
         }
     }
 
