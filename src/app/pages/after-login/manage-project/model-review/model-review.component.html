@@ -181,7 +181,7 @@
                                         </p>
                                         <p>
                                             <ng-container *ngFor="let docs of review.documents; let i = index">
-                                                <a (click)="openDocs(docs.docURL)">
+                                                <a (click)="openDocs(docs.docURL, docs.docName)">
                                                     <nb-tag class="docs" status="basic" appearance="filled" [text]="docs.docName" [nbTooltip]="'COMMON.TOOLTIP.VIEW' | translate"> </nb-tag>
                                                 </a>
                                             </ng-container>
