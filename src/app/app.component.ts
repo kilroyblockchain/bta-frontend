@@ -41,7 +41,7 @@ export class AppComponent {
     setPageTitle(): void {
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
             const rt = this.getChild(this.activatedRoute);
-            const titledProject = this.titleCasePipe.transform(environment.project);
+            const titledProject = environment.project;
             rt.data.subscribe((data) => {
                 if (data['pageTitle']) {
                     this.translate.stream(data['pageTitle']).subscribe((translation: string) => {

@@ -1,10 +1,10 @@
 export const environment = {
-    project: 'base-proj',
+    project: 'BTA',
     production: true,
-    apiURL: 'https://prod-api.baseproj.net/api/v1',
-    hostURL: 'https://prod-api.baseproj.net/#/',
+    apiURL: 'https://api.runbta.net/api/v1',
+    hostURL: 'https://runbta.net/#/',
     internationalization: 'enabled',
     resultsPerPage: 15,
     disableCaptcha: false,
-    recaptchaSiteKey: '6LdKDNYfAAAAAHIhducYusgXcLHj_-3xF4qAesXZ'
+    recaptchaSiteKey: '6Leox4EhAAAAACUbw7R68nrnP1vmCVt8ELRi4Bs0'
 };

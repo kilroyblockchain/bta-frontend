@@ -25,6 +25,7 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
     monitoringReports!: Array<IMonitoringReport>;
 
     loading!: boolean;
+    reportsLoading!: boolean;
     totalRecords = 0;
     dataFound!: boolean;
     reportsData!: boolean;
@@ -98,14 +99,14 @@ export class MonitoringReportComponent implements OnInit, OnDestroy {
     }
 
     getMonitoringReports(versionId: string): void {
-        this.loading = true;
+        this.reportsLoading = true;
         this.reportsData = false;
 
         this.manageProjectService
             .getVersionReports(versionId)
             .pipe(
                 finalize(() => {
-                    this.loading = false;
+                    this.reportsLoading = false;
                 })
             )
             .subscribe({

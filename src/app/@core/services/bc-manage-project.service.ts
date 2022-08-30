@@ -1,9 +1,8 @@
-// bc-project
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse } from '../interfaces/app-response.interface';
-import { IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
+import { IAIModelTempHash, IBcArtifactModelDataHistory, IBcArtifactModelDetailsData, IBcExperimentData, IBcExperimentDataHistory, IBcManageProject, IBcManageProjectVersion, IBcModelReviewHistory, IBcProjectHistory, IBcProjectVersionHistory } from '../interfaces/bc-manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -51,6 +50,30 @@ export class BcManageProjectService {
     }
 
     downloadExperimentLogFile(experimentId: string): Observable<IAppResponse<string>> {
-        return this.http.get(URLConstant.downloadExperimentOracleFile + `/${experimentId}`);
+        return this.http.get(URLConstant.downloadExperimentOracleFileURL + `/${experimentId}`);
+    }
+
+    getOracleDataHash(hashId: string): Observable<IAppResponse<IAIModelTempHash>> {
+        return this.http.get(URLConstant.getOracleDataHashURL + `/${hashId}`);
+    }
+
+    deleteOracleDataHash(hashId: string): Observable<IAppResponse<IAIModelTempHash>> {
+        return this.http.delete(URLConstant.deleteOracleDataHashURL + `/${hashId}`);
+    }
+
+    getExperimentBcDetails(experimentId: string): Observable<IAppResponse<IBcExperimentData>> {
+        return this.http.get(URLConstant.getModelExperimentBcDetailsURL + `/${experimentId}`);
+    }
+
+    getExperimentBcHistory(experimentId: string): Observable<IAppResponse<IBcExperimentDataHistory>> {
+        return this.http.get(URLConstant.getModelExperimentBcHistoryURL + `/${experimentId}`);
+    }
+
+    getArtifactModelBcHistory(modelId: string): Observable<IAppResponse<IBcArtifactModelDataHistory>> {
+        return this.http.get(URLConstant.getArtifactModelBcHistoryURL + `/${modelId}`);
+    }
+
+    getArtifactModelBcDetails(modelId: string): Observable<IAppResponse<IBcArtifactModelDetailsData>> {
+        return this.http.get(URLConstant.getArtifactModelBcDetailsURL + `/${modelId}`);
     }
 }

@@ -51,6 +51,7 @@ export interface IProjectVersion {
     productionDate: Date;
     createdBy: IUserRes;
     project: IProject;
+    isQAStatus: boolean;
 }
 
 export enum VersionStatus {
@@ -62,7 +63,10 @@ export enum VersionStatus {
     DEPLOYED = 'Deployed',
     MONITORING = 'Monitoring',
     COMPLETE = 'Complete',
-    DRAFT = 'Draft'
+    DRAFT = 'Draft',
+    QA_STATUS = 'Quality Assurance',
+    DECLINED = 'Declined',
+    MLOPS_REVIEW = 'MLOPs Review'
 }
 
 interface IOracleBucketDataStatus {
@@ -80,6 +84,7 @@ export interface IMonitoringReport {
     _id: string;
     subject: string;
     description: string;
+    monitoringToolLink: string;
     documents: Array<IDocuments>;
     updatedAt: Date;
     createdAt: Date;
@@ -164,4 +169,14 @@ export interface IModelReview {
     staffing: string;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface IAiArtifactsModel {
+    _id: string;
+    modelNo: string;
+    modelBcHash: string;
+    version: IProjectVersion;
+    project: IProject;
+    updatedAt: Date;
+    createdAt: Date;
 }

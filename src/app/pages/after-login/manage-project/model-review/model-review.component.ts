@@ -29,6 +29,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     page!: number;
     loading!: boolean;
     totalRecords = 0;
+    reviewLoading!: boolean;
 
     isCompanyAdmin!: boolean;
     isStakeHolder!: boolean;
@@ -41,6 +42,8 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     isReviewStatusMonitoring!: boolean;
     isReviewStatusComplete!: boolean;
     isReviewStatusFailed!: boolean;
+    isReviewStatusDeclined!: boolean;
+
     newReviewDialogClose!: Subscription;
 
     constructor(private dialogService: NbDialogService, private router: Router, private activeRoute: ActivatedRoute, private translate: TranslateService, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
@@ -74,6 +77,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
         this.isReviewStatusFailed = versionStatus === VersionStatus.REVIEW_FAILED;
         this.isReviewStatusMonitoring = versionStatus === VersionStatus.MONITORING;
         this.isReviewStatusComplete = versionStatus === VersionStatus.COMPLETE;
+        this.isReviewStatusDeclined = versionStatus === VersionStatus.DECLINED;
     }
 
     pageChange(pageNumber: number): void {
@@ -122,13 +126,13 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
 
     getModelReviews(versionId: string): void {
         this.reviewData = false;
-        this.loading = true;
+        this.reviewLoading = true;
 
         this.manageProjectService
             .getModelReview(this.options, versionId)
             .pipe(
                 finalize(() => {
-                    this.loading = false;
+                    this.reviewLoading = false;
                 })
             )
             .subscribe({
@@ -141,8 +145,8 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
                             this.reviewData = false;
                         } else {
                             this.reviewData = true;
+                            this.modelReviews = data.docs;
                         }
-                        this.modelReviews = data.docs;
                     } else {
                         this.totalRecords = 0;
                     }

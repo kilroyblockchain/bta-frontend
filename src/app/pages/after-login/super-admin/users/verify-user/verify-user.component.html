@@ -35,12 +35,12 @@
 
                 <div class="form-holder floating">
                     <span class="label"> *{{ 'MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate }} </span>
-                    <nb-select multiple [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" fullWidth formControlName="channels" [ngClass]="{ 'status-danger': submitted && UF['channels'].errors }">
+                    <nb-select [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.SELECT_CHANNEL_DETAILS' | translate)" fullWidth formControlName="tempChannel" (selectedChange)="onChannelSelection($event)" [ngClass]="{ 'status-danger': submitted && UF['tempChannel'].errors }">
                         <nb-option *ngFor="let channel of nonDefaultChannels" [value]="channel._id">
                             {{ channel.channelName }}
                         </nb-option>
                     </nb-select>
-                    <div *ngIf="submitted && UF['channels'].errors as err" class="invalid-feedback">
+                    <div *ngIf="submitted && UF['tempChannel'].errors as err" class="invalid-feedback">
                         <span *ngIf="err['required']"> {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.CHANNEL_DETAILS_IS_REQUIRED' | translate }}</span>
                     </div>
                 </div>

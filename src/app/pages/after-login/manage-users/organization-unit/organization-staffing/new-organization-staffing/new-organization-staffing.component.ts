@@ -7,7 +7,8 @@ import { IBcNodeInfo } from 'src/app/@core/interfaces/bc-node-info.interface';
 import { IChannelDetails } from 'src/app/@core/interfaces/channel-details.interface';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
 import { IFeature, IStaffing } from 'src/app/@core/interfaces/manage-user.interface';
-import { ManageUserService, UtilsService, StaffingService, ManageChannelDetailsService, BlockChainService } from 'src/app/@core/services';
+import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
+import { ManageUserService, UtilsService, StaffingService, ManageChannelDetailsService, BlockChainService, AuthService } from 'src/app/@core/services';
 
 interface IChildrenRow {
     unitName: string;
@@ -46,13 +47,13 @@ export class NewOrganizationStaffingComponent implements OnInit {
     accessListRequiredError = false;
     accessList: Array<IAccessList> = [];
     masterSelected: boolean;
-    @ViewChild('allSelected')
-    allSelected!: NbCheckboxComponent;
 
-    @ViewChild('staffingName')
-    staffingName!: ElementRef;
+    @ViewChild('allSelected') allSelected!: NbCheckboxComponent;
+    @ViewChild('staffingName') staffingName!: ElementRef;
+    @ViewChild('bcNodeInfoDiv') bcNodeInfoDiv!: ElementRef;
 
     updateStaffingName!: string;
+    defaultCompanyChannel!: string;
 
     totalFeaturesCount = 0;
 
@@ -60,18 +61,30 @@ export class NewOrganizationStaffingComponent implements OnInit {
     options!: { [key: string]: unknown };
 
     channelDetails!: Array<IChannelDetails>;
-    defaultChannel!: Array<IChannelDetails>;
     nonDefaultChannels!: Array<IChannelDetails>;
+    companyChannel!: Array<IChannelDetails>;
 
     bcNodeInfo!: Array<IBcNodeInfo>;
     channelId: string[] = [];
+    user!: IUserRes;
 
-    constructor(private ref: NbDialogRef<NewOrganizationStaffingComponent>, private fb: FormBuilder, private readonly staffingService: StaffingService, private readonly manageUserService: ManageUserService, private readonly utilsService: UtilsService, private readonly manageChannelService: ManageChannelDetailsService, private readonly blockChainService: BlockChainService) {
+    constructor(
+        private ref: NbDialogRef<NewOrganizationStaffingComponent>,
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private readonly staffingService: StaffingService,
+        private readonly manageUserService: ManageUserService,
+        private readonly utilsService: UtilsService,
+        private readonly manageChannelService: ManageChannelDetailsService,
+        private readonly blockChainService: BlockChainService
+    ) {
         that = this;
         this.masterSelected = false;
     }
 
     ngOnInit(): void {
+        this.user = this.authService.getUserDataSync();
+
         this.buildNewOrganizationStaffingForm();
         if (this.childRowData) {
             this.unitName = this.childRowData.unitName;
@@ -99,6 +112,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
     buildEditOrganizationStaffingForm(data: IChildrenRow): void {
         const [unitName, ...restName] = data.unitName.split('-');
         this.updateStaffingName = restName.join('-');
+        this.defaultCompanyChannel = data.channels[data.channels.length - 1];
 
         if (data.channels.length) {
             for (const channel of data.channels) {
@@ -107,21 +121,28 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
             this.channelId.length > 1 ? this.channelId.shift() : this.channelId;
         }
+
         this.newOrganizationStaffingForm.patchValue({
             staffingName: unitName,
             bcNodeInfo: data.bcNodeInfo,
             bucketUrl: data.bucketUrl,
-            oracleGroupName: data.oracleGroupName
+            oracleGroupName: data.oracleGroupName,
+            aiEngChannel: this.channelId.join()
         });
 
-        if (this.UF['staffingName'].value === this.defaultStaffingName[0]) {
+        if (this.newOrganizationStaffingForm.get('staffingName')?.value === this.defaultStaffingName[0]) {
             this.newOrganizationStaffingForm.patchValue({
-                aiEngChannel: this.channelId.join()
+                channels: [this.channelId, this.defaultCompanyChannel]
             });
         } else {
             this.newOrganizationStaffingForm.patchValue({
-                channels: [...this.channelId]
+                channels: [this.channelId]
             });
+        }
+
+        if (this.newOrganizationStaffingForm.get('staffingName')?.value === this.defaultStaffingName[2]) {
+            this.newOrganizationStaffingForm.get('bucketUrl')?.clearValidators();
+            this.newOrganizationStaffingForm.get('bucketUrl')?.updateValueAndValidity();
         }
 
         this.accessList = [...(data.action as IStaffing).featureAndAccess].map((access) => ({
@@ -208,15 +229,11 @@ export class NewOrganizationStaffingComponent implements OnInit {
     }
 
     saveNewOrganizationStaffing({ value, valid }: FormGroup): void {
-        if (this.UF['aiEngChannel'].value) {
-            this.newOrganizationStaffingForm.patchValue({
-                channels: [this.UF['aiEngChannel'].value]
-            });
-        }
         this.submitted = true;
         if (!valid) {
             return;
         }
+
         if (!this.accessList.length) {
             this.accessListRequiredError = true;
             return;
@@ -234,7 +251,6 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
             }
 
-            value['channels'] = [this.defaultChannel[0]._id, ...value['channels']];
             this.staffingService.createNewStaffing(value).subscribe({ next: this.successRes, error: this.errorRes });
         }
 
@@ -246,7 +262,6 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 value['staffingName'] = this.newOrganizationStaffingForm.get('staffingName')?.value;
             }
 
-            value['channels'] = [this.defaultChannel[0]._id, ...value['channels']];
             this.staffingService.updateStaffingById(this.childRowData.staffingId, value).subscribe({ next: this.successRes, error: this.errorRes });
         }
     }
@@ -293,30 +308,53 @@ export class NewOrganizationStaffingComponent implements OnInit {
     getAllChannelDetails(): void {
         this.manageChannelService.getAllChannel(this.options).subscribe((res) => {
             this.channelDetails = res.data.docs;
-            this.defaultChannel = this.channelDetails.filter((d) => d.isDefault === true);
-            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true);
+            this.nonDefaultChannels = this.channelDetails.filter((d) => d.isDefault !== true && d.createdBy === this.user.id);
+            this.companyChannel = this.channelDetails.filter((d) => d.isCompanyChannel === true);
         });
     }
 
     getBcNodeInfo(): void {
         this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
-            this.bcNodeInfo = res.data.docs;
+            this.bcNodeInfo = res.data.docs.filter((f) => f.addedBy._id === this.user.id);
         });
-    }
-
-    onChange(event: Event): void {
-        if (event) {
-            this.newOrganizationStaffingForm.patchValue({
-                channels: [event]
-            });
-        }
     }
 
     updateOracleGroupName(): void {
         if (this.mode === 'CREATE') {
-            const oracleGroupName = (this.newOrganizationStaffingForm.get('staffingName')?.value + ' ' + this.staffingName.nativeElement.value).toLowerCase().replace(/\s+/g, ' ');
+            const oracleGroupName = (this.newOrganizationStaffingForm.get('staffingName')?.value + ' ' + this.staffingName.nativeElement.value).toLowerCase().trim().replace(/\s+/g, ' ');
             this.newOrganizationStaffingForm.patchValue({
-                oracleGroupName: oracleGroupName.split(' ').join('-')
+                oracleGroupName: this.staffingName.nativeElement.value ? oracleGroupName.split(' ').join('-') : oracleGroupName.replace(' ', '-')
+            });
+        }
+    }
+
+    checkStaffingName(event: string): void {
+        if (event === this.defaultStaffingName[2]) {
+            this.newOrganizationStaffingForm.get('bucketUrl')?.clearValidators();
+            this.newOrganizationStaffingForm.get('bucketUrl')?.updateValueAndValidity();
+        }
+
+        if (event !== this.defaultStaffingName[0]) {
+            this.newOrganizationStaffingForm.get('channels')?.clearValidators();
+            this.newOrganizationStaffingForm.get('channels')?.updateValueAndValidity();
+        }
+
+        if (event !== this.defaultStaffingName[0]) {
+            this.bcNodeInfoDiv.nativeElement.classList.remove('two-col');
+        } else {
+            this.bcNodeInfoDiv.nativeElement.classList.add('two-col');
+        }
+    }
+
+    addChannel(event: string): void {
+        if (this.mode === 'CREATE') {
+            this.newOrganizationStaffingForm.patchValue({
+                channels: [event]
+            });
+        }
+        if (this.mode === 'EDIT') {
+            this.newOrganizationStaffingForm.patchValue({
+                channels: [event, this.defaultCompanyChannel]
             });
         }
     }

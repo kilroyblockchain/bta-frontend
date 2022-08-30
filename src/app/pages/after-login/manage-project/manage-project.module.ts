@@ -5,9 +5,6 @@ import { AfterLoginSharedModule } from '../after-login-shared/after-login-shared
 import { InternationalizationModule } from 'src/app/@core/internationalization/internationalization.module';
 import { ManageProjectComponent } from './manage-project.component';
 import { MiscellaneousModule } from 'src/app/pages/miscellaneous/miscellaneous.module';
-import { ChannelSetUpComponent } from './manage-channel/manage-channel.component';
-import { NewChannelComponent } from './manage-channel/new-channel/new-channel.component';
-import { EditChannelComponent } from './manage-channel/edit-channel/edit-channel.component';
 import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './project/add-project/add-project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
@@ -31,12 +28,10 @@ import { VerifyBcHashComponent } from './verify-bc-hash/verify-bc-hash.component
 import { CommonVerifyBcHashComponent } from './verify-bc-hash/common-verify-bc-hash/common-verify-bc-hash.component';
 import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
 import { CommonCompareLogFilesComponent } from './model-review/compare-log-files/common-compare-log-file/common-compare-log-file.component';
+import { CustomPipeModule } from 'src/app/@core/pipes/pipe.module';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
-    ChannelSetUpComponent,
-    NewChannelComponent,
-    EditChannelComponent,
     ProjectComponent,
     AddProjectComponent,
     EditProjectComponent,
@@ -63,7 +58,7 @@ const PAGE_COMPONENT = [
 ];
 
 @NgModule({
-    imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule],
+    imports: [ManageProjectRoutingModule, ...COMMON_SHARED_MODULE, MiscellaneousModule, InternationalizationModule, AfterLoginSharedModule, CustomPipeModule],
     declarations: [...PAGE_COMPONENT]
 })
 export class ManageProjectModule {}

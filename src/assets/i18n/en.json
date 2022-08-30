@@ -626,7 +626,8 @@
             "VIEW_DETAILS": "View Details",
             "VIEW_DOC": "View Doc",
             "BC_TIME_STAMPS": "BC Timestamps",
-            "BC_TRANSACTION_ID": "Bc Transaction Id"
+            "BC_TRANSACTION_ID": "Bc Transaction Id",
+            "FILE_NAME": "Filename"
         },
         "PAGE_TITLE": {
             "MANAGE_PROJECT": "Manage Project",
@@ -637,7 +638,7 @@
             "MODEL_REVIEWS": "Model Reviews",
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Version Bc History",
-            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History",
+            "MODEL_REVIEW_BC_HISTORY": "Model Bc History",
             "COMPARE_LOG_FILES": "Compare Logs Files",
             "VERIFY_BC_HASH": "Verify Bc Hash",
             "LOG_FILE_EXPERIMENT_DETAILS": "Log File Experiment Details"
@@ -653,7 +654,7 @@
             "EDIT_PROJECT_VERSION": "Edit Version",
             "PROJECT_BC_HISTORY": "Project Bc History",
             "VERSION_BC_HISTORY": "Model Version Bc History",
-            "MODEL_REVIEW_BC_HISTORY": "Model Review Bc History"
+            "MODEL_REVIEW_BC_HISTORY": "Model Bc History"
         },
         "COMMON": {
             "LABEL": {
@@ -687,7 +688,7 @@
                 "EDIT_PROJECT": "Edit Project",
                 "ADD_PROJECT_PURPOSE": "Add Project Purpose",
                 "EDIT_PROJECT_PURPOSE": "Edit Project Purpose",
-                "BLOCKCHAIN_DETAILS": "Blockchain Details",
+                "PROJECT_BLOCKCHAIN_DETAILS": "Project Blockchain Details",
                 "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
             "BUTTON": {
@@ -838,7 +839,8 @@
                 "MONITORING_SUBJECT": "Monitoring Subject",
                 "MONITORING_DOCUMENTS": "Monitoring Documents",
                 "MONITORING_STATUS": "Monitoring Status",
-                "OTHER_STATUS": "Other Status"
+                "OTHER_STATUS": "Other Status",
+                "MONITORING_TOOL_LINK": "Monitoring Tool Link"
             },
             "TITLE": {
                 "ALL_REPORTS": "All Reports",
@@ -848,7 +850,8 @@
                 "MONITORING_SUBJECT": "Monitoring subject",
                 "MONITORING_DESCRIPTION": "Monitoring description",
                 "MONITORING_STATUS": "Select status",
-                "OTHER_STATUS": "Other status"
+                "OTHER_STATUS": "Other status",
+                "MONITORING_TOOL_LINK": "Monitoring tool link"
             },
             "VALIDATIONS": {
                 "MONITORING_SUBJECT": "Monitoring subject is required",
@@ -872,7 +875,10 @@
                 "TEST_METRICS": "Test Metrics",
                 "EPOCHS": "Epochs",
                 "VERIFY_EXPERIMENT_HASH": "Verify Experiment Hash",
-                "EXPERIMENT_BC_HASH": "Experiment Bc Hash"
+                "EXPERIMENT_BC_HASH": "Experiment Bc Hash",
+                "LOG_HASH": "Log Hash",
+                "HASH_KEY": "Hash Key",
+                "MODEL_HASH": "Model Hash"
             },
             "COLUMN_NAME": {
                 "EXP_ID": "Exp Id/No",
@@ -919,10 +925,22 @@
                 "COMPLETE": "Complete",
                 "REVIEW_SUPPORTING_DOCUMENTS": "Review Supporting Documents",
                 "REVIEW_MODEL_DETAILS": "Review Model Details",
-                "MODEL_REVIEW_BC_HISTORY": "Model Review Blockchain History",
+                "MODEL_REVIEW_BC_HISTORY": "Model Blockchain History",
                 "MODEL_VERSION_BC_DETAILS": "Model Version Bc Details",
                 "REVIEWED_MODEL_ID": "Reviewed Model ID",
-                "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments"
+                "ALL_LOGS_FILE_EXPERIMENTS": "All Logs File Experiments",
+                "QA_STATUS": "QA",
+                "DECLINED": "Declined",
+                "TEST_ACCURACY_COMPARISON": "Test Accuracy Comparison",
+                "TEST_ACCURACY_FROM_AI_ENGINEER": "Test Accuracy from AI Engineer",
+                "TEST_ACCURACY_FROM_MLOPS_ENGINEER": "Test Accuracy from MLOPs Engineer",
+                "COMPARISON": "Comparison",
+                "LAST_EXP_TEST_METRICS_AI_ENGINEER": "Test Metric Of AI Engineer Last Experiment",
+                "LAST_EXP_TEST_METRICS_MLOPS_ENGINEER": "Test Metric Of MLOPs Engineer Last Experiment",
+                "TEST_METRICS_OF_CURRENT_EXPERIMENT": "Test Metric Of Current Experiment",
+                "TEST_ACCURACY_OF_CURRENT_EXPERIMENT": "Test Accuracy of current experiment",
+                "TEST_ACCURACY_OF_LAST_AI_ENGINEER": "Test Accuracy of last experiment from AI Engineer",
+                "TEST_ACCURACY_OF_LAST_MLOPS_ENGINEER": "Test Accuracy of last experiment from MLOPs Engineer"
             },
             "PLACEHOLDER": {
                 "REVIEW_STATUS": "Status",
@@ -940,6 +958,11 @@
             },
             "ALERT_MSG": {
                 "MODEL_NOT_DEPLOYED_YET": "The model has not deployed yet !!"
+            },
+            "MESSAGE": {
+                "AI_IS_GREATER_VALUE": "AI Engineer's accuracy is greater by {{ greaterValue }}",
+                "MLOPS_IS_GREATER_VALUE": "MLOPs Engineer's accuracy is greater by  {{ greaterValue }}",
+                "BOTH_ARE_EQUAL": "Both has same value"
             }
         }
     },

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
-import { IAiModel, IProjectVersion } from 'src/app/@core/interfaces/manage-project.interface';
+import { IAiModel, IProjectVersion, ITestMetrics } from 'src/app/@core/interfaces/manage-project.interface';
 import { AuthService, BcManageProjectService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 
 interface TreeNode<T> {
@@ -19,7 +19,8 @@ interface FSEntry {
 
 @Component({
     selector: 'app-common-compare-log-files',
-    templateUrl: './common-compare-log-file.html'
+    templateUrl: './common-compare-log-file.component.html',
+    styleUrls: ['./common-compare-log-file.component.scss']
 })
 export class CommonCompareLogFilesComponent implements OnInit {
     private data: TreeNode<FSEntry>[] = [];
@@ -35,14 +36,22 @@ export class CommonCompareLogFilesComponent implements OnInit {
     totalRecords = 0;
     loading!: boolean;
 
+    aiExperimentLoading!: boolean;
+    mlopsExperimentLoading!: boolean;
+
     columns!: Array<string>;
     columnNameKeys!: Array<string>;
     columnsName: Array<string> = [];
     tableData!: Array<IAiModel>;
     loadingTable!: boolean;
 
-    @Input()
-    versionId!: string;
+    aiTestMetricsData!: ITestMetrics;
+    mlopsTestMetricsData!: ITestMetrics;
+
+    @Input() versionId!: string;
+    @Input() lastAIExperimentID!: string;
+    @Input() lastMLOPsExperimentID!: string;
+    @Input() queryParams!: Params;
 
     constructor(private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private bcManageProjectService: BcManageProjectService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -51,6 +60,8 @@ export class CommonCompareLogFilesComponent implements OnInit {
     ngOnInit(): void {
         this.pageChange(1);
         this.setTranslatedTableColumns();
+        this.retrieveLastAIExperimentDetails();
+        this.retrieveLastMLOPsExperimentDetails();
     }
 
     pageChange(pageNumber: number): void {
@@ -165,6 +176,60 @@ export class CommonCompareLogFilesComponent implements OnInit {
 
     viewExperimentDetails(rowId: string): void {
         const URL = '/u/manage-project/log-file-experiment-details';
-        this.router.navigate([URL, rowId]);
+
+        if (this.queryParams['aiEngineer'] === 'true') {
+            this.router.navigate([URL, rowId, this.lastMLOPsExperimentID], { queryParams: this.queryParams });
+        } else {
+            this.router.navigate([URL, rowId, this.lastAIExperimentID], { queryParams: this.queryParams });
+        }
+    }
+
+    retrieveLastAIExperimentDetails(): void {
+        this.aiExperimentLoading = true;
+        this.dataFound = false;
+
+        this.manageProjectService
+            .getExperimentDetails(this.lastAIExperimentID)
+            .pipe(
+                finalize(() => {
+                    this.aiExperimentLoading = false;
+                })
+            )
+            .subscribe((res) => {
+                if (res && res.success) {
+                    const { data } = res;
+                    for (const expData of data) {
+                        this.aiTestMetricsData = expData.exp.test_metrics;
+                    }
+                    this.dataFound = true;
+                } else {
+                    this.dataFound = false;
+                }
+            });
+    }
+
+    retrieveLastMLOPsExperimentDetails(): void {
+        this.mlopsExperimentLoading = true;
+        this.dataFound = false;
+
+        this.manageProjectService
+            .getExperimentDetails(this.lastMLOPsExperimentID)
+            .pipe(
+                finalize(() => {
+                    this.mlopsExperimentLoading = false;
+                })
+            )
+            .subscribe((res) => {
+                if (res && res.success) {
+                    const { data } = res;
+                    for (const expData of data) {
+                        this.mlopsTestMetricsData = expData.exp.test_metrics;
+                    }
+
+                    this.dataFound = true;
+                } else {
+                    this.dataFound = false;
+                }
+            });
     }
 }

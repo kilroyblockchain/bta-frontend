@@ -3,7 +3,7 @@
         <div class="title-holder">
             <h4>{{ 'MANAGE_PROJECTS.COMMON.LABEL.VERSION_DETAILS' | translate }}</h4>
         </div>
-        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft">
+        <div class="actions" *ngIf="canViewReview && versionData && !isModelStatusDraft && !isModelStatusMlopsReview">
             <button nbButton hero status="primary" size="small" (click)="viewModelReviews(versionData._id)">
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.REVIEW_MODEL' | translate }}
             </button>
