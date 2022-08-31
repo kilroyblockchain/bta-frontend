@@ -52,7 +52,7 @@
                                         {{ row.data[column].text }}
                                     </span>
                                     <span [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DOC' | translate" *ngIf="row.data['purpose'].docName">
-                                        <a class="docs" (click)="openDocs(row.data[column]?.docURL)">
+                                        <a class="docs" (click)="openDocs(row.data[column]?.docURL, row.data[column]?.docName)">
                                             {{ row.data[column]?.docName }}
                                         </a>
                                     </span>

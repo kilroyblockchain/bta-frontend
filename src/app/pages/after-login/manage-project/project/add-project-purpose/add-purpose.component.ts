@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbOptionComponent, NbTagComponent } from '@nebular/theme';
 import { finalize } from 'rxjs';
 import { IFormControls } from 'src/app/@core/interfaces/common.interface';
@@ -14,6 +14,9 @@ import { ManageProjectService, UtilsService } from 'src/app/@core/services';
         `
             .file-names {
                 margin-bottom: 1px;
+            }
+            .normal-input {
+                margin-top: 1rem;
             }
         `
     ]
@@ -53,7 +56,9 @@ export class AddProjectPurposeComponent implements OnInit {
 
         this.projectPurposeForm = this.fb.group({
             purpose: [purpose && purpose.text ? purpose.text : ''],
-            purposeDoc: [null]
+            purposeDoc: [null],
+            details: [this.rowData.details ?? '', [Validators.required]],
+            domain: [this.rowData.domain ?? '', [Validators.required]]
         });
     }
 
