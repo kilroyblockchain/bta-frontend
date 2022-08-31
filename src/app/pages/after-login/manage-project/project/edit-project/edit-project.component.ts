@@ -44,8 +44,6 @@ export class EditProjectComponent implements OnInit {
         const membersId = data.members.map((member) => member._id);
         this.editProjectForm = this.fb.group({
             name: [data?.name, [Validators.required]],
-            details: [data?.details, [Validators.required]],
-            domain: [data?.domain, [Validators.required]],
             members: [membersId, [Validators.required]]
         });
     }

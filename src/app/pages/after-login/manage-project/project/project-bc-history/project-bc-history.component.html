@@ -25,12 +25,12 @@
                         </strong>
                         {{ projectBcDetails?.domain }}
                     </p>
-                    <p class="card-paragraph" *ngIf="projectBcDetails?.entryUser">
+                    <p class="card-paragraph" *ngIf="projectBcDetails?.createdBy">
                         <strong>
                             <nb-icon icon="chevron-right-outline"> </nb-icon>
                             {{ 'COMMON.COLUMN_NAME.CREATED_BY' | translate }}:
                         </strong>
-                        {{ projectBcDetails?.entryUser }}
+                        {{ projectBcDetails?.createdBy }}
                     </p>
                     <p class="card-paragraph" *ngIf="projectBcDetails?.members?.length">
                         <strong>
@@ -73,14 +73,26 @@
                             <td nbTreeGridCell *nbTreeGridCellDef="let row">
                                 <nb-tree-grid-row-toggle [expanded]="row.expanded" *ngIf="column === 'name' && row.children && row.children.length"> </nb-tree-grid-row-toggle>
                                 <div [ngSwitch]="column">
-                                    <div class="table-col" *ngSwitchCase="'isDeleted'">
-                                        {{ row.data[column] || 'MANAGE_PROJECTS.COMMON.LABEL.FALSE' | translate }}
+                                    <div class="table-col" *ngSwitchCase="'purpose'">
+                                        <ng-container *ngIf="row.data[column].purpose || row.data[column].docName; else default">
+                                            <span *ngIf="row.data['purpose'].purpose">
+                                                {{ row.data[column].purpose }}
+                                            </span>
+                                            <span [nbTooltip]="'MANAGE_PROJECTS.TOOLTIP.VIEW_DOC' | translate" nbTooltipPlacement="start" *ngIf="row.data['purpose'].docName">
+                                                <a class="docs" (click)="openDocs(row.data[column]?.docUrl, row.data[column]?.docName)">
+                                                    {{ row.data[column]?.docName }}
+                                                </a>
+                                            </span>
+                                        </ng-container>
+                                        <ng-template #default>
+                                            <span>{{ '-' }}</span>
+                                        </ng-template>
                                     </div>
                                     <div class="table-col" *ngSwitchCase="'modelVersions'">
                                         <ng-container *ngIf="row.data[column].length; else defaultCase">
                                             <div *ngFor="let version of row.data[column]">
-                                                <span
-                                                    >{{ '-' }}
+                                                <span>
+                                                    {{ '-' }}
                                                     <a class="version-bc-history" (click)="vewVersionBChistory(version.id)">
                                                         {{ version.versionName }}
                                                     </a>

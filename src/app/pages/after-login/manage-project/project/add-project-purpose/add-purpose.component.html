@@ -29,6 +29,24 @@
                     <nb-tag [text]="fileName" removable> </nb-tag>
                 </nb-tag-list>
             </div>
+            <div class="form-inner-container normal-input">
+                <div class="form-holder floating">
+                    <input name="domain" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DOMAIN' | translate)" formControlName="domain" [ngClass]="{ 'status-danger': submitted && UF['domain'].errors }" />
+                    <label for="domain" [attr.data-content]="'*' + ('MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_DOMAIN' | translate)"></label>
+                    <div *ngIf="submitted && UF['domain'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DOMAIN' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <textarea name="details" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.PROJECT.PLACEHOLDER.PROJECT_DETAILS' | translate)" formControlName="details" [ngClass]="{ 'status-danger': submitted && UF['details'].errors }"></textarea>
+                    <div *ngIf="submitted && UF['details'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.PROJECT.VALIDATIONS.PROJECT_DETAILS' | translate }}</span>
+                    </div>
+                </div>
+            </div>
         </form>
     </nb-card-body>
     <nb-card-footer>

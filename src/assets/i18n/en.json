@@ -647,7 +647,7 @@
             "MONITORING_REPORT": "Monitoring Report",
             "VERSION_DETAILS": "Version Details",
             "MODEL_REVIEWS": "Reviews",
-            "PROJECT_PURPOSE": "Project Purpose",
+            "PROJECT_PURPOSE": "Model Purpose",
             "VIEW_PROJECT": "View Project",
             "ADD_VERSION": "Add Version",
             "EDIT_PROJECT": "Edit Project",
@@ -686,8 +686,8 @@
                 "ALL_PROJECTS": "All Projects",
                 "ADD_NEW_PROJECT": "Add New Project",
                 "EDIT_PROJECT": "Edit Project",
-                "ADD_PROJECT_PURPOSE": "Add Project Purpose",
-                "EDIT_PROJECT_PURPOSE": "Edit Project Purpose",
+                "ADD_PROJECT_PURPOSE": "Add Model Purpose",
+                "EDIT_PROJECT_PURPOSE": "Edit Model Purpose",
                 "PROJECT_BLOCKCHAIN_DETAILS": "Project Blockchain Details",
                 "BLOCKCHAIN_HISTORY": "Project Blockchain History"
             },
@@ -697,7 +697,7 @@
             "LABEL": {
                 "SHOW_ACTIVE_UNIT": "Show Active Projects",
                 "PROJECT_NAME": "Project Name",
-                "PROJECT_DOMAIN": "Project Domain",
+                "PROJECT_DOMAIN": "Intended Domain",
                 "MEMBERS": "Member(s)",
                 "PROJECT_INFO": "Project Info",
                 "MODEL_DETAILS": "Model Details",
@@ -708,7 +708,7 @@
             },
             "PLACEHOLDER": {
                 "PROJECT_NAME": "Project name",
-                "PROJECT_DOMAIN": "Project domain",
+                "PROJECT_DOMAIN": "Intended domain",
                 "SELECT_MEMBERS": "Select member(s)",
                 "PROJECT_DETAILS": "Project details",
                 "PROJECT_PURPOSE": "Project purpose"
@@ -716,7 +716,7 @@
             "COLUMN_NAME": {
                 "PROJECT_NAME": "Project Name",
                 "PROJECT_DETAILS": "Project Details",
-                "PROJECT_DOMAIN": "Project Domain",
+                "PROJECT_DOMAIN": "Intended Domain",
                 "PROJECT_PURPOSE": "Project Purpose",
                 "LATEST_VERSION": "Latest Version",
                 "AI_ENGINEER": "AI Engineer",
@@ -729,7 +729,7 @@
             },
             "VALIDATIONS": {
                 "PROJECT_NAME": "Project name is required",
-                "PROJECT_DOMAIN": "Project domain is required",
+                "PROJECT_DOMAIN": "Intended domain is required",
                 "PROJECT_MEMBERS": "Select at least one member",
                 "PROJECT_DETAILS": "Project details is required"
             },

@@ -13,8 +13,16 @@ export interface IBcProject {
     domain: string;
     members: string[];
     entryUser: string;
+    createdBy: string;
     recordDate: Date;
+    purposeDetail: IPurposeDetails;
     modelVersions: IBcProjectVersion[];
+}
+
+export interface IPurposeDetails {
+    purpose: string;
+    docName: string;
+    docUrl: string;
 }
 export interface IBcProjectVersion {
     id: string;

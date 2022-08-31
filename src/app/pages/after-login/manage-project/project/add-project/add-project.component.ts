@@ -41,8 +41,6 @@ export class AddProjectComponent implements OnInit {
     buildNewProjectForm(): void {
         this.addProjectForm = this.fb.group({
             name: ['', [Validators.required]],
-            details: ['', [Validators.required]],
-            domain: ['', [Validators.required]],
             members: [[], [Validators.required]]
         });
     }
@@ -66,7 +64,7 @@ export class AddProjectComponent implements OnInit {
 
     pageChange(pageNumber: number): void {
         this.page = pageNumber;
-        this.options = { page: this.page, limit: this.resultperpage, status: this.toggleStatusFilter ? 'verified' : 'notverified', subscriptionType: this.authService.getDefaultSubscriptionType() };
+        this.options = { page: this.page, limit: Number.MAX_SAFE_INTEGER, status: this.toggleStatusFilter ? 'verified' : 'notverified', subscriptionType: this.authService.getDefaultSubscriptionType() };
         this.retrieveAllUserData();
     }
 

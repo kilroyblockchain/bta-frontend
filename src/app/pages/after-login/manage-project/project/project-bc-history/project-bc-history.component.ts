@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
-import { IBcProject, IBcProjectVersion, IProjectBcHistory } from 'src/app/@core/interfaces/bc-manage-project.interface';
-import { BcManageProjectService, UtilsService } from 'src/app/@core/services';
+import { IBcProject, IBcProjectVersion, IProjectBcHistory, IPurposeDetails } from 'src/app/@core/interfaces/bc-manage-project.interface';
+import { BcManageProjectService, FileService, UtilsService } from 'src/app/@core/services';
 
 interface TreeNode<T> {
     data: T;
@@ -13,10 +13,9 @@ interface TreeNode<T> {
 interface FSEntry {
     txId: string;
     txDateTime: Date;
-    isDeleted: boolean;
-    name: string;
     domain: string;
     details: string;
+    purpose: IPurposeDetails;
     members: string[];
     entryUser: string;
     modelVersions: IBcProjectVersion[];
@@ -30,6 +29,11 @@ interface FSEntry {
             .version-bc-history {
                 text-decoration: none;
                 cursor: pointer;
+            }
+            .docs {
+                cursor: pointer;
+                margin: 2px;
+                text-decoration: none;
             }
         `
     ]
@@ -51,7 +55,7 @@ export class ProjectBcHistoryComponent implements OnInit {
     tableData!: Array<IProjectBcHistory>;
     loadingTable!: boolean;
 
-    constructor(private activeRoute: ActivatedRoute, private router: Router, public utilsService: UtilsService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
+    constructor(private activeRoute: ActivatedRoute, private router: Router, public utilsService: UtilsService, private readonly fileService: FileService, private translate: TranslateService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private bcManageProjectService: BcManageProjectService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
@@ -63,15 +67,14 @@ export class ProjectBcHistoryComponent implements OnInit {
     }
 
     setTranslatedTableColumns(): void {
-        this.columns = ['txId', 'txDateTime', 'isDeleted', 'entryUser', 'name', 'domain', 'modelVersions', 'details', 'members'];
+        this.columns = ['txId', 'txDateTime', 'entryUser', 'domain', 'modelVersions', 'purpose', 'details', 'members'];
         this.columnNameKeys = [
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_ID',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.TX_DATE_TIME',
-            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.IS_DELETED',
             'COMMON.COLUMN_NAME.CREATED_BY',
-            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_NAME',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DOMAIN',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.MODEL_VERSION_NAME',
+            'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_PURPOSE',
             'MANAGE_PROJECTS.PROJECT.COLUMN_NAME.PROJECT_DETAILS',
             'MANAGE_PROJECTS.PROJECT.LABEL.MEMBERS'
         ];
@@ -138,8 +141,7 @@ export class ProjectBcHistoryComponent implements OnInit {
                 data: {
                     txId: item.txId,
                     txDateTime: item.project.recordDate,
-                    isDeleted: item.isDeleted,
-                    name: item.project.name,
+                    purpose: item.project.purposeDetail,
                     domain: item.project.domain,
                     details: item.project.detail,
                     members: item.project.members,
@@ -158,5 +160,21 @@ export class ProjectBcHistoryComponent implements OnInit {
     vewVersionBChistory(versionId: string): void {
         const URL = 'u/manage-project/model-review-bc-history';
         this.router.navigate([URL, versionId]);
+    }
+
+    openDocs(filePath: string, fileName: string): void {
+        this.fileService.getFileFromFolder(filePath).subscribe((file: Blob) => {
+            if (file['type'].split('/')[0] === 'image' || file['type'].split('/')[1] === 'pdf') {
+                const urlCreator = window.URL || window.webkitURL;
+                const url = urlCreator.createObjectURL(file);
+                window.open(url);
+                urlCreator.revokeObjectURL(url);
+            } else {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob([file], { type: file.type }));
+                a.download = fileName;
+                a.click();
+            }
+        });
     }
 }
