@@ -132,7 +132,6 @@ export class VerifyUserComponent implements OnInit {
             subscriptionType: data.assignedSubscription,
             channelId: this.defaultChannel?._id ?? '',
             bcNodeInfo: value.bcNodeInfo,
-            bucketUrl: value.bucketUrl,
             channels: value.channels,
             organizationName: data.companyName
         };
@@ -228,7 +227,6 @@ export class VerifyUserComponent implements OnInit {
     buildCreateStaffingForm(): void {
         this.createStaffingForm = this.fb.group({
             bcNodeInfo: ['', [Validators.required]],
-            bucketUrl: ['', [Validators.required]],
             channels: [[], [Validators.required]],
             tempChannel: ['', [Validators.required]]
         });
