@@ -44,17 +44,6 @@
                         <span *ngIf="err['required']"> {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.CHANNEL_DETAILS_IS_REQUIRED' | translate }}</span>
                     </div>
                 </div>
-                <div class="form-inner-container">
-                    <div class="form-holder floating">
-                        <input name="bucketUrl" nbInput fullWidth [placeholder]="'*' + ('MANAGE_USERS.ORG_STAFFING.PLACEHOLDER.ORACLE_BUCKET_URL' | translate)" fullWidth formControlName="bucketUrl" [ngClass]="{ 'status-danger': submitted && UF['bucketUrl'].errors }" />
-                        <label for="bucketUrl" [attr.data-content]="'*' + ('MANAGE_USERS.ORG_STAFFING.LABEL.ORACLE_BUCKET_URL' | translate)"></label>
-                        <div *ngIf="submitted && UF['bucketUrl'].errors as err" class="invalid-feedback">
-                            <span *ngIf="err['required']">
-                                {{ 'MANAGE_USERS.ORG_STAFFING.VALIDATIONS.ORACLE_BUCKET_URL_IS_REQUIRED' | translate }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </form>
         </nb-card-body>
 

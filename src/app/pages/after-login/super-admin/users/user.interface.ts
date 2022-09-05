@@ -8,6 +8,5 @@ export interface IUserActionRow {
     staffingId?: string[];
     bcNodeInfo?: string;
     channels?: string[];
-    bucketUrl?: string;
     organizationName: string;
 }
