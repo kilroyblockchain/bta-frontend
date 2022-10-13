@@ -1,7 +1,7 @@
 <nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
     <nb-card-header>
         <section class="dialog-head">
-            <h6>{{ 'Add New Channel Details' | translate }}</h6>
+            <h6>{{ 'BLOCKCHAIN.CHANNEL_DETAILS.TITLE.EDIT_CHANNEL_DETAILS' | translate }}</h6>
         </section>
         <div class="close-dialog">
             <button nbButton class="icon" (click)="closeModal()">
@@ -13,19 +13,19 @@
         <form class="form-container" [formGroup]="editChannelForm">
             <div class="form-inner-container">
                 <div class="form-holder floating">
-                    <input name="channelName" nbInput fullWidth placeholder="*Channel Name" formControlName="channelName" [ngClass]="{ 'status-danger': submitted && UF['channelName'].errors }" />
-                    <label for="channelName" [attr.data-content]="'*' + ('Channel Name' | translate)"></label>
+                    <input name="channelName" nbInput fullWidth [placeholder]="'BLOCKCHAIN.CHANNEL_DETAILS.PLACEHOLDER.CHANNEL_NAME' | translate" formControlName="channelName" [ngClass]="{ 'status-danger': submitted && UF['channelName'].errors }" />
+                    <label for="channelName" [attr.data-content]="'*' + ('BLOCKCHAIN.CHANNEL_DETAILS.LABEL.CHANNEL_NAME' | translate)"></label>
                     <div *ngIf="submitted && UF['channelName'].errors as err" class="invalid-feedback">
-                        <span *ngIf="err['required']">{{ 'Channel Name is Required' | translate }}</span>
+                        <span *ngIf="err['required']">{{ 'BLOCKCHAIN.CHANNEL_DETAILS.VALIDATIONS.CHANNEL_NAME_IS_REQUIRED' | translate }}</span>
                     </div>
                 </div>
             </div>
             <div class="form-inner-container">
                 <div class="form-holder floating">
-                    <input name="connectionProfileName" nbInput fullWidth placeholder="*Connection Profile Name" formControlName="connectionProfileName" [ngClass]="{ 'status-danger': submitted && UF['connectionProfileName'].errors }" />
-                    <label for="connectionProfileName" [attr.data-content]="'*' + ('Connection Profile Name' | translate)"></label>
+                    <input name="connectionProfileName" nbInput fullWidth [placeholder]="'BLOCKCHAIN.CHANNEL_DETAILS.PLACEHOLDER.LABEL' | translate" formControlName="connectionProfileName" [ngClass]="{ 'status-danger': submitted && UF['connectionProfileName'].errors }" />
+                    <label for="connectionProfileName" [attr.data-content]="'*' + ('BLOCKCHAIN.CHANNEL_DETAILS.LABEL.LABEL' | translate)"></label>
                     <div *ngIf="submitted && UF['connectionProfileName'].errors as err" class="invalid-feedback">
-                        <span *ngIf="err['required']">{{ 'Connection Profile Name is Required' | translate }}</span>
+                        <span *ngIf="err['required']">{{ 'BLOCKCHAIN.CHANNEL_DETAILS.VALIDATIONS.LABEL_IS_REQUIRED' | translate }}</span>
                     </div>
                 </div>
             </div>
