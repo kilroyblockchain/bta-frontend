@@ -119,7 +119,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
                 this.channelId.push(channel);
             }
 
-            this.channelId.length > 1 ? this.channelId.shift() : this.channelId;
+            this.channelId.length > 1 ? this.channelId.pop() : this.channelId;
         }
 
         this.newOrganizationStaffingForm.patchValue({
@@ -230,6 +230,14 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
     saveNewOrganizationStaffing({ value, valid }: FormGroup): void {
         this.submitted = true;
+
+        if (value.bucketUrl) {
+            const lastLetter = value.bucketUrl.charAt(value.bucketUrl.length - 1);
+            if (lastLetter === '/') {
+                value['bucketUrl'] = value.bucketUrl.slice(0, -1);
+            }
+        }
+
         if (!valid) {
             return;
         }
