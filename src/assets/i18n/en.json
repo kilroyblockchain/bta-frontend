@@ -1026,6 +1026,24 @@
             "VALIDATIONS": {
                 "BLOCKCHAIN_KEY": "Blockchain key is required"
             }
+        },
+        "CHANNEL_DETAILS": {
+            "TITLE": {
+                "NEW_CHANNEL_DETAILS": "New Channel Details",
+                "EDIT_CHANNEL_DETAILS": "Edit Channel Details"
+            },
+            "LABEL": {
+                "CHANNEL_NAME": "Channel Name",
+                "LABEL": "Label"
+            },
+            "PLACEHOLDER": {
+                "CHANNEL_NAME": "Channel name",
+                "LABEL": "Label"
+            },
+            "VALIDATIONS": {
+                "CHANNEL_NAME_IS_REQUIRED": "Channel name is required",
+                "LABEL_IS_REQUIRED": "Label is required"
+            }
         }
     }
 }
