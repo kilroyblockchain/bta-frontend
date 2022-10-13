@@ -26,9 +26,12 @@ export class EditChannelComponent implements OnInit {
     }
 
     buildEditChannelDetailsForm(data: IChannelDetails): void {
+        const subscriptionType = this.authService.getDefaultSubscriptionType();
+
         this.editChannelForm = this.fb.group({
             channelName: [data.channelName, [Validators.required]],
-            connectionProfileName: [data.connectionProfileName, [Validators.required]]
+            connectionProfileName: [data.connectionProfileName, [Validators.required]],
+            isCompanyChannel: [subscriptionType === 'super-admin' ? true : false]
         });
     }
 
