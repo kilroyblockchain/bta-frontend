@@ -164,6 +164,12 @@ export class AddModelReviewComponent implements OnInit {
         }
         this.loading = true;
 
+        if (value.status && value.status === VersionStatus.QA_STATUS) {
+            this.addReviewForm.patchValue({
+                productionURL: ''
+            });
+        }
+
         const formData = new FormData();
         for (let i = 0; i < this.myFiles.length; i++) {
             formData.append('docs', this.myFiles[i]);
@@ -184,7 +190,7 @@ export class AddModelReviewComponent implements OnInit {
             formData.append('deployedModelInstruction', value.deployedModelInstruction);
         }
 
-        if (this.RF['productionURL']?.value) {
+        if (this.RF['productionURL']?.value && this.isReviewStatusDeployed) {
             formData.append('productionURL', value.productionURL);
         }
 
