@@ -23,6 +23,7 @@ export class EditVersionComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildEditVersionForm(this.versionData);
+        this.getDefaultOracleBucket();
     }
 
     buildEditVersionForm(data: IProjectVersion): void {
@@ -50,7 +51,10 @@ export class EditVersionComponent implements OnInit {
             return;
         }
 
-        value['versionName'] = this.UF['defaultName']?.value + value.versionName;
+        if (!value['versionName'].length) {
+            value['versionName'] = this.UF['defaultName']?.value + value.versionName;
+        }
+
         this.loading = true;
         this.manageProjectService
             .updateVersion(value, this.versionData._id)
@@ -93,9 +97,11 @@ export class EditVersionComponent implements OnInit {
     }
 
     getDefaultOracleBucket(): void {
-        this.manageProjectService.getDefaultBucketUrl(this.versionData._id).subscribe((res) => {
-            this.defaultBucketUrl = res.data;
-        });
+        if (typeof this.versionData.project === 'string') {
+            this.manageProjectService.getDefaultBucketUrl(this.versionData.project).subscribe((res) => {
+                this.defaultBucketUrl = res.data;
+            });
+        }
     }
 
     closeModal(): void {
