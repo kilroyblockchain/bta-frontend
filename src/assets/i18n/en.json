@@ -787,7 +787,7 @@
                 "LOG_FILE_VERSION": "Log File Version",
                 "LOG_FILE_BC_HASH": "Log File BC Hash",
                 "TEST_DATA_SETS": "Test Data Sets URL",
-                "TEST_DATA_SETS_BC_HASH": "Test DataSets BC Hash",
+                "TEST_DATA_SETS_BC_HASH": "Test Data Sets BC Hash",
                 "TRAIN_DATA_SETS": "Train Data Sets URL",
                 "TRAIN_DATA_SETS_BC_HASH": "Train Data Sets BC Hash",
                 "NOTE_BOOK_VERSION": "Notebook Version",
