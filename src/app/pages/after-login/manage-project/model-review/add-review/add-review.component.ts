@@ -190,7 +190,7 @@ export class AddModelReviewComponent implements OnInit {
             formData.append('deployedModelInstruction', value.deployedModelInstruction);
         }
 
-        if (this.RF['productionURL']?.value && this.isReviewStatusDeployed) {
+        if (this.RF['productionURL']?.value && (this.isReviewStatusDeployed || this.versionData.isQAStatus)) {
             formData.append('productionURL', value.productionURL);
         }
 
