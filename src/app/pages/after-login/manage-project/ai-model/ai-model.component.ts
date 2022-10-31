@@ -103,7 +103,19 @@ export class AiModelComponent implements OnInit, OnDestroy {
     }
 
     checkCanSubmitVersionModel(): boolean {
-        if (this.isUserCanSubmitVersion && this.versionData && this.isModelStatusDraft && this.versionData.logFileBCHash && this.versionData.trainDatasetBCHash && this.versionData.trainDatasetBCHash && this.versionData.aiModelBcHash) {
+        if (
+            this.isUserCanSubmitVersion &&
+            this.versionData &&
+            this.isModelStatusDraft &&
+            this.versionData.logFileBCHash &&
+            this.versionData.trainDatasetBCHash &&
+            this.versionData.trainDatasetBCHash &&
+            this.versionData.aiModelBcHash &&
+            this.versionData?.logFileStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.trainDatasetStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.testDatasetStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.aiModelStatus?.code === this.oracleBucketDataStatus.FETCHED
+        ) {
             return true;
         } else {
             return false;
