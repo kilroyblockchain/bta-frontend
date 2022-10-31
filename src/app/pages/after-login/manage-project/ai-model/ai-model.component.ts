@@ -183,7 +183,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
                         if (!this.totalRecords) {
                             this.logsData = false;
                         } else {
-                            if (this.versionData.logFileStatus.code !== this.oracleBucketDataStatus.FETCHING) {
+                            if (this.versionData?.logFileStatus?.code !== this.oracleBucketDataStatus.FETCHING) {
                                 this.logsData = true;
                             }
                         }
