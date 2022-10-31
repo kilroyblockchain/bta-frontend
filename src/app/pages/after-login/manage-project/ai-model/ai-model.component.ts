@@ -111,10 +111,10 @@ export class AiModelComponent implements OnInit, OnDestroy {
             this.versionData.trainDatasetBCHash &&
             this.versionData.trainDatasetBCHash &&
             this.versionData.aiModelBcHash &&
-            this.versionData.logFileStatus.code === this.oracleBucketDataStatus.FETCHED &&
-            this.versionData.trainDatasetStatus.code === this.oracleBucketDataStatus.FETCHED &&
-            this.versionData.testDatasetStatus.code === this.oracleBucketDataStatus.FETCHED &&
-            this.versionData.aiModelStatus.code === this.oracleBucketDataStatus.FETCHED
+            this.versionData?.logFileStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.trainDatasetStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.testDatasetStatus?.code === this.oracleBucketDataStatus.FETCHED &&
+            this.versionData?.aiModelStatus?.code === this.oracleBucketDataStatus.FETCHED
         ) {
             return true;
         } else {
