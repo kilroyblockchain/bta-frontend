@@ -29,6 +29,7 @@ import { CommonVerifyBcHashComponent } from './verify-bc-hash/common-verify-bc-h
 import { ViewLogExperimentDetailsComponent } from './model-review/compare-log-files/log-experiment-details/log-experiment-details.component';
 import { CommonCompareLogFilesComponent } from './model-review/compare-log-files/common-compare-log-file/common-compare-log-file.component';
 import { CustomPipeModule } from 'src/app/@core/pipes/pipe.module';
+import { EditMlopsReviewedVersionComponent } from './ai-model/edit-mlops-reviewed-version/edit-mlops-reviewed-version.component';
 
 const PAGE_COMPONENT = [
     ManageProjectComponent,
@@ -54,7 +55,8 @@ const PAGE_COMPONENT = [
     VerifyBcHashComponent,
     CommonVerifyBcHashComponent,
     ViewLogExperimentDetailsComponent,
-    CommonCompareLogFilesComponent
+    CommonCompareLogFilesComponent,
+    EditMlopsReviewedVersionComponent
 ];
 
 @NgModule({

@@ -108,5 +108,7 @@ export const URLConstant = {
     getArtifactModelBcDetailsURL: '/ai-model/artifact-model-bc-details',
     getAllArtifactsModelURL: '/ai-model/all-artifacts-model',
     getArtifactModelOracleHashURL: '/ai-model/artifact-model-oracle-hash',
-    getArtifactModelDetailsURL: '/ai-model/artifact-model-details'
+    getArtifactModelDetailsURL: '/ai-model/artifact-model-details',
+    updateMlopsReviewedVersionURL: '/model-reviews/update-mlops-reviewed-version',
+    canMlopsEditReviewedVersionURL: '/model-reviews/can-mlops-edit-version'
 };

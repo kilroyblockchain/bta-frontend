@@ -752,7 +752,8 @@
                 "VERSION_DETAILS": "Version Details",
                 "PROJECT_INFO": "Project Information",
                 "CREATED_BY_INFO": "Creator Information",
-                "BLOCKCHAIN_HISTORY": "Model Version Blockchain History"
+                "BLOCKCHAIN_HISTORY": "Model Version Blockchain History",
+                "EDIT_REVIEWED_MODEL_VERSION": "Edit Reviewed Model Version"
             },
             "PLACEHOLDER": {
                 "VERSION_NAME": "version name",

@@ -16,9 +16,14 @@
                 {{ 'MANAGE_PROJECTS.AI_MODEL.BUTTON.SUBMIT_MODEL' | translate }}
             </button>
         </div>
+        <div class="actions" *ngIf="isUserCanSubmitVersion && canMlopsEditReviewedVersion" (click)="editMlopsVersion(versionData)">
+            <button nbButton hero status="primary" size="small">
+                {{ 'COMMON.BUTTON.EDIT' | translate }}
+            </button>
+        </div>
     </div>
-    <nb-card class="medium-card-width" *ngIf="versionData" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
-        <nb-card-body class="grid-row">
+    <nb-card class="medium-card-width" *ngIf="versionData">
+        <nb-card-body class="grid-row" [nbSpinner]="submitLoading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
             <div class="col-1-1">
                 <strong> {{ 'MANAGE_PROJECTS.PROJECT.LABEL.PROJECT_NAME' | translate }}: </strong>
             </div>
@@ -270,6 +275,9 @@
                     </ng-container>
                 </table>
                 <div *ngIf="loading && loadingTable">
+                    <app-loader></app-loader>
+                </div>
+                <div *ngIf="updateReviewedVersionLoader">
                     <app-loader></app-loader>
                 </div>
                 <div *ngIf="loadingTable && !loading && !logsData">
