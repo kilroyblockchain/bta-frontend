@@ -51,6 +51,10 @@
                             </div>
 
                             <div class="table-col" *ngSwitchCase="'action'">
+                                <button *ngIf="!row.data.status" nbSuffix nbButton ghost (click)="onEnableBcNode(row.data[column])">
+                                    <nb-icon [nbTooltip]="'COMMON.TOOLTIP.ENABLE' | translate" icon="toggle-right-outline" pack="eva"> </nb-icon>
+                                </button>
+
                                 <button *ngIf="!row.data['subrow']" nbSuffix nbButton ghost (click)="openEditBcNodeModal(row.data[column])">
                                     <nb-icon [nbTooltip]="'COMMON.TOOLTIP.EDIT' | translate" icon="edit-outline" pack="eva"> </nb-icon>
                                 </button>
