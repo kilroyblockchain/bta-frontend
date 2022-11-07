@@ -55,6 +55,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
     newBcNodeDialogClose!: Subscription;
     editBcNodeDialogClose!: Subscription;
     deleteDialogClose!: Subscription;
+    enableDialogClose!: Subscription;
 
     user!: IUserRes;
 
@@ -78,6 +79,7 @@ export class BcNodeComponent implements OnInit, OnDestroy {
         this.newBcNodeDialogClose ? this.newBcNodeDialogClose.unsubscribe() : null;
         this.editBcNodeDialogClose ? this.editBcNodeDialogClose.unsubscribe() : null;
         this.deleteDialogClose ? this.deleteDialogClose.unsubscribe() : null;
+        this.enableDialogClose ? this.enableDialogClose.unsubscribe() : null;
     }
 
     setTranslatedTableColumns(): void {
@@ -186,6 +188,31 @@ export class BcNodeComponent implements OnInit, OnDestroy {
         this.deleteDialogClose = deleteDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
                 this.blockchainService.deleteBcNodeInfo(rowData._id as string).subscribe({
+                    next: (res) => {
+                        if (res && res.success) {
+                            this.utilsService.showToast('success', res?.message);
+                            this.tableData = this.tableData.filter((item) => item._id !== rowData._id);
+                            this.totalRecords -= 1;
+                            if (this.tableData.length < 1) {
+                                this.dataFound = false;
+                            } else {
+                                this.createTableData(this.tableData);
+                            }
+                        }
+                    },
+                    error: (err) => {
+                        this.utilsService.showToast('warning', err?.message);
+                    }
+                });
+            }
+        });
+    }
+
+    onEnableBcNode(rowData: IBcNodeInfo): void {
+        const enableDialogOpen = this.dialogService.open(AlertComponent, { context: { alert: false, question: this.translate.instant('BLOCKCHAIN.BC_NODE_INFO.ALERT_MSG.ENABLE_BC_NODE_INFO'), name: rowData.orgName }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.deleteDialogClose = enableDialogOpen.onClose.subscribe((closeRes) => {
+            if (closeRes) {
+                this.blockchainService.enableBcNodeInfo(rowData._id as string).subscribe({
                     next: (res) => {
                         if (res && res.success) {
                             this.utilsService.showToast('success', res?.message);

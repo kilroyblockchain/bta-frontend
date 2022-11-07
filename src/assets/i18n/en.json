@@ -1010,7 +1010,8 @@
                 "AUTHORIZATION_TOKEN_MIN_LENGTH": "Authorization Token must be at least {{ minLength }} characters"
             },
             "ALERT_MSG": {
-                "DISABLE_BC_NODE_INFO": "Do you want to disable organization unit"
+                "DISABLE_BC_NODE_INFO": "Do you want to disable Bc Node",
+                "ENABLE_BC_NODE_INFO": "Do you want to enable Bc Node"
             }
         },
         "BC_KEY": {

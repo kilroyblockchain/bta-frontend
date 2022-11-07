@@ -80,6 +80,7 @@ export const URLConstant = {
     addBcNodeInfoURL: '/bc-node-info',
     updateBcNodeInfoURL: '/bc-node-info/update',
     deleteBcNodeInfoURL: '/bc-node-info/delete',
+    enableBcNodeInfoURL: '/bc-node-info/enable',
     verifyBcKeyURL: '/user/verify-bc-key',
     getProjectBcDetailsURL: '/project/bc-details',
     getProjectBcHistoryURL: '/project/bc-history',

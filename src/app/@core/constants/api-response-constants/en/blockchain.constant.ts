@@ -15,5 +15,8 @@ export const API_RES_MSG_BLOCKCHAIN = {
     FETCHED_ALL_CHANNEL_DETAIL: 'All Channel Fetched',
     CHANNEL_DETAIL_ALREADY_EXISTS: 'This Channel details already Exists',
     CHANNEL_ID_NOT_FOUND: 'Channel Id Not Found',
-    INVALID_BC_KEY: 'Invalid Bc Key'
+    INVALID_BC_KEY: 'Invalid Bc Key',
+    UNABLE_TO_DELETE_BC_NODE_INFO: 'Unable to disable BC Node. Already assigned on staffing.',
+    BC_NODE_INFO_ENABLED_SUCCESS: 'Bc Node Info Enabled Successfully',
+    UNABLE_TO_ENABLE_BC_NODE_INFO: 'Unable To Enable Bc Node Info'
 };

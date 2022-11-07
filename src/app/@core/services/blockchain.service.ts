@@ -28,4 +28,8 @@ export class BlockChainService {
     verifyBcKey(bcKey: string): Observable<IAppResponse<{ bcKey: string }>> {
         return this.http.post(URLConstant.verifyBcKeyURL, bcKey);
     }
+
+    enableBcNodeInfo(bcNodeId: string): Observable<IAppResponse<IBcNodeInfo>> {
+        return this.http.patch(URLConstant.enableBcNodeInfoURL + `/${bcNodeId}`);
+    }
 }
