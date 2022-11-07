@@ -1,0 +1,88 @@
+<nb-card class="medium-card-width" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
+    <nb-card-header>
+        <section class="dialog-head">
+            <h6>{{ 'MANAGE_PROJECTS.VERSION.TITLE.EDIT_REVIEWED_MODEL_VERSION' | translate }}</h6>
+        </section>
+        <div class="close-dialog">
+            <button nbButton class="icon" (click)="closeModal()">
+                <nb-icon icon="close-circle-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-container" [formGroup]="editMlopsVersionForm">
+            <div class="form-inner-container two-col">
+                <div class="form-holder floating">
+                    <nb-form-field>
+                        <span nbPrefix>v</span>
+                        <input nbInput type="number" min="1" fullWidth shape="round" (ngModelChange)="valueChange($event)" oninput="validity.valid||(value='');" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.VERSION_NUMBER' | translate)" formControlName="versionName" [ngClass]="{ 'status-danger': submitted && UF['versionName'].errors }" />
+                        <label for="versionModel" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.VERSION_NAME' | translate)"></label>
+                    </nb-form-field>
+                    <div *ngIf="submitted && UF['versionName'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.VERSION_NUMBER' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="logFilePath" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.LOG_FILE_PATH' | translate)" formControlName="logFilePath" [ngClass]="{ 'status-danger': submitted && UF['logFilePath'].errors }" />
+                    <label for="logFilePath" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.LOG_FILE_PATH' | translate)"></label>
+                    <div *ngIf="submitted && UF['logFilePath'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.LOG_FILE_PATH' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-inner-container two-col">
+                <div class="form-holder floating">
+                    <input name="testDataSets" nbInput fullWidth [attr.disabled]="true" [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.TEST_DATA_SETS' | translate)" formControlName="testDataSets" [ngClass]="{ 'status-danger': submitted && UF['testDataSets'].errors, 'status-warning': !submitted }" />
+                    <label for="testDataSets" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.TEST_DATA_SETS' | translate)"></label>
+                    <div *ngIf="submitted && UF['testDataSets'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.TEST_DATA_SETS' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-holder floating">
+                <input name="noteBookVersion" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.NOTE_BOOK_VERSION' | translate)" formControlName="noteBookVersion" [ngClass]="[submitted && UF['noteBookVersion'].errors] ? 'status-danger' : 'status-warning'" />
+                <label for="noteBookVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.NOTE_BOOK_VERSION' | translate)"></label>
+                <div *ngIf="submitted && UF['noteBookVersion'].errors as err" class="invalid-feedback">
+                    <span *ngIf="err['required']">
+                        {{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.NOTE_BOOK_VERSION' | translate }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <input name="codeRepo" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_REPO' | translate)" formControlName="codeRepo" [ngClass]="{ 'status-danger': submitted && UF['codeRepo'].errors }" />
+                    <label for="codeRepo" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_REPO' | translate)"></label>
+                    <div *ngIf="submitted && UF['codeRepo'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_REPO' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-holder floating">
+                <input name="codeVersion" fullWidth nbInput [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.CODE_VERSION' | translate)" formControlName="codeVersion" [ngClass]="{ 'status-danger': submitted && UF['codeVersion'].errors }" />
+                <label for="codeVersion" [attr.data-content]="'*' + ('MANAGE_PROJECTS.VERSION.LABEL.CODE_VERSION' | translate)"></label>
+                <div *ngIf="submitted && UF['codeVersion'].errors as err" class="invalid-feedback">
+                    <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.CODE_VERSION' | translate }}</span>
+                </div>
+            </div>
+
+            <div class="form-inner-container">
+                <div class="form-holder floating">
+                    <textarea name="comment" nbInput fullWidth [placeholder]="'*' + ('MANAGE_PROJECTS.VERSION.PLACEHOLDER.COMMENT' | translate)" formControlName="comment" [ngClass]="{ 'status-danger': submitted && UF['comment'].errors }"></textarea>
+                    <div *ngIf="submitted && UF['comment'].errors as err" class="invalid-feedback">
+                        <span *ngIf="err['required']">{{ 'MANAGE_PROJECTS.VERSION.VALIDATIONS.COMMENT' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" type=" submit" (click)="saveEditVersion(editMlopsVersionForm)">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+    </nb-card-footer>
+</nb-card>

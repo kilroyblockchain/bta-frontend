@@ -8,6 +8,7 @@ import { IAiModel, IProjectVersion, OracleBucketDataStatus, VersionStatus } from
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
+import { EditMlopsReviewedVersionComponent } from './edit-mlops-reviewed-version/edit-mlops-reviewed-version.component';
 
 interface TreeNode<T> {
     data: T;
@@ -64,6 +65,11 @@ export class AiModelComponent implements OnInit, OnDestroy {
     timeIntervalTrainDataSets!: Subscription;
     timeIntervalAIModel!: Subscription;
 
+    editMolpsReviewedVersionClose!: Subscription;
+    canMlopsEditReviewedVersion!: boolean;
+    updateReviewedVersionLoader!: boolean;
+    submitLoading!: boolean;
+
     constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private dialogService: NbDialogService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
     }
@@ -81,12 +87,14 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.timeIntervalTestDataSets ? this.timeIntervalTestDataSets.unsubscribe() : null;
         this.timeIntervalTrainDataSets ? this.timeIntervalTrainDataSets.unsubscribe() : null;
         this.timeIntervalAIModel ? this.timeIntervalAIModel.unsubscribe() : null;
+
+        this.editMolpsReviewedVersionClose ? this.editMolpsReviewedVersionClose.unsubscribe() : null;
     }
 
-    pageChange(pageNumber: number): void {
+    pageChange(pageNumber: number, isUpdateReviewModel = false): void {
         this.page = pageNumber;
         this.options = { ...this.options, page: this.page, limit: this.resultperpage, subscriptionType: this.authService.getDefaultSubscriptionType() };
-        this.getVersionData();
+        this.getVersionData(isUpdateReviewModel);
     }
 
     async checkAccess(): Promise<void> {
@@ -136,10 +144,22 @@ export class AiModelComponent implements OnInit, OnDestroy {
         });
     }
 
-    getVersionData(): void {
+    getVersionData(isUpdateReviewModel: boolean): void {
         const versionId = this.activeRoute.snapshot.params['id'];
         this.retrieveVersionData(versionId);
-        this.retrieveAllVersionLogs(versionId);
+        this.getCanMlopsEditReviewedVersion(versionId);
+        if (isUpdateReviewModel) {
+            this.data = [];
+            this.updateReviewedVersionLoader = true;
+            this.dataSource = this.dataSourceBuilder.create(this.data);
+            setTimeout(() => {
+                this.updateReviewedVersionLoader = false;
+
+                this.retrieveAllVersionLogs(versionId, false);
+            }, 5000);
+        } else {
+            this.retrieveAllVersionLogs(versionId);
+        }
     }
 
     retrieveVersionData(versionId: string): void {
@@ -175,8 +195,8 @@ export class AiModelComponent implements OnInit, OnDestroy {
             });
     }
 
-    retrieveAllVersionLogs(versionId: string): void {
-        this.loading = true;
+    retrieveAllVersionLogs(versionId: string, isLoading = true): void {
+        this.loading = isLoading;
         this.logsData = false;
         this.loadingTable = true;
 
@@ -248,12 +268,12 @@ export class AiModelComponent implements OnInit, OnDestroy {
         });
         this.confirmSubmitModelDialogClose = confirmSubmitModelDialogOpen.onClose.subscribe((closeRes) => {
             if (closeRes) {
-                this.loading = true;
+                this.submitLoading = true;
                 this.manageProjectService
                     .submitModelVersion(versionId)
                     .pipe(
                         finalize(() => {
-                            this.loading = false;
+                            this.submitLoading = false;
                         })
                     )
                     .subscribe({
@@ -409,5 +429,31 @@ export class AiModelComponent implements OnInit, OnDestroy {
     openVerifyBcHashModel(versionId: string): void {
         const URL = '/u/manage-project/verify-bc-hash';
         this.router.navigate([URL, versionId]);
+    }
+
+    editMlopsVersion(versionData: IProjectVersion): void {
+        const editMolpsReviewedVersionOpen = this.dialogService.open(EditMlopsReviewedVersionComponent, { context: { versionData }, hasBackdrop: true, closeOnBackdropClick: false });
+        this.editMolpsReviewedVersionClose = editMolpsReviewedVersionOpen.onClose.subscribe((res) => {
+            if (res && res !== 'close' && res.success) {
+                this.logsData = true;
+                const versionName = res.data.versionName;
+                if (versionName !== versionData.versionName) {
+                    this.pageChange(1, true);
+                } else {
+                    this.pageChange(1);
+                }
+            }
+        });
+    }
+
+    getCanMlopsEditReviewedVersion(versionId: string): void {
+        this.manageProjectService.canMlopsEditReviewedVersion(versionId).subscribe({
+            next: (res) => {
+                this.canMlopsEditReviewedVersion = res.data;
+            },
+            error: (err) => {
+                this.utilsService.showToast('warning', err.message);
+            }
+        });
     }
 }

@@ -124,4 +124,12 @@ export class ManageProjectService {
     getArtifactModelDetails(expId: string): Observable<IAppResponse<string>> {
         return this.http.get(URLConstant.getArtifactModelDetailsURL + `/${expId}`);
     }
+
+    updateMlopsReviewedVersion(data: IProjectVersion, versionId: string): Observable<IAppResponse<IProjectVersion>> {
+        return this.http.put(URLConstant.updateMlopsReviewedVersionURL + `/${versionId}`, data);
+    }
+
+    canMlopsEditReviewedVersion(versionId: string): Observable<IAppResponse<boolean>> {
+        return this.http.get(URLConstant.canMlopsEditReviewedVersionURL + `/${versionId}`);
+    }
 }

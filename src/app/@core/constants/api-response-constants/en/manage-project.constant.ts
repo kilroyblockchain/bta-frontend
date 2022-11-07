@@ -22,5 +22,7 @@ export const API_RES_MSG_MANAGE_PROJECT = {
     MODEL_VERSION_SUBMITTED_SUCCESS: 'Model Version Submitted Successfully',
     UNABLE_TO_SUBMIT_MODEL_VERSION: 'Unable To Submit Model Version',
     UPDATE_VERSION_SUCCESS: 'Model Version Updated Successfully',
-    UNABLE_TO_UPDATE_VERSION: 'Unable To Update Model Version'
+    UNABLE_TO_UPDATE_VERSION: 'Unable To Update Model Version',
+    CAN_ABLE_TO_UPDATE_REVIEWED_VERSION: 'Can able to updated reviewed version',
+    COULD_NOT_ABLE_TO_UPDATE_REVIEWED_VERSION: 'Could not able to update reviewed version'
 };
