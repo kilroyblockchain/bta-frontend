@@ -1016,7 +1016,7 @@
         },
         "BC_KEY": {
             "LABEL": {
-                "FORM_HEADER_MESSAGE": "Please enter Blockchain Key, this key gets verified with you credentials wallet stored in Hyperledger fabric.",
+                "FORM_HEADER_MESSAGE": "Please enter your blockchain key, which will be verified with your credentials wallet stored in Hyperledger Fabric.",
                 "BLOCKCHAIN_KEY": "Blockchain Key"
             },
             "BUTTON": {
