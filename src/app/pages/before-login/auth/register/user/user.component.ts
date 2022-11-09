@@ -158,7 +158,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 next: () => {
                     this.utilsService.showToast('success', MSG_KEY_CONSTANT_ORGANIZATION.DATA_ADDED_SUCCESSFULLY);
                     this.localStorageService.clearAllLocalStorageData();
-                    this.router.navigate(['/auth/thank-you/casey-survey']);
+                    this.router.navigate(['/auth/thank-you/bta-app']);
                 },
                 error: (err: Error) => {
                     this.utilsService.showToast('warning', err.message);

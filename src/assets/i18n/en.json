@@ -341,7 +341,7 @@
     },
     "THANK_YOU": {
         "LABEL": {
-            "THANK_YOU_FOR_REGISTRATION": "Thank you for your registration, you will be notified when your account is activated. This could take up to two weeks.",
+            "THANK_YOU_FOR_REGISTRATION": "Thank you for your registration, you will be notified when your account is activated.",
             "THANK_YOU_FOR_INTEREST": "Thank you for your interest in {{appTitle}} network.",
             "WELCOME_TO_COMMUNITY": "Welcome to the initiative to provide community-based organizations with meaningful options so they can fight COVID-19 in an impactful way.",
             "RESOURCES_AND_NEXT_STEPS": "Resources and Next Steps",
