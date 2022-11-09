@@ -10,4 +10,5 @@ export interface IBcNodeInfo {
     addedBy: IUserRes;
     updatedAt: Date;
     createdAt: Date;
+    isMigrated: boolean;
 }
