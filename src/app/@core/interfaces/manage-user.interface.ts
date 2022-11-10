@@ -26,6 +26,7 @@ export interface IOrganizationUnit {
     updatedAt: Date;
     createdAt: Date;
     staffing_records: IStaffing[];
+    isMigrated: boolean;
 }
 
 export interface IStaffing {
