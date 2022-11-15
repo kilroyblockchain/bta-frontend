@@ -872,7 +872,7 @@
             },
             "LABEL": {
                 "EXPERIMENT_NAME": "Experiment Name",
-                "HYPER_PARAMETERS": "Hyper Parameters",
+                "HYPER_PARAMETERS": "Hyperparameters",
                 "TEST_METRICS": "Test Metrics",
                 "EPOCHS": "Epochs",
                 "VERIFY_EXPERIMENT_HASH": "Verify Experiment Hash",
