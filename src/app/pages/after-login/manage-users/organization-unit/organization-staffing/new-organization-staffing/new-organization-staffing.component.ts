@@ -323,7 +323,7 @@ export class NewOrganizationStaffingComponent implements OnInit {
 
     getBcNodeInfo(): void {
         this.blockChainService.getAllBcInfo(this.options).subscribe((res) => {
-            this.bcNodeInfo = res.data.docs.filter((f) => f.addedBy._id === this.user.id && !f.isMigrated);
+            this.bcNodeInfo = res.data.docs.filter((f) => f.addedBy?._id === this.user.id && !f.isMigrated);
         });
     }
 

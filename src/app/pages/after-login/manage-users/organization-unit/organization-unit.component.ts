@@ -145,13 +145,13 @@ export class OrganizationUnitComponent implements OnInit, OnDestroy {
                 .subscribe({
                     next: (res) => {
                         if (res && res.success) {
-                            this.totalRecords = res.data.total;
+                            this.tableData = res.data.docs.filter((f) => !f.isMigrated);
+                            this.totalRecords = this.tableData.length;
                             if (!this.totalRecords) {
                                 this.dataFound = false;
                             } else {
                                 this.dataFound = true;
                             }
-                            this.tableData = res.data.docs;
                             this.createTableData(this.tableData);
                         }
                     }
