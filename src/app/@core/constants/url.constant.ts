@@ -111,5 +111,6 @@ export const URLConstant = {
     getArtifactModelOracleHashURL: '/ai-model/artifact-model-oracle-hash',
     getArtifactModelDetailsURL: '/ai-model/artifact-model-details',
     updateMlopsReviewedVersionURL: '/model-reviews/update-mlops-reviewed-version',
-    canMlopsEditReviewedVersionURL: '/model-reviews/can-mlops-edit-version'
+    canMlopsEditReviewedVersionURL: '/model-reviews/can-mlops-edit-version',
+    isErrorInReviewedModelURL: '/model-reviews/is-error-in-reviewed-model'
 };
