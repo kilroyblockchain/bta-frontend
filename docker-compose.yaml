@@ -1,7 +1,8 @@
-version: "3.7"
+version: '3.7'
 services:
     app:
-      container_name: bta_web
-      build: .
-      ports:
-          - "4200:80"
+        container_name: bta_web
+        image: bta-web
+        build: .
+        ports:
+            - '4200:80'
