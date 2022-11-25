@@ -44,6 +44,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     isReviewStatusFailed!: boolean;
     isReviewStatusDeclined!: boolean;
 
+    isErrorReviewedVersion!: boolean;
     newReviewDialogClose!: Subscription;
 
     constructor(private dialogService: NbDialogService, private router: Router, private activeRoute: ActivatedRoute, private translate: TranslateService, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
@@ -90,6 +91,7 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
         const versionId = this.activeRoute.snapshot.params['id'];
         this.retrieveVersionData(versionId);
         this.getModelReviews(versionId);
+        this.isErrorInReviewedVersion(versionId);
     }
 
     retrieveVersionData(versionId: string): void {
@@ -192,6 +194,12 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
                 }
             });
         }
+    }
+
+    isErrorInReviewedVersion(versionId: string): void {
+        this.manageProjectService.isErrorInReviewedModel(versionId).subscribe((res) => {
+            this.isErrorReviewedVersion = res.data;
+        });
     }
 
     openReviewDetails(modelReviewId: string): void {
