@@ -132,4 +132,8 @@ export class ManageProjectService {
     canMlopsEditReviewedVersion(versionId: string): Observable<IAppResponse<boolean>> {
         return this.http.get(URLConstant.canMlopsEditReviewedVersionURL + `/${versionId}`);
     }
+
+    isErrorInReviewedModel(versionId: string): Observable<IAppResponse<boolean>> {
+        return this.http.get(URLConstant.isErrorInReviewedModelURL + `/${versionId}`);
+    }
 }
