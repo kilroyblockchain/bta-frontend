@@ -68,7 +68,5 @@ else
 esac
 fi
 
-docker-compose down --volumes
-docker image rm bta-web-app
 docker-compose build --build-arg ENV=$1
 docker-compose up -d
