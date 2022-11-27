@@ -180,3 +180,9 @@ export interface IAiArtifactsModel {
     updatedAt: Date;
     createdAt: Date;
 }
+
+export interface IReviewedVersionError {
+    errorStatus: boolean;
+    logFileDataHashStatus: string;
+    testDataSetHashStatus: string;
+}

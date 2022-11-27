@@ -963,7 +963,9 @@
             "MESSAGE": {
                 "AI_IS_GREATER_VALUE": "AI Engineer's accuracy is greater by {{ greaterValue }}",
                 "MLOPS_IS_GREATER_VALUE": "MLOPs Engineer's accuracy is greater by  {{ greaterValue }}",
-                "BOTH_ARE_EQUAL": "Both has same value"
+                "BOTH_ARE_EQUAL": "Both has same value",
+                "ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_ERROR": "Disable due to Error: Error on model review .Please check the model review added.",
+                "ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_DATA_FETCHING": "Disable due to data fetching in process: Fetching the data. Please refresh after some time."
             }
         }
     },
