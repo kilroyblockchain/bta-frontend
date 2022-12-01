@@ -1,14 +1,15 @@
-import { AuthService } from 'src/app/@core/services';
+import { AuthService, UtilsService } from 'src/app/@core/services';
 import { Injectable } from '@angular/core';
 import { HttpHandler, HttpEvent, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
+import { MSG_KEY_CONSTANT_COMMON } from '../constants/message-key-constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     refreshingAccessToken!: boolean;
     private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    constructor(public authService: AuthService) {}
+    constructor(public authService: AuthService, private readonly utilsService: UtilsService) {}
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,11 +31,19 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse): Observable<any> => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     if (req.url.includes('refresh-access-token')) {
-                        this.authService.logoutByTokenExpiry();
+                        const toastRef = this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.TOKEN_EXPIRED_LOGOUT);
+                        toastRef.onClose().subscribe(() => {
+                            // this.authService.logoutWithReturnURL();
+                            this.authService.logoutByTokenExpiry();
+                        });
                     } else if (req.url.includes('verify-bc-key')) {
                         return throwError(() => error);
                     } else {
-                        return this.handle401Error(req, next);
+                        return this.handle401Error(req, next).pipe(
+                            catchError(() => {
+                                return of(null);
+                            })
+                        );
                     }
                 }
                 return throwError(() => error);
