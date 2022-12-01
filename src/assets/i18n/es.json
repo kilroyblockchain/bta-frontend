@@ -290,7 +290,7 @@
             "JOB_TITLE_MIN_LENGTH": "es  Job Title must be at least {{ minLength }} characters"
         },
         "LABEL": {
-            "AGREE_THE_TERMS_AND_CONDITION": "es Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
+            "AGREE_THE_TERMS_AND_CONDITION": "es Agree to the <a href='/#/terms-and-conditions' target='_blank'>Terms and Conditions</a>",
             "COMPANY": "es Organization",
             "JOB_TITLE": "es Job Title"
         },
