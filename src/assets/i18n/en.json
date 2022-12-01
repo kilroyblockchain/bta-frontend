@@ -247,7 +247,7 @@
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
         "APPLICATION_LOGS": "Application Logs",
-        "BC_NODE_INFO": "BC Node Info",
+        "BC_NODE_INFO": "Bc Node Info",
         "BC_KEY_VERIFY": "Bc Key Verify"
     },
     "FOOTER": {
@@ -569,7 +569,7 @@
             "NON_ADMIN_USERS": "Non Admin Users",
             "BLOCKED_USERS": "Blocked Users",
             "APPLICATION_LOGS": "Application Logs",
-            "BC_NODE_INFO": "BC Node Info"
+            "BC_NODE_INFO": "Bc Node Info"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -973,7 +973,7 @@
         },
         "BC_NODE_INFO": {
             "TITLE": {
-                "ALL_BC_NODE": "All Bc Nodes",
+                "BC_NODE_INFO": "Bc Node Info",
                 "ADD_NEW_BC_NODE_INFO": "New Bc Node Info",
                 "EDIT_BC_NODE_INFO": "Edit Bc Node Info"
             },
@@ -1031,6 +1031,7 @@
         },
         "CHANNEL_DETAILS": {
             "TITLE": {
+                "CHANNEL_DETAILS": "Channel Details",
                 "NEW_CHANNEL_DETAILS": "New Channel Details",
                 "EDIT_CHANNEL_DETAILS": "Edit Channel Details"
             },
