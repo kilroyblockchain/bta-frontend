@@ -499,7 +499,7 @@
             "REGISTER": "ne Register",
             "DASHBOARD": "ne Dashboard",
             "MANAGE_USERS": "ne Manage Users",
-            "ORGANIZATION_UNIT": "ne Organization Unit",
+            "ORGANIZATION_UNITS": "ne Organization Units",
             "USER": "ne User",
             "USER_ACTIVITY": "ne User Activity"
         }

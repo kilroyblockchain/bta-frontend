@@ -499,7 +499,7 @@
             "REGISTER": "es Register",
             "DASHBOARD": "es Dashboard",
             "MANAGE_USERS": "es Manage Users",
-            "ORGANIZATION_UNIT": "es Organization Unit",
+            "ORGANIZATION_UNITS": "es Organization Units",
             "USER": "es User",
             "USER_ACTIVITY": "es User Activity"
         }
