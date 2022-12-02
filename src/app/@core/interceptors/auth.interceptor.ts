@@ -33,7 +33,6 @@ export class AuthInterceptor implements HttpInterceptor {
                     if (req.url.includes('refresh-access-token')) {
                         const toastRef = this.utilsService.showToast('warning', MSG_KEY_CONSTANT_COMMON.TOKEN_EXPIRED_LOGOUT);
                         toastRef.onClose().subscribe(() => {
-                            // this.authService.logoutWithReturnURL();
                             this.authService.logoutByTokenExpiry();
                         });
                     } else if (req.url.includes('verify-bc-key')) {
