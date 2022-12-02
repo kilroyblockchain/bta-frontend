@@ -1,14 +1,5 @@
 <form [formGroup]="registrationFormGroup" (ngSubmit)="executeCaptcha(registrationFormGroup, captchaRef)" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
     <h4 class="title">{{ 'REGISTER.TITLE' | translate }}</h4>
-    <p class="sub-title">{{ 'REGISTER.SUBTITLE' | translate }}</p>
-    <div class="form-holder full">
-        <nb-select [placeholder]="'REGISTER.PLACEHOLDER.CHOOSE_SUBSCRIPTION_TYPE' | translate" (selectedChange)="subscriberChanged()" formControlName="subscriptionType" [ngClass]="{ 'status-danger': submitted && UF['subscriptionType'].errors }">
-            <nb-option *ngFor="let subscriptionRow of subscriptions" [value]="subscriptionRow.subscriptionTypeIdentifier">{{ subscriptionRow.subscriptionType }}</nb-option>
-        </nb-select>
-        <div *ngIf="submitted && UF['subscriptionType'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'REGISTER.VALIDATIONS.SUBSCRIPTION_TYPE_IS_REQUIRED' | translate }}</span>
-        </div>
-    </div>
 
     <div class="form-inner-container two-col">
         <div class="form-holder floating">
