@@ -144,7 +144,7 @@ export class NewUserComponent implements OnInit {
     setOrgUnits(): void {
         this.manageUserService.getAllOrganizationUnitOfOrganization(this.defaultSubscriptionType).subscribe((res) => {
             if (res && res.success) {
-                this.organizationUnits = res.data.filter((f) => !f.isMigrated);
+                this.organizationUnits = res.data;
             }
         });
     }
