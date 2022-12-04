@@ -111,7 +111,7 @@
 
         <div class="form-holder full" *ngIf="selectedSubscriber !== 'other'">
             <nb-checkbox status="basic" (checkedChange)="changedOnAgreedOnTerms($event)">
-                <p [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
+                <p class="terms-and-condition" [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
             </nb-checkbox>
         </div>
         <re-captcha #captchaRef="reCaptcha" (error)="onError($event)" errorMode="handled" (resolved)="resolved($event, registrationFormGroup)" size="invisible"> </re-captcha>
