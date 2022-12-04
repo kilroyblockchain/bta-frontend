@@ -1,6 +1,7 @@
 #!/bin/bash
 Red='\033[0;31m'
 Green='\033[0;32m'
+Blue='\033[0;34m'
 Color_Off='\033[0m'
 
 ./deploy.sh local
@@ -16,10 +17,13 @@ if [ $res -ne 0 ]; then
     echo -e "${Color_Off}"
     exit 1
   fi
+
 echo -e "${Green}"
 echo "-----------------------------------------------------------------------"
 echo "-----------------------------------------------------------------------"
-echo "Successfully created and run BTA frontend application"
+echo "BTA frontend has been successfully started"
+echo -e "Subscribe using ${Blue}http://localhost:4200/#/auth/register${Green}"
+echo "Log in as super admin to approve new subscription."
 echo "-----------------------------------------------------------------------"
 echo "-----------------------------------------------------------------------"
 echo -e "${Color_Off}"
