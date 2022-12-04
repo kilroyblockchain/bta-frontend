@@ -111,7 +111,7 @@ export class SidebarComponent {
                 title: 'Organization Unit',
                 link: '/u/manage-users/organization-unit',
                 pathMatch: 'full',
-                key: 'HEADER.MENU_ITEM.ORGANIZATION_UNIT'
+                key: 'HEADER.MENU_ITEM.ORGANIZATION_UNITS'
             });
         }
 

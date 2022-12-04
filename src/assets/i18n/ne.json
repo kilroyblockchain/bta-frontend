@@ -499,8 +499,8 @@
             "REGISTER": "ne Register",
             "DASHBOARD": "ne Dashboard",
             "MANAGE_USERS": "ne Manage Users",
-            "ORGANIZATION_UNIT": "ne Organization Unit",
-            "USER": "ne User",
+            "ORGANIZATION_UNITS": "ne Organization Units",
+            "USERS": "ne Users",
             "USER_ACTIVITY": "ne User Activity"
         }
     },
