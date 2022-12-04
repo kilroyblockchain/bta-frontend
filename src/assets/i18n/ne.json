@@ -500,7 +500,7 @@
             "DASHBOARD": "ne Dashboard",
             "MANAGE_USERS": "ne Manage Users",
             "ORGANIZATION_UNITS": "ne Organization Units",
-            "USER": "ne User",
+            "USERS": "ne Users",
             "USER_ACTIVITY": "ne User Activity"
         }
     },

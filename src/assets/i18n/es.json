@@ -500,7 +500,7 @@
             "DASHBOARD": "es Dashboard",
             "MANAGE_USERS": "es Manage Users",
             "ORGANIZATION_UNITS": "es Organization Units",
-            "USER": "es User",
+            "USERS": "es Users",
             "USER_ACTIVITY": "es User Activity"
         }
     },
