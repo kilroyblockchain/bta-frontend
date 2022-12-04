@@ -424,7 +424,7 @@
         },
         "USERS": {
             "TITLE": {
-                "USER": "User",
+                "USERS": "Users",
                 "CREATE_USER": "Create User",
                 "EDIT_USER": "Edit User"
             },
@@ -518,7 +518,7 @@
             "DASHBOARD": "Dashboard",
             "MANAGE_USERS": "Manage Users",
             "ORGANIZATION_UNIT": "Organization Unit",
-            "USER": "User",
+            "USERS": "Users",
             "USER_ACTIVITY": "User Activity",
             "MANAGE_PROJECTS": "Manage Projects",
             "PROJECT": "Project"

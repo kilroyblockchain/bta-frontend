@@ -120,7 +120,7 @@ export class SidebarComponent {
                 title: 'User',
                 link: '/u/manage-users/user',
                 pathMatch: 'full',
-                key: 'HEADER.MENU_ITEM.USER'
+                key: 'HEADER.MENU_ITEM.USERS'
             });
         }
 
