@@ -159,7 +159,7 @@
                                 </button>
                             </ng-container>
 
-                            <ng-container *ngIf="!isStakeHolder && isErrorReviewedVersion.errorStatus">
+                            <ng-container *ngIf="!isStakeHolder && isErrorReviewedVersion?.errorStatus">
                                 <div nbTooltipStatus="basic" [nbTooltip]="disableButtonMessage" nbTooltipPlacement="bottom">
                                     <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)" [disabled]="true">
                                         <nb-icon icon="plus-circle-outline"></nb-icon>
@@ -168,7 +168,7 @@
                                 </div>
                             </ng-container>
 
-                            <ng-container *ngIf="!isStakeHolder && !isErrorReviewedVersion.errorStatus">
+                            <ng-container *ngIf="!isStakeHolder && !isErrorReviewedVersion?.errorStatus">
                                 <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                     <nb-icon icon="plus-circle-outline"></nb-icon>
                                     {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
