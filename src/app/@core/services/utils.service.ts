@@ -1,4 +1,4 @@
-import { NbGlobalLogicalPosition, NbToastrService, NbSortDirection, NbSortRequest, NbToastrConfig } from '@nebular/theme';
+import { NbGlobalLogicalPosition, NbToastrService, NbSortDirection, NbSortRequest, NbToastrConfig, NbToastRef } from '@nebular/theme';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { ALL_API_RES_MSG_EN, ALL_API_RES_MSG_ES } from '../constants/api-response-constants';
@@ -19,10 +19,10 @@ export class UtilsService {
     MS_PER_DAY = 1000 * 60 * 60 * 24;
     logFileName: string | undefined;
     constructor(protected readonly nbToasterService: NbToastrService, protected readonly authService: AuthService) {}
-    showToast(status: string, message: string | Array<string>, data?: string, options?: Partial<NbToastrConfig>): void {
+    showToast(status: string, message: string | Array<string>, data?: string, options?: Partial<NbToastrConfig>): NbToastRef {
         this.logFileName = data;
         const messageData = this.mapApiErrorConstant(message);
-        this.nbToasterService.show(status, messageData, { limit: 3, position: NbGlobalLogicalPosition.BOTTOM_START, status, duration: this.logFileName ? 20000 : 6000, destroyByClick: true, ...(options ? options : {}) });
+        return this.nbToasterService.show(status, messageData, { limit: 3, position: NbGlobalLogicalPosition.BOTTOM_START, status, duration: this.logFileName ? 20000 : 6000, destroyByClick: true, ...(options ? options : {}) });
     }
 
     updateSort(sortRequest: NbSortRequest): void {

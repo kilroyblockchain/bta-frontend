@@ -23,5 +23,6 @@ export const API_RES_MSG_COMMON = {
     ERROR_WHILE_CREATING_RECORD: 'Error While Creating Record',
     ERROR_WHILE_UPDATING_RECORD: 'Error While Updating Record',
     THE_RECAPTCHA_WAS_INVALID: 'The reCAPTCHA was invalid. Please try it again.',
-    COPPIED_SUCCESSFULLY: 'Copied successfully'
+    COPPIED_SUCCESSFULLY: 'Copied successfully',
+    TOKEN_EXPIRED_LOGOUT: 'The session has been expired. Please re-login to continue'
 };

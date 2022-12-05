@@ -119,7 +119,12 @@ export class EditUserComponent implements OnInit {
     setOrgUnits(): void {
         this.manageUserService.getAllOrganizationUnitOfOrganization(this.defaultSubscriptionType).subscribe((res) => {
             if (res && res.success) {
-                this.organizationUnits = res.data;
+                const isCompanyAdminUser = !!this.rowData.company.find((company) => company.isAdmin);
+                if (isCompanyAdminUser) {
+                    this.organizationUnits = res.data.filter((f) => f.isMigrated);
+                } else {
+                    this.organizationUnits = res.data.filter((f) => !f.isMigrated);
+                }
             }
         });
     }

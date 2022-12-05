@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { finalize, Subscription } from 'rxjs';
 import { ACCESS_TYPE, FEATURE_IDENTIFIER } from 'src/app/@core/constants';
 import { PROJECT_USER } from 'src/app/@core/constants/project-roles.enum';
-import { IModelReview, IProjectVersion, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
+import { IModelReview, IProjectVersion, IReviewedVersionError, OracleBucketDataStatus, VersionStatus } from 'src/app/@core/interfaces/manage-project.interface';
 import { IUserRes } from 'src/app/@core/interfaces/user-data.interface';
 import { AuthService, FileService, ManageProjectService, UtilsService } from 'src/app/@core/services';
 import { AlertComponent } from 'src/app/pages/miscellaneous/alert/alert.component';
@@ -44,7 +44,9 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     isReviewStatusFailed!: boolean;
     isReviewStatusDeclined!: boolean;
 
-    isErrorReviewedVersion!: boolean;
+    isErrorReviewedVersion!: IReviewedVersionError;
+    disableButtonMessage!: string;
+
     newReviewDialogClose!: Subscription;
 
     constructor(private dialogService: NbDialogService, private router: Router, private activeRoute: ActivatedRoute, private translate: TranslateService, private readonly fileService: FileService, private authService: AuthService, public utilsService: UtilsService, private readonly manageProjectService: ManageProjectService) {
@@ -199,6 +201,14 @@ export class ModelReviewComponent implements OnInit, OnDestroy {
     isErrorInReviewedVersion(versionId: string): void {
         this.manageProjectService.isErrorInReviewedModel(versionId).subscribe((res) => {
             this.isErrorReviewedVersion = res.data;
+
+            if (this.isErrorReviewedVersion.errorStatus === true && (this.isErrorReviewedVersion.logFileDataHashStatus === OracleBucketDataStatus.ERROR || this.isErrorReviewedVersion.testDataSetHashStatus === OracleBucketDataStatus.ERROR)) {
+                this.disableButtonMessage = this.translate.instant('MANAGE_PROJECTS.MODEL_REVIEW.MESSAGE.ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_ERROR');
+            }
+
+            if (this.isErrorReviewedVersion.errorStatus === true && (this.isErrorReviewedVersion.logFileDataHashStatus === OracleBucketDataStatus.FETCHING || this.isErrorReviewedVersion.testDataSetHashStatus === OracleBucketDataStatus.FETCHING)) {
+                this.disableButtonMessage = this.translate.instant('MANAGE_PROJECTS.MODEL_REVIEW.MESSAGE.ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_DATA_FETCHING');
+            }
         });
     }
 

@@ -111,7 +111,7 @@ export class SidebarComponent {
                 title: 'Organization Unit',
                 link: '/u/manage-users/organization-unit',
                 pathMatch: 'full',
-                key: 'HEADER.MENU_ITEM.ORGANIZATION_UNIT'
+                key: 'HEADER.MENU_ITEM.ORGANIZATION_UNITS'
             });
         }
 
@@ -120,7 +120,7 @@ export class SidebarComponent {
                 title: 'User',
                 link: '/u/manage-users/user',
                 pathMatch: 'full',
-                key: 'HEADER.MENU_ITEM.USER'
+                key: 'HEADER.MENU_ITEM.USERS'
             });
         }
 
