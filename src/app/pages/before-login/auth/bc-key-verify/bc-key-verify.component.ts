@@ -38,6 +38,8 @@ export class BcKeyVerifyComponent implements OnInit {
             return;
         }
 
+        this.loading = true;
+
         this.blockChainService.verifyBcKey(value).subscribe({
             next: (res) => {
                 const { data } = res;
