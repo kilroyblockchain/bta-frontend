@@ -69,6 +69,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
     canMlopsEditReviewedVersion!: boolean;
     updateReviewedVersionLoader!: boolean;
     submitLoading!: boolean;
+    delay = 10000; // 10 sec for polling
 
     constructor(private activeRoute: ActivatedRoute, private router: Router, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private translate: TranslateService, public utilsService: UtilsService, private manageProjectService: ManageProjectService, private authService: AuthService, private dialogService: NbDialogService) {
         this.dataSource = this.dataSourceBuilder.create(this.data);
@@ -181,6 +182,15 @@ export class AiModelComponent implements OnInit, OnDestroy {
                             this.dataFound = false;
                         } else {
                             this.versionData = data;
+                            if (this.versionData?.aiModelStatus.code === this.oracleBucketDataStatus.FETCHING) {
+                                this.getTestDataBcHash(versionId);
+                            }
+                            if (this.versionData?.trainDatasetStatus.code === this.oracleBucketDataStatus.FETCHING) {
+                                this.getTrainDataSetsBcHash(versionId);
+                            }
+                            if (this.versionData?.aiModelStatus.code === this.oracleBucketDataStatus.FETCHING) {
+                                this.getAiModelBcHash(versionId);
+                            }
                             this.checkModelStatus(this.versionData.versionStatus);
                             this.getVersionUser(this.versionData.createdBy);
                             this.dataFound = true;
@@ -212,13 +222,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
                     const { data } = res;
                     if (data.total) {
                         this.totalRecords = data.total;
-                        if (!this.totalRecords) {
-                            this.logsData = false;
-                        } else {
-                            if (this.versionData?.logFileStatus?.code !== this.oracleBucketDataStatus.FETCHING) {
-                                this.logsData = true;
-                            }
-                        }
+                        this.logsData = true;
                         this.tableData = data.docs;
                         this.createTableData(this.tableData);
                     } else {
@@ -295,12 +299,11 @@ export class AiModelComponent implements OnInit, OnDestroy {
 
     getLogFileBcHash(versionId: string): void {
         this.logsData = false;
-        this.data = [];
         this.versionData.logFileStatus.code = this.oracleBucketDataStatus.FETCHING;
-        this.dataSource = this.dataSourceBuilder.create(this.data);
         this.manageProjectService.getLogFileBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.reLoad();
+                this.versionData = res.data;
+                this.retrieveAllVersionLogs(versionId, true);
             }
         });
     }
@@ -309,7 +312,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.testDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getTestDataBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.timeIntervalTestDataSets = interval(2000)
+                this.timeIntervalTestDataSets = interval(this.delay)
                     .pipe(
                         startWith(0),
                         switchMap(() => this.manageProjectService.getVersionInfo(versionId))
@@ -346,7 +349,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.trainDatasetStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getTrainDataSetsBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.timeIntervalTrainDataSets = interval(2000)
+                this.timeIntervalTrainDataSets = interval(this.delay)
                     .pipe(
                         startWith(0),
                         switchMap(() => this.manageProjectService.getVersionInfo(versionId))
@@ -382,7 +385,7 @@ export class AiModelComponent implements OnInit, OnDestroy {
         this.versionData.aiModelStatus.code = this.oracleBucketDataStatus.FETCHING;
         this.manageProjectService.getAiModelBcHash(versionId).subscribe((res) => {
             if (res) {
-                this.timeIntervalAIModel = interval(2000)
+                this.timeIntervalAIModel = interval(this.delay)
                     .pipe(
                         startWith(0),
                         switchMap(() => this.manageProjectService.getVersionInfo(versionId))
