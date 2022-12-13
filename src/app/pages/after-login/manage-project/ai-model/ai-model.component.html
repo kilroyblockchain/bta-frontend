@@ -233,7 +233,7 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <table *ngIf="dataFound" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
+                <table *ngIf="logsData" [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="utilsService.updateSort($event)">
                     <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="columns"></tr>
                     <tr [clickToToggle]="false" nbTreeGridRow *nbTreeGridRowDef="let row; columns: columns"></tr>
                     <ng-container
