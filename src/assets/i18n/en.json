@@ -742,7 +742,7 @@
                 "NO_MEMBERS_ARE_ADDED": "No members are added !!",
                 "NO_MODELS_ARE_ADDED": "No models are added !!",
                 "ENABLE_PROJECT": "Do you want to enable project",
-                "CAN_ADD_PROJECT": "Required team members to start the project are not added, please consult with Org. admin for this."
+                "CAN_ADD_PROJECT": "Team members required to start the project have not been added. Please log in as the organization admin to do this."
             }
         },
         "VERSION": {
