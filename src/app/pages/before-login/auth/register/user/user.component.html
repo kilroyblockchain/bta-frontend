@@ -1,14 +1,5 @@
 <form [formGroup]="registrationFormGroup" (ngSubmit)="executeCaptcha(registrationFormGroup, captchaRef)" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="">
     <h4 class="title">{{ 'REGISTER.TITLE' | translate }}</h4>
-    <p class="sub-title">{{ 'REGISTER.SUBTITLE' | translate }}</p>
-    <div class="form-holder full">
-        <nb-select [placeholder]="'REGISTER.PLACEHOLDER.CHOOSE_SUBSCRIPTION_TYPE' | translate" (selectedChange)="subscriberChanged()" formControlName="subscriptionType" [ngClass]="{ 'status-danger': submitted && UF['subscriptionType'].errors }">
-            <nb-option *ngFor="let subscriptionRow of subscriptions" [value]="subscriptionRow.subscriptionTypeIdentifier">{{ subscriptionRow.subscriptionType }}</nb-option>
-        </nb-select>
-        <div *ngIf="submitted && UF['subscriptionType'].errors as err" class="invalid-feedback">
-            <span *ngIf="err['required']">{{ 'REGISTER.VALIDATIONS.SUBSCRIPTION_TYPE_IS_REQUIRED' | translate }}</span>
-        </div>
-    </div>
 
     <div class="form-inner-container two-col">
         <div class="form-holder floating">
@@ -51,6 +42,29 @@
             </div>
         </div>
 
+        <div class="form-holder floating">
+            <input id="company" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.COMPANY' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" />
+            <label for="company" [attr.data-content]="'*' + ('REGISTER.LABEL.COMPANY' | translate)"></label>
+            <div *ngIf="submitted && UF['companyName'].errors as err" class="invalid-feedback">
+                <span *ngIf="err['required']">{{ 'REGISTER.VALIDATIONS.COMPANY_IS_REQUIRED' | translate }}</span>
+                <span *ngIf="err['minlength']" [translate]="'REGISTER.VALIDATIONS.COMPANY_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"></span>
+            </div>
+            <nb-autocomplete #autoControl>
+                <nb-option *ngFor="let option of filteredControlOptions$ | async" [value]="option">
+                    {{ option }}
+                </nb-option>
+            </nb-autocomplete>
+        </div>
+
+        <div class="form-holder floating">
+            <input id="address" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ADDRESS' | translate" formControlName="address" [ngClass]="{ 'status-danger': submitted && UF['address'].errors }" />
+            <label for="address" [attr.data-content]="'*' + ('COMMON.LABEL.ADDRESS' | translate)"></label>
+            <div *ngIf="submitted && UF['address'].errors as err" class="invalid-feedback">
+                <span *ngIf="err['required']">{{ 'COMMON.VALIDATIONS.ADDRESS_IS_REQUIRED' | translate }}</span>
+                <span *ngIf="err['minlength']" [translate]="'COMMON.VALIDATIONS.ADDRESS_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"></span>
+            </div>
+        </div>
+
         <div class="form-holder">
             <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)" [ngClass]="{ 'status-danger': submitted && UF['country'].errors }">
                 <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
@@ -78,15 +92,6 @@
         </div>
 
         <div class="form-holder floating">
-            <input id="address" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ADDRESS' | translate" formControlName="address" [ngClass]="{ 'status-danger': submitted && UF['address'].errors }" />
-            <label for="address" [attr.data-content]="'*' + ('COMMON.LABEL.ADDRESS' | translate)"></label>
-            <div *ngIf="submitted && UF['address'].errors as err" class="invalid-feedback">
-                <span *ngIf="err['required']">{{ 'COMMON.VALIDATIONS.ADDRESS_IS_REQUIRED' | translate }}</span>
-                <span *ngIf="err['minlength']" [translate]="'COMMON.VALIDATIONS.ADDRESS_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"></span>
-            </div>
-        </div>
-
-        <div class="form-holder floating">
             <input id="zipcode" nbInput fullWidth type="text" [placeholder]="'COMMON.PLACEHOLDER.ZIP_CODE' | translate" formControlName="zipCode" [ngClass]="{ 'status-danger': submitted && UF['zipCode'].errors }" />
             <label for="zipcode" [attr.data-content]="'*' + ('COMMON.LABEL.ZIP_CODE' | translate)"></label>
             <div *ngIf="submitted && UF['zipCode'].errors as err" class="invalid-feedback">
@@ -95,23 +100,9 @@
             </div>
         </div>
 
-        <div class="form-holder floating">
-            <input id="company" nbInput fullWidth type="text" [placeholder]="'REGISTER.PLACEHOLDER.COMPANY' | translate" formControlName="companyName" [ngClass]="{ 'status-danger': submitted && UF['companyName'].errors }" />
-            <label for="company" [attr.data-content]="'*' + ('REGISTER.LABEL.COMPANY' | translate)"></label>
-            <div *ngIf="submitted && UF['companyName'].errors as err" class="invalid-feedback">
-                <span *ngIf="err['required']">{{ 'REGISTER.VALIDATIONS.COMPANY_IS_REQUIRED' | translate }}</span>
-                <span *ngIf="err['minlength']" [translate]="'REGISTER.VALIDATIONS.COMPANY_MIN_LENGTH'" [translateParams]="{ minLength: err['minlength'].requiredLength }"></span>
-            </div>
-            <nb-autocomplete #autoControl>
-                <nb-option *ngFor="let option of filteredControlOptions$ | async" [value]="option">
-                    {{ option }}
-                </nb-option>
-            </nb-autocomplete>
-        </div>
-
         <div class="form-holder full" *ngIf="selectedSubscriber !== 'other'">
             <nb-checkbox status="basic" (checkedChange)="changedOnAgreedOnTerms($event)">
-                <p [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
+                <p class="terms-and-condition" [innerHTML]="'REGISTER.LABEL.AGREE_THE_TERMS_AND_CONDITION' | translate"></p>
             </nb-checkbox>
         </div>
         <re-captcha #captchaRef="reCaptcha" (error)="onError($event)" errorMode="handled" (resolved)="resolved($event, registrationFormGroup)" size="invisible"> </re-captcha>

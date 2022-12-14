@@ -68,7 +68,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     createRegistrationForm(user: User): void {
         this.registrationFormGroup = this.fb.group({
-            subscriptionType: [user?.subscriptionType, [Validators.required]],
+            subscriptionType: ['staff', [Validators.required]],
             firstName: [this.titleCasePipe.transform(user?.firstName), [Validators.required, Validators.minLength(2)]],
             lastName: [this.titleCasePipe.transform(user?.lastName), [Validators.required, Validators.minLength(2)]],
             email: [user?.email, [Validators.required, Validators.minLength(5), Validators.email]],

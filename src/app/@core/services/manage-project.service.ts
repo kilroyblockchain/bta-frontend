@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URLConstant } from '../constants';
 import { IAppResponse, IPaginateResult } from '../interfaces/app-response.interface';
-import { IAiArtifactsModel, IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IMonitoringStatus, IProject, IProjectVersion } from '../interfaces/manage-project.interface';
+import { IAiArtifactsModel, IAiModel, IAiModelExp, IModelReview, IMonitoringReport, IMonitoringStatus, IProject, IProjectVersion, IReviewedVersionError } from '../interfaces/manage-project.interface';
 import { HttpService } from './http.service';
 
 @Injectable({ providedIn: 'root' })
@@ -133,7 +133,7 @@ export class ManageProjectService {
         return this.http.get(URLConstant.canMlopsEditReviewedVersionURL + `/${versionId}`);
     }
 
-    isErrorInReviewedModel(versionId: string): Observable<IAppResponse<boolean>> {
+    isErrorInReviewedModel(versionId: string): Observable<IAppResponse<IReviewedVersionError>> {
         return this.http.get(URLConstant.isErrorInReviewedModelURL + `/${versionId}`);
     }
 }
