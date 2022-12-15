@@ -290,7 +290,7 @@
             "JOB_TITLE_MIN_LENGTH": "ne  Job Title must be at least {{ minLength }} characters"
         },
         "LABEL": {
-            "AGREE_THE_TERMS_AND_CONDITION": "ne Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
+            "AGREE_THE_TERMS_AND_CONDITION": "ne Agree to the <a href='/#/terms-and-conditions' target='_blank'>Terms and Conditions</a>",
             "COMPANY": "ne Organization",
             "JOB_TITLE": "ne Job Title"
         },
@@ -499,8 +499,8 @@
             "REGISTER": "ne Register",
             "DASHBOARD": "ne Dashboard",
             "MANAGE_USERS": "ne Manage Users",
-            "ORGANIZATION_UNIT": "ne Organization Unit",
-            "USER": "ne User",
+            "ORGANIZATION_UNITS": "ne Organization Units",
+            "USERS": "ne Users",
             "USER_ACTIVITY": "ne User Activity"
         }
     },

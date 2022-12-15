@@ -132,26 +132,7 @@
                                 <app-validation-message field="phone" [error]="err"></app-validation-message>
                             </div>
                         </div>
-                        <div class="form-holder">
-                            <label for="country" class="label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
-                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)" [ngClass]="{ 'status-danger': submitted && UF['country'].errors }">
-                                <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
-                            </nb-select>
-                        </div>
-                    </div>
-                    <div class="form-inner-container two-col">
-                        <div class="form-holder">
-                            <label for="state" class="label">{{ 'COMMON.LABEL.STATE' | translate }}</label>
-                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="state" [ngClass]="{ 'status-danger': submitted && UF['state'].errors }">
-                                <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class="form-holder floating">
-                            <input name="city" nbInput fullWidth [placeholder]="'COMMON.LABEL.CITY' | translate" formControlName="city" [ngClass]="{ 'status-danger': submitted && UF['city'].errors }" />
-                            <label for="city" [attr.data-content]="'COMMON.LABEL.CITY' | translate"></label>
-                        </div>
-                    </div>
-                    <div class="form-inner-container two-col">
+
                         <div class="form-holder floating">
                             <input name="address" nbInput fullWidth [placeholder]="'COMMON.LABEL.ADDRESS' | translate" formControlName="address" [ngClass]="{ 'status-danger': submitted && UF['address'].errors }" />
                             <label for="address" [attr.data-content]="'COMMON.LABEL.ADDRESS' | translate"></label>
@@ -159,9 +140,30 @@
                                 <span *ngIf="err['minlength']">{{ 'COMMON.VALIDATIONS.ADDRESS_MIN_LENGTH' | translate: { minLength: err['minlength'].requiredLength } }}</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder floating">
+                            <input name="city" nbInput fullWidth [placeholder]="'COMMON.LABEL.CITY' | translate" formControlName="city" [ngClass]="{ 'status-danger': submitted && UF['city'].errors }" />
+                            <label for="city" [attr.data-content]="'COMMON.LABEL.CITY' | translate"></label>
+                        </div>
                         <div class="form-holder floating">
                             <input name="zipCode" nbInput fullWidth [placeholder]="'COMMON.LABEL.ZIP_CODE' | translate" formControlName="zipCode" [ngClass]="{ 'status-danger': submitted && UF['zipCode'].errors }" />
                             <label for="zipCode" [attr.data-content]="'COMMON.LABEL.ZIP_CODE' | translate"></label>
+                        </div>
+                    </div>
+                    <div class="form-inner-container two-col">
+                        <div class="form-holder">
+                            <label for="country" class="label">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
+                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_COUNTRY' | translate" fullWidth formControlName="country" (selectedChange)="onSelectChange($event)" [ngClass]="{ 'status-danger': submitted && UF['country'].errors }">
+                                <nb-option *ngFor="let countryRow of countries" [value]="countryRow._id">{{ countryRow.name }}</nb-option>
+                            </nb-select>
+                        </div>
+
+                        <div class="form-holder">
+                            <label for="state" class="label">{{ 'COMMON.LABEL.STATE' | translate }}</label>
+                            <nb-select [placeholder]="'COMMON.PLACEHOLDER.SELECT_STATE' | translate" fullWidth formControlName="state" [ngClass]="{ 'status-danger': submitted && UF['state'].errors }">
+                                <nb-option *ngFor="let stateRow of states" [value]="stateRow._id">{{ stateRow.name }}</nb-option>
+                            </nb-select>
                         </div>
                     </div>
                 </ng-container>

@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
     rejectedCompanies!: boolean;
     @Input()
     blockedUsers!: boolean;
-    defaultColumnsNames = ['SUPER_ADMIN.COLUMN_NAME.ORGANIZATION/SUPER_ADMIN.COLUMN_NAME.POST', 'COMMON.COLUMN_NAME.NAME/SUPER_ADMIN.COLUMN_NAME.ADDRESS', 'COMMON.COLUMN_NAME.EMAIL/COMMON.COLUMN_NAME.PHONE', 'COMMON.COLUMN_NAME.ACTION'];
+    defaultColumnsNames = ['SUPER_ADMIN.COLUMN_NAME.ORGANIZATION', 'COMMON.COLUMN_NAME.NAME/SUPER_ADMIN.COLUMN_NAME.ADDRESS', 'COMMON.COLUMN_NAME.EMAIL/COMMON.COLUMN_NAME.PHONE', 'COMMON.COLUMN_NAME.ACTION'];
     defaultColumns = ['companyName', 'name', 'email', 'action'];
     allColumns = [...this.defaultColumns];
     dataSource: NbTreeGridDataSource<FSEntry>;

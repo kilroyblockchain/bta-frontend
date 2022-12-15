@@ -144,7 +144,7 @@
                         <section class="dialog-head">
                             <h4>{{ 'MANAGE_PROJECTS.MODEL_REVIEW.TITLE.ALL_REVIEWS' | translate }}</h4>
                         </section>
-                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder && !isReviewStatusFailed && !isReviewStatusDeclined && !isErrorReviewedVersion">
+                        <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && isReviewStatusMonitoring && isStakeHolder && !isReviewStatusFailed && !isReviewStatusDeclined && !isErrorReviewedVersion?.errorStatus">
                             <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
                                 <nb-icon icon="plus-circle-outline"></nb-icon>
                                 {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
@@ -152,10 +152,28 @@
                         </div>
 
                         <div class="actions" *ngIf="canAddReview && !isCompanyAdmin && !isReviewStatusMonitoring && !isReviewStatusComplete && !isReviewStatusFailed && !isReviewStatusDeclined">
-                            <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)" [disabled]="!isStakeHolder && isErrorReviewedVersion">
-                                <nb-icon icon="plus-circle-outline"></nb-icon>
-                                {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
-                            </button>
+                            <ng-container *ngIf="isStakeHolder">
+                                <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
+                                    <nb-icon icon="plus-circle-outline"></nb-icon>
+                                    {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
+                                </button>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isStakeHolder && isErrorReviewedVersion?.errorStatus">
+                                <div nbTooltipStatus="basic" [nbTooltip]="disableButtonMessage" nbTooltipPlacement="bottom">
+                                    <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)" [disabled]="true">
+                                        <nb-icon icon="plus-circle-outline"></nb-icon>
+                                        {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isStakeHolder && !isErrorReviewedVersion?.errorStatus">
+                                <button nbButton hero status="primary" size="small" (click)="addNewReviewModal(versionData)">
+                                    <nb-icon icon="plus-circle-outline"></nb-icon>
+                                    {{ 'MANAGE_PROJECTS.MODEL_REVIEW.BUTTON.ADD_REVIEW' | translate }}
+                                </button>
+                            </ng-container>
                         </div>
                     </nb-card-header>
                     <nb-card-body>
