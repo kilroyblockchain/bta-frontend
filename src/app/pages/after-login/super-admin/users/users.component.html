@@ -29,7 +29,7 @@
                 >
                     <ng-container [ngSwitch]="column">
                         <ng-container *ngSwitchCase="'companyName'">
-                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'SUPER_ADMIN.COLUMN_NAME.ORGANIZATION' | translate }}/{{ 'SUPER_ADMIN.COLUMN_NAME.POST' | translate }}</th>
+                            <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'SUPER_ADMIN.COLUMN_NAME.ORGANIZATION' | translate }}</th>
                         </ng-container>
                         <ng-container *ngSwitchCase="'name'">
                             <th nbTreeGridHeaderCell [nbSortHeader]="utilsService.getSortDirection(column)" *nbTreeGridHeaderCellDef>{{ 'COMMON.COLUMN_NAME.NAME' | translate }}/{{ 'SUPER_ADMIN.COLUMN_NAME.ADDRESS' | translate }}</th>

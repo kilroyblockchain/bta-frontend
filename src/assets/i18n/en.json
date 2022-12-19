@@ -247,7 +247,7 @@
         "BLOCKED_USERS": "Blocked Users",
         "USER_ACTIVITY_LOG": "User Activity",
         "APPLICATION_LOGS": "Application Logs",
-        "BC_NODE_INFO": "BC Node Info",
+        "BC_NODE_INFO": "Bc Node Info",
         "BC_KEY_VERIFY": "Bc Key Verify"
     },
     "FOOTER": {
@@ -293,7 +293,7 @@
             "JOB_TITLE_MIN_LENGTH": " Job Title must be at least {{ minLength }} characters"
         },
         "LABEL": {
-            "AGREE_THE_TERMS_AND_CONDITION": "Agree the <a href='/#/terms-and-conditions' target='_blank'>Terms and conditions</a>",
+            "AGREE_THE_TERMS_AND_CONDITION": "Agree to the <a href='/#/terms-and-conditions' target='_blank'>Terms and Conditions</a>",
             "COMPANY": "Organization",
             "JOB_TITLE": "Job Title"
         },
@@ -362,7 +362,7 @@
                 "EDIT_ORGANIZATION_UNIT": "Edit Organization Unit"
             },
             "BUTTON": {
-                "ORGANIZATION_UNIT": "Organization Unit"
+                "ADD_ORGANIZATION_UNIT": "Add Organization Unit"
             },
             "LABEL": {
                 "SHOW_ACTIVE_UNIT": "Show Active Units",
@@ -424,7 +424,7 @@
         },
         "USERS": {
             "TITLE": {
-                "USER": "User",
+                "USERS": "Users",
                 "CREATE_USER": "Create User",
                 "EDIT_USER": "Edit User"
             },
@@ -517,8 +517,8 @@
             "REGISTER": "Register",
             "DASHBOARD": "Dashboard",
             "MANAGE_USERS": "Manage Users",
-            "ORGANIZATION_UNIT": "Organization Unit",
-            "USER": "User",
+            "ORGANIZATION_UNITS": "Organization Units",
+            "USERS": "Users",
             "USER_ACTIVITY": "User Activity",
             "MANAGE_PROJECTS": "Manage Projects",
             "PROJECT": "Project"
@@ -569,7 +569,7 @@
             "NON_ADMIN_USERS": "Non Admin Users",
             "BLOCKED_USERS": "Blocked Users",
             "APPLICATION_LOGS": "Application Logs",
-            "BC_NODE_INFO": "BC Node Info"
+            "BC_NODE_INFO": "Bc Node Info"
         },
         "LABEL": {
             "TITLE": "Title",
@@ -742,7 +742,7 @@
                 "NO_MEMBERS_ARE_ADDED": "No members are added !!",
                 "NO_MODELS_ARE_ADDED": "No models are added !!",
                 "ENABLE_PROJECT": "Do you want to enable project",
-                "CAN_ADD_PROJECT": "Required team members to start the project are not added, please consult with Org. admin for this."
+                "CAN_ADD_PROJECT": "Team members required to start the project have not been added. Please log in as the organization admin to do this."
             }
         },
         "VERSION": {
@@ -963,7 +963,9 @@
             "MESSAGE": {
                 "AI_IS_GREATER_VALUE": "AI Engineer's accuracy is greater by {{ greaterValue }}",
                 "MLOPS_IS_GREATER_VALUE": "MLOPs Engineer's accuracy is greater by  {{ greaterValue }}",
-                "BOTH_ARE_EQUAL": "Both has same value"
+                "BOTH_ARE_EQUAL": "Both has same value",
+                "ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_ERROR": "Error on model review .Please check the model review added.",
+                "ADD_REVIEWED_BUTTON_DISABLED_DUE_TO_DATA_FETCHING": "Fetching the data. Please refresh after some time."
             }
         }
     },
@@ -973,7 +975,7 @@
         },
         "BC_NODE_INFO": {
             "TITLE": {
-                "ALL_BC_NODE": "All Bc Nodes",
+                "BC_NODE_INFO": "Bc Node Info",
                 "ADD_NEW_BC_NODE_INFO": "New Bc Node Info",
                 "EDIT_BC_NODE_INFO": "Edit Bc Node Info"
             },
@@ -1031,6 +1033,7 @@
         },
         "CHANNEL_DETAILS": {
             "TITLE": {
+                "CHANNEL_DETAILS": "Channel Details",
                 "NEW_CHANNEL_DETAILS": "New Channel Details",
                 "EDIT_CHANNEL_DETAILS": "Edit Channel Details"
             },
